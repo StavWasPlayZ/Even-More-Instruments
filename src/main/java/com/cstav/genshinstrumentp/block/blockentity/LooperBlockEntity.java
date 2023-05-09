@@ -169,7 +169,7 @@ public class LooperBlockEntity extends BlockEntity {
     public static LooperBlockEntity getLBE(final Level level, final ItemStack instrument) {
         if (!LooperBlock.hasLooperTag(instrument))
             return null;
-            
+
         final LooperBlockEntity looperBE = getLBE(level, LooperBlock.getLooperPos(instrument));
 
         if (looperBE == null)
@@ -185,7 +185,7 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
     @SubscribeEvent
-    public static void onInstrumentPlayed(final InstrumentPlayedEvent event) {
+    public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
         if (!LooperBlock.isRecording(event.instrument))
             return;
             
