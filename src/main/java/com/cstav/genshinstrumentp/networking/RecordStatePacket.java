@@ -4,8 +4,8 @@ import java.util.function.Supplier;
 
 import com.cstav.genshinstrument.item.InstrumentItem;
 import com.cstav.genshinstrument.networking.ModPacket;
-import com.cstav.genshinstrumentp.block.LooperBlock;
 import com.cstav.genshinstrumentp.block.blockentity.LooperBlockEntity;
+import com.cstav.genshinstrumentp.util.LooperUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -41,19 +41,19 @@ public class RecordStatePacket implements ModPacket {
 
         ctx.enqueueWork(() -> {
             final ItemStack item = ctx.getSender().getItemInHand(usedHand);
-            final BlockPos looperPos = LooperBlock.getLooperPos(item);
+            final BlockPos looperPos = LooperUtil.getLooperPos(item);
             if (!ctx.getSender().level.hasChunkAt(looperPos))
                 return;
 
 
-            final boolean prevRecState = LooperBlock.isRecording(item);
+            final boolean prevRecState = LooperUtil.isRecording(item);
             if (!prevRecState && !recording)
                 return;
 
             final LooperBlockEntity lbe = LooperBlockEntity.getLBE(ctx.getSender().level, item);
 
             if (item.getItem() instanceof InstrumentItem) {
-                LooperBlock.setRecording(item, recording);
+                LooperUtil.setRecording(item, recording);
                 lbe.setRecording(false);
             }
 

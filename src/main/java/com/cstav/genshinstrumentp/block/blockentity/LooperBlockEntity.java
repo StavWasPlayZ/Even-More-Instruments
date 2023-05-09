@@ -8,8 +8,8 @@ import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.sound.NoteSound;
 import com.cstav.genshinstrument.util.ServerUtil;
 import com.cstav.genshinstrumentp.Main;
-import com.cstav.genshinstrumentp.Util;
-import com.cstav.genshinstrumentp.block.LooperBlock;
+import com.cstav.genshinstrumentp.util.CommonUtil;
+import com.cstav.genshinstrumentp.util.LooperUtil;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.BlockPos;
@@ -41,7 +41,7 @@ public class LooperBlockEntity extends BlockEntity {
         return getChannels(getPersistentData());
     }
     public ListTag getChannels(final CompoundTag data) {
-        return Util.getOrCreateListTag(data, "channels");
+        return CommonUtil.getOrCreateListTag(data, "channels");
     }
 
 
@@ -167,13 +167,13 @@ public class LooperBlockEntity extends BlockEntity {
      * Null if not found
      */
     public static LooperBlockEntity getLBE(final Level level, final ItemStack instrument) {
-        if (!LooperBlock.hasLooperTag(instrument))
+        if (!LooperUtil.hasLooperTag(instrument))
             return null;
 
-        final LooperBlockEntity looperBE = getLBE(level, LooperBlock.getLooperPos(instrument));
+        final LooperBlockEntity looperBE = getLBE(level, LooperUtil.getLooperPos(instrument));
 
         if (looperBE == null)
-            LooperBlock.remLooperTag(instrument);
+            LooperUtil.remLooperTag(instrument);
 
         return looperBE;
     }
@@ -186,7 +186,7 @@ public class LooperBlockEntity extends BlockEntity {
 
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
-        if (!LooperBlock.isRecording(event.instrument))
+        if (!LooperUtil.isRecording(event.instrument))
             return;
             
             
@@ -199,7 +199,7 @@ public class LooperBlockEntity extends BlockEntity {
             
         looperBE.addNote(
             event.sound, event.instrument,
-            LooperBlock.looperTag(event.instrument).getInt("channel"),
+            LooperUtil.looperTag(event.instrument).getInt("channel"),
             looperBE.getTicks()
         );
 

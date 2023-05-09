@@ -1,8 +1,9 @@
-package com.cstav.genshinstrumentp;
+package com.cstav.genshinstrumentp.util;
 
 import java.util.function.Supplier;
 
 import com.cstav.genshinstrument.item.InstrumentItem;
+import com.cstav.genshinstrumentp.Main;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class Util {
+public class CommonUtil {
 
     public static final CompoundTag TAG_EMPTY = new CompoundTag();
 

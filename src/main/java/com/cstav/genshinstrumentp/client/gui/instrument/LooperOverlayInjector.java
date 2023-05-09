@@ -2,10 +2,10 @@ package com.cstav.genshinstrumentp.client.gui.instrument;
 
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.AbstractInstrumentScreen;
 import com.cstav.genshinstrumentp.Main;
-import com.cstav.genshinstrumentp.Util;
-import com.cstav.genshinstrumentp.block.LooperBlock;
 import com.cstav.genshinstrumentp.networking.ModPacketHandler;
 import com.cstav.genshinstrumentp.networking.RecordStatePacket;
+import com.cstav.genshinstrumentp.util.CommonUtil;
+import com.cstav.genshinstrumentp.util.LooperUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -34,7 +34,7 @@ public class LooperOverlayInjector {
             return;
 
         final AbstractInstrumentScreen screen = (AbstractInstrumentScreen) event.getScreen();
-        if (!LooperBlock.hasLooperTag(Minecraft.getInstance().player.getItemInHand(screen.interactionHand)))
+        if (!LooperUtil.hasLooperTag(Minecraft.getInstance().player.getItemInHand(screen.interactionHand)))
             return;
 
         LooperOverlayInjector.screen = screen;
@@ -55,19 +55,19 @@ public class LooperOverlayInjector {
         if (event.getScreen() != screen)
             return;
 
-        ModPacketHandler.sendToServer(new RecordStatePacket(false, Util.getInstrumentHand()));
+        ModPacketHandler.sendToServer(new RecordStatePacket(false, CommonUtil.getInstrumentHand()));
     }
     
     @SuppressWarnings("resource")
     private static void onRecordPress(final Button btn) {
         final LocalPlayer player = Minecraft.getInstance().player;
-        final InteractionHand hand = Util.getInstrumentHand();
+        final InteractionHand hand = CommonUtil.getInstrumentHand();
         final ItemStack item = player.getItemInHand(hand);
 
         btn.setMessage(Component.translatable("button.genshinstrumentp."
-            + (LooperBlock.isRecording(item) ? "record" : "stop")
+            + (LooperUtil.isRecording(item) ? "record" : "stop")
         ));
 
-        ModPacketHandler.sendToServer(new RecordStatePacket(!LooperBlock.isRecording(item), hand));
+        ModPacketHandler.sendToServer(new RecordStatePacket(!LooperUtil.isRecording(item), hand));
     }
 }
