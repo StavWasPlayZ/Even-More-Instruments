@@ -41,6 +41,9 @@ public class LooperBlock extends Block implements EntityBlock {
     public static void remLooperTag(final ItemStack instrument) {
         Main.modTag(instrument).remove(LOOPER_TAG);
     }
+    public static void createLooperTag(final ItemStack instrument) {
+        Main.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
+    }
 
     public LooperBlock(Properties properties) {
         super(properties);
@@ -77,6 +80,8 @@ public class LooperBlock extends Block implements EntityBlock {
         }
 
         if ((itemStack.getItem() instanceof InstrumentItem) && !isSameBlock(itemStack, pPos)) {
+            createLooperTag(itemStack);
+            
             looperTag(itemStack).put(POS_TAG, NbtUtils.writeBlockPos(pPos));
             setRecording(itemStack, false);
             setChannel(itemStack, 0);
