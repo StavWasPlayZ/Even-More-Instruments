@@ -27,13 +27,14 @@ public class LooperOverlayInjector {
     
     private static AbstractInstrumentScreen screen = null;
 
+    @SuppressWarnings("resource")
     @SubscribeEvent
     public static void onScreenDrawn(final ScreenEvent.Init.Post event) {
         if (!(event.getScreen() instanceof AbstractInstrumentScreen))
             return;
 
         final AbstractInstrumentScreen screen = (AbstractInstrumentScreen) event.getScreen();
-        if (!LooperBlock.hasLooperTag(screen.instrument))
+        if (!LooperBlock.hasLooperTag(Minecraft.getInstance().player.getItemInHand(screen.interactionHand)))
             return;
 
         LooperOverlayInjector.screen = screen;

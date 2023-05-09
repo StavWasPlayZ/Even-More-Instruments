@@ -2,15 +2,22 @@ package com.cstav.genshinstrumentp.block.blockentity;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.sound.NoteSound;
+import com.cstav.genshinstrument.util.ServerUtil;
 import com.cstav.genshinstrumentp.Main;
 import com.cstav.genshinstrumentp.Util;
 import com.cstav.genshinstrumentp.block.LooperBlock;
+import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,6 +28,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID)
 public class LooperBlockEntity extends BlockEntity {
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     /**
      * <p>The channels list is constructed so that every entry represents a layer
@@ -103,12 +111,51 @@ public class LooperBlockEntity extends BlockEntity {
 
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (!isPlaying() && !isRecording())
+        // idk why but it needs to be here for it to work
+        final LooperBlockEntity lbe = getLBE(pLevel, pPos);
+
+        
+        if (!lbe.isPlaying() && !lbe.isRecording())
             return;
 
-        setTicks(getTicks() + 1);
-        if ((getRepeatTick() != -1) && (getTicks() > getRepeatTick()))
-            setTicks(0);
+        int ticks = getTicks() + 1;
+        final int repTick = getRepeatTick();
+        if ((repTick != -1) && (ticks > repTick))
+            ticks = 0;
+
+
+        for (final Tag channel : lbe.getChannels()) {
+            if (!(channel instanceof ListTag))
+                continue;
+
+            for (final Tag rNote : (ListTag)channel) {
+                if (!(rNote instanceof CompoundTag))
+                    continue;
+
+                final CompoundTag note = (CompoundTag)rNote;
+                if (ticks != note.getInt("timestamp"))
+                    continue;
+
+                try {
+                    final String stereoLoc = note.getString("stereo");
+                    
+                    ServerUtil.sendPlayNotePackets(pLevel, pPos, new NoteSound(
+                        SoundEvent.createVariableRangeEvent(new ResourceLocation(note.getString("mono"))),
+                        stereoLoc.equals("") ? null
+                            : SoundEvent.createVariableRangeEvent(new ResourceLocation(stereoLoc)),
+                        
+                        note.getFloat("pitch")
+                    ));
+
+                } catch (Exception e) {
+                    LOGGER.error("Attempted to play note, but met with an exception", e);
+                }
+            }
+        }
+
+
+        lbe.setTicks(ticks);
+        lbe.setChanged();
     }
 
 
@@ -136,13 +183,11 @@ public class LooperBlockEntity extends BlockEntity {
 
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent event) {
-        //TODO replace with event.hand once exists
-        final ItemStack instrument = event.player.getItemInHand(Util.getInstrumentHand(event.player));
-        if (!LooperBlock.isRecording(instrument))
+        if (!LooperBlock.isRecording(event.instrument))
             return;
             
             
-        final LooperBlockEntity looperBE = getLBE(event.player.getLevel(), instrument);
+        final LooperBlockEntity looperBE = getLBE(event.player.getLevel(), event.instrument);
         if (looperBE == null)
             return;
             

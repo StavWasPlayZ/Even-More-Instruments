@@ -65,11 +65,20 @@ public class LooperBlock extends Block implements EntityBlock {
             BlockHitResult pHit) {
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
         
+        if (pPlayer.isShiftKeyDown()) {
+            final LooperBlockEntity lbe = pLevel.getBlockEntity(pPos, ModBlockEntities.LOOPER.get()).get();
+            lbe.setPlaying(!lbe.isPlaying());
+            lbe.setChanged();
+            
+            return InteractionResult.SUCCESS;
+        }
+
         if ((itemStack.getItem() instanceof InstrumentItem) && !isSameBlock(itemStack, pPos)) {
             looperTag(itemStack).put(POS_TAG, NbtUtils.writeBlockPos(pPos));
             setRecording(itemStack, false);
             setChannel(itemStack, 0);
-            return InteractionResult.CONSUME;
+
+            return InteractionResult.SUCCESS;
         }
 
         //TODO: Add a GUI for the looper and trigger it for display here

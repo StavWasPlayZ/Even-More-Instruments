@@ -143,7 +143,7 @@ dependencies {
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
     // Examples using mod jars from ./libs
-    implementation fg.deobf("com.cstav.genshinstrument:genshinstrument-1.19.3:2.4")
+    implementation fg.deobf("com.cstav.genshinstrument:genshinstrument-1.19.3:2.4.1")
     // implementation "com.cstav.genshinstrument:Genshin-Instruments:2.3"
     // implementation "com.cstav.genshinstrument:genshinstrument:2.3:sources"
 

@@ -46,12 +46,22 @@ public class RecordStatePacket implements ModPacket {
                 return;
 
 
-            if (item.getItem() instanceof InstrumentItem)
-                LooperBlock.setRecording(item, recording);
+            final boolean prevRecState = LooperBlock.isRecording(item);
+            if (!prevRecState && !recording)
+                return;
 
-            if (!recording) {
-                final LooperBlockEntity lbe = LooperBlockEntity.getLBE(ctx.getSender().level, item);
+            final LooperBlockEntity lbe = LooperBlockEntity.getLBE(ctx.getSender().level, item);
+
+            if (item.getItem() instanceof InstrumentItem) {
+                LooperBlock.setRecording(item, recording);
+                lbe.setRecording(false);
+            }
+
+            if (prevRecState && !recording) {
                 lbe.setRepeatTick(lbe.getTicks());
+                lbe.setPlaying(true);
+
+                lbe.setChanged();
             }
         });
 
