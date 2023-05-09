@@ -167,6 +167,9 @@ public class LooperBlockEntity extends BlockEntity {
      * Null if not found
      */
     public static LooperBlockEntity getLBE(final Level level, final ItemStack instrument) {
+        if (!LooperBlock.hasLooperTag(instrument))
+            return null;
+            
         final LooperBlockEntity looperBE = getLBE(level, LooperBlock.getLooperPos(instrument));
 
         if (looperBE == null)

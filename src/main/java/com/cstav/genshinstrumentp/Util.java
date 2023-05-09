@@ -16,6 +16,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class Util {
 
+    public static final CompoundTag TAG_EMPTY = new CompoundTag();
+
     public static CompoundTag getOrCreateElementTag(final ItemStack item, final String key) {
         return getOrCreateElementTag(Main.modTag(item), key);
     }

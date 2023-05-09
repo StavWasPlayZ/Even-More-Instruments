@@ -33,7 +33,10 @@ public class LooperBlock extends Block implements EntityBlock {
     }
 
     public static CompoundTag looperTag(final ItemStack instrument) {
-        return Util.getOrCreateElementTag(instrument, LOOPER_TAG);
+        final CompoundTag tag = Main.modTag(instrument);
+        return tag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND)
+            ? tag.getCompound(LOOPER_TAG)
+            : Util.TAG_EMPTY;
     }
     public static void remLooperTag(final ItemStack instrument) {
         Main.modTag(instrument).remove(LOOPER_TAG);
