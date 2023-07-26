@@ -108,8 +108,8 @@ public class LooperBlockEntity extends BlockEntity {
 
 
         CompoundTag channelTag;
-        if (channels.size() < channel) {
-            while (channels.size() < channel) {
+        if (channels.size() <= channel) {
+            while (channels.size() <= channel) {
                 channels.add(new CompoundTag());
             }
 
@@ -204,11 +204,12 @@ public class LooperBlockEntity extends BlockEntity {
 
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
-        if (!LooperUtil.isRecording(event.instrument))
+        //TODO implement support for block instruments
+        if (!LooperUtil.isRecording(event.instrument.get()))
             return;
             
             
-        final LooperBlockEntity looperBE = getLBE(event.player.getLevel(), event.instrument);
+        final LooperBlockEntity looperBE = getLBE(event.player.level(), event.instrument.get());
         if (looperBE == null)
             return;
             
@@ -216,10 +217,8 @@ public class LooperBlockEntity extends BlockEntity {
         looperBE.setRecording(true);
             
         looperBE.addNote(
-            event.sound, event.instrumentId,
-            //TODO Once update to v3.2, replace with event.pitch
-            0,
-            LooperUtil.looperTag(event.instrument).getInt("channel"),
+            event.sound, event.instrumentId, event.pitch,
+            LooperUtil.looperTag(event.instrument.get()).getInt("channel"),
             looperBE.getTicks()
         );
 

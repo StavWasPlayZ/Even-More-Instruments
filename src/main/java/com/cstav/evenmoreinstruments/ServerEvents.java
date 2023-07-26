@@ -22,8 +22,8 @@ public class ServerEvents {
         if (event.side == LogicalSide.CLIENT)
             return;
             
-        remLooperRef(event.player.getMainHandItem(), event.player.level);
-        remLooperRef(event.player.getOffhandItem(), event.player.level);
+        remLooperRef(event.player.getMainHandItem(), event.player.level());
+        remLooperRef(event.player.getOffhandItem(), event.player.level());
     }
 
     private static void remLooperRef(final ItemStack item, final Level level) {

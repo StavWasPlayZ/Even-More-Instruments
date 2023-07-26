@@ -1,14 +1,15 @@
 package com.cstav.evenmoreinstruments.item;
 
-import com.cstav.genshinstrument.ModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.genshinstrument.ModCreativeModeTabs;
 
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -31,9 +32,11 @@ public class ModItems {
 
 
     @SubscribeEvent
-    public static void addCreative(final CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() != ModCreativeModeTabs.getInstrumentsTab())
-            return;
+    public static void addCreative(final BuildCreativeModeTabContentsEvent event) {
+        if (
+            (event.getTab() != ModCreativeModeTabs.INSTRUMENTS_TAB.get()) ||
+            (event.getTabKey() != CreativeModeTabs.FUNCTIONAL_BLOCKS)
+        ) return;
 
         ITEMS.getEntries().forEach((entry) -> event.accept(entry.get()));
     }

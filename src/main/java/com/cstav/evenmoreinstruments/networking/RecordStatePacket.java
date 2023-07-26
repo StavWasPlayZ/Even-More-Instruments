@@ -36,6 +36,7 @@ public class RecordStatePacket implements ModPacket {
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean handle(Supplier<Context> arg0) {
         Context ctx = arg0.get();
@@ -43,7 +44,7 @@ public class RecordStatePacket implements ModPacket {
         ctx.enqueueWork(() -> {
             final ItemStack item = ctx.getSender().getItemInHand(usedHand);
             final BlockPos looperPos = LooperUtil.getLooperPos(item);
-            if (!ctx.getSender().level.hasChunkAt(looperPos))
+            if (!ctx.getSender().level().hasChunkAt(looperPos))
                 return;
 
 
@@ -51,7 +52,7 @@ public class RecordStatePacket implements ModPacket {
             if (!prevRecState && !recording)
                 return;
 
-            final LooperBlockEntity lbe = LooperBlockEntity.getLBE(ctx.getSender().level, item);
+            final LooperBlockEntity lbe = LooperBlockEntity.getLBE(ctx.getSender().level(), item);
 
             if (item.getItem() instanceof InstrumentItem) {
                 LooperUtil.setRecording(item, recording);
@@ -62,7 +63,7 @@ public class RecordStatePacket implements ModPacket {
                 lbe.setRepeatTick(lbe.getTicks());
                 lbe.setChanged();
                 
-                ctx.getSender().level.setBlock(looperPos,
+                ctx.getSender().level().setBlock(looperPos,
                     lbe.getBlockState().setValue(LooperBlock.PLAYING, true)
                 , 3);
             }

@@ -23,6 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class LooperBlock extends Block implements EntityBlock {
 
+    //TODO: Redstone should trigger this
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
 
     public LooperBlock(Properties properties) {
@@ -40,7 +41,7 @@ public class LooperBlock extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
             BlockEntityType<T> pBlockEntityType) {
-        return (pBlockEntityType == ModBlockEntities.LOOPER.get())
+        return (!pLevel.isClientSide && pBlockEntityType == ModBlockEntities.LOOPER.get())
             ? (level, pos, state, be) -> ((LooperBlockEntity)(be)).tick(level, pos, state)
             : null;
     }
