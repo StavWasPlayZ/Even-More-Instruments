@@ -1,11 +1,11 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument;
 
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.AbstractInstrumentScreen;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
-import com.cstav.evenmoreinstruments.networking.RecordStatePacket;
+import com.cstav.evenmoreinstruments.networking.packet.RecordStatePacket;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
+import com.cstav.genshinstrument.client.gui.screens.instrument.partial.AbstractInstrumentScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;

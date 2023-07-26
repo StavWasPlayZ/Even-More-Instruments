@@ -1,4 +1,6 @@
 {
+    "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
+
     "button.evenmoreinstruments.record": "Record",
     "button.evenmoreinstruments.stop": "Stop"
 }

@@ -1,5 +1,8 @@
 package com.cstav.evenmoreinstruments.item;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
@@ -8,6 +11,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,21 +24,43 @@ import net.minecraftforge.registries.RegistryObject;
 
 @EventBusSubscriber(modid = Main.MODID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ModItems {
+    public static final String NOTEBLOCK_INSTRUMENT_SUFFIX = "_note_block_instrument";
     
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
     public static void register(final IEventBus bus) {
         ITEMS.register(bus);
     }
 
+
     public static final RegistryObject<Item>
         LOOPER = ITEMS.register("looper", () -> new BlockItem(ModBlocks.LOOPER.get(), new Properties()))
     ;
+    
+    public static final Map<NoteBlockInstrument, RegistryObject<Item>> NOTEBLOCK_INSTRUMENTS = initNoteBlockInstruments();
+
+
+    public static HashMap<NoteBlockInstrument, RegistryObject<Item>> initNoteBlockInstruments() {
+        final NoteBlockInstrument[] instruments = NoteBlockInstrument.values();
+        final HashMap<NoteBlockInstrument, RegistryObject<Item>> result = new HashMap<>(instruments.length);
+
+        for (final NoteBlockInstrument instrument : instruments) {
+            if (!instrument.isTunable())
+                continue;
+
+            result.put(instrument,
+                ITEMS.register(instrument.getSerializedName() + NOTEBLOCK_INSTRUMENT_SUFFIX,
+                () -> new NoteBlockInstrumentItem(instrument))
+            );
+        }
+        
+        return result;
+    }
 
 
     @SubscribeEvent
     public static void addCreative(final BuildCreativeModeTabContentsEvent event) {
         if (
-            (event.getTab() != ModCreativeModeTabs.INSTRUMENTS_TAB.get()) ||
+            (event.getTab() != ModCreativeModeTabs.INSTRUMENTS_TAB.get()) &&
             (event.getTabKey() != CreativeModeTabs.FUNCTIONAL_BLOCKS)
         ) return;
 

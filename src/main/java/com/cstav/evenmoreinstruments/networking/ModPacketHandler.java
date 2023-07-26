@@ -3,7 +3,9 @@ package com.cstav.evenmoreinstruments.networking;
 import java.util.List;
 
 import com.cstav.evenmoreinstruments.Main;
-import com.cstav.genshinstrument.networking.ModPacket;
+import com.cstav.evenmoreinstruments.networking.packet.OpenNoteBlockInstrumentPacket;
+import com.cstav.evenmoreinstruments.networking.packet.RecordStatePacket;
+import com.cstav.genshinstrument.networking.IModPacket;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,8 +21,8 @@ import net.minecraftforge.network.simple.SimpleChannel;
 @EventBusSubscriber(modid = Main.MODID, bus = Bus.MOD)
 public class ModPacketHandler {
     @SuppressWarnings("unchecked")
-    private static final List<Class<ModPacket>> ACCEPTABLE_PACKETS = List.of(new Class[] {
-        RecordStatePacket.class
+    private static final List<Class<IModPacket>> ACCEPTABLE_PACKETS = List.of(new Class[] {
+        RecordStatePacket.class, OpenNoteBlockInstrumentPacket.class
     });
 
 
