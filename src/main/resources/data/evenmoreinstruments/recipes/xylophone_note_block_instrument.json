@@ -18,6 +18,8 @@
         }
     },
 
+    "group": "noteblock_instruments",
+
     "result": {
         "item": "evenmoreinstruments:xylophone_note_block_instrument",
         "count": 1
