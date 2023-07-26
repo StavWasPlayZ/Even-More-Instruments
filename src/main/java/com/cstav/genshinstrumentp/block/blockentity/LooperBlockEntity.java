@@ -8,6 +8,7 @@ import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.sound.NoteSound;
 import com.cstav.genshinstrument.util.ServerUtil;
 import com.cstav.genshinstrumentp.Main;
+import com.cstav.genshinstrumentp.block.LooperBlock;
 import com.cstav.genshinstrumentp.util.CommonUtil;
 import com.cstav.genshinstrumentp.util.LooperUtil;
 import com.mojang.logging.LogUtils;
@@ -54,8 +55,6 @@ public class LooperBlockEntity extends BlockEntity {
         if (!data.contains("channels", CompoundTag.TAG_LIST))
             getChannels().add(new ListTag());
 
-        if (!data.contains("playing", CompoundTag.TAG_BYTE))
-            setPlaying(false);
         if (!data.contains("isRecording", CompoundTag.TAG_BYTE))
             setRecording(false);
 
@@ -66,9 +65,6 @@ public class LooperBlockEntity extends BlockEntity {
     }
     
 
-    public void setPlaying(final boolean playing) {
-        getPersistentData().putBoolean("playing", playing);
-    }
     public void setRecording(final boolean recording) {
         getPersistentData().putBoolean("recording", recording);
     }
@@ -79,9 +75,6 @@ public class LooperBlockEntity extends BlockEntity {
         getPersistentData().putInt("repeatTick", tick);
     }
 
-    public boolean isPlaying() {
-        return getPersistentData().getBoolean("playing");
-    }
     public boolean isRecording() {
         return getPersistentData().getBoolean("recording");
     }
@@ -115,7 +108,7 @@ public class LooperBlockEntity extends BlockEntity {
         final LooperBlockEntity lbe = getLBE(pLevel, pPos);
 
         
-        if (!lbe.isPlaying() && !lbe.isRecording())
+        if (!lbe.getBlockState().getValue(LooperBlock.PLAYING) && !lbe.isRecording())
             return;
 
         int ticks = getTicks() + 1;

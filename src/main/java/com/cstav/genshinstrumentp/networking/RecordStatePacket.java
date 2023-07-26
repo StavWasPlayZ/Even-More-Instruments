@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.cstav.genshinstrument.item.InstrumentItem;
 import com.cstav.genshinstrument.networking.ModPacket;
+import com.cstav.genshinstrumentp.block.LooperBlock;
 import com.cstav.genshinstrumentp.block.blockentity.LooperBlockEntity;
 import com.cstav.genshinstrumentp.util.LooperUtil;
 
@@ -59,9 +60,11 @@ public class RecordStatePacket implements ModPacket {
 
             if (prevRecState && !recording) {
                 lbe.setRepeatTick(lbe.getTicks());
-                lbe.setPlaying(true);
-
                 lbe.setChanged();
+                
+                ctx.getSender().level.setBlock(looperPos,
+                    lbe.getBlockState().setValue(LooperBlock.PLAYING, true)
+                , 3);
             }
         });
 

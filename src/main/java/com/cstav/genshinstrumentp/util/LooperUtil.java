@@ -28,6 +28,9 @@ public class LooperUtil {
         setChannel(instrument, 0);
     }
 
+    /**
+     * @return The {@code instrument}'s 
+     */
     public static CompoundTag looperTag(final ItemStack instrument) {
         final CompoundTag tag = Main.modTag(instrument);
         return tag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND)

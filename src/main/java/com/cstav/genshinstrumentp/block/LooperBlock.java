@@ -17,12 +17,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class LooperBlock extends Block implements EntityBlock {
 
+    public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
+
     public LooperBlock(Properties properties) {
         super(properties);
+        registerDefaultState(defaultBlockState().setValue(PLAYING, false));
     }
 
     
@@ -48,9 +53,7 @@ public class LooperBlock extends Block implements EntityBlock {
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
         
         if (pPlayer.isShiftKeyDown()) {
-            final LooperBlockEntity lbe = pLevel.getBlockEntity(pPos, ModBlockEntities.LOOPER.get()).get();
-            lbe.setPlaying(!lbe.isPlaying());
-            lbe.setChanged();
+            pLevel.setBlock(pPos, pState.cycle(PLAYING), 3);
             
             return InteractionResult.SUCCESS;
         }
@@ -65,4 +68,9 @@ public class LooperBlock extends Block implements EntityBlock {
         return InteractionResult.SUCCESS;
     }
     
+
+    @Override
+    protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(PLAYING);
+    }
 }
