@@ -5,7 +5,10 @@ import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -53,18 +57,24 @@ public class LooperBlock extends Block implements EntityBlock {
             BlockHitResult pHit) {
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
         
-        if (pPlayer.isShiftKeyDown()) {
-            pLevel.setBlock(pPos, pState.cycle(PLAYING), 3);
-            
-            return InteractionResult.SUCCESS;
-        }
 
-        if ((itemStack.getItem() instanceof InstrumentItem) && !LooperUtil.isSameBlock(itemStack, pPos)) {
-            LooperUtil.createLooperTag(itemStack, pPos);
-            return InteractionResult.SUCCESS;
-        }
+        if (!pPlayer.isShiftKeyDown() && !LooperUtil.isSameBlock(itemStack, pPos))
+            if ((itemStack.getItem() instanceof InstrumentItem)) {
+                LooperUtil.createLooperTag(itemStack, pPos);
+
+                pPlayer.displayClientMessage(
+                    Component.translatable("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
+                , true);
+                pPlayer.playSound(SoundEvents.NOTE_BLOCK_PLING.get(), .9f, NoteBlock.getPitchFromNote(7));
+
+                return InteractionResult.SUCCESS;
+            }
+
 
         //TODO: Add a GUI for the looper and trigger it for display here
+        // Then make it so that only by holding shift can you pause and play
+        // since you'll be able to do that there anyways
+        pLevel.setBlock(pPos, pState.cycle(PLAYING), 3);
 
         return InteractionResult.SUCCESS;
     }

@@ -1,6 +1,9 @@
 {
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
 
+
+    "evenmoreinstruments.looper.success_pair": "Paired instrument successfully!",
+
     "button.evenmoreinstruments.record": "Record",
     "button.evenmoreinstruments.stop": "Stop"
 }
