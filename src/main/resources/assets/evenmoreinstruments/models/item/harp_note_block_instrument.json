@@ -1,0 +1,6 @@
+{
+    "parent": "genshinstrument:item/instrument",
+    "textures": {
+        "layer0": "evenmoreinstruments:item/note_block_instrument"
+    }
+}
