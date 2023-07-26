@@ -14,6 +14,7 @@ public class LooperUtil {
         POS_TAG = "pos", RECORDING_TAG = "recording", CHANNEL_TAG = "channel";
     
 
+    // Handle instrument's looper tag
     public static boolean hasLooperTag(final ItemStack instrument) {
         return Main.modTag(instrument).contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND);
     }
@@ -28,9 +29,6 @@ public class LooperUtil {
         setChannel(instrument, 0);
     }
 
-    /**
-     * @return The {@code instrument}'s 
-     */
     public static CompoundTag looperTag(final ItemStack instrument) {
         final CompoundTag tag = Main.modTag(instrument);
         return tag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND)
