@@ -7,15 +7,18 @@ import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -23,33 +26,23 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class LooperBlock extends Block implements EntityBlock {
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     //TODO: Redstone should trigger this
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
+    
 
     public LooperBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(PLAYING, false));
+        registerDefaultState(defaultBlockState()
+            .setValue(PLAYING, false)
+            .setValue(FACING, Direction.NORTH)
+        );
     }
-
-    
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new LooperBlockEntity(pPos, pState);
-    }
-
-
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
-            BlockEntityType<T> pBlockEntityType) {
-        return (!pLevel.isClientSide && pBlockEntityType == ModBlockEntities.LOOPER.get())
-            ? (level, pos, state, be) -> ((LooperBlockEntity)(be)).tick(level, pos, state)
-            : null;
-    }
-
 
 
     @Override
@@ -78,10 +71,30 @@ public class LooperBlock extends Block implements EntityBlock {
 
         return InteractionResult.SUCCESS;
     }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
+            BlockEntityType<T> pBlockEntityType) {
+                
+        return (!pLevel.isClientSide && pBlockEntityType == ModBlockEntities.LOOPER.get())
+            ? (level, pos, state, be) -> ((LooperBlockEntity)(be)).tick(level, pos, state)
+            : null;
+    }
     
 
     @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new LooperBlockEntity(pPos, pState);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+    }
+
+
+    @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(PLAYING);
+        pBuilder.add(PLAYING, FACING);
     }
 }
