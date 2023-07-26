@@ -1,12 +1,12 @@
-package com.cstav.genshinstrumentp.networking;
+package com.cstav.evenmoreinstruments.networking;
 
 import java.util.function.Supplier;
 
+import com.cstav.evenmoreinstruments.block.LooperBlock;
+import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
 import com.cstav.genshinstrument.networking.ModPacket;
-import com.cstav.genshinstrumentp.block.LooperBlock;
-import com.cstav.genshinstrumentp.block.blockentity.LooperBlockEntity;
-import com.cstav.genshinstrumentp.util.LooperUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

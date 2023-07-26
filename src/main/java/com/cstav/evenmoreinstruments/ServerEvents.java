@@ -1,7 +1,7 @@
-package com.cstav.genshinstrumentp;
+package com.cstav.evenmoreinstruments;
 
 import com.cstav.genshinstrument.item.InstrumentItem;
-import com.cstav.genshinstrumentp.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;

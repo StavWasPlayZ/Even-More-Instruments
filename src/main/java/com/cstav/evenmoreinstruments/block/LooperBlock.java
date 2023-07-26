@@ -1,9 +1,9 @@
-package com.cstav.genshinstrumentp.block;
+package com.cstav.evenmoreinstruments.block;
 
+import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
+import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
-import com.cstav.genshinstrumentp.block.blockentity.LooperBlockEntity;
-import com.cstav.genshinstrumentp.block.blockentity.ModBlockEntities;
-import com.cstav.genshinstrumentp.util.LooperUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;

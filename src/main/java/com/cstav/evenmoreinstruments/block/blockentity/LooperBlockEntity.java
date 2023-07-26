@@ -1,4 +1,4 @@
-package com.cstav.genshinstrumentp.block.blockentity;
+package com.cstav.evenmoreinstruments.block.blockentity;
 
 import java.util.Optional;
 
@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.sound.NoteSound;
 import com.cstav.genshinstrument.util.ServerUtil;
-import com.cstav.genshinstrumentp.Main;
-import com.cstav.genshinstrumentp.block.LooperBlock;
-import com.cstav.genshinstrumentp.util.CommonUtil;
-import com.cstav.genshinstrumentp.util.LooperUtil;
+import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.block.LooperBlock;
+import com.cstav.evenmoreinstruments.util.CommonUtil;
+import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.BlockPos;

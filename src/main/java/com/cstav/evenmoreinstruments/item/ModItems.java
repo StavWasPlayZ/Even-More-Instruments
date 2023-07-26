@@ -1,8 +1,8 @@
-package com.cstav.genshinstrumentp.item;
+package com.cstav.evenmoreinstruments.item;
 
 import com.cstav.genshinstrument.ModCreativeModeTabs;
-import com.cstav.genshinstrumentp.Main;
-import com.cstav.genshinstrumentp.block.ModBlocks;
+import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.block.ModBlocks;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

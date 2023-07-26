@@ -1,9 +1,9 @@
-package com.cstav.genshinstrumentp.util;
+package com.cstav.evenmoreinstruments.util;
 
 import java.util.function.Supplier;
 
 import com.cstav.genshinstrument.item.InstrumentItem;
-import com.cstav.genshinstrumentp.Main;
+import com.cstav.evenmoreinstruments.Main;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;

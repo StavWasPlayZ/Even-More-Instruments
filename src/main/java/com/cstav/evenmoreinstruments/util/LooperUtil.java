@@ -1,8 +1,8 @@
-package com.cstav.genshinstrumentp.util;
+package com.cstav.evenmoreinstruments.util;
 
 import javax.annotation.Nullable;
 
-import com.cstav.genshinstrumentp.Main;
+import com.cstav.evenmoreinstruments.Main;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

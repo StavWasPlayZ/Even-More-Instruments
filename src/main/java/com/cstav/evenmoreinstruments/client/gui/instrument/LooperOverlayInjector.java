@@ -1,11 +1,11 @@
-package com.cstav.genshinstrumentp.client.gui.instrument;
+package com.cstav.evenmoreinstruments.client.gui.instrument;
 
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.AbstractInstrumentScreen;
-import com.cstav.genshinstrumentp.Main;
-import com.cstav.genshinstrumentp.networking.ModPacketHandler;
-import com.cstav.genshinstrumentp.networking.RecordStatePacket;
-import com.cstav.genshinstrumentp.util.CommonUtil;
-import com.cstav.genshinstrumentp.util.LooperUtil;
+import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.RecordStatePacket;
+import com.cstav.evenmoreinstruments.util.CommonUtil;
+import com.cstav.evenmoreinstruments.util.LooperUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -41,7 +41,7 @@ public class LooperOverlayInjector {
 
         event.addListener(
             Button.builder(
-                Component.translatable("button.genshinstrumentp.record"),
+                Component.translatable("button.evenmoreinstruments.record"),
                 LooperOverlayInjector::onRecordPress
             )
                 .width(REC_BTN_WIDTH)
@@ -64,7 +64,7 @@ public class LooperOverlayInjector {
         final InteractionHand hand = CommonUtil.getInstrumentHand();
         final ItemStack item = player.getItemInHand(hand);
 
-        btn.setMessage(Component.translatable("button.genshinstrumentp."
+        btn.setMessage(Component.translatable("button.evenmoreinstruments."
             + (LooperUtil.isRecording(item) ? "record" : "stop")
         ));
 

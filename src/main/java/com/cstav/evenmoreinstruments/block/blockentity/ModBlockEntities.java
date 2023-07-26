@@ -1,7 +1,7 @@
-package com.cstav.genshinstrumentp.block.blockentity;
+package com.cstav.evenmoreinstruments.block.blockentity;
 
-import com.cstav.genshinstrumentp.Main;
-import com.cstav.genshinstrumentp.block.ModBlocks;
+import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.block.ModBlocks;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;

@@ -1,9 +1,9 @@
-package com.cstav.genshinstrumentp.networking;
+package com.cstav.evenmoreinstruments.networking;
 
 import java.util.List;
 
 import com.cstav.genshinstrument.networking.ModPacket;
-import com.cstav.genshinstrumentp.Main;
+import com.cstav.evenmoreinstruments.Main;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

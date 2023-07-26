@@ -1,6 +1,6 @@
-package com.cstav.genshinstrumentp.block;
+package com.cstav.evenmoreinstruments.block;
 
-import com.cstav.genshinstrumentp.Main;
+import com.cstav.evenmoreinstruments.Main;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
