@@ -2,7 +2,7 @@
     "parent": "minecraft:block/orientable",
     "textures": {
         "front": "evenmoreinstruments:block/looper_front_playing",
-        "side": "minecraft:block/furnace_side",
+        "side": "minecraft:block/note_block",
         "top": "evenmoreinstruments:block/looper_top_playing"
     }
 }
