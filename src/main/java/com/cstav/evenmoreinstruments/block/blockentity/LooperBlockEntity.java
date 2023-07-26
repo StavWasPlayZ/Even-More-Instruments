@@ -4,13 +4,13 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 
-import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
-import com.cstav.genshinstrument.sound.NoteSound;
-import com.cstav.genshinstrument.util.ServerUtil;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
+import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
+import com.cstav.genshinstrument.sound.NoteSound;
+import com.cstav.genshinstrument.util.ServerUtil;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.BlockPos;
@@ -31,11 +31,13 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class LooperBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    //TODO Convert channel to a class of tag
     /**
      * <p>The channels list is constructed so that every entry represents a layer
      * of sounds to be played back ny the looper.</p>
-     * That means that this is a 2D list, where each list inside it is a singular channel
-     * containing a list of notes and their respected play timestamp in ticks.
+     * 
+     * Thus, it is a list that contains compound tags, whom there is present the {@code instrumentId},
+     * and a list {@code notes} containing a list of notes and their respected play timestamp in ticks.
      * @return The channels list of this looper entity block
      */
     public ListTag getChannels() {
@@ -52,8 +54,7 @@ public class LooperBlockEntity extends BlockEntity {
         final CompoundTag data = getPersistentData();
 
         // Construct all the data stuff
-        if (!data.contains("channels", CompoundTag.TAG_LIST))
-            getChannels().add(new ListTag());
+        getChannels();
 
         if (!data.contains("isRecording", CompoundTag.TAG_BYTE))
             setRecording(false);
@@ -86,20 +87,39 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
-    protected void addNote(final NoteSound sound, final ItemStack instrument, int channel, int timestamp) {
+    /**
+     * Adds the note to the given {@code channel}.
+     * If the given channel is out of bounds, it will create channels up to the given channel
+     */
+    protected void addNote(NoteSound sound, ResourceLocation instrumentId, int pitch, int channel, int timestamp) {
         final ListTag channels = getChannels();
-        if (channels.size() < channel)
-            return;
 
         final CompoundTag noteTag = new CompoundTag();
-        noteTag.putFloat("pitch", sound.getPitch());
-        noteTag.putString("mono", sound.mono.getLocation().toString());
-        if (sound.hasStereo())
-            noteTag.putString("stereo", sound.stereo.getLocation().toString());
+
+
+        noteTag.putInt("pitch", pitch);
+
+        noteTag.putString("mono", sound.getMono().getLocation().toString());
+        sound.getStereo().ifPresent((stereo) ->
+            noteTag.putString("stereo", stereo.getLocation().toString())
+        );
+
         noteTag.putInt("timestamp", timestamp);
 
 
-        channels.getList(channel).add(noteTag);
+        CompoundTag channelTag;
+        if (channels.size() < channel) {
+            while (channels.size() < channel) {
+                channels.add(new CompoundTag());
+            }
+
+            channelTag = channels.getCompound(channel);
+            channelTag.putString("instrumentId", instrumentId.toString());
+            channelTag.put("notes", new ListTag());
+        } else
+            channelTag = channels.getCompound(channel);
+
+        channelTag.getList("notes", CompoundTag.TAG_COMPOUND).add(noteTag);
     }
 
 
@@ -117,28 +137,33 @@ public class LooperBlockEntity extends BlockEntity {
             ticks = 0;
 
 
-        for (final Tag channel : lbe.getChannels()) {
-            if (!(channel instanceof ListTag))
+        for (final Tag pChannel : lbe.getChannels()) {
+            if (!(pChannel instanceof CompoundTag))
                 continue;
 
-            for (final Tag rNote : (ListTag)channel) {
-                if (!(rNote instanceof CompoundTag))
+            final CompoundTag channel = (CompoundTag)pChannel;
+            final String instrumentId = channel.getString("instrumentId");
+
+            for (final Tag pNote : channel.getList("notes", Tag.TAG_COMPOUND)) {
+                if (!(pNote instanceof CompoundTag))
                     continue;
 
-                final CompoundTag note = (CompoundTag)rNote;
+                final CompoundTag note = (CompoundTag)pNote;
                 if (ticks != note.getInt("timestamp"))
                     continue;
 
                 try {
                     final String stereoLoc = note.getString("stereo");
                     
-                    ServerUtil.sendPlayNotePackets(pLevel, pPos, new NoteSound(
-                        SoundEvent.createVariableRangeEvent(new ResourceLocation(note.getString("mono"))),
-                        stereoLoc.equals("") ? null
-                            : SoundEvent.createVariableRangeEvent(new ResourceLocation(stereoLoc)),
-                        
-                        note.getFloat("pitch")
-                    ));
+                    ServerUtil.sendPlayNotePackets(pLevel, pPos,
+                        new NoteSound(
+                            SoundEvent.createVariableRangeEvent(new ResourceLocation(note.getString("mono"))),
+                            stereoLoc.equals("") ? Optional.empty() : Optional.of(
+                                SoundEvent.createVariableRangeEvent(new ResourceLocation(stereoLoc))
+                            )
+                        ), new ResourceLocation(instrumentId),
+                        note.getInt("pitch")
+                    );
 
                 } catch (Exception e) {
                     LOGGER.error("Attempted to play note, but met with an exception", e);
@@ -191,7 +216,9 @@ public class LooperBlockEntity extends BlockEntity {
         looperBE.setRecording(true);
             
         looperBE.addNote(
-            event.sound, event.instrument,
+            event.sound, event.instrumentId,
+            //TODO Once update to v3.2, replace with event.pitch
+            0,
             LooperUtil.looperTag(event.instrument).getInt("channel"),
             looperBE.getTicks()
         );
