@@ -35,7 +35,7 @@ public class ModItems {
     public static final RegistryObject<Item>
         LOOPER = ITEMS.register("looper", () -> new BlockItem(ModBlocks.LOOPER.get(), new Properties()))
     ;
-    
+
     public static final Map<NoteBlockInstrument, RegistryObject<Item>> NOTEBLOCK_INSTRUMENTS = initNoteBlockInstruments();
 
 
@@ -48,12 +48,16 @@ public class ModItems {
                 continue;
 
             result.put(instrument,
-                ITEMS.register(instrument.getSerializedName() + NOTEBLOCK_INSTRUMENT_SUFFIX,
+                ITEMS.register(getInstrumentId(instrument),
                 () -> new NoteBlockInstrumentItem(instrument))
             );
         }
         
         return result;
+    }
+
+    public static String getInstrumentId(final NoteBlockInstrument instrument) {
+        return instrument.getSerializedName() + NOTEBLOCK_INSTRUMENT_SUFFIX;
     }
 
 
