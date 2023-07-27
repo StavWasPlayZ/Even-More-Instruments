@@ -1,21 +1,25 @@
 {
     "variants": {
 
-        "facing=north": {
-            "model": "evenmoreinstruments:block/keyboard",
+        "part=left,facing=north": {
+            "model": "evenmoreinstruments:block/keyboard_left",
             "y": 0
         },
-        "facing=east": {
-            "model": "evenmoreinstruments:block/keyboard",
+        "part=left,facing=east": {
+            "model": "evenmoreinstruments:block/keyboard_left",
             "y": 90
         },
-        "facing=south": {
-            "model": "evenmoreinstruments:block/keyboard",
+        "part=left,facing=south": {
+            "model": "evenmoreinstruments:block/keyboard_left",
             "y": 180
         },
-        "facing=west": {
-            "model": "evenmoreinstruments:block/keyboard",
+        "part=left,facing=west": {
+            "model": "evenmoreinstruments:block/keyboard_left",
             "y": 270
+        },
+
+        "part=right": {
+            "model": "evenmoreinstruments:block/keyboard_right"
         }
 
     }
