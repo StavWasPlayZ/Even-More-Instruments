@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.cstav.evenmoreinstruments.Main;
-import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -32,9 +29,9 @@ public class ModItems {
     }
 
 
-    public static final RegistryObject<Item>
-        LOOPER = ITEMS.register("looper", () -> new BlockItem(ModBlocks.LOOPER.get(), new Properties()))
-    ;
+    // public static final RegistryObject<Item>
+        
+    // ;
 
     public static final Map<NoteBlockInstrument, RegistryObject<Item>> NOTEBLOCK_INSTRUMENTS = initNoteBlockInstruments();
 

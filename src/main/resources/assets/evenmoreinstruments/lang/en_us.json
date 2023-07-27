@@ -2,6 +2,10 @@
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
 
 
+    "block.evenmoreinstruments.keyboard": "Keyboard",
+
+    "block.evenmoreinstruments.looper": "Looper",
+
     "evenmoreinstruments.looper.success_pair": "Paired instrument successfully!",
 
     "button.evenmoreinstruments.record": "Record",

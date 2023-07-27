@@ -1,0 +1,22 @@
+{
+    "variants": {
+
+        "facing=north": {
+            "model": "evenmoreinstruments:block/keyboard",
+            "y": 0
+        },
+        "facing=east": {
+            "model": "evenmoreinstruments:block/keyboard",
+            "y": 90
+        },
+        "facing=south": {
+            "model": "evenmoreinstruments:block/keyboard",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "evenmoreinstruments:block/keyboard",
+            "y": 270
+        }
+
+    }
+}
