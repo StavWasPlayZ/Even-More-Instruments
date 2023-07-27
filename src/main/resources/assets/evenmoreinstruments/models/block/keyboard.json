@@ -3,8 +3,8 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "evenmoreinstruments:block/keyboard_keys",
-		"1": "evenmoreinstruments:block/keyboard_case",
-		"particle": "evenmoreinstruments:block/keyboard_keys"
+		"1": "minecraft:block/black_wool",
+		"particle": "minecraft:block/black_wool"
 	},
 	"elements": [
 		{
@@ -760,7 +760,7 @@
 			"scale": [0.82, 0.82, 0.82]
 		},
 		"firstperson_righthand": {
-			"translation": [2.25, 6.5, -1]
+			"translation": [2.25, 8, 0]
 		},
 		"firstperson_lefthand": {
 			"translation": [2.25, 6.5, -1]

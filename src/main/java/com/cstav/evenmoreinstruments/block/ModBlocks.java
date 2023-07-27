@@ -22,7 +22,9 @@ public class ModBlocks {
     }
 
     public static final RegistryObject<Block>
-        KEYBOARD = registerBlockItem("keyboard", () -> new KeyboardBlock(Properties.copy(Blocks.WHITE_CONCRETE))),
+        KEYBOARD = registerBlockItem("keyboard", () -> new KeyboardBlock(
+            Properties.copy(Blocks.WHITE_CONCRETE).noOcclusion()
+        )),
         LOOPER = registerBlockItem("looper", () -> new LooperBlock(Properties.copy(Blocks.NOTE_BLOCK)))
     ;
 
