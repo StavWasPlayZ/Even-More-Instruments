@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class LooperUtil {
     public static final String LOOPER_TAG = "looper",
-        POS_TAG = "pos", RECORDING_TAG = "recording", CHANNEL_TAG = "channel";
+        POS_TAG = "pos", RECORDING_TAG = "recording";
     
 
     // Handle instrument's looper tag
@@ -26,7 +26,6 @@ public class LooperUtil {
 
         looperTag(instrument).put(POS_TAG, NbtUtils.writeBlockPos(looperPos));
         setRecording(instrument, false);
-        setChannel(instrument, 0);
     }
 
     public static CompoundTag looperTag(final ItemStack instrument) {
@@ -60,14 +59,8 @@ public class LooperUtil {
     public static void setRecording(final ItemStack instrument, final boolean recording) {
         looperTag(instrument).putBoolean(RECORDING_TAG, recording);
     }
-    public static void setChannel(final ItemStack instrument, final int channel) {
-        looperTag(instrument).putInt(CHANNEL_TAG, channel);
-    }
     public static boolean isRecording(final ItemStack instrument) {
         return looperTag(instrument).getBoolean(RECORDING_TAG);
-    }
-    public static int getChannel(final ItemStack instrument) {
-        return looperTag(instrument).getInt(CHANNEL_TAG);
     }
     
 }
