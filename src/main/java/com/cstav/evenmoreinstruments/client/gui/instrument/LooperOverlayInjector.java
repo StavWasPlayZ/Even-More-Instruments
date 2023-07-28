@@ -64,10 +64,13 @@ public class LooperOverlayInjector {
         final InteractionHand hand = CommonUtil.getInstrumentHand();
         final ItemStack item = player.getItemInHand(hand);
 
-        btn.setMessage(Component.translatable("button.evenmoreinstruments."
-            + (LooperUtil.isRecording(item) ? "record" : "stop")
-        ));
+        final boolean isRecording = LooperUtil.isRecording(item);
 
-        ModPacketHandler.sendToServer(new RecordStatePacket(!LooperUtil.isRecording(item), hand));
+        if (isRecording) {
+            screen.renderables.removeIf((renderable) -> renderable.equals(btn));
+        } else
+            btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
+
+        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, hand));
     }
 }

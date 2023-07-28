@@ -53,7 +53,8 @@ public class LooperBlock extends Block implements EntityBlock {
         if (!(be instanceof LooperBlockEntity))
             return InteractionResult.FAIL;
 
-        final boolean hasChannel = ((LooperBlockEntity)be).hasChannel();
+        final LooperBlockEntity lbe = (LooperBlockEntity) pLevel.getBlockEntity(pPos);
+        final boolean hasChannel = lbe.hasChannel();
 
 
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
@@ -87,8 +88,6 @@ public class LooperBlock extends Block implements EntityBlock {
             return InteractionResult.FAIL;
 
         }
-
-
 
 
         //TODO: Add a GUI for the looper and trigger it for display here

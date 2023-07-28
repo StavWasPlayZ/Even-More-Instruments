@@ -56,11 +56,11 @@ public class RecordStatePacket implements IModPacket {
 
             if (item.getItem() instanceof InstrumentItem) {
                 LooperUtil.setRecording(item, recording);
-                lbe.setRecording(false);
             }
 
             if (prevRecState && !recording) {
                 lbe.setRepeatTick(lbe.getTicks());
+                lbe.setRecording(false);
                 lbe.setChanged();
                 
                 ctx.getSender().level().setBlock(looperPos,
