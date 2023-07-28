@@ -1,6 +1,7 @@
 package com.cstav.evenmoreinstruments.block.blockentity;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 
@@ -29,6 +30,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID)
 public class LooperBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    private UUID lockedBy;
 
     public CompoundTag getChannel() {
         return getChannel(getPersistentData());
@@ -67,9 +70,36 @@ public class LooperBlockEntity extends BlockEntity {
     public void setRepeatTick(final int tick) {
         getPersistentData().putInt("repeatTick", tick);
     }
+    public void setLockedBy(final UUID player) {
+        lockedBy = player;
+    }
 
+    public void lock() {
+        getPersistentData().putBoolean("locked", true);
+        lockedBy = null;
+
+        setRepeatTick(getTicks());
+        setRecording(false);
+
+        setChanged();
+    }
+    //TODO implement to Looper GUI
+    public void reset() {
+        getPersistentData().remove("locked");
+        getPersistentData().remove("lockedBy");
+        lockedBy = null;
+
+        getPersistentData().remove("channel");
+    }
+
+    public boolean isLocked() {
+        return (lockedBy != null) || getPersistentData().getBoolean("locked");
+    }
     public boolean isRecording() {
         return getPersistentData().getBoolean("recording");
+    }
+    public boolean isAllowedToRecord(final UUID player) {
+        return (lockedBy != null) || lockedBy.equals(player);
     }
     public int getTicks() {
         return getPersistentData().getInt("ticks");
@@ -79,7 +109,7 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
-    protected void addNote(NoteSound sound, ResourceLocation instrumentId, int pitch, int timestamp) {
+    protected void addNote(NoteSound sound, int pitch, int timestamp) {
         final CompoundTag channel = getChannel();
         final CompoundTag noteTag = new CompoundTag();
 
@@ -114,7 +144,7 @@ public class LooperBlockEntity extends BlockEntity {
 
 
         final CompoundTag channel = getChannel();
-        final String instrumentId = channel.getString("instrumentId");
+        final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
 
         for (final Tag pNote : channel.getList("notes", Tag.TAG_COMPOUND)) {
             if (!(pNote instanceof CompoundTag))
@@ -133,7 +163,7 @@ public class LooperBlockEntity extends BlockEntity {
                         stereoLoc.equals("") ? Optional.empty() : Optional.of(
                             SoundEvent.createVariableRangeEvent(new ResourceLocation(stereoLoc))
                         )
-                    ), new ResourceLocation(instrumentId),
+                    ), instrumentId,
                     note.getInt("pitch")
                 );
 
@@ -179,15 +209,21 @@ public class LooperBlockEntity extends BlockEntity {
         if (event.isClientSide || !LooperUtil.isRecording(event.instrument.get()))
             return;
             
-            
         final LooperBlockEntity looperBE = getLBE(event.player.level(), event.instrument.get());
         if (looperBE == null)
             return;
+
+
+        if (looperBE.isLocked()) {
+            if (!looperBE.isAllowedToRecord(event.player.getUUID()))
+                return;
+        } else {
+            looperBE.setLockedBy(event.player.getUUID());
+            looperBE.setRecording(true);
+            looperBE.getChannel().putString("instrumentId", event.instrumentId.toString());
+        }
             
-
-        looperBE.setRecording(true);
-        looperBE.addNote(event.sound, event.instrumentId, event.pitch, looperBE.getTicks());
-
+        looperBE.addNote(event.sound, event.pitch, looperBE.getTicks());
         looperBE.setChanged();
     }
     

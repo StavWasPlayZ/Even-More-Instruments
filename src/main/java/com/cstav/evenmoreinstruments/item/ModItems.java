@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -29,12 +33,12 @@ public class ModItems {
     }
 
 
-    // public static final RegistryObject<Item>
-        
-    // ;
+    public static final RegistryObject<Item>
+        KEYBOARD = registerBlockItem(ModBlocks.KEYBOARD),
+        LOOPER = registerBlockItem(ModBlocks.LOOPER)
+    ;
 
     public static final Map<NoteBlockInstrument, RegistryObject<Item>> NOTEBLOCK_INSTRUMENTS = initNoteBlockInstruments();
-
 
     public static HashMap<NoteBlockInstrument, RegistryObject<Item>> initNoteBlockInstruments() {
         final NoteBlockInstrument[] instruments = NoteBlockInstrument.values();
@@ -52,9 +56,12 @@ public class ModItems {
         
         return result;
     }
-
     public static String getInstrumentId(final NoteBlockInstrument instrument) {
         return instrument.getSerializedName() + NOTEBLOCK_INSTRUMENT_SUFFIX;
+    }
+
+    private static RegistryObject<Item> registerBlockItem(final RegistryObject<Block> block) {
+        return ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Properties()));
     }
 
 

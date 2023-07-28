@@ -10,6 +10,7 @@ import com.cstav.genshinstrument.networking.IModPacket;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkDirection;
@@ -48,25 +49,22 @@ public class RecordStatePacket implements IModPacket {
                 return;
 
 
-            final boolean prevRecState = LooperUtil.isRecording(item);
-            if (!prevRecState && !recording)
-                return;
-
             final LooperBlockEntity lbe = LooperBlockEntity.getLBE(ctx.getSender().level(), item);
 
-            if (item.getItem() instanceof InstrumentItem) {
-                LooperUtil.setRecording(item, recording);
-            }
-
-            if (prevRecState && !recording) {
-                lbe.setRepeatTick(lbe.getTicks());
-                lbe.setRecording(false);
-                lbe.setChanged();
+            
+            if (recording) {
+                if (item.getItem() instanceof InstrumentItem)
+                    LooperUtil.setRecording(item, true);
+            } else {
+                lbe.lock();
                 
                 ctx.getSender().level().setBlock(looperPos,
                     lbe.getBlockState().setValue(LooperBlock.PLAYING, true)
                 , 3);
+
+                LooperUtil.remLooperTag(item);
             }
+
         });
 
         return true;
