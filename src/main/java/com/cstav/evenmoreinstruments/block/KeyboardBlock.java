@@ -6,6 +6,7 @@ import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
 import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
+import com.cstav.genshinstrument.util.CommonUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -80,7 +81,7 @@ public class KeyboardBlock extends AbstractInstrumentBlock {
     private static Direction getOffset(final Direction direction, final int offset) {
         for (int i = 0; i < DIRECTIONS.length; i++)
             if (DIRECTIONS[i] == direction)
-                return DIRECTIONS[pyWrap(i + offset, DIRECTIONS.length) % DIRECTIONS.length];
+                return DIRECTIONS[CommonUtil.pyWrap(i + offset, DIRECTIONS.length) % DIRECTIONS.length];
 
         throw new IllegalStateException("How did we get here?");
     }
@@ -89,14 +90,6 @@ public class KeyboardBlock extends AbstractInstrumentBlock {
     }
     private static Direction getRight(final Direction direction) {
         return getOffset(direction, -1);
-    }
-    //TODO: Move to CommonUtil and make public in genshinstrument
-    private static int pyWrap(int index, int arrLength) {
-        while (index < 0) {
-           index += arrLength;
-        }
-  
-        return index;
     }
 
 

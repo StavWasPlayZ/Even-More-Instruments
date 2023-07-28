@@ -1,13 +1,17 @@
 package com.cstav.evenmoreinstruments.item;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
@@ -33,9 +37,25 @@ public class ModItems {
     }
 
 
+    private static final LinkedHashMap<RegistryObject<Item>, ResourceKey<CreativeModeTab>[]> CREATIVE_TABS_MAP = new LinkedHashMap<>();
+
+    @SuppressWarnings("unchecked")
+    private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENTS_TABS = new ResourceKey[] {
+        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey()
+    };
+    @SuppressWarnings("unchecked")
+    private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENT_BLOCK_TABS = new ResourceKey[] {
+        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS
+    };
+
+
+    @SuppressWarnings("unchecked")
     public static final RegistryObject<Item>
         KEYBOARD = registerBlockItem(ModBlocks.KEYBOARD),
-        LOOPER = registerBlockItem(ModBlocks.LOOPER)
+        LOOPER = registerBlockItem(ModBlocks.LOOPER, new ResourceKey[] {
+            ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
+            CreativeModeTabs.REDSTONE_BLOCKS
+        })
     ;
 
     public static final Map<NoteBlockInstrument, RegistryObject<Item>> NOTEBLOCK_INSTRUMENTS = initNoteBlockInstruments();
@@ -49,8 +69,9 @@ public class ModItems {
                 continue;
 
             result.put(instrument,
-                ITEMS.register(getInstrumentId(instrument),
-                () -> new NoteBlockInstrumentItem(instrument))
+                register(getInstrumentId(instrument),
+                    () -> new NoteBlockInstrumentItem(instrument)
+                )
             );
         }
         
@@ -60,19 +81,34 @@ public class ModItems {
         return instrument.getSerializedName() + NOTEBLOCK_INSTRUMENT_SUFFIX;
     }
 
+
     private static RegistryObject<Item> registerBlockItem(final RegistryObject<Block> block) {
-        return ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Properties()));
+        return registerBlockItem(block, DEFAULT_INSTRUMENT_BLOCK_TABS);
+    }
+    private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, ResourceKey<CreativeModeTab>[] tabs) {
+        return register(block.getId().getPath(),
+            () -> new BlockItem(block.get(), new Properties())
+        , tabs);
+    }
+
+    private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>[] tabs) {
+        final RegistryObject<Item> item = ITEMS.register(name, supplier);
+        CREATIVE_TABS_MAP.put(item, tabs);
+
+        return item;
+    }
+    private static RegistryObject<Item> register(String name, Supplier<Item> supplier) {
+        return register(name, supplier, DEFAULT_INSTRUMENTS_TABS);
     }
 
 
     @SubscribeEvent
     public static void addCreative(final BuildCreativeModeTabContentsEvent event) {
-        if (
-            (event.getTab() != ModCreativeModeTabs.INSTRUMENTS_TAB.get()) &&
-            (event.getTabKey() != CreativeModeTabs.FUNCTIONAL_BLOCKS)
-        ) return;
-
-        ITEMS.getEntries().forEach((entry) -> event.accept(entry.get()));
+        CREATIVE_TABS_MAP.forEach((key, value) -> {
+            for (final ResourceKey<CreativeModeTab> tabKey : value) 
+                if (event.getTabKey().equals(tabKey))
+                    event.accept(key);
+        });
     }
 
 }
