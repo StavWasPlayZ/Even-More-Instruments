@@ -7,6 +7,8 @@
     "block.evenmoreinstruments.looper": "Looper",
 
     "evenmoreinstruments.looper.success_pair": "Paired instrument successfully!",
+    "evenmoreinstruments.looper.pair_exists": "Instrument already paired!",
+    "evenmoreinstruments.looper.pair_conflict": "This Looper already has recorded footage!",
 
     "button.evenmoreinstruments.record": "Record",
     "button.evenmoreinstruments.stop": "Stop"

@@ -34,7 +34,11 @@ public class LooperBlockEntity extends BlockEntity {
         return getChannel(getPersistentData());
     }
     public CompoundTag getChannel(final CompoundTag data) {
-        return CommonUtil.getOrCreateElementTag(data, "channels");
+        return CommonUtil.getOrCreateElementTag(data, "channel");
+    }
+
+    public boolean hasChannel() {
+        return getPersistentData().contains("channel");
     }
 
 
@@ -44,8 +48,6 @@ public class LooperBlockEntity extends BlockEntity {
         final CompoundTag data = getPersistentData();
 
         // Construct all the data stuff
-        getChannel();
-
         if (!data.contains("isRecording", CompoundTag.TAG_BYTE))
             setRecording(false);
 
@@ -92,7 +94,8 @@ public class LooperBlockEntity extends BlockEntity {
         noteTag.putInt("timestamp", timestamp);
 
 
-        channel.getList("notes", CompoundTag.TAG_COMPOUND).add(noteTag);
+        CommonUtil.getOrCreateListTag(channel, "notes").add(noteTag);
+        setChanged();
     }
 
 
@@ -173,7 +176,7 @@ public class LooperBlockEntity extends BlockEntity {
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
         //TODO implement support for block instruments
-        if (!LooperUtil.isRecording(event.instrument.get()))
+        if (event.isClientSide || !LooperUtil.isRecording(event.instrument.get()))
             return;
             
             
@@ -183,7 +186,6 @@ public class LooperBlockEntity extends BlockEntity {
             
 
         looperBE.setRecording(true);
-            
         looperBE.addNote(event.sound, event.instrumentId, event.pitch, looperBE.getTicks());
 
         looperBE.setChanged();
