@@ -3,7 +3,7 @@ package com.cstav.evenmoreinstruments.networking.packet;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import com.cstav.evenmoreinstruments.block.keyboard.KeyboardScreen;
+import com.cstav.evenmoreinstruments.client.gui.instrument.keyboard.KeyboardScreen;
 import com.cstav.genshinstrument.networking.packet.instrument.OpenInstrumentPacket;
 
 import net.minecraft.network.FriendlyByteBuf;

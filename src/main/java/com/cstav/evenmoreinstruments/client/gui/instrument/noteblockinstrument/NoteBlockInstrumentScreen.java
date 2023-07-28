@@ -34,6 +34,10 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
         // Update the sound to match the note block's
         noteGrid.setNoteSounds(new NoteSound[] {new NoteSound(instrumentType.getSoundEvent().get(), Optional.empty())});
     }
+    @Override
+    public boolean isGenshinInstrument() {
+        return false;
+    }
 
 
     @Override
