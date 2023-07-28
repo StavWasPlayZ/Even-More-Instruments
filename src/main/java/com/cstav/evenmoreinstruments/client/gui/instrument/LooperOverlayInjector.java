@@ -1,9 +1,10 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument;
 
+import java.util.Optional;
+
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.RecordStatePacket;
-import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.AbstractInstrumentScreen;
 
@@ -34,6 +35,11 @@ public class LooperOverlayInjector {
             return;
 
         final AbstractInstrumentScreen screen = (AbstractInstrumentScreen) event.getScreen();
+        //TODO: Handle instrument blocks
+        if (screen.interactionHand == null)
+            return;
+            
+
         if (!LooperUtil.hasLooperTag(Minecraft.getInstance().player.getItemInHand(screen.interactionHand)))
             return;
 
@@ -52,25 +58,24 @@ public class LooperOverlayInjector {
 
     @SubscribeEvent
     public static void onScreenClose(final ScreenEvent.Closing event) {
-        if (event.getScreen() != screen)
-            return;
-
-        ModPacketHandler.sendToServer(new RecordStatePacket(false, CommonUtil.getInstrumentHand()));
+        if (event.getScreen() == screen)
+            ModPacketHandler.sendToServer(new RecordStatePacket(false, Optional.of(screen.interactionHand), Optional.empty()));
     }
     
     @SuppressWarnings("resource")
     private static void onRecordPress(final Button btn) {
         final LocalPlayer player = Minecraft.getInstance().player;
-        final InteractionHand hand = CommonUtil.getInstrumentHand();
+        final InteractionHand hand = screen.interactionHand;
         final ItemStack item = player.getItemInHand(hand);
 
-        final boolean isRecording = LooperUtil.isRecording(item);
+        final boolean isRecording = LooperUtil.isRecording(LooperUtil.looperTag(item));
 
         if (isRecording) {
             screen.renderables.removeIf((renderable) -> renderable.equals(btn));
+            screen = null;
         } else
             btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
 
-        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, hand));
+        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, Optional.of(hand), Optional.empty()));
     }
 }

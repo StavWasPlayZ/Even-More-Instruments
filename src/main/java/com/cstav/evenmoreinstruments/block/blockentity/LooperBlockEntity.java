@@ -178,24 +178,30 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
+
+    public static LooperBlockEntity getLBE(final Level level, final ItemStack instrument) {
+        return getLBE(level, LooperUtil.looperTag(instrument), () -> LooperUtil.remLooperTag(instrument));
+    }
+    public static LooperBlockEntity getLBE(final Level level, final BlockEntity instrument) {
+        return getLBE(level, LooperUtil.looperTag(instrument), () -> LooperUtil.remLooperTag(instrument));
+    }
     /**
-     * Attempts to get the looper pointed out by {@code instrument}. Removes its reference if not found.
-     * @param level The level to get the BE from
-     * @param instrument The subject instrument to get the looper data from
+     * Attempts to get the looper pointed out by {@code looperData}. Removes its reference if not found.
      * @return The Looper's block entity as pointed in the {@code instrument}'s data.
      * Null if not found
      */
-    public static LooperBlockEntity getLBE(final Level level, final ItemStack instrument) {
-        if (!LooperUtil.hasLooperTag(instrument))
+    private static LooperBlockEntity getLBE(Level level, CompoundTag looperData, Runnable onInvalid) {
+        if (looperData.isEmpty())
             return null;
 
-        final LooperBlockEntity looperBE = getLBE(level, LooperUtil.getLooperPos(instrument));
+        final LooperBlockEntity looperBE = getLBE(level, LooperUtil.getLooperPos(looperData));
 
         if (looperBE == null)
-            LooperUtil.remLooperTag(instrument);
+            onInvalid.run();
 
         return looperBE;
     }
+
     public static LooperBlockEntity getLBE(final Level level, final BlockPos pos) {
         final Optional<LooperBlockEntity> opLooperBE =
             level.getBlockEntity(pos, ModBlockEntities.LOOPER.get());
@@ -203,10 +209,11 @@ public class LooperBlockEntity extends BlockEntity {
         return opLooperBE.isPresent() ? opLooperBE.get() : null;
     }
 
+
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
         //TODO implement support for block instruments
-        if (event.isClientSide || !LooperUtil.isRecording(event.itemInstrument.get()))
+        if (event.isClientSide || !LooperUtil.isRecording(LooperUtil.getLooperTagFromEvent(event)))
             return;
             
         final LooperBlockEntity looperBE = getLBE(event.player.level(), event.itemInstrument.get());

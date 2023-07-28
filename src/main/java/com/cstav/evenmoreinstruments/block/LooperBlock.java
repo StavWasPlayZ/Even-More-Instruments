@@ -61,6 +61,7 @@ public class LooperBlock extends Block implements EntityBlock {
         
 
         // Handle pairing
+        //TODO introduce cable item to handle instrument block to looper pairing
         if (!pPlayer.isShiftKeyDown() && (itemStack.getItem() instanceof InstrumentItem)) {
 
             if (hasChannel) {
@@ -71,21 +72,13 @@ public class LooperBlock extends Block implements EntityBlock {
                 return InteractionResult.FAIL;
             }
 
-            if (!LooperUtil.isSameBlock(itemStack, pPos)) {
-                LooperUtil.createLooperTag(itemStack, pPos);
-
-                pPlayer.displayClientMessage(
-                    Component.translatable("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
-                , true);
-
-                return InteractionResult.SUCCESS;
-            }
+            LooperUtil.createLooperTag(itemStack, pPos);
 
             pPlayer.displayClientMessage(
-                Component.translatable("evenmoreinstruments.looper.pair_exists").withStyle(ChatFormatting.YELLOW)
+                Component.translatable("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
             , true);
 
-            return InteractionResult.FAIL;
+            return InteractionResult.SUCCESS;
 
         }
 

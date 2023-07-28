@@ -2,18 +2,12 @@ package com.cstav.evenmoreinstruments.util;
 
 import java.util.function.Supplier;
 
-import com.cstav.genshinstrument.item.InstrumentItem;
 import com.cstav.evenmoreinstruments.Main;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CommonUtil {
 
@@ -41,17 +35,6 @@ public class CommonUtil {
         final T tag = orElse.get();
         parent.put(key, tag);
         return tag;
-    }
-
-
-    public static InteractionHand getInstrumentHand(final LivingEntity entity) {
-        return (entity.getMainHandItem().getItem() instanceof InstrumentItem)
-            ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
-    }
-    @SuppressWarnings("resource")
-    @OnlyIn(Dist.CLIENT)
-    public static InteractionHand getInstrumentHand() {
-        return getInstrumentHand(Minecraft.getInstance().player);
     }
 
 }
