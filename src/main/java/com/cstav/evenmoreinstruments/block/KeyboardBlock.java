@@ -108,13 +108,24 @@ public class KeyboardBlock extends Block {
             Blocks.AIR.defaultBlockState()
         , 3);
         pLevel.blockUpdated(pPos, Blocks.AIR);
-        pState.updateNeighbourShapes(pLevel, pPos, 3);
+        pState.updateNeighbourShapes(pLevel, pPos, 35);
     }
 
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+        final Direction direction = pContext.getHorizontalDirection();
+        final BlockPos pos = pContext.getClickedPos();
+        final BlockPos sidePos = pos.relative(getLeft(direction));
+
+        final Level level = pContext.getLevel();
+
+        return (
+            level.getBlockState(sidePos).canBeReplaced(pContext) && level.getWorldBorder().isWithinBounds(sidePos)
+            && !(level.getBlockState(pos.below(1)).isAir() || level.getBlockState(sidePos.below(1)).isAir())
+        )
+            ? defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite())
+            : null;
     }
 
     @Override
