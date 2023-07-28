@@ -84,11 +84,13 @@ public class KeyboardBlock extends Block {
         if (pLevel.isClientSide)
             return;
 
-        pLevel.setBlock(
-            pPos.relative(getRight(pState.getValue(FACING))),
+        final BlockPos sidePos = pPos.relative(getRight(pState.getValue(FACING)));
+
+        pLevel.setBlock(sidePos,
             pState.setValue(PART, KeyboardPart.RIGHT)
         , 3);
         pLevel.blockUpdated(pPos, Blocks.AIR);
+        pLevel.blockUpdated(sidePos, Blocks.AIR);
         pState.updateNeighbourShapes(pLevel, pPos, 3);
     }
 
@@ -101,14 +103,14 @@ public class KeyboardBlock extends Block {
             ? getRight(pState.getValue(FACING))
             : getLeft(pState.getValue(FACING))
         );
-        if (!(pLevel.getBlockState(sideBlock).getBlock() instanceof KeyboardBlock))
+        if (!pLevel.getBlockState(sideBlock).is(ModBlocks.KEYBOARD.get()))
             return;
 
         pLevel.setBlock(sideBlock,
             Blocks.AIR.defaultBlockState()
-        , 3);
+        , 1|2|4);
         pLevel.blockUpdated(pPos, Blocks.AIR);
-        pState.updateNeighbourShapes(pLevel, pPos, 35);
+        pState.updateNeighbourShapes(pLevel, pPos, 1|2|4);
     }
 
 
@@ -122,7 +124,7 @@ public class KeyboardBlock extends Block {
 
         return (
             level.getBlockState(sidePos).canBeReplaced(pContext) && level.getWorldBorder().isWithinBounds(sidePos)
-            && !(level.getBlockState(pos.below(1)).isAir() || level.getBlockState(sidePos.below(1)).isAir())
+            && (level.getBlockState(pos.below(1)).canOcclude() || level.getBlockState(sidePos.below(1)).canOcclude())
         )
             ? defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite())
             : null;
