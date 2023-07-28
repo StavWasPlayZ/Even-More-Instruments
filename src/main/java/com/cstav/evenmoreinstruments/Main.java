@@ -3,6 +3,7 @@ package com.cstav.evenmoreinstruments;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.item.ModItems;
+import com.cstav.evenmoreinstruments.sound.ModSounds;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -22,6 +23,8 @@ public class Main
     public Main()
     {
         final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModSounds.register(bus);
 
         ModBlocks.register(bus);
         ModBlockEntities.register(bus);

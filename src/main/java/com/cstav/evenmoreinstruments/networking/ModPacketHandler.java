@@ -3,6 +3,7 @@ package com.cstav.evenmoreinstruments.networking;
 import java.util.List;
 
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.evenmoreinstruments.networking.packet.OpenNoteBlockInstrumentPacket;
 import com.cstav.evenmoreinstruments.networking.packet.RecordStatePacket;
 import com.cstav.genshinstrument.networking.IModPacket;
@@ -22,7 +23,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 public class ModPacketHandler {
     @SuppressWarnings("unchecked")
     private static final List<Class<IModPacket>> ACCEPTABLE_PACKETS = List.of(new Class[] {
-        RecordStatePacket.class, OpenNoteBlockInstrumentPacket.class
+        RecordStatePacket.class, OpenNoteBlockInstrumentPacket.class, ModOpenInstrumentPacket.class
     });
 
 

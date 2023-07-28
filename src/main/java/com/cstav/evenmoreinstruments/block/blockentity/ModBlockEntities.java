@@ -16,9 +16,16 @@ public class ModBlockEntities {
         BLOCK_ENTITIES.register(bus);
     }
 
+
     public static final RegistryObject<BlockEntityType<LooperBlockEntity>> LOOPER = BLOCK_ENTITIES.register("looper", () ->
         BlockEntityType.Builder.of(
             LooperBlockEntity::new, ModBlocks.LOOPER.get()
+        ).build(null)
+    );
+
+    public static final RegistryObject<BlockEntityType<ModInstrumentBlockEntity>> INSTRUMENT = BLOCK_ENTITIES.register(Main.MODID+"_instrument", () ->
+        BlockEntityType.Builder.of(
+            ModInstrumentBlockEntity::new, ModBlocks.KEYBOARD.get()
         ).build(null)
     );
     

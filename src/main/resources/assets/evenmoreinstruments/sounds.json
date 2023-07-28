@@ -1,0 +1,171 @@
+{
+    "keyboard_note_0": {
+        "catrgory": "record",
+        "sounds": ["evenmoreinstruments:keyboard/0"]
+    },
+    "keyboard_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/1"]
+    },
+    "keyboard_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/2"]
+    },
+    "keyboard_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/3"]
+    },
+    "keyboard_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/4"]
+    },
+    "keyboard_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/5"]
+    },
+    "keyboard_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/6"]
+    },
+    "keyboard_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/7"]
+    },
+    "keyboard_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/8"]
+    },
+    "keyboard_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/9"]
+    },
+    "keyboard_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/10"]
+    },
+    "keyboard_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/11"]
+    },
+    "keyboard_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/12"]
+    },
+    "keyboard_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/13"]
+    },
+    "keyboard_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/14"]
+    },
+    "keyboard_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/15"]
+    },
+    "keyboard_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/16"]
+    },
+    "keyboard_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/17"]
+    },
+    "keyboard_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/18"]
+    },
+    "keyboard_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/19"]
+    },
+    "keyboard_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/20"]
+    },
+
+    "keyboard_note_0_stereo": {
+        "catrgory": "record",
+        "sounds": ["evenmoreinstruments:keyboard/0.stereo"]
+    },
+    "keyboard_note_1_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/1.stereo"]
+    },
+    "keyboard_note_2_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/2.stereo"]
+    },
+    "keyboard_note_3_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/3.stereo"]
+    },
+    "keyboard_note_4_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/4.stereo"]
+    },
+    "keyboard_note_5_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/5.stereo"]
+    },
+    "keyboard_note_6_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/6.stereo"]
+    },
+    "keyboard_note_7_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/7.stereo"]
+    },
+    "keyboard_note_8_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/8.stereo"]
+    },
+    "keyboard_note_9_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/9.stereo"]
+    },
+    "keyboard_note_10_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/10.stereo"]
+    },
+    "keyboard_note_11_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/11.stereo"]
+    },
+    "keyboard_note_12_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/12.stereo"]
+    },
+    "keyboard_note_13_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/13.stereo"]
+    },
+    "keyboard_note_14_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/14.stereo"]
+    },
+    "keyboard_note_15_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/15.stereo"]
+    },
+    "keyboard_note_16_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/16.stereo"]
+    },
+    "keyboard_note_17_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/17.stereo"]
+    },
+    "keyboard_note_18_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/18.stereo"]
+    },
+    "keyboard_note_19_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/19.stereo"]
+    },
+    "keyboard_note_20_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/20.stereo"]
+    }
+}

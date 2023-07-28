@@ -1,5 +1,12 @@
 package com.cstav.evenmoreinstruments.block;
 
+import com.cstav.evenmoreinstruments.block.blockentity.ModInstrumentBlockEntity;
+import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
+import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
+import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
+import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
@@ -11,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -18,11 +26,11 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class KeyboardBlock extends Block {
+public class KeyboardBlock extends AbstractInstrumentBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final EnumProperty<KeyboardBlock.KeyboardPart> PART = EnumProperty.create("part", KeyboardPart.class);
 
-    private static final VoxelShape
+    public static final VoxelShape
         SHAPE_LEFT_SOUTH = Block.box(0.0D, 0.0D, 4.0D, 15.65D, 4.4D, 12.8D),
         SHAPE_RIGHT_SOUTH = Block.box(0.3D, 0.0D, 4D, 16.0D, 4.4D, 12.8D),
 
@@ -47,6 +55,21 @@ public class KeyboardBlock extends Block {
         return (pState.getValue(PART) == KeyboardPart.LEFT)
             ? (southOrNorth ? SHAPE_LEFT_SOUTH : SHAPE_LEFT_EAST)
             : (southOrNorth ? SHAPE_RIGHT_SOUTH : SHAPE_RIGHT_EAST);
+    }
+
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
+    }
+
+
+    @Override
+    protected OpenInstrumentPacketSender instrumentPacketSender() {
+        return (player, hand) -> ModPacketHandler.sendToClient(new ModOpenInstrumentPacket("keyboard", hand), player);
+    }
+
+    @Override
+    public InstrumentBlockEntity newBlockEntity(BlockPos arg0, BlockState arg1) {
+        return new ModInstrumentBlockEntity(arg0, arg1);
     }
 
 
@@ -144,4 +167,5 @@ public class KeyboardBlock extends Block {
             return toString().toLowerCase();
         }
     }
+
 }
