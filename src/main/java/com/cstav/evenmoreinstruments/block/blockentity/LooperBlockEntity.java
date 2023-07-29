@@ -226,11 +226,9 @@ public class LooperBlockEntity extends BlockEntity {
         return looperBE;
     }
 
-    public static LooperBlockEntity getLBE(final Level level, final BlockPos pos) {
-        final Optional<LooperBlockEntity> opLooperBE =
-            level.getBlockEntity(pos, ModBlockEntities.LOOPER.get());
-
-        return opLooperBE.isPresent() ? opLooperBE.get() : null;
+    private static LooperBlockEntity getLBE(final Level level, final BlockPos pos) {
+        final BlockEntity be = level.getBlockEntity(pos);
+        return (be instanceof LooperBlockEntity lbe) ? lbe : null;
     }
 
 
@@ -240,8 +238,13 @@ public class LooperBlockEntity extends BlockEntity {
         //TODO implement support for block instruments
         if (event.isClientSide || !LooperUtil.isRecording(LooperUtil.getLooperTagFromEvent(event)))
             return;
+
+        final Level level = event.player.level();
             
-        final LooperBlockEntity looperBE = getLBE(event.player.level(), event.itemInstrument.get());
+        final LooperBlockEntity looperBE = event.itemInstrument.isPresent()
+            ? getLBE(level, event.itemInstrument.get())
+            : getLBE(level, event.level.getBlockEntity(event.blockInstrumentPos.get()));
+
         if (looperBE == null)
             return;
 

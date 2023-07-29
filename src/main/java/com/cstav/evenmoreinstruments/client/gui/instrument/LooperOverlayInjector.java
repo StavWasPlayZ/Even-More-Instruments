@@ -102,7 +102,7 @@ public class LooperOverlayInjector {
         } else
             btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
 
-        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, hand, Optional.empty()));
+        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, hand, Optional.ofNullable(instrumentBlockPos)));
     }
 
     private static BlockEntity getIBE(final Player player) {
