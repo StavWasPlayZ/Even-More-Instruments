@@ -3,6 +3,8 @@ package com.cstav.evenmoreinstruments.item;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.SyncModTagPacket;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
@@ -14,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -92,6 +95,9 @@ public class LooperAdapterItem extends Item {
 
             LooperUtil.createLooperTag(ibe, looperPos);
             ibe.setChanged();
+
+            if (player instanceof ServerPlayer serverPlayer)
+                ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(ibe), instrumentBlockPos), serverPlayer);
 
         }, player);
     }

@@ -3,8 +3,10 @@ package com.cstav.evenmoreinstruments.networking.packet;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
 import com.cstav.genshinstrument.networking.IModPacket;
 
 import net.minecraft.core.BlockPos;
@@ -12,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent.Context;
 
@@ -19,25 +22,23 @@ public class UpdateLooperRemovedForInstrument implements IModPacket {
     public static final NetworkDirection NETWORK_DIRECTION = NetworkDirection.PLAY_TO_SERVER;
 
     final Optional<InteractionHand> hand;
-    final Optional<BlockPos> blockPos;
 
     public UpdateLooperRemovedForInstrument(final InteractionHand hand) {
         this.hand = Optional.of(hand);
-        blockPos = Optional.empty();
     }
-    public UpdateLooperRemovedForInstrument(final BlockPos blockPos) {
-        this.blockPos = Optional.of(blockPos);
+    /**
+     * Counts this update request as a request for a block instrument
+     */
+    public UpdateLooperRemovedForInstrument() {
         this.hand = Optional.empty();
     }
     public UpdateLooperRemovedForInstrument(FriendlyByteBuf buf) {
         hand = buf.readOptional((fbb) -> fbb.readEnum(InteractionHand.class));
-        blockPos = buf.readOptional(FriendlyByteBuf::readBlockPos);
     }
 
     @Override
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeOptional(hand, FriendlyByteBuf::writeEnum);
-        buf.writeOptional(blockPos, FriendlyByteBuf::writeBlockPos);
     }
 
     @Override
@@ -52,8 +53,19 @@ public class UpdateLooperRemovedForInstrument implements IModPacket {
 
             if (hand.isPresent())
                 result = LooperBlockEntity.getLBE(level, player.getItemInHand(hand.get()));
-            else
-                result = LooperBlockEntity.getLBE(level, level.getBlockEntity(blockPos.get()));
+            else {
+                final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
+                final BlockEntity instrumentBlockEntity = level.getBlockEntity(instrumentBlockPos);
+                
+                result = LooperBlockEntity.getLBE(level, instrumentBlockEntity);
+
+                // Manually update the tag removal for the client
+                if (result == null)
+                    ModPacketHandler.sendToClient(
+                        new SyncModTagPacket(Main.modTag(instrumentBlockEntity), instrumentBlockPos)
+                    , player);
+
+            }
 
             if (result == null)
                 ModPacketHandler.sendToClient(new LooperRemovedPacket(), player);

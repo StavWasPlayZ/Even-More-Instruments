@@ -38,7 +38,7 @@ public class LooperOverlayInjector {
 
     @SuppressWarnings("resource")
     @SubscribeEvent
-    public static void onScreenDrawn(final ScreenEvent.Init.Post event) {
+    public static void onScreenInit(final ScreenEvent.Init.Post event) {
         if (!(event.getScreen() instanceof AbstractInstrumentScreen))
             return;
 
@@ -49,12 +49,18 @@ public class LooperOverlayInjector {
             final InteractionHand hand = screen.interactionHand.get();
             final ItemStack instrumentItem = player.getItemInHand(hand);
             
+            // Send am update request upon opening an item instrument's screen
             ModPacketHandler.sendToServer(new UpdateLooperRemovedForInstrument(hand));
 
             if (!LooperUtil.hasLooperTag(instrumentItem))
                 return;
         } else {
             final BlockEntity be = getIBE(player);
+
+            //FIXME Works sometimes, for some reason.
+            // I think it's because the "InstrumentOpenProvider.getBlockPos(player)" thing may not
+            // have been fully initialized, yet.
+            ModPacketHandler.sendToServer(new UpdateLooperRemovedForInstrument());
 
             if (be == null || !LooperUtil.hasLooperTag(be))
                 return;
