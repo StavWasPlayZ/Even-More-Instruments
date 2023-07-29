@@ -57,9 +57,6 @@ public class LooperOverlayInjector {
         } else {
             final BlockEntity be = getIBE(player);
 
-            //FIXME Works sometimes, for some reason.
-            // I think it's because the "InstrumentOpenProvider.getBlockPos(player)" thing may not
-            // have been fully initialized, yet.
             ModPacketHandler.sendToServer(new UpdateLooperRemovedForInstrument());
 
             if (be == null || !LooperUtil.hasLooperTag(be))
