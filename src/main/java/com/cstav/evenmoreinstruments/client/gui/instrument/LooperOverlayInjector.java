@@ -35,12 +35,12 @@ public class LooperOverlayInjector {
             return;
 
         final AbstractInstrumentScreen screen = (AbstractInstrumentScreen) event.getScreen();
-        //TODO: Handle instrument blocks
-        if (screen.interactionHand == null)
+        //TODO: Handle instrument blocks (for all methods!)
+        if (!screen.interactionHand.isPresent())
             return;
             
 
-        if (!LooperUtil.hasLooperTag(Minecraft.getInstance().player.getItemInHand(screen.interactionHand)))
+        if (!LooperUtil.hasLooperTag(Minecraft.getInstance().player.getItemInHand(screen.interactionHand.get())))
             return;
 
         LooperOverlayInjector.screen = screen;
@@ -59,13 +59,15 @@ public class LooperOverlayInjector {
     @SubscribeEvent
     public static void onScreenClose(final ScreenEvent.Closing event) {
         if (event.getScreen() == screen)
-            ModPacketHandler.sendToServer(new RecordStatePacket(false, Optional.of(screen.interactionHand), Optional.empty()));
+            ModPacketHandler.sendToServer(
+                new RecordStatePacket(false, Optional.of(screen.interactionHand.get()), Optional.empty())
+            );
     }
     
     @SuppressWarnings("resource")
     private static void onRecordPress(final Button btn) {
         final LocalPlayer player = Minecraft.getInstance().player;
-        final InteractionHand hand = screen.interactionHand;
+        final InteractionHand hand = screen.interactionHand.get();
         final ItemStack item = player.getItemInHand(hand);
 
         final boolean isRecording = LooperUtil.isRecording(LooperUtil.looperTag(item));

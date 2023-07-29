@@ -10,12 +10,14 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 public class OpenNoteBlockInstrumentPacket implements IModPacket {
     public static final NetworkDirection NETWORK_DIRECTION = NetworkDirection.PLAY_TO_CLIENT;
+
 
     private final NoteBlockInstrument instrument;
     private final InteractionHand hand;
@@ -41,11 +43,15 @@ public class OpenNoteBlockInstrumentPacket implements IModPacket {
         final Context context = arg0.get();
 
         context.enqueueWork(() ->
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                Minecraft.getInstance().setScreen(new NoteBlockInstrumentScreen(hand, instrument))
-        ));
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::openScreen)
+        );
 
         return true;
     }
     
+    @OnlyIn(Dist.CLIENT)
+    private void openScreen() {
+        Minecraft.getInstance().setScreen(new NoteBlockInstrumentScreen(hand, instrument));
+    }
+
 }
