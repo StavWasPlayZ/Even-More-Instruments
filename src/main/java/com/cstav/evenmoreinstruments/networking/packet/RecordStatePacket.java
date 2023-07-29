@@ -3,14 +3,17 @@ package com.cstav.evenmoreinstruments.networking.packet;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.networking.IModPacket;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +52,7 @@ public class RecordStatePacket implements IModPacket {
         Context ctx = arg0.get();
 
         ctx.enqueueWork(() -> {
-            final Player player = ctx.getSender();
+            final ServerPlayer player = ctx.getSender();
 
             if (usedHand.isPresent())
                 handleItem(player);
@@ -60,7 +63,7 @@ public class RecordStatePacket implements IModPacket {
         return true;
     }
 
-    private void handleBlock(final Player player) {
+    private void handleBlock(final ServerPlayer player) {
         final BlockEntity instrumentBlock = player.level().getBlockEntity(instrumentBlockPos.get());
         final CompoundTag looperTag = LooperUtil.looperTag(instrumentBlock);
 
@@ -69,8 +72,10 @@ public class RecordStatePacket implements IModPacket {
 
         final LooperBlockEntity lbe = LooperBlockEntity.getLBE(player.level(), instrumentBlock);
         changeRecordingState(player, looperTag, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
+
+        ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(instrumentBlock), instrumentBlockPos.get()), player);
     }
-    private void handleItem(final Player player) {
+    private void handleItem(final ServerPlayer player) {
         final ItemStack instrumentItem = player.getItemInHand(usedHand.get());
         final CompoundTag looperTag = LooperUtil.looperTag(instrumentItem);
 

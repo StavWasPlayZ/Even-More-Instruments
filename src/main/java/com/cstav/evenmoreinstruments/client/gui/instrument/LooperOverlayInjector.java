@@ -55,6 +55,7 @@ public class LooperOverlayInjector {
             if (!LooperUtil.hasLooperTag(instrumentItem))
                 return;
         } else {
+            //FIXME seldom not showing at the beggining
             final BlockEntity be = getIBE(player);
 
             ModPacketHandler.sendToServer(new UpdateLooperRemovedForInstrument());
