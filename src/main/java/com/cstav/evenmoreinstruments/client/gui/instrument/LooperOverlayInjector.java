@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.RecordStatePacket;
+import com.cstav.evenmoreinstruments.networking.packet.UpdateLooperRemovedForInstrument;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.AbstractInstrumentScreen;
@@ -16,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,6 +33,8 @@ public class LooperOverlayInjector {
     
     private static AbstractInstrumentScreen screen = null;
     private static BlockPos instrumentBlockPos = null;
+    private static boolean isRecording;
+    private static Button recordBtn;
 
     @SuppressWarnings("resource")
     @SubscribeEvent
@@ -42,7 +46,12 @@ public class LooperOverlayInjector {
         final Player player = Minecraft.getInstance().player;
 
         if (screen.interactionHand.isPresent()) {
-            if (!LooperUtil.hasLooperTag(player.getItemInHand(screen.interactionHand.get())))
+            final InteractionHand hand = screen.interactionHand.get();
+            final ItemStack instrumentItem = player.getItemInHand(hand);
+            
+            ModPacketHandler.sendToServer(new UpdateLooperRemovedForInstrument(hand));
+
+            if (!LooperUtil.hasLooperTag(instrumentItem))
                 return;
         } else {
             final BlockEntity be = getIBE(player);
@@ -56,7 +65,7 @@ public class LooperOverlayInjector {
         LooperOverlayInjector.screen = screen;
 
         event.addListener(
-            Button.builder(
+            recordBtn = Button.builder(
                 Component.translatable("button.evenmoreinstruments.record"),
                 LooperOverlayInjector::onRecordPress
             )
@@ -68,7 +77,7 @@ public class LooperOverlayInjector {
 
     @SubscribeEvent
     public static void onScreenClose(final ScreenEvent.Closing event) {
-        if (event.getScreen() == screen)
+        if (isRecording && (event.getScreen() == screen))
             ModPacketHandler.sendToServer(
                 new RecordStatePacket(false, screen.interactionHand, Optional.ofNullable(instrumentBlockPos))
             );
@@ -79,13 +88,13 @@ public class LooperOverlayInjector {
         final LocalPlayer player = Minecraft.getInstance().player;
         final Optional<InteractionHand> hand = screen.interactionHand;
 
-        final boolean isRecording = hand.isPresent()
+        isRecording = hand.isPresent()
             ? LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(hand.get())))
             : LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player)));
 
 
         if (isRecording) {
-            screen.renderables.removeIf((renderable) -> renderable.equals(btn));
+            removeRecordButton();
             screen = null;
         } else
             btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
@@ -98,5 +107,11 @@ public class LooperOverlayInjector {
 
         return (instrumentPos == null) ? null
             : player.level().getBlockEntity(instrumentPos);
+    }
+
+
+    public static void removeRecordButton() {
+        if (screen != null)
+            screen.renderables.removeIf((renderable) -> renderable.equals(recordBtn));
     }
 }
