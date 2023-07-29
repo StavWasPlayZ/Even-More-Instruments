@@ -3,11 +3,15 @@ package com.cstav.evenmoreinstruments.util;
 import javax.annotation.Nullable;
 
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -18,11 +22,13 @@ public class LooperUtil {
 
     // Handle instrument's looper tag
     public static boolean hasLooperTag(final ItemStack instrument) {
-        final CompoundTag modTag = Main.modTag(instrument);
-        return modTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND) && !modTag.getCompound(LOOPER_TAG).isEmpty();
+        return hasLooperTag(Main.modTag(instrument));
     }
     public static boolean hasLooperTag(final BlockEntity instrument) {
-        return Main.modTag(instrument).contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND);
+        return hasLooperTag(Main.modTag(instrument));
+    }
+    private static boolean hasLooperTag(final CompoundTag modTag) {
+        return modTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND) && !modTag.getCompound(LOOPER_TAG).isEmpty();
     }
 
     public static void remLooperTag(final ItemStack instrument) {
@@ -34,21 +40,26 @@ public class LooperUtil {
 
     public static void createLooperTag(final ItemStack instrument, final BlockPos looperPos) {
         Main.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
-
-        final CompoundTag looperTag = looperTag(instrument);
-        looperTag(instrument).put(POS_TAG, NbtUtils.writeBlockPos(looperPos));
+        constructLooperTag(looperTag(instrument), looperPos);
+    }
+    public static void createLooperTag(final BlockEntity instrument, final BlockPos looperPos) {
+        Main.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
+        constructLooperTag(looperTag(instrument), looperPos);
+    }
+    private static void constructLooperTag(final CompoundTag looperTag, final BlockPos looperPos) {
+        looperTag.put(POS_TAG, NbtUtils.writeBlockPos(looperPos));
         setRecording(looperTag, false);
     }
 
     public static CompoundTag looperTag(final ItemStack instrument) {
-        return Main.modTag(instrument);
+        return looperTag(Main.modTag(instrument));
     }
     public static CompoundTag looperTag(final BlockEntity instrument) {
-        return Main.modTag(instrument);
+        return looperTag(Main.modTag(instrument));
     }
-    public static CompoundTag looperTag(final CompoundTag tag) {
-        return tag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND)
-            ? tag.getCompound(LOOPER_TAG)
+    public static CompoundTag looperTag(final CompoundTag parentTag) {
+        return parentTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND)
+            ? parentTag.getCompound(LOOPER_TAG)
             : CommonUtil.TAG_EMPTY;
     }
 
@@ -56,6 +67,30 @@ public class LooperUtil {
         return (event.itemInstrument.isPresent())
             ? looperTag(event.itemInstrument.get())
             : looperTag(event.level.getBlockEntity(event.blockInstrumentPos.get()));
+    }
+
+
+    public static boolean performPair(LooperBlockEntity lbe, Runnable pairPerformer, Player pairingPlayer) {
+        if (!performChannelCheck(lbe, pairingPlayer))
+            return false;
+
+        pairPerformer.run();
+
+        pairingPlayer.displayClientMessage(
+            Component.translatable("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
+        , true);
+
+        return true;
+    }
+    public static boolean performChannelCheck(final LooperBlockEntity lbe, final Player pairingPlayer) {
+        if (!lbe.hasChannel())
+            return true;
+
+        pairingPlayer.displayClientMessage(
+            Component.translatable("evenmoreinstruments.looper.pair_conflict").withStyle(ChatFormatting.GREEN)
+        , true);
+
+        return false;
     }
 
 

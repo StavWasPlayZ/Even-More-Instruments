@@ -5,10 +5,8 @@ import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -61,24 +59,11 @@ public class LooperBlock extends Block implements EntityBlock {
         
 
         // Handle pairing
-        //TODO introduce cable item to handle instrument block to looper pairing
         if (!pPlayer.isShiftKeyDown() && (itemStack.getItem() instanceof InstrumentItem)) {
 
-            if (hasChannel) {
-                pPlayer.displayClientMessage(
-                    Component.translatable("evenmoreinstruments.looper.pair_conflict").withStyle(ChatFormatting.GREEN)
-                , true);
-
-                return InteractionResult.CONSUME_PARTIAL;
-            }
-
-            LooperUtil.createLooperTag(itemStack, pPos);
-
-            pPlayer.displayClientMessage(
-                Component.translatable("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
-            , true);
-
-            return InteractionResult.SUCCESS;
+            return LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer)
+                ? InteractionResult.SUCCESS
+                : InteractionResult.CONSUME_PARTIAL;
 
         }
 

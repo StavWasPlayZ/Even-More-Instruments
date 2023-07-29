@@ -31,6 +31,8 @@ public class Main
 
         ModSounds.register(bus);
 
+        EMIModCreativeModeTabs.register(bus);
+
         ModBlocks.register(bus);
         ModBlockEntities.register(bus);
         ModItems.register(bus);

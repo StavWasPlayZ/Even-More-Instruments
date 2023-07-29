@@ -6,14 +6,17 @@ import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.RecordStatePacket;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
+import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.AbstractInstrumentScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -27,6 +30,7 @@ public class LooperOverlayInjector {
     private static final int REC_BTN_WIDTH = 120;
     
     private static AbstractInstrumentScreen screen = null;
+    private static BlockPos instrumentBlockPos = null;
 
     @SuppressWarnings("resource")
     @SubscribeEvent
@@ -35,13 +39,19 @@ public class LooperOverlayInjector {
             return;
 
         final AbstractInstrumentScreen screen = (AbstractInstrumentScreen) event.getScreen();
-        //TODO: Handle instrument blocks (for all methods!)
-        if (!screen.interactionHand.isPresent())
-            return;
-            
+        final Player player = Minecraft.getInstance().player;
 
-        if (!LooperUtil.hasLooperTag(Minecraft.getInstance().player.getItemInHand(screen.interactionHand.get())))
-            return;
+        if (screen.interactionHand.isPresent()) {
+            if (!LooperUtil.hasLooperTag(player.getItemInHand(screen.interactionHand.get())))
+                return;
+        } else {
+            final BlockEntity be = getIBE(player);
+
+            if (be == null || !LooperUtil.hasLooperTag(be))
+                return;
+            
+            instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
+        }
 
         LooperOverlayInjector.screen = screen;
 
@@ -60,17 +70,19 @@ public class LooperOverlayInjector {
     public static void onScreenClose(final ScreenEvent.Closing event) {
         if (event.getScreen() == screen)
             ModPacketHandler.sendToServer(
-                new RecordStatePacket(false, Optional.of(screen.interactionHand.get()), Optional.empty())
+                new RecordStatePacket(false, screen.interactionHand, Optional.ofNullable(instrumentBlockPos))
             );
     }
     
     @SuppressWarnings("resource")
     private static void onRecordPress(final Button btn) {
         final LocalPlayer player = Minecraft.getInstance().player;
-        final InteractionHand hand = screen.interactionHand.get();
-        final ItemStack item = player.getItemInHand(hand);
+        final Optional<InteractionHand> hand = screen.interactionHand;
 
-        final boolean isRecording = LooperUtil.isRecording(LooperUtil.looperTag(item));
+        final boolean isRecording = hand.isPresent()
+            ? LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(hand.get())))
+            : LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player)));
+
 
         if (isRecording) {
             screen.renderables.removeIf((renderable) -> renderable.equals(btn));
@@ -78,6 +90,13 @@ public class LooperOverlayInjector {
         } else
             btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
 
-        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, Optional.of(hand), Optional.empty()));
+        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, hand, Optional.empty()));
+    }
+
+    private static BlockEntity getIBE(final Player player) {
+        final BlockPos instrumentPos = InstrumentOpenProvider.getBlockPos(player);
+
+        return (instrumentPos == null) ? null
+            : player.level().getBlockEntity(instrumentPos);
     }
 }

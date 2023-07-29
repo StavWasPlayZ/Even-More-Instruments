@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
@@ -49,13 +50,16 @@ public class ModItems {
     };
 
 
-    @SuppressWarnings("unchecked")
     public static final RegistryObject<Item>
         KEYBOARD = registerBlockItem(ModBlocks.KEYBOARD),
-        LOOPER = registerBlockItem(ModBlocks.LOOPER, new ResourceKey[] {
-            ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
+
+        LOOPER = registerBlockItem(ModBlocks.LOOPER,
+            EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
             CreativeModeTabs.REDSTONE_BLOCKS
-        })
+        ),
+        LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()),
+            CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
+        )
     ;
 
     public static final Map<NoteBlockInstrument, RegistryObject<Item>> NOTEBLOCK_INSTRUMENTS = initNoteBlockInstruments();
@@ -85,13 +89,15 @@ public class ModItems {
     private static RegistryObject<Item> registerBlockItem(final RegistryObject<Block> block) {
         return registerBlockItem(block, DEFAULT_INSTRUMENT_BLOCK_TABS);
     }
-    private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, ResourceKey<CreativeModeTab>[] tabs) {
+    @SafeVarargs
+    private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, ResourceKey<CreativeModeTab>... tabs) {
         return register(block.getId().getPath(),
             () -> new BlockItem(block.get(), new Properties())
         , tabs);
     }
 
-    private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>[] tabs) {
+    @SafeVarargs
+    private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>... tabs) {
         final RegistryObject<Item> item = ITEMS.register(name, supplier);
         CREATIVE_TABS_MAP.put(item, tabs);
 

@@ -37,4 +37,11 @@ public class NoteBlockInstrumentItem extends InstrumentItem {
 
         return result.toString().trim();
     }
+
+    @Override
+    public Object getRenderPropertiesInternal() {
+        // TODO Auto-generated method stub
+        return super.getRenderPropertiesInternal();
+    }
+
 }
