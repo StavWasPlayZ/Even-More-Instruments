@@ -69,7 +69,7 @@ public class LooperBlock extends Block implements EntityBlock {
                     Component.translatable("evenmoreinstruments.looper.pair_conflict").withStyle(ChatFormatting.GREEN)
                 , true);
 
-                return InteractionResult.FAIL;
+                return InteractionResult.CONSUME_PARTIAL;
             }
 
             LooperUtil.createLooperTag(itemStack, pPos);
@@ -91,7 +91,7 @@ public class LooperBlock extends Block implements EntityBlock {
             return InteractionResult.SUCCESS;
         }
 
-        return InteractionResult.FAIL;
+        return InteractionResult.CONSUME_PARTIAL;
     }
 
     @Override

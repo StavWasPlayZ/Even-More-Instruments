@@ -18,7 +18,8 @@ public class LooperUtil {
 
     // Handle instrument's looper tag
     public static boolean hasLooperTag(final ItemStack instrument) {
-        return Main.modTag(instrument).contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND);
+        final CompoundTag modTag = Main.modTag(instrument);
+        return modTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND) && !modTag.getCompound(LOOPER_TAG).isEmpty();
     }
     public static boolean hasLooperTag(final BlockEntity instrument) {
         return Main.modTag(instrument).contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND);

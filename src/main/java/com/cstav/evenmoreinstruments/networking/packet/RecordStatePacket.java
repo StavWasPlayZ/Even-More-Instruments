@@ -83,6 +83,9 @@ public class RecordStatePacket implements IModPacket {
     }
 
     private void changeRecordingState(Player player, CompoundTag looperTag, LooperBlockEntity lbe, Runnable removeLooperTagRunnable) {
+        if (lbe.isLocked() && !lbe.isLockedBy(player.getUUID()))
+            return;
+
         if (!recording) {
             lbe.lock();
 

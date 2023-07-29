@@ -1,5 +1,7 @@
 package com.cstav.evenmoreinstruments.block.blockentity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -31,6 +34,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class LooperBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    private static final HashSet<LooperBlockEntity> RECORDING_LOOPERS = new HashSet<>();
     private UUID lockedBy;
 
     public CompoundTag getChannel() {
@@ -51,18 +55,24 @@ public class LooperBlockEntity extends BlockEntity {
         final CompoundTag data = getPersistentData();
 
         // Construct all the data stuff
-        if (!data.contains("isRecording", CompoundTag.TAG_BYTE))
-            setRecording(false);
-
         if (!data.contains("ticks", CompoundTag.TAG_INT))
             setTicks(0);
         if (!data.contains("repeatTick", CompoundTag.TAG_INT))
             setRepeatTick(-1);
     }
+    @Override
+    public void setRemoved() {
+        RECORDING_LOOPERS.remove(this);
+    }
     
 
     public void setRecording(final boolean recording) {
         getPersistentData().putBoolean("recording", recording);
+
+        if (recording)
+            RECORDING_LOOPERS.add(this);
+        else
+            RECORDING_LOOPERS.remove(this);
     }
     public void setTicks(final int ticks) {
         getPersistentData().putInt("ticks", ticks);
@@ -84,23 +94,37 @@ public class LooperBlockEntity extends BlockEntity {
         setChanged();
     }
     //TODO implement to Looper GUI
+    /**
+     * This method resets the looper, assuming it is not recording.
+     */
     public void reset() {
         getPersistentData().remove("locked");
         getPersistentData().remove("lockedBy");
         lockedBy = null;
 
+        setRepeatTick(-1);
+        setTicks(0);
+
         getPersistentData().remove("channel");
     }
 
     public boolean isLocked() {
-        return (lockedBy != null) || getPersistentData().getBoolean("locked");
+        return lockedByAnyone() || getPersistentData().getBoolean("locked");
     }
     public boolean isRecording() {
         return getPersistentData().getBoolean("recording");
     }
+
     public boolean isAllowedToRecord(final UUID player) {
-        return (lockedBy != null) || lockedBy.equals(player);
+        return !lockedByAnyone() || isLockedBy(player);
     }
+    public boolean lockedByAnyone() {
+        return lockedBy != null;
+    }
+    public boolean isLockedBy(final UUID player) {
+        return lockedBy.equals(player);
+    }
+
     public int getTicks() {
         return getPersistentData().getInt("ticks");
     }
@@ -210,6 +234,7 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
+
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
         //TODO implement support for block instruments
@@ -222,7 +247,7 @@ public class LooperBlockEntity extends BlockEntity {
 
 
         if (looperBE.isLocked()) {
-            if (!looperBE.isAllowedToRecord(event.player.getUUID()))
+            if (!looperBE.isRecording() || !looperBE.isAllowedToRecord(event.player.getUUID()))
                 return;
         } else {
             looperBE.setLockedBy(event.player.getUUID());
@@ -232,6 +257,22 @@ public class LooperBlockEntity extends BlockEntity {
             
         looperBE.addNote(event.sound, event.pitch, looperBE.getTicks());
         looperBE.setChanged();
+    }
+
+    // If the player leaves the world, we should'nt record anymore
+    @SubscribeEvent
+    public static void onPlayerLeave(final PlayerLoggedOutEvent event) {
+        final ArrayList<LooperBlockEntity> toBeRemoved = new ArrayList<>();
+
+        RECORDING_LOOPERS.forEach((looper) -> {
+            if (looper.lockedBy.equals(event.getEntity().getUUID())) {
+                looper.reset();
+                looper.getPersistentData().putBoolean("recording", false);
+                toBeRemoved.add(looper);
+            }
+        });
+
+        RECORDING_LOOPERS.removeAll(toBeRemoved);
     }
     
 }
