@@ -17,7 +17,7 @@ import net.minecraft.network.chat.Component;
 
 // Lazily copied from Zither
 public class ViolinOptionsScreen extends GridInstrumentOptionsScreen {
-    private static final String SOUND_TYPE_KEY = "button.evemoreinstruments.violin.soundType";
+    private static final String SOUND_TYPE_KEY = "button.evenmoreinstruments.violin.soundType";
     private final static int SPACE_BEFORE = 30, SPACER_HEIGHT = 13;
 
     public ViolinOptionsScreen(AbstractGridInstrumentScreen screen) {

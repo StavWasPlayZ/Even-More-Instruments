@@ -1,5 +1,5 @@
 {
-    "evemoreinstruments.itemGroup.instrument_accessories_tab": "Instrument Accessories",
+    "evenmoreinstruments.itemGroup.instrument_accessories_tab": "Instrument Accessories",
 
     "item.evenmoreinstruments.violin": "Violin",
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
@@ -9,6 +9,12 @@
     "item.evenmoreinstruments.looper_adapter.select_looper": "Instrument wired successfully. Please select a looper to pair with it.",
 
     "block.evenmoreinstruments.keyboard": "Keyboard",
+
+
+    "label.evenmoreinstruments.violin_options": "Violin Options",
+    "button.evenmoreinstruments.violin.soundType": "Violin Note Length",
+    "button.evenmoreinstruments.violin.soundType.half_note": "Half Note",
+    "button.evenmoreinstruments.violin.soundType.full_note": "Full Note",
 
 
     "block.evenmoreinstruments.looper": "Looper",
