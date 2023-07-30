@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class KeyboardBlock extends AbstractInstrumentBlock {
+public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final EnumProperty<KeyboardBlock.KeyboardPart> PART = EnumProperty.create("part", KeyboardPart.class);
 
@@ -115,11 +115,8 @@ public class KeyboardBlock extends AbstractInstrumentBlock {
         if (pLevel.isClientSide)
             return;
 
-        final BlockPos sideBlock = pPos.relative((pState.getValue(PART) == KeyboardPart.LEFT)
-            ? getRight(pState.getValue(FACING))
-            : getLeft(pState.getValue(FACING))
-        );
-        if (!pLevel.getBlockState(sideBlock).is(ModBlocks.KEYBOARD.get()))
+        final BlockPos sideBlock = getOtherBlock(pState, pPos, pLevel);
+        if (sideBlock == null)
             return;
 
         pLevel.setBlock(sideBlock,
@@ -159,6 +156,17 @@ public class KeyboardBlock extends AbstractInstrumentBlock {
         public String getSerializedName() {
             return toString().toLowerCase();
         }
+    }
+
+
+    @Override
+    public BlockPos getOtherBlock(final BlockState state, BlockPos blockPos, Level level) {
+        final BlockPos sideBlock = blockPos.relative((state.getValue(PART) == KeyboardPart.LEFT)
+            ? getRight(state.getValue(FACING))
+            : getLeft(state.getValue(FACING))
+        );
+
+        return (!level.getBlockState(sideBlock).is(ModBlocks.KEYBOARD.get())) ? null : sideBlock;
     }
 
 }

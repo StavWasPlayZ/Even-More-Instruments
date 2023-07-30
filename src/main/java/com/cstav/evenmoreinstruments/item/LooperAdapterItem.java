@@ -1,6 +1,7 @@
 package com.cstav.evenmoreinstruments.item;
 
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class LooperAdapterItem extends Item {
     private static final String BLOCK_INSTRUMENT_POS_TAG = "instrument_block",
@@ -93,11 +95,28 @@ public class LooperAdapterItem extends Item {
 
         return LooperUtil.performPair((LooperBlockEntity)be, () -> {
 
+            final BlockState instrumentBlockState = level.getBlockState(instrumentBlockPos);
+            final Block instrumentBlock = instrumentBlockState.getBlock();
+
+            BlockPos otherBlockPos = null;
+            if (instrumentBlock instanceof IDoubleBlock doubleBlock)
+                otherBlockPos = doubleBlock.getOtherBlock(instrumentBlockState, instrumentBlockPos, level);
+
             LooperUtil.createLooperTag(ibe, looperPos);
+            if (otherBlockPos != null)
+                LooperUtil.createLooperTag(level.getBlockEntity(otherBlockPos), looperPos);
+
             ibe.setChanged();
 
-            if (player instanceof ServerPlayer serverPlayer)
+            // Handle syncing data to client
+            if (player instanceof ServerPlayer serverPlayer) {
                 ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(ibe), instrumentBlockPos), serverPlayer);
+
+                if (otherBlockPos != null)
+                    ModPacketHandler.sendToClient(
+                        new SyncModTagPacket(Main.modTag(ibe), otherBlockPos)
+                    , serverPlayer);
+            }
 
         }, player);
     }

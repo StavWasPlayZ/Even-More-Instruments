@@ -112,6 +112,7 @@ public class LooperUtil {
         return (looperPosTag == null) ? null : NbtUtils.readBlockPos(looperPosTag);
     }
     
+    //TODO Move recording data to player
     public static void setRecording(final CompoundTag looperTag, final boolean recording) {
         looperTag.putBoolean(RECORDING_TAG, recording);
     }
