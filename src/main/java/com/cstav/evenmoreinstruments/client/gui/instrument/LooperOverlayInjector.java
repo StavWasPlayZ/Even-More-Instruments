@@ -33,7 +33,7 @@ public class LooperOverlayInjector {
     
     private static AbstractInstrumentScreen screen = null;
     private static BlockPos instrumentBlockPos = null;
-    private static boolean isRecording;
+    private static boolean isRecording = false;
     private static Button recordBtn;
 
     @SuppressWarnings("resource")
@@ -55,14 +55,7 @@ public class LooperOverlayInjector {
             if (!LooperUtil.hasLooperTag(instrumentItem))
                 return;
         } else {
-            //FIXME seldom not showing at the beggining
-            final BlockEntity be = getIBE(player);
-
             ModPacketHandler.sendToServer(new UpdateLooperRemovedForInstrument());
-
-            if (be == null || !LooperUtil.hasLooperTag(be))
-                return;
-            
             instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
         }
 
@@ -81,10 +74,13 @@ public class LooperOverlayInjector {
 
     @SubscribeEvent
     public static void onScreenClose(final ScreenEvent.Closing event) {
-        if (isRecording && (event.getScreen() == screen))
+        if (isRecording && (event.getScreen() == screen)) {
             ModPacketHandler.sendToServer(
                 new RecordStatePacket(false, screen.interactionHand, Optional.ofNullable(instrumentBlockPos))
             );
+            
+            isRecording = false;
+        }
     }
     
     @SuppressWarnings("resource")
