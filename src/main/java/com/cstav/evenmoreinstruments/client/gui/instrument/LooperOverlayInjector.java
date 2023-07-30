@@ -32,7 +32,6 @@ public class LooperOverlayInjector {
     private static final int REC_BTN_WIDTH = 120;
     
     private static AbstractInstrumentScreen screen = null;
-    private static BlockPos instrumentBlockPos = null;
     private static boolean isRecording = false;
     private static Button recordBtn;
 
@@ -56,7 +55,6 @@ public class LooperOverlayInjector {
                 return;
         } else {
             ModPacketHandler.sendToServer(new UpdateLooperRemovedForInstrument());
-            instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
         }
 
         LooperOverlayInjector.screen = screen;
@@ -76,7 +74,7 @@ public class LooperOverlayInjector {
     public static void onScreenClose(final ScreenEvent.Closing event) {
         if (isRecording && (event.getScreen() == screen)) {
             ModPacketHandler.sendToServer(
-                new RecordStatePacket(false, screen.interactionHand, Optional.ofNullable(instrumentBlockPos))
+                new RecordStatePacket(false, screen.interactionHand)
             );
             
             isRecording = false;
@@ -99,7 +97,7 @@ public class LooperOverlayInjector {
         } else
             btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
 
-        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, hand, Optional.ofNullable(instrumentBlockPos)));
+        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, hand));
     }
 
     private static BlockEntity getIBE(final Player player) {

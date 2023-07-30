@@ -8,6 +8,7 @@ import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
+import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
 import com.cstav.genshinstrument.networking.IModPacket;
 
 import net.minecraft.core.BlockPos;
@@ -25,25 +26,21 @@ public class RecordStatePacket implements IModPacket {
     public static final NetworkDirection NETWORK_DIRECTION = NetworkDirection.PLAY_TO_SERVER;
 
     private final Optional<InteractionHand> usedHand;
-    private final Optional<BlockPos> instrumentBlockPos;
     private final boolean recording;
 
-    public RecordStatePacket(boolean recording, Optional<InteractionHand> usedHand, Optional<BlockPos> instrumentBlockPos) {
+    public RecordStatePacket(boolean recording, Optional<InteractionHand> usedHand) {
         this.recording = recording;
         this.usedHand = usedHand;
-        this.instrumentBlockPos = instrumentBlockPos;
     }
     public RecordStatePacket(final FriendlyByteBuf buf) {
         recording = buf.readBoolean();
         usedHand = buf.readOptional((fbb) -> fbb.readEnum(InteractionHand.class));
-        instrumentBlockPos = buf.readOptional(FriendlyByteBuf::readBlockPos);
     }
 
     @Override
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeBoolean(recording);
         buf.writeOptional(usedHand, FriendlyByteBuf::writeEnum);
-        buf.writeOptional(instrumentBlockPos, FriendlyByteBuf::writeBlockPos);
     }
 
 
@@ -64,7 +61,9 @@ public class RecordStatePacket implements IModPacket {
     }
 
     private void handleBlock(final ServerPlayer player) {
-        final BlockEntity instrumentBlock = player.level().getBlockEntity(instrumentBlockPos.get());
+        final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
+
+        final BlockEntity instrumentBlock = player.level().getBlockEntity(instrumentBlockPos);
         final CompoundTag looperTag = LooperUtil.looperTag(instrumentBlock);
 
         if (isMaliciousPos(player, looperTag))
@@ -73,7 +72,7 @@ public class RecordStatePacket implements IModPacket {
         final LooperBlockEntity lbe = LooperBlockEntity.getLBE(player.level(), instrumentBlock);
         changeRecordingState(player, looperTag, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
 
-        ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(instrumentBlock), instrumentBlockPos.get()), player);
+        ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(instrumentBlock), instrumentBlockPos), player);
     }
     private void handleItem(final ServerPlayer player) {
         final ItemStack instrumentItem = player.getItemInHand(usedHand.get());
