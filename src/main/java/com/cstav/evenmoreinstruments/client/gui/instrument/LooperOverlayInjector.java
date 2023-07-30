@@ -65,7 +65,7 @@ public class LooperOverlayInjector {
                 LooperOverlayInjector::onRecordPress
             )
                 .width(REC_BTN_WIDTH)
-                .pos((screen.width - REC_BTN_WIDTH) / 2, 25)
+                .pos((screen.width - REC_BTN_WIDTH) / 2, 5)
                 .build()
         );
     }

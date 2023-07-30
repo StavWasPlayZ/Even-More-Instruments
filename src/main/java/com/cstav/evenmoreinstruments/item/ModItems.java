@@ -8,7 +8,10 @@ import java.util.function.Supplier;
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
+import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
@@ -51,6 +54,12 @@ public class ModItems {
 
 
     public static final RegistryObject<Item>
+        VIOLIN = register("violin", () -> new InstrumentItem(
+            (player, hand) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("violin", hand), player
+            )
+        )),
+
         KEYBOARD = registerBlockItem(ModBlocks.KEYBOARD),
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER,

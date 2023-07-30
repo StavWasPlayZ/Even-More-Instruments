@@ -1,6 +1,8 @@
 {
 	"credit": "Made with Blockbench",
+	
 	"texture_size": [32, 32],
+	"gui_light": "front",
 	"textures": {
 		"0": "evenmoreinstruments:block/keyboard_keys",
 		"1": "minecraft:block/black_wool",

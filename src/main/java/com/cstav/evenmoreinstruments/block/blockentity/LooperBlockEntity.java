@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
@@ -207,7 +208,14 @@ public class LooperBlockEntity extends BlockEntity {
         return getLBE(level, LooperUtil.looperTag(instrument), () -> LooperUtil.remLooperTag(instrument));
     }
     public static LooperBlockEntity getLBE(final Level level, final BlockEntity instrument) {
-        return getLBE(level, LooperUtil.looperTag(instrument), () -> LooperUtil.remLooperTag(instrument));
+        return getLBE(level, LooperUtil.looperTag(instrument), () -> {
+            LooperUtil.remLooperTag(instrument);
+            
+            final BlockPos pos = instrument.getBlockPos();
+            final BlockState state = level.getBlockState(pos);
+            if (state.getBlock() instanceof IDoubleBlock doubleBlock)
+                LooperUtil.remLooperTag(level.getBlockEntity(doubleBlock.getOtherBlock(state, pos, level)));
+        });
     }
     /**
      * Attempts to get the looper pointed out by {@code looperData}. Removes its reference if not found.

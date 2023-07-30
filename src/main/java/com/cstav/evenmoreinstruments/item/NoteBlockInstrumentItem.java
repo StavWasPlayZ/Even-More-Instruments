@@ -13,8 +13,8 @@ public class NoteBlockInstrumentItem extends InstrumentItem {
     public final NoteBlockInstrument instrument;
     public NoteBlockInstrumentItem(NoteBlockInstrument instrument) {
         super((player, hand) -> ModPacketHandler.sendToClient(
-            new OpenNoteBlockInstrumentPacket(instrument, hand), player)
-        );
+            new OpenNoteBlockInstrumentPacket(instrument, hand), player
+        ));
 
         this.instrument = instrument;
     }
@@ -36,12 +36,6 @@ public class NoteBlockInstrumentItem extends InstrumentItem {
         }
 
         return result.toString().trim();
-    }
-
-    @Override
-    public Object getRenderPropertiesInternal() {
-        // TODO Auto-generated method stub
-        return super.getRenderPropertiesInternal();
     }
 
 }

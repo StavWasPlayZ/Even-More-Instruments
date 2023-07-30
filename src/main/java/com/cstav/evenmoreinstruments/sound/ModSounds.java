@@ -18,7 +18,8 @@ public class ModSounds {
     }
 
     public static final NoteSound[]
-        KEYBOARD = NoteSoundRegistrer.createInstrumentNotes(SOUNDS, loc("keyboard"), true);
+        KEYBOARD = NoteSoundRegistrer.createInstrumentNotes(SOUNDS, loc("keyboard"), true),
+        VIOLIN = NoteSoundRegistrer.createInstrumentNotes(SOUNDS, loc("violin"))
     ;
 
 
