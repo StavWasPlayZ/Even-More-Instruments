@@ -170,88 +170,88 @@
     },
 
 
-    "violin_note_0": {
+    "violin_full_note_0": {
         "catrgory": "record",
-        "sounds": ["evenmoreinstruments:violin/0"]
+        "sounds": ["evenmoreinstruments:violin/full/0"]
     },
-    "violin_note_1": {
+    "violin_full_note_1": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/1"]
+        "sounds": ["evenmoreinstruments:violin/full/1"]
     },
-    "violin_note_2": {
+    "violin_full_note_2": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/2"]
+        "sounds": ["evenmoreinstruments:violin/full/2"]
     },
-    "violin_note_3": {
+    "violin_full_note_3": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/3"]
+        "sounds": ["evenmoreinstruments:violin/full/3"]
     },
-    "violin_note_4": {
+    "violin_full_note_4": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/4"]
+        "sounds": ["evenmoreinstruments:violin/full/4"]
     },
-    "violin_note_5": {
+    "violin_full_note_5": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/5"]
+        "sounds": ["evenmoreinstruments:violin/full/5"]
     },
-    "violin_note_6": {
+    "violin_full_note_6": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/6"]
+        "sounds": ["evenmoreinstruments:violin/full/6"]
     },
-    "violin_note_7": {
+    "violin_full_note_7": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/7"]
+        "sounds": ["evenmoreinstruments:violin/full/7"]
     },
-    "violin_note_8": {
+    "violin_full_note_8": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/8"]
+        "sounds": ["evenmoreinstruments:violin/full/8"]
     },
-    "violin_note_9": {
+    "violin_full_note_9": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/9"]
+        "sounds": ["evenmoreinstruments:violin/full/9"]
     },
-    "violin_note_10": {
+    "violin_full_note_10": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/10"]
+        "sounds": ["evenmoreinstruments:violin/full/10"]
     },
-    "violin_note_11": {
+    "violin_full_note_11": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/11"]
+        "sounds": ["evenmoreinstruments:violin/full/11"]
     },
-    "violin_note_12": {
+    "violin_full_note_12": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/12"]
+        "sounds": ["evenmoreinstruments:violin/full/12"]
     },
-    "violin_note_13": {
+    "violin_full_note_13": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/13"]
+        "sounds": ["evenmoreinstruments:violin/full/13"]
     },
-    "violin_note_14": {
+    "violin_full_note_14": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/14"]
+        "sounds": ["evenmoreinstruments:violin/full/14"]
     },
-    "violin_note_15": {
+    "violin_full_note_15": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/15"]
+        "sounds": ["evenmoreinstruments:violin/full/15"]
     },
-    "violin_note_16": {
+    "violin_full_note_16": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/16"]
+        "sounds": ["evenmoreinstruments:violin/full/16"]
     },
-    "violin_note_17": {
+    "violin_full_note_17": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/17"]
+        "sounds": ["evenmoreinstruments:violin/full/17"]
     },
-    "violin_note_18": {
+    "violin_full_note_18": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/18"]
+        "sounds": ["evenmoreinstruments:violin/full/18"]
     },
-    "violin_note_19": {
+    "violin_full_note_19": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/19"]
+        "sounds": ["evenmoreinstruments:violin/full/19"]
     },
-    "violin_note_20": {
+    "violin_full_note_20": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:violin/20"]
+        "sounds": ["evenmoreinstruments:violin/full/20"]
     }
 }
