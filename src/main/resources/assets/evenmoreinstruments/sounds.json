@@ -253,5 +253,91 @@
     "violin_full_note_20": {
         "category": "record",
         "sounds": ["evenmoreinstruments:violin/full/20"]
+    },
+
+
+    "violin_half_note_0": {
+        "catrgory": "record",
+        "sounds": ["evenmoreinstruments:violin/half/0"]
+    },
+    "violin_half_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/1"]
+    },
+    "violin_half_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/2"]
+    },
+    "violin_half_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/3"]
+    },
+    "violin_half_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/4"]
+    },
+    "violin_half_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/5"]
+    },
+    "violin_half_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/6"]
+    },
+    "violin_half_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/7"]
+    },
+    "violin_half_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/8"]
+    },
+    "violin_half_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/9"]
+    },
+    "violin_half_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/10"]
+    },
+    "violin_half_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/11"]
+    },
+    "violin_half_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/12"]
+    },
+    "violin_half_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/13"]
+    },
+    "violin_half_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/14"]
+    },
+    "violin_half_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/15"]
+    },
+    "violin_half_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/16"]
+    },
+    "violin_half_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/17"]
+    },
+    "violin_half_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/18"]
+    },
+    "violin_half_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/19"]
+    },
+    "violin_half_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/20"]
     }
 }
