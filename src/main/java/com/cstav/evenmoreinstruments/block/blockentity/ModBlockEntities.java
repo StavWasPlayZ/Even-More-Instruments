@@ -25,7 +25,7 @@ public class ModBlockEntities {
 
     public static final RegistryObject<BlockEntityType<ModInstrumentBlockEntity>> INSTRUMENT = BLOCK_ENTITIES.register(Main.MODID+"_instrument", () ->
         BlockEntityType.Builder.of(
-            ModInstrumentBlockEntity::new, ModBlocks.KEYBOARD.get()
+            ModInstrumentBlockEntity::new, ModBlocks.KEYBOARD.get(), ModBlocks.KEYBOARD_STAND.get()
         ).build(null)
     );
     

@@ -21,6 +21,10 @@ public class ModBlocks {
         KEYBOARD = BLOCKS.register("keyboard", () -> new KeyboardBlock(
             Properties.copy(Blocks.WHITE_CONCRETE).noOcclusion()
         )),
+        KEYBOARD_STAND = BLOCKS.register("keyboard_stand", () -> new StandBlock(
+            Properties.copy(Blocks.WHITE_CONCRETE).noOcclusion()
+        )),
+
         LOOPER = BLOCKS.register("looper", () -> new LooperBlock(Properties.copy(Blocks.NOTE_BLOCK)))
     ;
 

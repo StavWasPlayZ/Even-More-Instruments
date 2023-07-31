@@ -63,12 +63,16 @@ public class ModItems {
 
         KEYBOARD = registerBlockItem(ModBlocks.KEYBOARD),
 
+
         LOOPER = registerBlockItem(ModBlocks.LOOPER,
             EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
             CreativeModeTabs.REDSTONE_BLOCKS
         ),
         LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()),
             CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
+        ),
+        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
+            EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
         )
     ;
 

@@ -3,10 +3,10 @@ package com.cstav.evenmoreinstruments.block;
 import com.cstav.evenmoreinstruments.block.blockentity.ModInstrumentBlockEntity;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
+import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
 import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
-import com.cstav.genshinstrument.util.CommonUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -74,25 +74,6 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
     }
 
 
-    //idk how to do maths
-    private static final Direction[] DIRECTIONS = {
-        Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST
-    };
-    private static Direction getOffset(final Direction direction, final int offset) {
-        for (int i = 0; i < DIRECTIONS.length; i++)
-            if (DIRECTIONS[i] == direction)
-                return DIRECTIONS[CommonUtil.pyWrap(i + offset, DIRECTIONS.length) % DIRECTIONS.length];
-
-        throw new IllegalStateException("How did we get here?");
-    }
-    private static Direction getLeft(final Direction direction) {
-        return getOffset(direction, 1);
-    }
-    private static Direction getRight(final Direction direction) {
-        return getOffset(direction, -1);
-    }
-
-
     // Handle 2 blocks
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
@@ -100,7 +81,7 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
         if (pLevel.isClientSide)
             return;
 
-        final BlockPos sidePos = pPos.relative(getRight(pState.getValue(FACING)));
+        final BlockPos sidePos = pPos.relative(CommonUtil.getRight(pState.getValue(FACING)));
 
         pLevel.setBlock(sidePos,
             pState.setValue(PART, KeyboardPart.RIGHT)
@@ -131,7 +112,7 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         final Direction direction = pContext.getHorizontalDirection();
         final BlockPos pos = pContext.getClickedPos();
-        final BlockPos sidePos = pos.relative(getLeft(direction));
+        final BlockPos sidePos = pos.relative(CommonUtil.getLeft(direction));
 
         final Level level = pContext.getLevel();
 
@@ -162,8 +143,8 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
     @Override
     public BlockPos getOtherBlock(final BlockState state, BlockPos blockPos, Level level) {
         final BlockPos sideBlock = blockPos.relative((state.getValue(PART) == KeyboardPart.LEFT)
-            ? getRight(state.getValue(FACING))
-            : getLeft(state.getValue(FACING))
+            ? CommonUtil.getRight(state.getValue(FACING))
+            : CommonUtil.getLeft(state.getValue(FACING))
         );
 
         return (!level.getBlockState(sideBlock).is(ModBlocks.KEYBOARD.get())) ? null : sideBlock;
