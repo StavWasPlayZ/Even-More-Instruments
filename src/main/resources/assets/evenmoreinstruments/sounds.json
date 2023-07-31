@@ -339,5 +339,91 @@
     "violin_half_note_20": {
         "category": "record",
         "sounds": ["evenmoreinstruments:violin/half/20"]
+    },
+    
+
+    "trombone_note_0": {
+        "catrgory": "record",
+        "sounds": ["evenmoreinstruments:trombone/0"]
+    },
+    "trombone_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/1"]
+    },
+    "trombone_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/2"]
+    },
+    "trombone_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/3"]
+    },
+    "trombone_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/4"]
+    },
+    "trombone_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/5"]
+    },
+    "trombone_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/6"]
+    },
+    "trombone_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/7"]
+    },
+    "trombone_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/8"]
+    },
+    "trombone_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/9"]
+    },
+    "trombone_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/10"]
+    },
+    "trombone_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/11"]
+    },
+    "trombone_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/12"]
+    },
+    "trombone_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/13"]
+    },
+    "trombone_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/14"]
+    },
+    "trombone_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/15"]
+    },
+    "trombone_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/16"]
+    },
+    "trombone_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/17"]
+    },
+    "trombone_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/18"]
+    },
+    "trombone_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/19"]
+    },
+    "trombone_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/20"]
     }
 }

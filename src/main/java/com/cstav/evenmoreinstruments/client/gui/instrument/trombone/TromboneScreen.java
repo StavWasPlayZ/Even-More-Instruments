@@ -1,10 +1,9 @@
-package com.cstav.evenmoreinstruments.client.gui.instrument.violin;
+package com.cstav.evenmoreinstruments.client.gui.instrument.trombone;
 
 import com.cstav.evenmoreinstruments.Main;
-import com.cstav.evenmoreinstruments.client.gui.options.ViolinOptionsScreen;
+import com.cstav.evenmoreinstruments.sound.ModSounds;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.InstrumentThemeLoader;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
-import com.cstav.genshinstrument.client.gui.screens.options.instrument.AbstractInstrumentOptionsScreen;
 import com.cstav.genshinstrument.sound.NoteSound;
 
 import net.minecraft.resources.ResourceLocation;
@@ -16,16 +15,16 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //NOTE: There to load it on startup
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(Dist.CLIENT)
-public class ViolinScreen extends AbstractGridInstrumentScreen {
-    public static final String INSTRUMENT_ID = "violin";
+public class TromboneScreen extends AbstractGridInstrumentScreen {
+    public static final String INSTRUMENT_ID = "trombone";
 
-    public ViolinScreen(InteractionHand hand) {
+    public TromboneScreen(InteractionHand hand) {
         super(hand);
     }
 
     @Override
     public NoteSound[] getSounds() {
-        return ((ViolinOptionsScreen)optionsScreen).getPerferredSoundType().soundArr().get();
+        return ModSounds.TROMBONE;
     }
 
     @Override
@@ -35,12 +34,6 @@ public class ViolinScreen extends AbstractGridInstrumentScreen {
     @Override
     public boolean isGenshinInstrument() {
         return false;
-    }
-
-
-    @Override
-    protected AbstractInstrumentOptionsScreen initInstrumentOptionsScreen() {
-        return new ViolinOptionsScreen(this);
     }
 
 

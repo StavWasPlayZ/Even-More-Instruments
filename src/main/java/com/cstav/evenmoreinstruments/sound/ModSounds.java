@@ -21,7 +21,9 @@ public class ModSounds {
         KEYBOARD = NoteSoundRegistrer.createInstrumentNotes(SOUNDS, loc("keyboard"), true),
 
         VIOLIN_FULL_NOTE = NoteSoundRegistrer.createInstrumentNotes(SOUNDS, loc("violin_full")),
-        VIOLIN_HALF_NOTE = NoteSoundRegistrer.createInstrumentNotes(SOUNDS, loc("violin_half"))
+        VIOLIN_HALF_NOTE = NoteSoundRegistrer.createInstrumentNotes(SOUNDS, loc("violin_half")),
+
+        TROMBONE = NoteSoundRegistrer.createInstrumentNotes(SOUNDS, loc("trombone"))
     ;
 
 
