@@ -32,8 +32,7 @@ public class TromboneItem extends InstrumentItem {
             @Override
             public @Nullable ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
                 return (entityLiving instanceof Player player)
-                    // ? (InstrumentOpenProvider.isOpen(player) && InstrumentOpenProvider.isItem(player))
-                    ? (true)
+                    ? (InstrumentOpenProvider.isOpen(player) && InstrumentOpenProvider.isItem(player))
                         ? ModArmPose.PLAYING_TROMBONE
                         : null
                     : null;
