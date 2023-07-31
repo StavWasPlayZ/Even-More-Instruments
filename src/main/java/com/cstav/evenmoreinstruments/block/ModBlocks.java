@@ -19,10 +19,10 @@ public class ModBlocks {
 
     public static final RegistryObject<Block>
         KEYBOARD = BLOCKS.register("keyboard", () -> new KeyboardBlock(
-            Properties.copy(Blocks.WHITE_CONCRETE).noOcclusion()
+            Properties.of().noOcclusion().strength(.3f)
         )),
         KEYBOARD_STAND = BLOCKS.register("keyboard_stand", () -> new KeyboardStandBlock(
-            Properties.copy(Blocks.WHITE_CONCRETE).noOcclusion()
+            Properties.of().noOcclusion().strength(.3f)
         )),
 
         LOOPER = BLOCKS.register("looper", () -> new LooperBlock(Properties.copy(Blocks.NOTE_BLOCK)))

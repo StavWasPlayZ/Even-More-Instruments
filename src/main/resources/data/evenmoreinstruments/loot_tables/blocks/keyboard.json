@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:block",
+  "name": "evenmoreinstruments:keyboard",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "evenmoreinstruments:keyboard"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "evenmoreinstruments:blocks/keyboard"
+}

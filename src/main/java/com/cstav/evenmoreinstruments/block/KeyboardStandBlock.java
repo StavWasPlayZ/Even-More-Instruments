@@ -1,6 +1,7 @@
 package com.cstav.evenmoreinstruments.block;
 
 import com.cstav.evenmoreinstruments.block.blockentity.ModInstrumentBlockEntity;
+import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
@@ -11,7 +12,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -54,6 +58,27 @@ public class KeyboardStandBlock extends AbstractInstrumentBlock {
             return InteractionResult.FAIL;
 
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+    }
+
+    //NOTE: Replace with this on Fabric:
+    // @Override
+    // public void onRemove(BlockState arg0, Level arg1, BlockPos arg2, BlockState arg3, boolean arg4) {
+    //     if (!arg1.isClientSide && arg0.getValue(HAS_KEYBOARD))
+    //         arg1.addFreshEntity(
+    //             new ItemEntity(arg1, arg2.getX(), arg2.getY(), arg2.getZ(), new ItemStack(ModItems.KEYBOARD.get()))
+    //         );
+
+    //     super.onRemove(arg0, arg1, arg2, arg3, arg4);
+    // }
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest,
+            FluidState fluid) {
+        if (!level.isClientSide && state.getValue(HAS_KEYBOARD) && !player.isCreative())
+            level.addFreshEntity(
+                new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.KEYBOARD.get()))
+            );
+
+        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 
 
