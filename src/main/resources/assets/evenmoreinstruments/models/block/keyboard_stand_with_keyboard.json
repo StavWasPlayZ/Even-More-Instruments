@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "black_concrete",
-		"1": "gray_concrete_powder",
+		"0": "minecraft:block/black_concrete",
+		"1": "minecraft:block/gray_concrete_powder",
 		"2": "evenmoreinstruments:block/keyboard_keys",
-		"3": "block/black_wool",
-		"particle": "block/black_wool"
+		"3": "minecraft:block/black_wool",
+		"particle": "minecraft:block/black_wool"
 	},
 	"elements": [
 		{
