@@ -59,11 +59,7 @@ public class ModItems {
                 new ModOpenInstrumentPacket("violin", hand), player
             )
         )),
-        TROMBONE = register("trombone", () -> new InstrumentItem(
-            (player, hand) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("trombone", hand), player
-            )
-        )),
+        TROMBONE = register("trombone", () -> new TromboneItem()),
 
         KEYBOARD = registerBlockItem(ModBlocks.KEYBOARD),
 
