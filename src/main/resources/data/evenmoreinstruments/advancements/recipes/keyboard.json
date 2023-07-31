@@ -1,0 +1,30 @@
+{
+    "parent": "evenmoreinstruments:recipes/root",
+
+    "criteria": {
+        "has_item": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "minecraft:redstone",
+                            "minecraft:redstone_block",
+                            "minecraft:redstone_ore"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+
+    "requirements": [
+        ["has_item"]
+    ],
+
+    "rewards": {
+        "recipes": [
+            "evenmoreinstruments:keyboard"
+        ]
+    }
+}

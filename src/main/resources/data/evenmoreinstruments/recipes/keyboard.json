@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " A ",
+        "BSB",
+        "AAA"
+    ],
+    "key": {
+        "A": {
+            "item": "minecraft:black_concrete"
+        },
+        "B": {
+            "item": "minecraft:white_concrete"
+        },
+        "S": {
+            "item": "minecraft:redstone_block"
+        }
+    },
+    "result": {
+        "item": "evenmoreinstruments:keyboard",
+        "count": 1
+    }
+}
