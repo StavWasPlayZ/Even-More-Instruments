@@ -61,7 +61,10 @@ public class ModItems {
         )),
         TROMBONE = register("trombone", () -> new TromboneItem()),
 
-        KEYBOARD = registerBlockItem(ModBlocks.KEYBOARD),
+        KEYBOARD = register("keyboard", () ->
+            new KeyboardBlockItem(ModBlocks.KEYBOARD.get(), new Properties()),
+            DEFAULT_INSTRUMENT_BLOCK_TABS
+        ),
 
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER,

@@ -26,9 +26,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class StandBlock extends AbstractInstrumentBlock {
+public class KeyboardStandBlock extends AbstractInstrumentBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty HAS_KEYBOARD = BooleanProperty.create("has_keyboard");
+    
 
     public static final VoxelShape BASE_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D),
         WITH_KEYBOARD_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D);
@@ -38,7 +39,7 @@ public class StandBlock extends AbstractInstrumentBlock {
         return pState.getValue(HAS_KEYBOARD) ? WITH_KEYBOARD_SHAPE : BASE_SHAPE;
     }
 
-    public StandBlock(Properties pProperties) {
+    public KeyboardStandBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState()
             .setValue(FACING, Direction.NORTH)
