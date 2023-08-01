@@ -103,9 +103,9 @@ public class ModItems {
     }
 
 
-    private static RegistryObject<Item> registerBlockItem(final RegistryObject<Block> block) {
-        return registerBlockItem(block, DEFAULT_INSTRUMENT_BLOCK_TABS);
-    }
+    // private static RegistryObject<Item> registerBlockItem(final RegistryObject<Block> block) {
+    //     return registerBlockItem(block, DEFAULT_INSTRUMENT_BLOCK_TABS);
+    // }
     @SafeVarargs
     private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, ResourceKey<CreativeModeTab>... tabs) {
         return register(block.getId().getPath(),
