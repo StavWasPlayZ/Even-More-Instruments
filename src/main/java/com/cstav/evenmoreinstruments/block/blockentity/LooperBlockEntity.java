@@ -256,6 +256,10 @@ public class LooperBlockEntity extends BlockEntity {
         if (looperBE == null)
             return;
 
+        // Cap at 255 notes (who needs that many?)
+        if (looperBE.getChannel().getList("notes", Tag.TAG_COMPOUND).size() > 255)
+            return;
+
 
         if (looperBE.isLocked()) {
             if (!looperBE.isRecording() || !looperBE.isAllowedToRecord(event.player.getUUID()))
