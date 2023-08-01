@@ -39,9 +39,7 @@ authors="Stav (IGN StavWasPlayZ)" #optional
 #displayTest="MATCH_VERSION" # MATCH_VERSION is the default if nothing is specified (#optional)
 
 # The description text for the mod (multi line!) (#mandatory)
-description='''
-A mod that expands on the capabilities of the Genshin Instruments mod with new instruments, tools and other cool stuff
-'''
+description='''A mod that expands on the capabilities of the Genshin Instruments mod with new instruments, tools and other cool stuff'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.evenmoreinstruments]] #optional
     # the modid of the dependency
