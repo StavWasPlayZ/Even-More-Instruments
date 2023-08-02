@@ -1,0 +1,29 @@
+{
+    "evenmoreinstruments.itemGroup.instrument_accessories_tab": "אביזרי כלי נגינה",
+
+    "item.evenmoreinstruments.violin": "כינור",
+    "item.evenmoreinstruments.trombone": "טרומבון",
+    "item.evenmoreinstruments.note_block_instrument": "בלוק הצליל של %s",
+
+    "item.evenmoreinstruments.looper_adapter": "מתאם אלחוטי ללופר",
+    "item.evenmoreinstruments.looper_adapter.select_instrument": "לופר חובר בהצלחה. אנא בחר כלי נגינה לתאם עימו.",
+    "item.evenmoreinstruments.looper_adapter.select_looper": "כלי נגינה חובר בהצלחה. אנא בחר לופר לתאם עימו.",
+
+    "block.evenmoreinstruments.keyboard": "אורגן",
+    "block.evenmoreinstruments.keyboard_stand": "מעמד לאורגן",
+
+
+    "label.evenmoreinstruments.violin_options": "אפשרויות הכינור",
+    "button.evenmoreinstruments.violin.soundType": "אורך צליל הכינור",
+    "button.evenmoreinstruments.violin.soundType.half_note": "שתי פעמות",
+    "button.evenmoreinstruments.violin.soundType.full_note": "ארבעה פעמות",
+
+
+    "block.evenmoreinstruments.looper": "לופר",
+
+    "evenmoreinstruments.looper.success_pair": "כלי הנגינה תואם בהצלחה!",
+    "evenmoreinstruments.looper.pair_conflict": "לופר זה הינו תפוס!",
+
+    "button.evenmoreinstruments.record": "הקלט",
+    "button.evenmoreinstruments.stop": "עצור"
+}

@@ -6,8 +6,8 @@
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
 
     "item.evenmoreinstruments.looper_adapter": "Looper Wireless Adapter",
-    "item.evenmoreinstruments.looper_adapter.select_instrument": "Looper wired successfully. Please select an instrument to pair with it.",
-    "item.evenmoreinstruments.looper_adapter.select_looper": "Instrument wired successfully. Please select a looper to pair with it.",
+    "item.evenmoreinstruments.looper_adapter.select_instrument": "Looper connected successfully. Please select an instrument to pair with it.",
+    "item.evenmoreinstruments.looper_adapter.select_looper": "Instrument connected successfully. Please select a looper to pair with it.",
 
     "block.evenmoreinstruments.keyboard": "Keyboard",
     "block.evenmoreinstruments.keyboard_stand": "Keyboard Stand",
