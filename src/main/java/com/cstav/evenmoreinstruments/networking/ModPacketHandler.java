@@ -10,13 +10,12 @@ import com.cstav.evenmoreinstruments.networking.packet.RecordStatePacket;
 import com.cstav.evenmoreinstruments.networking.packet.SyncModTagPacket;
 import com.cstav.evenmoreinstruments.networking.packet.UpdateLooperRemovedForInstrument;
 import com.cstav.genshinstrument.networking.IModPacket;
+import com.cstav.genshinstrument.util.ServerUtil;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -30,11 +29,16 @@ public class ModPacketHandler {
         UpdateLooperRemovedForInstrument.class, LooperRemovedPacket.class, SyncModTagPacket.class
     });
 
+    private static int id = 0;
+    public static void registerPackets() {
+        ServerUtil.registerModPackets(INSTANCE, ACCEPTABLE_PACKETS, () -> id++);
+    }
+
 
     private static final String PROTOCOL_VERSION = "1";
 
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-        new ResourceLocation(Main.MODID, "main"),
+        new ResourceLocation(Main.MODID, "mod_networking"),
         () -> PROTOCOL_VERSION,
         PROTOCOL_VERSION::equals,
         PROTOCOL_VERSION::equals
@@ -46,14 +50,6 @@ public class ModPacketHandler {
     }
     public static <T> void sendToClient(final T packet, final ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
-    }
-
-
-    @SubscribeEvent
-    public static void registerPackets(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() ->
-            com.cstav.genshinstrument.networking.ModPacketHandler.registerModPackets(INSTANCE, ACCEPTABLE_PACKETS)    
-        );
     }
 
 }

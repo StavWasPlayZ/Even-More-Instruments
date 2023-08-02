@@ -40,7 +40,7 @@ public class SyncModTagPacket implements IModPacket {
 
     @SuppressWarnings("resource")
     @Override
-    public boolean handle(Supplier<Context> arg0) {
+    public void handle(Supplier<Context> arg0) {
         final Context context = arg0.get();
 
         //TODO Try without the safe method
@@ -53,6 +53,6 @@ public class SyncModTagPacket implements IModPacket {
             })
         ));
 
-        return true;
+        context.setPacketHandled(true);
     }
 }

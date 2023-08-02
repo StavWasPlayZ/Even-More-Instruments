@@ -45,11 +45,11 @@ public class RecordStatePacket implements IModPacket {
 
 
     @Override
-    public boolean handle(Supplier<Context> arg0) {
-        Context ctx = arg0.get();
+    public void handle(Supplier<Context> arg0) {
+        final Context context = arg0.get();
 
-        ctx.enqueueWork(() -> {
-            final ServerPlayer player = ctx.getSender();
+        context.enqueueWork(() -> {
+            final ServerPlayer player = context.getSender();
 
             if (usedHand.isPresent())
                 handleItem(player);
@@ -57,7 +57,7 @@ public class RecordStatePacket implements IModPacket {
                 handleBlock(player);
         });
 
-        return true;
+        context.setPacketHandled(true);
     }
 
     private void handleBlock(final ServerPlayer player) {

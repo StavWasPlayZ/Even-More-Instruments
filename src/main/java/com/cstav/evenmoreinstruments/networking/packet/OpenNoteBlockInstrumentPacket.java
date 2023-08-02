@@ -39,14 +39,14 @@ public class OpenNoteBlockInstrumentPacket implements IModPacket {
 
 
     @Override
-    public boolean handle(Supplier<Context> arg0) {
+    public void handle(Supplier<Context> arg0) {
         final Context context = arg0.get();
 
         context.enqueueWork(() ->
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::openScreen)
         );
 
-        return true;
+        context.setPacketHandled(true);
     }
     
     @OnlyIn(Dist.CLIENT)
