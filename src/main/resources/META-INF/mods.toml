@@ -19,7 +19,7 @@ modId="evenmoreinstruments" #mandatory
 # The version number of the mod
 version="1.0" #mandatory
 # A display name for the mod
-displayName="Even More Instruments" #mandatory
+displayName="Even More Instruments!" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.minecraftforge.net/en/latest/misc/updatechecker/
 updateJSONURL="https://github.com/StavWasPlayZ/Even-More-Instruments/blob/master/public/updates.json?raw=true" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
