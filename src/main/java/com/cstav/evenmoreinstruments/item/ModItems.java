@@ -13,7 +13,6 @@ import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -22,7 +21,7 @@ import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -41,15 +40,13 @@ public class ModItems {
     }
 
 
-    private static final LinkedHashMap<RegistryObject<Item>, ResourceKey<CreativeModeTab>[]> CREATIVE_TABS_MAP = new LinkedHashMap<>();
+    private static final LinkedHashMap<RegistryObject<Item>, CreativeModeTab[]> CREATIVE_TABS_MAP = new LinkedHashMap<>();
 
-    @SuppressWarnings("unchecked")
-    private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENTS_TABS = new ResourceKey[] {
-        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey()
+    private static final CreativeModeTab[] DEFAULT_INSTRUMENTS_TABS = new CreativeModeTab[] {
+        ModCreativeModeTabs.getInstrumentsTab()
     };
-    @SuppressWarnings("unchecked")
-    private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENT_BLOCK_TABS = new ResourceKey[] {
-        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS
+    private static final CreativeModeTab[] DEFAULT_INSTRUMENT_BLOCK_TABS = new CreativeModeTab[] {
+        ModCreativeModeTabs.getInstrumentsTab(), CreativeModeTabs.FUNCTIONAL_BLOCKS
     };
 
 
@@ -68,14 +65,14 @@ public class ModItems {
 
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER,
-            EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
+            EMIModCreativeModeTabs.getInstrumentAccessoryTab(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
             CreativeModeTabs.REDSTONE_BLOCKS
         ),
         LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()),
-            CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
+            CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.getInstrumentAccessoryTab()
         ),
         KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
-            EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
+            EMIModCreativeModeTabs.getInstrumentAccessoryTab()
         )
     ;
 
@@ -107,14 +104,14 @@ public class ModItems {
     //     return registerBlockItem(block, DEFAULT_INSTRUMENT_BLOCK_TABS);
     // }
     @SafeVarargs
-    private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, ResourceKey<CreativeModeTab>... tabs) {
+    private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, CreativeModeTab... tabs) {
         return register(block.getId().getPath(),
             () -> new BlockItem(block.get(), new Properties())
         , tabs);
     }
 
     @SafeVarargs
-    private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>... tabs) {
+    private static RegistryObject<Item> register(String name, Supplier<Item> supplier, CreativeModeTab... tabs) {
         final RegistryObject<Item> item = ITEMS.register(name, supplier);
         CREATIVE_TABS_MAP.put(item, tabs);
 
@@ -126,10 +123,10 @@ public class ModItems {
 
 
     @SubscribeEvent
-    public static void addCreative(final BuildCreativeModeTabContentsEvent event) {
+    public static void addCreative(final CreativeModeTabEvent.BuildContents event) {
         CREATIVE_TABS_MAP.forEach((key, value) -> {
-            for (final ResourceKey<CreativeModeTab> tabKey : value) 
-                if (event.getTabKey().equals(tabKey))
+            for (final CreativeModeTab tab : value) 
+                if (event.getTab() == tab)
                     event.accept(key);
         });
     }

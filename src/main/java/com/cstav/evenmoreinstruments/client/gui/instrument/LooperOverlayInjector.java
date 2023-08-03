@@ -104,7 +104,7 @@ public class LooperOverlayInjector {
         final BlockPos instrumentPos = InstrumentOpenProvider.getBlockPos(player);
 
         return (instrumentPos == null) ? null
-            : player.level().getBlockEntity(instrumentPos);
+            : player.getLevel().getBlockEntity(instrumentPos);
     }
 
 

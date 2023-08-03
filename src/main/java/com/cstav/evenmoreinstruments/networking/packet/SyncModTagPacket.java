@@ -46,7 +46,7 @@ public class SyncModTagPacket implements IModPacket {
         //TODO Try without the safe method
         context.enqueueWork(() -> context.enqueueWork(() ->
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                final BlockEntity be = Minecraft.getInstance().player.level().getBlockEntity(pos);
+                final BlockEntity be = Minecraft.getInstance().player.getLevel().getBlockEntity(pos);
                 
                 if (be != null)
                     be.getPersistentData().put(Main.MODID, modTag);

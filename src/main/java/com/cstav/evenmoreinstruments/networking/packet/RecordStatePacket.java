@@ -63,13 +63,13 @@ public class RecordStatePacket implements IModPacket {
     private void handleBlock(final ServerPlayer player) {
         final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
 
-        final BlockEntity instrumentBlock = player.level().getBlockEntity(instrumentBlockPos);
+        final BlockEntity instrumentBlock = player.getLevel().getBlockEntity(instrumentBlockPos);
         final CompoundTag looperTag = LooperUtil.looperTag(instrumentBlock);
 
         if (isMaliciousPos(player, looperTag))
             return;
 
-        final LooperBlockEntity lbe = LooperBlockEntity.getLBE(player.level(), instrumentBlock);
+        final LooperBlockEntity lbe = LooperBlockEntity.getLBE(player.getLevel(), instrumentBlock);
         changeRecordingState(player, looperTag, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
 
         ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(instrumentBlock), instrumentBlockPos), player);
@@ -82,7 +82,7 @@ public class RecordStatePacket implements IModPacket {
             return;
 
 
-        final LooperBlockEntity lbe = LooperBlockEntity.getLBE(player.level(), instrumentItem);
+        final LooperBlockEntity lbe = LooperBlockEntity.getLBE(player.getLevel(), instrumentItem);
         changeRecordingState(player, looperTag, lbe, () -> LooperUtil.remLooperTag(instrumentItem));
     }
 
@@ -93,7 +93,7 @@ public class RecordStatePacket implements IModPacket {
         if (!recording) {
             lbe.lock();
 
-            player.level().setBlock(lbe.getBlockPos(),
+            player.getLevel().setBlock(lbe.getBlockPos(),
                 lbe.getBlockState().setValue(LooperBlock.PLAYING, true)
             , 3);
 
@@ -106,7 +106,7 @@ public class RecordStatePacket implements IModPacket {
     @SuppressWarnings("deprecation")
     private static boolean isMaliciousPos(final Player player, final CompoundTag looperTag) {
         final BlockPos looperPos = LooperUtil.getLooperPos(looperTag);
-        return !player.level().hasChunkAt(looperPos);
+        return !player.getLevel().hasChunkAt(looperPos);
     }
 
 }

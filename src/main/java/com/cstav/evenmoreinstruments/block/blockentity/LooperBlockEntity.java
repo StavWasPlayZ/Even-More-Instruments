@@ -247,7 +247,7 @@ public class LooperBlockEntity extends BlockEntity {
         if (event.isClientSide || !LooperUtil.isRecording(LooperUtil.getLooperTagFromEvent(event)))
             return;
 
-        final Level level = event.player.level();
+        final Level level = event.player.getLevel();
             
         final LooperBlockEntity looperBE = event.itemInstrument.isPresent()
             ? getLBE(level, event.itemInstrument.get())

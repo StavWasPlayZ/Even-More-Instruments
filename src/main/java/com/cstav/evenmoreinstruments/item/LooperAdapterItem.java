@@ -66,7 +66,7 @@ public class LooperAdapterItem extends Item {
         return true;
     }
     private static boolean handleLooperBlock(BlockPos blockPos, CompoundTag adapterTag, Player player) {
-        final BlockEntity be = player.level().getBlockEntity(blockPos);
+        final BlockEntity be = player.getLevel().getBlockEntity(blockPos);
         if (!(be instanceof LooperBlockEntity lbe) || !LooperUtil.performChannelCheck(lbe, player))
             return false;
 
@@ -81,7 +81,7 @@ public class LooperAdapterItem extends Item {
     }
 
     private static boolean pair(CompoundTag adapterTag, BlockPos instrumentBlockPos, BlockPos looperPos, Player player) {
-        final Level level = player.level();
+        final Level level = player.getLevel();
 
         final BlockEntity be = level.getBlockEntity(looperPos),
             ibe = level.getBlockEntity(instrumentBlockPos);

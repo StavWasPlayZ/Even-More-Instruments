@@ -7,8 +7,8 @@ import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinSoundType;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screens.options.instrument.GridInstrumentOptionsScreen;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.layouts.GridLayout.RowHelper;
@@ -53,10 +53,10 @@ public class ViolinOptionsScreen extends GridInstrumentOptionsScreen {
     }
 
     @Override
-    public void render(GuiGraphics gui, int pMouseX, int pMouseY, float pPartialTick) {
-        super.render(gui, pMouseX, pMouseY, pPartialTick);
+    public void render(PoseStack stack, int pMouseX, int pMouseY, float pPartialTick) {
+        super.render(stack, pMouseX, pMouseY, pPartialTick);
         
-        gui.drawCenteredString(font,
+        drawCenteredString(stack, font,
             Component.translatable("label.evenmoreinstruments.violin_options"),
             width/2, heightBefore + SPACE_BEFORE
         , Color.WHITE.getRGB());

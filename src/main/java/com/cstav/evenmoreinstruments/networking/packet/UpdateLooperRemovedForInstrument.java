@@ -47,7 +47,7 @@ public class UpdateLooperRemovedForInstrument implements IModPacket {
 
         context.enqueueWork(() -> {
             final ServerPlayer player = context.getSender();
-            final Level level = player.level();
+            final Level level = player.getLevel();
 
             LooperBlockEntity result;
 
