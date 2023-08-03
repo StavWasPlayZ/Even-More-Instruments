@@ -42,7 +42,7 @@ public class UpdateLooperRemovedForInstrument implements IModPacket {
     }
 
     @Override
-    public boolean handle(Supplier<Context> arg0) {
+    public void handle(Supplier<Context> arg0) {
         final Context context = arg0.get();
 
         context.enqueueWork(() -> {
@@ -71,7 +71,7 @@ public class UpdateLooperRemovedForInstrument implements IModPacket {
                 ModPacketHandler.sendToClient(new LooperRemovedPacket(), player);
         });
 
-        return true;
+        context.setPacketHandled(true);
     }
     
 }

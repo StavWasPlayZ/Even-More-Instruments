@@ -18,7 +18,7 @@ public class LooperRemovedPacket implements IModPacket {
     public LooperRemovedPacket(final FriendlyByteBuf buf) {}
 
     @Override
-    public boolean handle(Supplier<Context> arg0) {
+    public void handle(Supplier<Context> arg0) {
         final Context context = arg0.get();
 
         context.enqueueWork(() ->
@@ -27,7 +27,7 @@ public class LooperRemovedPacket implements IModPacket {
             )
         );
 
-        return true;
+        context.setPacketHandled(true);
     }
     
 }
