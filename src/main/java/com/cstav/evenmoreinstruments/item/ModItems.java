@@ -45,11 +45,11 @@ public class ModItems {
         TROMBONE = register("trombone", () -> new TromboneItem()),
 
         KEYBOARD = register("keyboard", () ->
-            new KeyboardBlockItem(ModBlocks.KEYBOARD.get(), new Properties())
+            new KeyboardBlockItem(ModBlocks.KEYBOARD.get(), new Properties().tab(ModCreativeModeTabs.instrumentsTab))
         ),
 
 
-        LOOPER = registerBlockItem(ModBlocks.LOOPER, ModCreativeModeTabs.instrumentsTab),
+        LOOPER = registerBlockItem(ModBlocks.LOOPER, EMIModCreativeModeTabs.instrumentAccessoryTab),
         LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()
             .tab(EMIModCreativeModeTabs.instrumentAccessoryTab)
         )),
