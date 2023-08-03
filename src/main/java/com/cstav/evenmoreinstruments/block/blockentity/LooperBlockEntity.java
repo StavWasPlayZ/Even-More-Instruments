@@ -184,9 +184,9 @@ public class LooperBlockEntity extends BlockEntity {
                 
                 ServerUtil.sendPlayNotePackets(pLevel, pPos,
                     new NoteSound(
-                        SoundEvent.createVariableRangeEvent(new ResourceLocation(note.getString("mono"))),
+                        new SoundEvent(new ResourceLocation(note.getString("mono"))),
                         stereoLoc.equals("") ? Optional.empty() : Optional.of(
-                            SoundEvent.createVariableRangeEvent(new ResourceLocation(stereoLoc))
+                            new SoundEvent(new ResourceLocation(stereoLoc))
                         )
                     ), instrumentId,
                     note.getInt("pitch")

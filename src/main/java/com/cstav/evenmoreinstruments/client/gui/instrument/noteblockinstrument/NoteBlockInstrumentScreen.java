@@ -22,7 +22,7 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
     public static final String INSTRUMENT_ID = "banjo";
     public static final String[] NOTES_LAYOUT = {"F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F"};
     private static final NoteSound[] DEFAULT_NOTE_SOUNDS = new NoteSound[] {
-        new NoteSound(NoteBlockInstrument.BASS.getSoundEvent().get(), Optional.empty())
+        new NoteSound(NoteBlockInstrument.BASS.getSoundEvent(), Optional.empty())
     };
 
     public final NoteBlockInstrument instrumentType;
@@ -32,7 +32,7 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
 
         this.instrumentType = instrumentType;
         // Update the sound to match the note block's
-        noteGrid.setNoteSounds(new NoteSound[] {new NoteSound(instrumentType.getSoundEvent().get(), Optional.empty())});
+        noteGrid.setNoteSounds(new NoteSound[] {new NoteSound(instrumentType.getSoundEvent(), Optional.empty())});
     }
     @Override
     public boolean isGenshinInstrument() {

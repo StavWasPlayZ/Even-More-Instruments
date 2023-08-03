@@ -60,13 +60,10 @@ public class LooperOverlayInjector {
         LooperOverlayInjector.screen = screen;
 
         event.addListener(
-            recordBtn = Button.builder(
+            recordBtn = new Button((screen.width - REC_BTN_WIDTH) / 2, 5, REC_BTN_WIDTH, 20,
                 Component.translatable("button.evenmoreinstruments.record"),
                 LooperOverlayInjector::onRecordPress
             )
-                .width(REC_BTN_WIDTH)
-                .pos((screen.width - REC_BTN_WIDTH) / 2, 5)
-                .build()
         );
     }
 

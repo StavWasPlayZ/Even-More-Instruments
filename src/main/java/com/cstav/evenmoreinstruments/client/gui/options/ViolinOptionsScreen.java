@@ -7,12 +7,12 @@ import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinSoundType;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screens.options.instrument.GridInstrumentOptionsScreen;
+import com.cstav.genshinstrument.client.gui.widget.copied.GridWidget;
+import com.cstav.genshinstrument.client.gui.widget.copied.GridWidget.RowHelper;
+import com.cstav.genshinstrument.client.gui.widget.copied.SpacerWidget;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.components.CycleButton;
-import net.minecraft.client.gui.components.GridWidget;
-import net.minecraft.client.gui.components.GridWidget.RowHelper;
-import net.minecraft.client.gui.components.SpacerWidget;
 import net.minecraft.network.chat.Component;
 
 // Lazily copied from Zither
