@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
@@ -21,12 +22,14 @@ public class EMIModCreativeModeTabs {
         return instrumentAccessoryTab;
     }
 
+    @SubscribeEvent
     public static void regsiterCreativeModeTabs(final CreativeModeTabEvent.Register event) {
         instrumentAccessoryTab = event.registerCreativeModeTab(new ResourceLocation(Main.MODID, "instrument_accessories_tab"),
             List.of(ModCreativeModeTabs.getInstrumentsTab()), List.of(),
             (builder) -> builder
                 .title(Component.translatable("evenmoreinstruments.itemGroup.instrument_accessories_tab"))
                 .icon(() -> new ItemStack(ModItems.LOOPER.get()))
+            .build()
         );
     }
 

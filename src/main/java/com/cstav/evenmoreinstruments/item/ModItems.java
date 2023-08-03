@@ -40,12 +40,12 @@ public class ModItems {
     }
 
 
-    private static final LinkedHashMap<RegistryObject<Item>, CreativeModeTab[]> CREATIVE_TABS_MAP = new LinkedHashMap<>();
+    private static final LinkedHashMap<RegistryObject<Item>, Supplier<CreativeModeTab[]>> CREATIVE_TABS_MAP = new LinkedHashMap<>();
 
-    private static final CreativeModeTab[] DEFAULT_INSTRUMENTS_TABS = new CreativeModeTab[] {
+    private static final Supplier<CreativeModeTab[]> DEFAULT_INSTRUMENTS_TABS = () -> new CreativeModeTab[] {
         ModCreativeModeTabs.getInstrumentsTab()
     };
-    private static final CreativeModeTab[] DEFAULT_INSTRUMENT_BLOCK_TABS = new CreativeModeTab[] {
+    private static final Supplier<CreativeModeTab[]> DEFAULT_INSTRUMENT_BLOCK_TABS = () -> new CreativeModeTab[] {
         ModCreativeModeTabs.getInstrumentsTab(), CreativeModeTabs.FUNCTIONAL_BLOCKS
     };
 
@@ -64,16 +64,18 @@ public class ModItems {
         ),
 
 
-        LOOPER = registerBlockItem(ModBlocks.LOOPER,
+        LOOPER = registerBlockItem(ModBlocks.LOOPER, () -> new CreativeModeTab[] {
             EMIModCreativeModeTabs.getInstrumentAccessoryTab(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
             CreativeModeTabs.REDSTONE_BLOCKS
-        ),
+        }),
         LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()),
-            CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.getInstrumentAccessoryTab()
+            () -> new CreativeModeTab[] {
+                CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.getInstrumentAccessoryTab()
+            }
         ),
-        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
+        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND, () -> new CreativeModeTab[] {
             EMIModCreativeModeTabs.getInstrumentAccessoryTab()
-        )
+        })
     ;
 
     public static final Map<NoteBlockInstrument, RegistryObject<Item>> NOTEBLOCK_INSTRUMENTS = initNoteBlockInstruments();
@@ -103,15 +105,13 @@ public class ModItems {
     // private static RegistryObject<Item> registerBlockItem(final RegistryObject<Block> block) {
     //     return registerBlockItem(block, DEFAULT_INSTRUMENT_BLOCK_TABS);
     // }
-    @SafeVarargs
-    private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, CreativeModeTab... tabs) {
+    private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, Supplier<CreativeModeTab[]> tabs) {
         return register(block.getId().getPath(),
             () -> new BlockItem(block.get(), new Properties())
         , tabs);
     }
 
-    @SafeVarargs
-    private static RegistryObject<Item> register(String name, Supplier<Item> supplier, CreativeModeTab... tabs) {
+    private static RegistryObject<Item> register(String name, Supplier<Item> supplier, Supplier<CreativeModeTab[]> tabs) {
         final RegistryObject<Item> item = ITEMS.register(name, supplier);
         CREATIVE_TABS_MAP.put(item, tabs);
 
@@ -125,7 +125,7 @@ public class ModItems {
     @SubscribeEvent
     public static void addCreative(final CreativeModeTabEvent.BuildContents event) {
         CREATIVE_TABS_MAP.forEach((key, value) -> {
-            for (final CreativeModeTab tab : value) 
+            for (final CreativeModeTab tab : value.get())
                 if (event.getTab() == tab)
                     event.accept(key);
         });
