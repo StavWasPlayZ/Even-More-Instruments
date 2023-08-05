@@ -67,7 +67,7 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
 
 
     @Override
-    protected ResourceLocation getSourcePath() {
+    public ResourceLocation getSourcePath() {
         return new ResourceLocation(GInstrumentMod.MODID, FloralZitherScreen.INSTRUMENT_ID);
     }
     
