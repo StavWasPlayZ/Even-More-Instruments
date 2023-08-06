@@ -8,7 +8,6 @@ import com.cstav.genshinstrument.client.gui.screens.instrument.partial.Instrumen
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
 import com.cstav.genshinstrument.sound.NoteSound;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -45,15 +44,8 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
         return 8;
     }
 
-    @SuppressWarnings("resource")
     public int getNoteSize() {
-        return switch (Minecraft.getInstance().options.guiScale().get()) {
-            case 0 -> 40;
-            case 1 -> 35;
-            case 2 -> 41;
-            case 3 -> 48;
-            default -> 36;
-        };
+        return (int)(super.getNoteSize() * .85f);
     }
 
 
