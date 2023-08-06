@@ -48,10 +48,11 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
     @SuppressWarnings("resource")
     public int getNoteSize() {
         return switch (Minecraft.getInstance().options.guiScale().get()) {
+            case 0 -> 40;
             case 1 -> 35;
             case 2 -> 41;
             case 3 -> 48;
-            default -> 40;
+            default -> 36;
         };
     }
 
