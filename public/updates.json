@@ -3,28 +3,28 @@
         "1.0": "Backported mod to Minecraft version 1.19.2!",
         "1.0.1": "- Fixed keyboard not showing in the instruments tab\n- Fixed Looper being in the instruments tab rather than instrument accessories",
 
-        "1.1": "\n- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
+        "1.1": "- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
     },
     "1.19.3": {
         "1.0": "Backported mod to Minecraft version 1.19.3!",
 
-        "1.1": "\n- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
+        "1.1": "- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
     },
     "1.19.4": {
         "1.0": "Backported mod to Minecraft version 1.19.4!",
 
-        "1.1": "\n- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
+        "1.1": "- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
     },
 
     "1.20": {
         "1.0": "Backported mod to Minecraft version 1.20!",
 
-        "1.1": "\n- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
+        "1.1": "- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
     },
     "1.20.1": {
         "1.0": "Release!",
-        
-        "1.1": "\n- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
+
+        "1.1": "- Added compatibility with Genshin Instruments v3.2.3\n- The Violin can now extend/shorten its sound length by simply pressing the set keybind! (Right Cntrl by default)\n- Fixed humongous note block instrument on large GUI scales"
     },
 
 
