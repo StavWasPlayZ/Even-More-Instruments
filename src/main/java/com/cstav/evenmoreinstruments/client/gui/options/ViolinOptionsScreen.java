@@ -63,8 +63,10 @@ public class ViolinOptionsScreen extends GridInstrumentOptionsScreen {
     }
 
     private void onSoundTypeChange(final CycleButton<ViolinSoundType> btn, final ViolinSoundType soundType) {
-        if ((instrumentScreen != null) && (instrumentScreen instanceof ViolinScreen))
-            ((ViolinScreen)instrumentScreen).noteGrid.setNoteSounds(soundType.soundArr().get());
+        if ((instrumentScreen != null) && (instrumentScreen instanceof ViolinScreen violinScreen)) {
+            violinScreen.noteGrid.setNoteSounds(soundType.getSoundArr().get());
+            violinScreen.setSoundType(soundType);
+        }
 
         queueToSave("violin_sound_type", () -> ModClientConfigs.VIOLIN_SOUND_TYPE.set(soundType));
     }

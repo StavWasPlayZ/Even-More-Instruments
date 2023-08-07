@@ -243,7 +243,6 @@ public class LooperBlockEntity extends BlockEntity {
 
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
-        //TODO implement support for block instruments
         if (event.isClientSide || !LooperUtil.isRecording(LooperUtil.getLooperTagFromEvent(event)))
             return;
 
