@@ -18,7 +18,11 @@ public enum ViolinSoundType {
         this.soundArr = soundType;
     }
 
-    public Supplier<NoteSound[]> soundArr() {
+    public Supplier<NoteSound[]> getSoundArr() {
         return soundArr;
+    }
+
+    public ViolinSoundType getOpposite() {
+        return (this == FULL_NOTE) ? HALF_NOTE : FULL_NOTE;
     }
 }
