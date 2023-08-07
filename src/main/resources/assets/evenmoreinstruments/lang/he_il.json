@@ -1,5 +1,9 @@
 {
+    "evenmoreinstruments.keymaps": "הגדרות המקשים של 'אפילו יותר כלי נגינה!'",
+    "evenmoreinstruments.keymaps.violin_type_modifier": "הארך/קצר את אורך צליל הכינור",
+
     "evenmoreinstruments.itemGroup.instrument_accessories_tab": "אביזרי כלי נגינה",
+
 
     "item.evenmoreinstruments.violin": "כינור",
     "item.evenmoreinstruments.trombone": "טרומבון",

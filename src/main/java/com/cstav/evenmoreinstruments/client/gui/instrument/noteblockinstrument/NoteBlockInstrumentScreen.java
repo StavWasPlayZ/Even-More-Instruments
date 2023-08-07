@@ -8,7 +8,6 @@ import com.cstav.genshinstrument.client.gui.screens.instrument.partial.Instrumen
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
 import com.cstav.genshinstrument.sound.NoteSound;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -45,18 +44,8 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
         return 8;
     }
 
-    @SuppressWarnings("resource")
     public int getNoteSize() {
-        final int guiScale = Minecraft.getInstance().options.guiScale().get();
-
-        return switch (guiScale) {
-            case 0 -> 40;
-            case 1 -> 35;
-            case 2 -> 41;
-            case 3 -> 48;
-            case 4 -> 41;
-            default -> guiScale * 18;
-        };
+        return (int)(super.getNoteSize() * .85f);
     }
 
 
@@ -67,7 +56,7 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
 
 
     @Override
-    protected ResourceLocation getSourcePath() {
+    public ResourceLocation getSourcePath() {
         return new ResourceLocation(GInstrumentMod.MODID, FloralZitherScreen.INSTRUMENT_ID);
     }
     
