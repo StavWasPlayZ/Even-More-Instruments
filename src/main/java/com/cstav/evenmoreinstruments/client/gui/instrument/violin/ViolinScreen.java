@@ -43,22 +43,31 @@ public class ViolinScreen extends AbstractGridInstrumentScreen {
     public NoteSound[] getSounds() {
         return getSoundType().getSoundArr().get();
     }
-
+    
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        return changeSoundType(pKeyCode, pScanCode) || super.keyPressed(pKeyCode, pScanCode, pModifiers);
+        return changeSoundType(pKeyCode, pScanCode, true) || super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
     @Override
     public boolean keyReleased(int pKeyCode, int pScanCode, int pModifiers) {
-        return changeSoundType(pKeyCode, pScanCode) || super.keyReleased(pKeyCode, pScanCode, pModifiers);
+        return changeSoundType(pKeyCode, pScanCode, false) || super.keyReleased(pKeyCode, pScanCode, pModifiers);
     }
-    private boolean changeSoundType(final int keyCode, final int scanCode) {
-        if (KeyMappings.VIOLIN_TYPE_MODIFIER.get().matches(keyCode, scanCode)) {
-            updateSoundType(getSoundType().getOpposite());
-            return true;
-        }
 
-        return false;
+    private boolean soundTypeChanged = false;
+    private boolean changeSoundType(int keyCode, int scanCode, boolean pressed) {
+        if (!KeyMappings.VIOLIN_TYPE_MODIFIER.get().matches(keyCode, scanCode))
+            return false;
+
+        if (pressed) {
+            if (soundTypeChanged)
+                return false;
+        } else if (!soundTypeChanged)
+            return false;
+
+        updateSoundType(getSoundType().getOpposite());
+        soundTypeChanged = pressed;
+
+        return true;
     }
 
     private void updateSoundType(final ViolinSoundType sound) {
