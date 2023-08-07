@@ -43,7 +43,6 @@ public class SyncModTagPacket implements IModPacket {
     public void handle(Supplier<Context> arg0) {
         final Context context = arg0.get();
 
-        //TODO Try without the safe method
         context.enqueueWork(() -> context.enqueueWork(() ->
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 final BlockEntity be = Minecraft.getInstance().player.level().getBlockEntity(pos);
