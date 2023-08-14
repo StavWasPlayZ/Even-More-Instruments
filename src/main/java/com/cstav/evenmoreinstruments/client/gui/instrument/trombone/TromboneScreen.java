@@ -23,7 +23,7 @@ public class TromboneScreen extends AbstractGridInstrumentScreen {
     }
 
     @Override
-    public NoteSound[] getSounds() {
+    public NoteSound[] getInitSounds() {
         return ModSounds.TROMBONE;
     }
 

@@ -62,7 +62,7 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
     
 
     @Override
-    public NoteSound[] getSounds() {
+    public NoteSound[] getInitSounds() {
         return DEFAULT_NOTE_SOUNDS;
     }
 
