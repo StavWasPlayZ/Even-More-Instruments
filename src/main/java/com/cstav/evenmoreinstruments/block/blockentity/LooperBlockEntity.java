@@ -194,7 +194,7 @@ public class LooperBlockEntity extends BlockEntity {
                     pitch
                 );
 
-                pLevel.blockEvent(pPos, ModBlocks.LOOPER.get(), 69420/*nice*/, pitch);
+                pLevel.blockEvent(pPos, ModBlocks.LOOPER.get(), 42, pitch);
 
             } catch (Exception e) {
                 LOGGER.error("Attempted to play note, but met with an exception", e);

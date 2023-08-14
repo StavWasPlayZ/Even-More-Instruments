@@ -103,7 +103,7 @@ public class LooperBlock extends Block implements EntityBlock {
 
     @Override
     public boolean triggerEvent(BlockState pState, Level pLevel, BlockPos pPos, int pId, int pParam) {
-        if (pId != 69420/*nice*/)
+        if (pId != 42)
             return false;
 
         // Copied from note block
