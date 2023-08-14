@@ -7,6 +7,7 @@ import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -97,6 +98,21 @@ public class LooperBlock extends Block implements EntityBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+    }
+
+
+    @Override
+    public boolean triggerEvent(BlockState pState, Level pLevel, BlockPos pPos, int pId, int pParam) {
+        if (pId != 69420/*nice*/)
+            return false;
+
+        // Copied from note block
+        pLevel.addParticle(ParticleTypes.NOTE,
+            (double)pPos.getX() + 0.5D, (double)pPos.getY() + 1.2D, (double)pPos.getZ() + 0.5D,
+            (double)pParam / 24.0D, 0.0D, 0.0D
+        );
+
+        return true;
     }
 
 

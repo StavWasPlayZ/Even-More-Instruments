@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
+import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
@@ -181,6 +182,7 @@ public class LooperBlockEntity extends BlockEntity {
 
             try {
                 final String stereoLoc = note.getString("stereo");
+                final int pitch = note.getInt("pitch");
                 
                 ServerUtil.sendPlayNotePackets(pLevel, pPos,
                     new NoteSound(
@@ -189,8 +191,10 @@ public class LooperBlockEntity extends BlockEntity {
                             SoundEvent.createVariableRangeEvent(new ResourceLocation(stereoLoc))
                         )
                     ), instrumentId,
-                    note.getInt("pitch")
+                    pitch
                 );
+
+                pLevel.blockEvent(pPos, ModBlocks.LOOPER.get(), 69420/*nice*/, pitch);
 
             } catch (Exception e) {
                 LOGGER.error("Attempted to play note, but met with an exception", e);
