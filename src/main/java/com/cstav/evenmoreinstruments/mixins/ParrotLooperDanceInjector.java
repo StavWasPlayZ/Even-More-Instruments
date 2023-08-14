@@ -31,6 +31,8 @@ public abstract class ParrotLooperDanceInjector extends Entity {
     private boolean partyParrot;
 
     @Unique
+    private boolean isLooper;
+    @Unique
     private BlockPos jukeboxBefore;
     @Unique
     private boolean partiedBefore;
@@ -39,16 +41,17 @@ public abstract class ParrotLooperDanceInjector extends Entity {
     @Inject(at = @At(value = "HEAD"), method = "aiStep()V")
     private void aiStepHead(final CallbackInfo info) {
         jukeboxBefore = jukebox;
+        isLooper = (jukebox == null) ? false : level().getBlockState(jukebox).is(ModBlocks.LOOPER.get());
     }
 
     @Inject(at = @At(value = "TAIL"), method = "aiStep()V")
     private void aiStepTail(final CallbackInfo info) {
-        if (jukeboxBefore == null)
+        if (!isLooper || (jukeboxBefore == null))
             return;
 
         final BlockState state = level().getBlockState(jukeboxBefore);
 
-        if (jukeboxBefore.closerToCenterThan(position(), 3.46) && state.is(ModBlocks.LOOPER.get()) && state.getValue(LooperBlock.PLAYING)) {
+        if (jukeboxBefore.closerToCenterThan(position(), 3.46) && state.getValue(LooperBlock.PLAYING)) {
             partyParrot = true;
             jukebox = jukeboxBefore;
         } else {
