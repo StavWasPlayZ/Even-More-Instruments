@@ -2,12 +2,15 @@ package com.cstav.evenmoreinstruments.block;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
+import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +45,22 @@ public class LooperBlock extends Block implements EntityBlock {
     }
 
 
+    public BlockState setPlaying(boolean isPlaying, Level level, BlockState blockState, BlockPos blockPos) {
+        final BlockState newState = blockState.setValue(PLAYING, isPlaying);
+
+        // should always be serverside but whatever
+        if (!level.isClientSide)
+            level.players().forEach((player) ->
+                ModPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, blockPos), (ServerPlayer)player)
+            );
+
+        return newState;
+    }
+    public BlockState cyclePlaying(Level level, BlockState blockState, BlockPos blockPos) {
+        return setPlaying(!blockState.getValue(PLAYING), level, blockState, blockPos);
+    }
+
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
             BlockHitResult pHit) {
@@ -73,7 +92,7 @@ public class LooperBlock extends Block implements EntityBlock {
         // Then make it so that only by holding shift can you pause and play
         // since you'll be able to do that there anyways
         if (hasChannel) {
-            pLevel.setBlock(pPos, pState.cycle(PLAYING), 3);
+            pLevel.setBlock(pPos, cyclePlaying(pLevel, pState, pPos), 3);
             return InteractionResult.SUCCESS;
         }
 

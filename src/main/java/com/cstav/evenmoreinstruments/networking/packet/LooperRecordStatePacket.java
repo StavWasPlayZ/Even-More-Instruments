@@ -18,21 +18,23 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent.Context;
 
-public class RecordStatePacket implements IModPacket {
+public class LooperRecordStatePacket implements IModPacket {
     public static final NetworkDirection NETWORK_DIRECTION = NetworkDirection.PLAY_TO_SERVER;
 
     private final Optional<InteractionHand> usedHand;
     private final boolean recording;
 
-    public RecordStatePacket(boolean recording, Optional<InteractionHand> usedHand) {
+    public LooperRecordStatePacket(boolean recording, Optional<InteractionHand> usedHand) {
         this.recording = recording;
         this.usedHand = usedHand;
     }
-    public RecordStatePacket(final FriendlyByteBuf buf) {
+    public LooperRecordStatePacket(final FriendlyByteBuf buf) {
         recording = buf.readBoolean();
         usedHand = buf.readOptional((fbb) -> fbb.readEnum(InteractionHand.class));
     }
@@ -93,8 +95,14 @@ public class RecordStatePacket implements IModPacket {
         if (!recording) {
             lbe.lock();
 
-            player.level().setBlock(lbe.getBlockPos(),
-                lbe.getBlockState().setValue(LooperBlock.PLAYING, true)
+            final BlockState blockState = lbe.getBlockState();
+            final Level level = player.level();
+
+            if (!(blockState.getBlock() instanceof LooperBlock looperBlock))
+                return;
+
+            level.setBlock(lbe.getBlockPos(),
+                looperBlock.setPlaying(true, level, blockState, lbe.getBlockPos())
             , 3);
 
             removeLooperTagRunnable.run();
