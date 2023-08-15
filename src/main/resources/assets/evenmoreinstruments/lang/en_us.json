@@ -27,6 +27,7 @@
 
     "evenmoreinstruments.looper.success_pair": "Paired instrument successfully!",
     "evenmoreinstruments.looper.pair_conflict": "This Looper already has recorded footage!",
+    "evenmoreinstruments.looper.no_footage": "This looper has no footage! Use an instrument to start recording",
 
     "button.evenmoreinstruments.record": "Record",
     "button.evenmoreinstruments.stop": "Stop"

@@ -13,6 +13,7 @@
     "item.evenmoreinstruments.looper_adapter.select_instrument": "לופר חובר בהצלחה. אנא בחר כלי נגינה לתאם עימו.",
     "item.evenmoreinstruments.looper_adapter.select_looper": "כלי נגינה חובר בהצלחה. אנא בחר לופר לתאם עימו.",
 
+
     "block.evenmoreinstruments.keyboard": "אורגן",
     "block.evenmoreinstruments.keyboard_stand": "מעמד לאורגן",
 
@@ -27,6 +28,7 @@
 
     "evenmoreinstruments.looper.success_pair": "כלי הנגינה תואם בהצלחה!",
     "evenmoreinstruments.looper.pair_conflict": "לופר זה הינו תפוס!",
+    "evenmoreinstruments.looper.no_footage": "ללופר זה אין אף הקלטה! השתמש בכלי נגינה כדיי להתחיל להקליט",
 
     "button.evenmoreinstruments.record": "הקלט",
     "button.evenmoreinstruments.stop": "עצור"

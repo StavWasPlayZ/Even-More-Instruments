@@ -10,6 +10,7 @@ import com.cstav.genshinstrument.item.InstrumentItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -68,22 +69,18 @@ public class LooperBlock extends Block implements EntityBlock {
             return InteractionResult.CONSUME;
 
         final BlockEntity be = pLevel.getBlockEntity(pPos);
-        if (!(be instanceof LooperBlockEntity))
+        if (!(be instanceof LooperBlockEntity lbe))
             return InteractionResult.FAIL;
 
-        final LooperBlockEntity lbe = (LooperBlockEntity) pLevel.getBlockEntity(pPos);
         final boolean hasChannel = lbe.hasChannel();
-
-
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
         
 
         // Handle pairing
-        if (!pPlayer.isShiftKeyDown() && (itemStack.getItem() instanceof InstrumentItem)) {
+        if (itemStack.getItem() instanceof InstrumentItem) {
 
-            return LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer)
-                ? InteractionResult.SUCCESS
-                : InteractionResult.CONSUME_PARTIAL;
+            if (LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer))
+                return InteractionResult.SUCCESS;
 
         }
 
@@ -95,8 +92,13 @@ public class LooperBlock extends Block implements EntityBlock {
             pLevel.setBlock(pPos, cyclePlaying(pLevel, pState, pPos), 3);
             return InteractionResult.SUCCESS;
         }
+        else {
+            pPlayer.displayClientMessage(
+                Component.translatable("evenmoreinstruments.looper.no_footage")
+            , true);
+            return InteractionResult.CONSUME_PARTIAL;
+        }
 
-        return InteractionResult.CONSUME_PARTIAL;
     }
 
     @Override
