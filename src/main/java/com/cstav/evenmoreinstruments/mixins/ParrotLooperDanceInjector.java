@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 
 import net.minecraft.core.BlockPos;
@@ -15,7 +14,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(Parrot.class)
 public abstract class ParrotLooperDanceInjector extends Entity {
@@ -41,22 +39,22 @@ public abstract class ParrotLooperDanceInjector extends Entity {
     @Inject(at = @At(value = "HEAD"), method = "aiStep()V")
     private void aiStepHead(final CallbackInfo info) {
         jukeboxBefore = jukebox;
-        isLooper = (jukebox == null) ? false : level().getBlockState(jukebox).is(ModBlocks.LOOPER.get());
+        isLooper = (jukebox != null) && level().getBlockState(jukebox).is(ModBlocks.LOOPER.get());
+
+        partiedBefore = partyParrot;
     }
 
     @Inject(at = @At(value = "TAIL"), method = "aiStep()V")
     private void aiStepTail(final CallbackInfo info) {
-        if (!isLooper || (jukeboxBefore == null))
+        if (!isLooper)
             return;
-
-        final BlockState state = level().getBlockState(jukeboxBefore);
-
-        if (jukeboxBefore.closerToCenterThan(position(), 3.46) && state.getValue(LooperBlock.PLAYING)) {
+        // If the parrot is not dancing to the looper, it means it has stopped playing
+        if (!partiedBefore)
+            jukebox = null;
+            
+        else if (jukeboxBefore.closerToCenterThan(position(), 3.46)) {
             partyParrot = true;
             jukebox = jukeboxBefore;
-        } else {
-            jukebox = null;
-            partyParrot = false;
         }
     }
 
