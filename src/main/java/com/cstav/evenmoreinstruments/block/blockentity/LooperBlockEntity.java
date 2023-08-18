@@ -77,12 +77,34 @@ public class LooperBlockEntity extends BlockEntity {
         else
             RECORDING_LOOPERS.remove(this);
     }
+
     public void setTicks(final int ticks) {
         getPersistentData().putInt("ticks", ticks);
+    }
+    /**
+     * Increment the ticks of this looper by 1. Wrap back to the start
+     * if the track finished playing.
+     * @return The new tick value
+     */
+    public int incrementTick() {
+        int ticks = getTicks();
+
+        // Wrap back to the start when we finished playing
+        final int repTick = getRepeatTick();
+        if ((repTick != -1) && (ticks > repTick))
+            ticks = 0;
+        else
+            ticks++;
+
+        setTicks(ticks);
+        setChanged();
+
+        return ticks;
     }
     public void setRepeatTick(final int tick) {
         getPersistentData().putInt("repeatTick", tick);
     }
+
     public void setLockedBy(final UUID player) {
         lockedBy = player;
     }
@@ -159,18 +181,18 @@ public class LooperBlockEntity extends BlockEntity {
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         // idk why but it needs to be here for it to work
         final LooperBlockEntity lbe = getLBE(pLevel, pPos);
+        final boolean isPlaying = lbe.getBlockState().getValue(LooperBlock.PLAYING);
 
-        
-        if (!lbe.getBlockState().getValue(LooperBlock.PLAYING) && !lbe.isRecording())
+        if (!isPlaying && !lbe.isRecording())
             return;
 
-        int ticks = getTicks() + 1;
-        final int repTick = getRepeatTick();
-        if ((repTick != -1) && (ticks > repTick))
-            ticks = 0;
+        final int ticks = lbe.incrementTick();
+
+        if (!isPlaying)
+            return;
 
 
-        final CompoundTag channel = getChannel();
+        final CompoundTag channel = lbe.getChannel();
         final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
 
         for (final Tag pNote : channel.getList("notes", Tag.TAG_COMPOUND)) {
@@ -182,6 +204,7 @@ public class LooperBlockEntity extends BlockEntity {
                 continue;
 
             try {
+                
                 final String stereoLoc = note.getString("stereo");
                 final int pitch = note.getInt("pitch");
                 
@@ -201,10 +224,6 @@ public class LooperBlockEntity extends BlockEntity {
                 LOGGER.error("Attempted to play note, but met with an exception", e);
             }
         }
-
-
-        lbe.setTicks(ticks);
-        lbe.setChanged();
     }
 
 
@@ -240,8 +259,7 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
     private static LooperBlockEntity getLBE(final Level level, final BlockPos pos) {
-        final BlockEntity be = level.getBlockEntity(pos);
-        return (be instanceof LooperBlockEntity lbe) ? lbe : null;
+        return (level.getBlockEntity(pos) instanceof LooperBlockEntity lbe) ? lbe : null;
     }
 
 

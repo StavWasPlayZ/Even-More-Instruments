@@ -45,6 +45,30 @@ public class LooperBlock extends Block implements EntityBlock {
         );
     }
 
+    @Override
+    protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(PLAYING, FACING);
+    }
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+    }
+
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new LooperBlockEntity(pPos, pState);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
+            BlockEntityType<T> pBlockEntityType) {
+                
+        return (!pLevel.isClientSide && pBlockEntityType == ModBlockEntities.LOOPER.get())
+            ? (level, pos, state, be) -> ((LooperBlockEntity)(be)).tick(level, pos, state)
+            : null;
+    }
+
 
     public BlockState setPlaying(boolean isPlaying, Level level, BlockState blockState, BlockPos blockPos) {
         final BlockState newState = blockState.setValue(PLAYING, isPlaying);
@@ -102,23 +126,14 @@ public class LooperBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
-            BlockEntityType<T> pBlockEntityType) {
+    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock,
+            BlockPos pNeighborPos, boolean pMovedByPiston) {
+        if (pLevel.isClientSide)
+            return;
                 
-        return (!pLevel.isClientSide && pBlockEntityType == ModBlockEntities.LOOPER.get())
-            ? (level, pos, state, be) -> ((LooperBlockEntity)(be)).tick(level, pos, state)
-            : null;
-    }
-    
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new LooperBlockEntity(pPos, pState);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+        if (pLevel.hasNeighborSignal(pPos) && (pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe)) {
+            lbe.setTicks(lbe.getRepeatTick() + 1);
+        }
     }
 
 
@@ -136,9 +151,4 @@ public class LooperBlock extends Block implements EntityBlock {
         return true;
     }
 
-
-    @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(PLAYING, FACING);
-    }
 }
