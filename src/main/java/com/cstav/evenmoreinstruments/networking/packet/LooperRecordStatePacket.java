@@ -46,6 +46,8 @@ public class LooperRecordStatePacket implements IModPacket {
     }
 
 
+    //TODO extract all the below to its own method in LooperUtil
+
     @Override
     public void handle(Supplier<Context> arg0) {
         final Context context = arg0.get();
