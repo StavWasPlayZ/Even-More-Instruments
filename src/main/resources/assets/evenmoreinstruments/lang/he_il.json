@@ -31,5 +31,8 @@
     "evenmoreinstruments.looper.no_footage": "ללופר זה אין אף הקלטה! השתמש בכלי נגינה כדיי להתחיל להקליט",
 
     "button.evenmoreinstruments.record": "הקלט",
-    "button.evenmoreinstruments.stop": "עצור"
+    "button.evenmoreinstruments.stop": "עצור",
+
+    "gamerule.evenmoreinstruments_looperMaxNotes": "מגבלת התווים ללופר",
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "מספר התווים שלופר יכול להכיל. כל ערך מתחת ל- 0 יגרום ללופר להיות חסר כל מגבלות."
 }

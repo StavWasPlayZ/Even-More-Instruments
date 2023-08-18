@@ -11,6 +11,7 @@ import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.evenmoreinstruments.gamerules.ModGameRules;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
@@ -259,8 +260,7 @@ public class LooperBlockEntity extends BlockEntity {
         if (looperBE == null)
             return;
 
-        // Cap at 255 notes (who needs that many?)
-        if (looperBE.getChannel().getList("notes", Tag.TAG_COMPOUND).size() > 255)
+        if (looperBE.isCapped(level))
             return;
 
 
@@ -277,11 +277,24 @@ public class LooperBlockEntity extends BlockEntity {
         looperBE.setChanged();
     }
 
+    /**
+     * A capped looper is a looper that cannot have any more notes in it, as defined in {@link ModGameRules#RULE_LOOPER_MAX_NOTES}.
+     * Any negative will make the looper uncappable.
+     * @return Whether this looper is capped
+     */
+    public boolean isCapped(final Level level) {
+        final int cap = level.getGameRules().getInt(ModGameRules.RULE_LOOPER_MAX_NOTES);
+        return (cap >= 0) && (getChannel().getList("notes", Tag.TAG_COMPOUND).size() >= cap);
+    }
+
+
     // If the player leaves the world, we should'nt record anymore
     @SubscribeEvent
     public static void onPlayerLeave(final PlayerLoggedOutEvent event) {
         final ArrayList<LooperBlockEntity> toBeRemoved = new ArrayList<>();
 
+        //TODO keep track of where player recording to in (future) record data tag
+        // Thus limit the possibilities of player recording at once to 1
         RECORDING_LOOPERS.forEach((looper) -> {
             if (looper.lockedBy.equals(event.getEntity().getUUID())) {
                 looper.reset();

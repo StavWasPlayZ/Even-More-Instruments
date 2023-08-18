@@ -30,5 +30,8 @@
     "evenmoreinstruments.looper.no_footage": "This looper has no footage! Use an instrument to start recording",
 
     "button.evenmoreinstruments.record": "Record",
-    "button.evenmoreinstruments.stop": "Stop"
+    "button.evenmoreinstruments.stop": "Stop",
+
+    "gamerule.evenmoreinstruments_looperMaxNotes": "Looper Max Notes",
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable."
 }
