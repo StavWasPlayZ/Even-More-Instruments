@@ -131,9 +131,8 @@ public class LooperBlock extends Block implements EntityBlock {
         if (pLevel.isClientSide)
             return;
                 
-        if (pLevel.hasNeighborSignal(pPos) && (pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe)) {
+        if (pLevel.hasNeighborSignal(pPos) && (pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe))
             lbe.setTicks(lbe.getRepeatTick() + 1);
-        }
     }
 
 
