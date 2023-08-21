@@ -10,10 +10,11 @@ public class NoteBlockInstrumentNote extends NoteGridButton {
     }
 
     // Layout starts from the bottom in a note block instrument, not the top
-    // Hence, no need to perform a column flip
+    // Hence, perform a column flip
     @Override
     public int getNoteOffset() {
-        return row + column * ((AbstractGridInstrumentScreen)instrumentScreen).rows();
+        final AbstractGridInstrumentScreen gridInstrument = (AbstractGridInstrumentScreen)instrumentScreen;
+        return row + gridInstrument.noteGrid.getFlippedColumn(column) * gridInstrument.rows();
     }
     
 }
