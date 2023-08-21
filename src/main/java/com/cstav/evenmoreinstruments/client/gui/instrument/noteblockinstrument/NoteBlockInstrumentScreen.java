@@ -6,6 +6,7 @@ import com.cstav.genshinstrument.GInstrumentMod;
 import com.cstav.genshinstrument.client.gui.screens.instrument.floralzither.FloralZitherScreen;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.InstrumentThemeLoader;
 import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.NoteGridButton;
 import com.cstav.genshinstrument.sound.NoteSound;
 
 import net.minecraft.resources.ResourceLocation;
@@ -46,6 +47,10 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
 
     public int getNoteSize() {
         return (int)(super.getNoteSize() * .85f);
+    }
+    @Override
+    public NoteGridButton createNote(int row, int column, int pitch) {
+        return new NoteBlockInstrumentNote(row, column, this, pitch);
     }
 
 
