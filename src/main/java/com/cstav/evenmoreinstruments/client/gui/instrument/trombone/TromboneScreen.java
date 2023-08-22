@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(Dist.CLIENT)
 public class TromboneScreen extends AbstractGridInstrumentScreen {
-    public static final String INSTRUMENT_ID = "trombone";
+    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "trombone");
 
     public TromboneScreen(InteractionHand hand) {
         super(hand);
@@ -29,7 +29,7 @@ public class TromboneScreen extends AbstractGridInstrumentScreen {
 
     @Override
     public ResourceLocation getInstrumentId() {
-        return new ResourceLocation(Main.MODID, INSTRUMENT_ID);
+        return INSTRUMENT_ID;
     }
     @Override
     public boolean isGenshinInstrument() {
@@ -37,7 +37,7 @@ public class TromboneScreen extends AbstractGridInstrumentScreen {
     }
 
 
-    private static final InstrumentThemeLoader THEME_LOADER = initThemeLoader(Main.MODID, INSTRUMENT_ID);
+    private static final InstrumentThemeLoader THEME_LOADER = new InstrumentThemeLoader(INSTRUMENT_ID);
     @Override
     public InstrumentThemeLoader getThemeLoader() {
         return THEME_LOADER;

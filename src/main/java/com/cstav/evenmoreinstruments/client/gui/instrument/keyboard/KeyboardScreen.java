@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber(Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
 public class KeyboardScreen extends AbstractGridInstrumentScreen {
-    public static final String INSTRUMENT_ID = "keyboard";
+    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "keyboard");
 
     public KeyboardScreen(InteractionHand hand) {
         super(hand);
@@ -34,11 +34,11 @@ public class KeyboardScreen extends AbstractGridInstrumentScreen {
 
     @Override
     public ResourceLocation getInstrumentId() {
-        return new ResourceLocation(Main.MODID, INSTRUMENT_ID);
+        return INSTRUMENT_ID;
     }
 
 
-    private static final InstrumentThemeLoader THEME_LOADER = initThemeLoader(Main.MODID, INSTRUMENT_ID);
+    private static final InstrumentThemeLoader THEME_LOADER = new InstrumentThemeLoader(INSTRUMENT_ID);
     @Override
     public InstrumentThemeLoader getThemeLoader() {
         return THEME_LOADER;
