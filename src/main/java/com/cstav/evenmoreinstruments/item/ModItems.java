@@ -44,11 +44,11 @@ public class ModItems {
 
     @SuppressWarnings("unchecked")
     private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENTS_TABS = new ResourceKey[] {
-        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey()
+        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES
     };
     @SuppressWarnings("unchecked")
     private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENT_BLOCK_TABS = new ResourceKey[] {
-        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS
+        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES, CreativeModeTabs.FUNCTIONAL_BLOCKS
     };
 
 
