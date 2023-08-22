@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import javax.sound.midi.Instrument;
+
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
@@ -58,7 +60,14 @@ public class ModItems {
                 new ModOpenInstrumentPacket("violin", hand), player
             )
         )),
+        GUITAR = register("guitar", () -> new InstrumentItem(
+            (player, hand) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("guitar", hand), player
+            )
+        )),
+
         TROMBONE = register("trombone", () -> new TromboneItem()),
+
 
         KEYBOARD = register("keyboard", () ->
             new KeyboardBlockItem(ModBlocks.KEYBOARD.get(), new Properties()),
