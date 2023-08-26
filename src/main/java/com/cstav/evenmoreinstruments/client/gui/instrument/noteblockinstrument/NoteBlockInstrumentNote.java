@@ -1,7 +1,7 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument.noteblockinstrument;
 
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.NoteGridButton;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.AbstractGridInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.NoteGridButton;
 
 public class NoteBlockInstrumentNote extends NoteGridButton {
 

@@ -3,8 +3,8 @@ package com.cstav.evenmoreinstruments.client.gui.options;
 import com.cstav.evenmoreinstruments.client.ModClientConfigs;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinSoundType;
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
-import com.cstav.genshinstrument.client.gui.screens.options.instrument.SoundTypeOptionsScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.AbstractGridInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.options.instrument.partial.SoundTypeOptionsScreen;
 
 public class ViolinOptionsScreen extends SoundTypeOptionsScreen<ViolinSoundType> {
     private static final String SOUND_TYPE_KEY = "button.evenmoreinstruments.violin.soundType",
