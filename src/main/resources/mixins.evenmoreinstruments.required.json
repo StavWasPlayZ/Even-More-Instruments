@@ -1,5 +1,5 @@
 {
-    "required": false,
+    "required": true,
 	"package": "com.cstav.evenmoreinstruments.mixins.required",
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "mixins.evenmoreinstruments.refmap.json",
