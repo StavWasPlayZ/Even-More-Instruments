@@ -199,7 +199,7 @@ dependencies {
 
 mixin {
     add sourceSets.main, 'mixins.evenmoreinstruments.refmap.json'
-    config 'mixins.evenmoreinstruments.json'
+    config 'mixins.evenmoreinstruments.optional.json'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
