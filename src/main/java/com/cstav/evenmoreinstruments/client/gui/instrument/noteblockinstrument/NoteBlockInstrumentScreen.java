@@ -2,10 +2,12 @@ package com.cstav.evenmoreinstruments.client.gui.instrument.noteblockinstrument;
 
 import java.util.Optional;
 
-import com.cstav.genshinstrument.GInstrumentMod;
-import com.cstav.genshinstrument.client.gui.screens.instrument.floralzither.FloralZitherScreen;
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.InstrumentThemeLoader;
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
+import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.item.NoteBlockInstrumentItem;
+import com.cstav.genshinstrument.client.gui.screen.instrument.floralzither.FloralZitherScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentThemeLoader;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.AbstractGridInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.NoteGridButton;
 import com.cstav.genshinstrument.sound.NoteSound;
 
 import net.minecraft.resources.ResourceLocation;
@@ -16,23 +18,27 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @OnlyIn(Dist.CLIENT)
+//NOTE: There to load it on startup
 @EventBusSubscriber(Dist.CLIENT)
 public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
-    public static final String INSTRUMENT_ID = "banjo";
     public static final String[] NOTES_LAYOUT = {"F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F"};
     private static final NoteSound[] DEFAULT_NOTE_SOUNDS = new NoteSound[] {
         new NoteSound(NoteBlockInstrument.BASS.getSoundEvent().get(), Optional.empty())
     };
 
     public final NoteBlockInstrument instrumentType;
+    public final ResourceLocation instrumentId;
     
     public NoteBlockInstrumentScreen(InteractionHand hand, final NoteBlockInstrument instrumentType) {
         super(hand);
 
         this.instrumentType = instrumentType;
+        instrumentId = new ResourceLocation(Main.MODID, NoteBlockInstrumentItem.getId(instrumentType));
+
         // Update the sound to match the note block's
         noteGrid.setNoteSounds(new NoteSound[] {new NoteSound(instrumentType.getSoundEvent().get(), Optional.empty())});
     }
+
     @Override
     public boolean isGenshinInstrument() {
         return false;
@@ -47,22 +53,26 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
     public int getNoteSize() {
         return (int)(super.getNoteSize() * .85f);
     }
+    @Override
+    public NoteGridButton createNote(int row, int column, int pitch) {
+        return new NoteBlockInstrumentNote(row, column, this, pitch);
+    }
 
 
     @Override
     public ResourceLocation getInstrumentId() {
-        return new ResourceLocation(GInstrumentMod.MODID, INSTRUMENT_ID);
+        return instrumentId;
     }
 
 
     @Override
     public ResourceLocation getSourcePath() {
-        return new ResourceLocation(GInstrumentMod.MODID, FloralZitherScreen.INSTRUMENT_ID);
+        return FloralZitherScreen.INSTRUMENT_ID;
     }
     
 
     @Override
-    public NoteSound[] getSounds() {
+    public NoteSound[] getInitSounds() {
         return DEFAULT_NOTE_SOUNDS;
     }
 
@@ -77,7 +87,9 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
     }
 
 
-    private static final InstrumentThemeLoader THEME_LOADER = initThemeLoader(GInstrumentMod.MODID, FloralZitherScreen.INSTRUMENT_ID);
+    private static final InstrumentThemeLoader THEME_LOADER =
+        InstrumentThemeLoader.fromOther(FloralZitherScreen.INSTRUMENT_ID, new ResourceLocation(Main.MODID, "note_block_instrument"));
+        
     @Override
     public InstrumentThemeLoader getThemeLoader() {
         return THEME_LOADER;
