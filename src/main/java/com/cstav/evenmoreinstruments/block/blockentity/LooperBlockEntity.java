@@ -306,7 +306,7 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
-    // If the player leaves the world, we should'nt record anymore
+    // If the player leaves the world, we shouldn't record anymore
     @SubscribeEvent
     public static void onPlayerLeave(final PlayerLoggedOutEvent event) {
         final ArrayList<LooperBlockEntity> toBeRemoved = new ArrayList<>();
