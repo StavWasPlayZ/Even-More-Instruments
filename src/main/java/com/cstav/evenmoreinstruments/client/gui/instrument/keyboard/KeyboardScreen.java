@@ -12,9 +12,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+@OnlyIn(Dist.CLIENT)
 //NOTE there just to make it load on setup
 @EventBusSubscriber(Dist.CLIENT)
-@OnlyIn(Dist.CLIENT)
 public class KeyboardScreen extends AbstractGridInstrumentScreen {
     public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "keyboard");
 
