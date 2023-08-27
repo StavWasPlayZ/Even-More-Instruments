@@ -2,11 +2,16 @@ package com.cstav.evenmoreinstruments.block;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
+import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -40,43 +45,19 @@ public class LooperBlock extends Block implements EntityBlock {
         );
     }
 
+    @Override
+    protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(PLAYING, FACING);
+    }
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+    }
+
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
-            BlockHitResult pHit) {
-        if (pLevel.isClientSide)
-            return InteractionResult.CONSUME;
-
-        final BlockEntity be = pLevel.getBlockEntity(pPos);
-        if (!(be instanceof LooperBlockEntity))
-            return InteractionResult.FAIL;
-
-        final LooperBlockEntity lbe = (LooperBlockEntity) pLevel.getBlockEntity(pPos);
-        final boolean hasChannel = lbe.hasChannel();
-
-
-        final ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        
-
-        // Handle pairing
-        if (!pPlayer.isShiftKeyDown() && (itemStack.getItem() instanceof InstrumentItem)) {
-
-            return LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer)
-                ? InteractionResult.SUCCESS
-                : InteractionResult.CONSUME_PARTIAL;
-
-        }
-
-
-        //TODO: Add a GUI for the looper and trigger it for display here
-        // Then make it so that only by holding shift can you pause and play
-        // since you'll be able to do that there anyways
-        if (hasChannel) {
-            pLevel.setBlock(pPos, pState.cycle(PLAYING), 3);
-            return InteractionResult.SUCCESS;
-        }
-
-        return InteractionResult.CONSUME_PARTIAL;
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new LooperBlockEntity(pPos, pState);
     }
 
     @Override
@@ -87,21 +68,86 @@ public class LooperBlock extends Block implements EntityBlock {
             ? (level, pos, state, be) -> ((LooperBlockEntity)(be)).tick(level, pos, state)
             : null;
     }
-    
+
+
+    public BlockState setPlaying(boolean isPlaying, Level level, BlockState blockState, BlockPos blockPos) {
+        final BlockState newState = blockState.setValue(PLAYING, isPlaying);
+
+        // should always be serverside but whatever
+        if (!level.isClientSide)
+            level.players().forEach((player) ->
+                ModPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, blockPos), (ServerPlayer)player)
+            );
+
+        return newState;
+    }
+    public BlockState cyclePlaying(Level level, BlockState blockState, BlockPos blockPos) {
+        return setPlaying(!blockState.getValue(PLAYING), level, blockState, blockPos);
+    }
+
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new LooperBlockEntity(pPos, pState);
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
+            BlockHitResult pHit) {
+        if (pLevel.isClientSide)
+            return InteractionResult.CONSUME;
+
+        final BlockEntity be = pLevel.getBlockEntity(pPos);
+        if (!(be instanceof LooperBlockEntity lbe))
+            return InteractionResult.FAIL;
+
+        final boolean hasChannel = lbe.hasChannel();
+        final ItemStack itemStack = pPlayer.getItemInHand(pHand);
+        
+
+        // Handle pairing
+        if (itemStack.getItem() instanceof InstrumentItem) {
+
+            if (LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer))
+                return InteractionResult.SUCCESS;
+
+        }
+
+
+        //TODO: Add a GUI for the looper and trigger it for display here
+        // Then make it so that only by holding shift can you pause and play
+        // since you'll be able to do that there anyways
+        if (hasChannel) {
+            pLevel.setBlock(pPos, cyclePlaying(pLevel, pState, pPos), 3);
+            return InteractionResult.SUCCESS;
+        }
+        else {
+            pPlayer.displayClientMessage(
+                Component.translatable("evenmoreinstruments.looper.no_footage")
+            , true);
+            return InteractionResult.CONSUME_PARTIAL;
+        }
+
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock,
+            BlockPos pNeighborPos, boolean pMovedByPiston) {
+        if (pLevel.isClientSide)
+            return;
+                
+        if (pLevel.hasNeighborSignal(pPos) && (pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe))
+            lbe.setTicks(lbe.getRepeatTick() + 1);
     }
 
 
     @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(PLAYING, FACING);
+    public boolean triggerEvent(BlockState pState, Level pLevel, BlockPos pPos, int pId, int pParam) {
+        if (pId != 42)
+            return false;
+
+        // Copied from note block
+        pLevel.addParticle(ParticleTypes.NOTE,
+            (double)pPos.getX() + 0.5D, (double)pPos.getY() + 1.2D, (double)pPos.getZ() + 0.5D,
+            (double)pParam / 24.0D, 0.0D, 0.0D
+        );
+
+        return true;
     }
+
 }

@@ -2,8 +2,8 @@ package com.cstav.evenmoreinstruments.client.gui.instrument.keyboard;
 
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.InstrumentThemeLoader;
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.notegrid.AbstractGridInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentThemeLoader;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.AbstractGridInstrumentScreen;
 import com.cstav.genshinstrument.sound.NoteSound;
 
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber(Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
 public class KeyboardScreen extends AbstractGridInstrumentScreen {
-    public static final String INSTRUMENT_ID = "keyboard";
+    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "keyboard");
 
     public KeyboardScreen(InteractionHand hand) {
         super(hand);
@@ -28,17 +28,17 @@ public class KeyboardScreen extends AbstractGridInstrumentScreen {
 
 
     @Override
-    public NoteSound[] getSounds() {
+    public NoteSound[] getInitSounds() {
         return ModSounds.KEYBOARD;
     }
 
     @Override
     public ResourceLocation getInstrumentId() {
-        return new ResourceLocation(Main.MODID, INSTRUMENT_ID);
+        return INSTRUMENT_ID;
     }
 
 
-    private static final InstrumentThemeLoader THEME_LOADER = initThemeLoader(Main.MODID, INSTRUMENT_ID);
+    private static final InstrumentThemeLoader THEME_LOADER = new InstrumentThemeLoader(INSTRUMENT_ID);
     @Override
     public InstrumentThemeLoader getThemeLoader() {
         return THEME_LOADER;

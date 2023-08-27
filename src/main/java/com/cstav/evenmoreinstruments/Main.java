@@ -3,6 +3,7 @@ package com.cstav.evenmoreinstruments;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.client.ModArmPose;
+import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
@@ -35,6 +36,8 @@ public class Main
         bus.addListener(Main::initClient);
 
         ModSounds.register(bus);
+
+        ModGameRules.load();
 
         ModBlocks.register(bus);
         ModBlockEntities.register(bus);

@@ -32,8 +32,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @EventBusSubscriber(modid = Main.MODID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ModItems {
-    public static final String NOTEBLOCK_INSTRUMENT_SUFFIX = "_note_block_instrument";
-    
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
     public static void register(final IEventBus bus) {
         ITEMS.register(bus);
@@ -43,10 +42,10 @@ public class ModItems {
     private static final LinkedHashMap<RegistryObject<Item>, Supplier<CreativeModeTab[]>> CREATIVE_TABS_MAP = new LinkedHashMap<>();
 
     private static final Supplier<CreativeModeTab[]> DEFAULT_INSTRUMENTS_TABS = () -> new CreativeModeTab[] {
-        ModCreativeModeTabs.getInstrumentsTab()
+        ModCreativeModeTabs.getInstrumentsTab(), CreativeModeTabs.TOOLS_AND_UTILITIES
     };
     private static final Supplier<CreativeModeTab[]> DEFAULT_INSTRUMENT_BLOCK_TABS = () -> new CreativeModeTab[] {
-        ModCreativeModeTabs.getInstrumentsTab(), CreativeModeTabs.FUNCTIONAL_BLOCKS
+        ModCreativeModeTabs.getInstrumentsTab(), CreativeModeTabs.TOOLS_AND_UTILITIES, CreativeModeTabs.FUNCTIONAL_BLOCKS
     };
 
 
@@ -56,7 +55,14 @@ public class ModItems {
                 new ModOpenInstrumentPacket("violin", hand), player
             )
         )),
+        GUITAR = register("guitar", () -> new InstrumentItem(
+            (player, hand) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("guitar", hand), player
+            )
+        )),
+
         TROMBONE = register("trombone", () -> new TromboneItem()),
+
 
         KEYBOARD = register("keyboard", () ->
             new KeyboardBlockItem(ModBlocks.KEYBOARD.get(), new Properties()),
@@ -89,16 +95,13 @@ public class ModItems {
                 continue;
 
             result.put(instrument,
-                register(getInstrumentId(instrument),
+                register(NoteBlockInstrumentItem.getId(instrument),
                     () -> new NoteBlockInstrumentItem(instrument)
                 )
             );
         }
         
         return result;
-    }
-    public static String getInstrumentId(final NoteBlockInstrument instrument) {
-        return instrument.getSerializedName() + NOTEBLOCK_INSTRUMENT_SUFFIX;
     }
 
 

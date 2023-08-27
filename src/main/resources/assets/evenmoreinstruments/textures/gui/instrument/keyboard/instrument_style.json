@@ -1,4 +1,5 @@
 {
     "note_theme": [150, 150, 150],
-    "label_theme": [20, 20, 20]
+    "label_theme": [20, 20, 20],
+    "note_ring_theme": [50, 50, 50]
 }

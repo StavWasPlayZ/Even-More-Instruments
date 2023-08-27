@@ -2,6 +2,8 @@
     "values": [
         "evenmoreinstruments:keyboard",
         "evenmoreinstruments:violin",
+        "evenmoreinstruments:guitar",
+        "evenmoreinstruments:trombone",
 
         "evenmoreinstruments:banjo_note_block_instrument",
         "evenmoreinstruments:basedrum_note_block_instrument",
