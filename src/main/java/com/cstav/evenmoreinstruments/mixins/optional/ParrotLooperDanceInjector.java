@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.mixins;
+package com.cstav.evenmoreinstruments.mixins.optional;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
