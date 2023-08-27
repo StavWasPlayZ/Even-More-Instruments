@@ -4,6 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -174,6 +175,9 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    // Apply Mixin AP
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
     // implementation "maven.modrinth:genshin-instruments:${genshinstruments_version}"
     implementation fg.deobf("idc:genshinstrument-${minecraft_version}:${genshinstruments_version}")
 
@@ -191,6 +195,11 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+mixin {
+    add sourceSets.main, 'mixins.evenmoreinstruments.refmap.json'
+    config 'mixins.evenmoreinstruments.optional.json'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

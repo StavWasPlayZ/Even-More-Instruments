@@ -425,5 +425,91 @@
     "trombone_note_20": {
         "category": "record",
         "sounds": ["evenmoreinstruments:trombone/20"]
+    },
+    
+
+    "guitar_note_0": {
+        "catrgory": "record",
+        "sounds": ["evenmoreinstruments:guitar/0"]
+    },
+    "guitar_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/1"]
+    },
+    "guitar_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/2"]
+    },
+    "guitar_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/3"]
+    },
+    "guitar_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/4"]
+    },
+    "guitar_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/5"]
+    },
+    "guitar_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/6"]
+    },
+    "guitar_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/7"]
+    },
+    "guitar_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/8"]
+    },
+    "guitar_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/9"]
+    },
+    "guitar_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/10"]
+    },
+    "guitar_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/11"]
+    },
+    "guitar_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/12"]
+    },
+    "guitar_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/13"]
+    },
+    "guitar_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/14"]
+    },
+    "guitar_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/15"]
+    },
+    "guitar_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/16"]
+    },
+    "guitar_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/17"]
+    },
+    "guitar_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/18"]
+    },
+    "guitar_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/19"]
+    },
+    "guitar_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/20"]
     }
 }

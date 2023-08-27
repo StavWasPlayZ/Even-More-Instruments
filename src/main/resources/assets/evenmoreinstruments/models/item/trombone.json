@@ -1,5 +1,8 @@
 {
 	"credit": "Made with Blockbench",
+	
+	"gui_light": "front",
+
 	"textures": {
 		"1": "evenmoreinstruments:item/trombone"
 	},
@@ -348,8 +351,8 @@
 			"translation": [0, 5.25, 0]
 		},
 		"gui": {
-			"rotation": [34, -144, -7],
-			"translation": [-0.5, 8.5, 0],
+			"rotation": [30, 143, -7],
+			"translation": [-1, 8.5, 0],
 			"scale": [1.33, 1.33, 1.33]
 		},
 		"head": {

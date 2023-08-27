@@ -28,8 +28,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @EventBusSubscriber(modid = Main.MODID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ModItems {
-    public static final String NOTEBLOCK_INSTRUMENT_SUFFIX = "_note_block_instrument";
-    
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
     public static void register(final IEventBus bus) {
         ITEMS.register(bus);
@@ -42,7 +41,14 @@ public class ModItems {
                 new ModOpenInstrumentPacket("violin", hand), player
             )
         )),
+        GUITAR = register("guitar", () -> new InstrumentItem(
+            (player, hand) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("guitar", hand), player
+            )
+        )),
+
         TROMBONE = register("trombone", () -> new TromboneItem()),
+
 
         KEYBOARD = register("keyboard", () ->
             new KeyboardBlockItem(ModBlocks.KEYBOARD.get(), new Properties().tab(ModCreativeModeTabs.instrumentsTab))
@@ -64,16 +70,13 @@ public class ModItems {
 
         for (final NoteBlockInstrument instrument : instruments) {
             result.put(instrument,
-                register(getInstrumentId(instrument),
+                register(NoteBlockInstrumentItem.getId(instrument),
                     () -> new NoteBlockInstrumentItem(instrument)
                 )
             );
         }
         
         return result;
-    }
-    public static String getInstrumentId(final NoteBlockInstrument instrument) {
-        return instrument.getSerializedName() + NOTEBLOCK_INSTRUMENT_SUFFIX;
     }
 
 

@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.RecordStatePacket;
+import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
 import com.cstav.evenmoreinstruments.networking.packet.UpdateLooperRemovedForInstrument;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
-import com.cstav.genshinstrument.client.gui.screens.instrument.partial.AbstractInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.AbstractInstrumentScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -71,7 +71,7 @@ public class LooperOverlayInjector {
     public static void onScreenClose(final ScreenEvent.Closing event) {
         if (isRecording && (event.getScreen() == screen)) {
             ModPacketHandler.sendToServer(
-                new RecordStatePacket(false, screen.interactionHand)
+                new LooperRecordStatePacket(false, screen.interactionHand)
             );
             
             isRecording = false;
@@ -94,7 +94,7 @@ public class LooperOverlayInjector {
         } else
             btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
 
-        ModPacketHandler.sendToServer(new RecordStatePacket(!isRecording, hand));
+        ModPacketHandler.sendToServer(new LooperRecordStatePacket(!isRecording, hand));
     }
 
     private static BlockEntity getIBE(final Player player) {

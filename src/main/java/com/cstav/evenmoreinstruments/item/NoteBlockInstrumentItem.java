@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 
 public class NoteBlockInstrumentItem extends InstrumentItem {
+    public static final String NOTEBLOCK_INSTRUMENT_SUFFIX = "_note_block_instrument";
 
     public final NoteBlockInstrument instrument;
     public NoteBlockInstrumentItem(NoteBlockInstrument instrument) {
@@ -36,6 +37,10 @@ public class NoteBlockInstrumentItem extends InstrumentItem {
         }
 
         return result.toString().trim();
+    }
+
+    public static String getId(final NoteBlockInstrument instrument) {
+        return instrument.getSerializedName() + NOTEBLOCK_INSTRUMENT_SUFFIX;
     }
 
 }

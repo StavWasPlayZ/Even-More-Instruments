@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
+import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
@@ -75,12 +77,34 @@ public class LooperBlockEntity extends BlockEntity {
         else
             RECORDING_LOOPERS.remove(this);
     }
+
     public void setTicks(final int ticks) {
         getPersistentData().putInt("ticks", ticks);
+    }
+    /**
+     * Increment the ticks of this looper by 1. Wrap back to the start
+     * if the track finished playing.
+     * @return The new tick value
+     */
+    public int incrementTick() {
+        int ticks = getTicks();
+
+        // Wrap back to the start when we finished playing
+        final int repTick = getRepeatTick();
+        if ((repTick != -1) && (ticks > repTick))
+            ticks = 0;
+        else
+            ticks++;
+
+        setTicks(ticks);
+        setChanged();
+
+        return ticks;
     }
     public void setRepeatTick(final int tick) {
         getPersistentData().putInt("repeatTick", tick);
     }
+
     public void setLockedBy(final UUID player) {
         lockedBy = player;
     }
@@ -157,18 +181,18 @@ public class LooperBlockEntity extends BlockEntity {
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         // idk why but it needs to be here for it to work
         final LooperBlockEntity lbe = getLBE(pLevel, pPos);
+        final boolean isPlaying = lbe.getBlockState().getValue(LooperBlock.PLAYING);
 
-        
-        if (!lbe.getBlockState().getValue(LooperBlock.PLAYING) && !lbe.isRecording())
+        if (!isPlaying && !lbe.isRecording())
             return;
 
-        int ticks = getTicks() + 1;
-        final int repTick = getRepeatTick();
-        if ((repTick != -1) && (ticks > repTick))
-            ticks = 0;
+        final int ticks = lbe.incrementTick();
+
+        if (!isPlaying)
+            return;
 
 
-        final CompoundTag channel = getChannel();
+        final CompoundTag channel = lbe.getChannel();
         final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
 
         for (final Tag pNote : channel.getList("notes", Tag.TAG_COMPOUND)) {
@@ -180,7 +204,9 @@ public class LooperBlockEntity extends BlockEntity {
                 continue;
 
             try {
+                
                 final String stereoLoc = note.getString("stereo");
+                final int pitch = note.getInt("pitch");
                 
                 ServerUtil.sendPlayNotePackets(pLevel, pPos,
                     new NoteSound(
@@ -189,17 +215,15 @@ public class LooperBlockEntity extends BlockEntity {
                             new SoundEvent(new ResourceLocation(stereoLoc))
                         )
                     ), instrumentId,
-                    note.getInt("pitch")
+                    pitch
                 );
+
+                pLevel.blockEvent(pPos, ModBlocks.LOOPER.get(), 42, pitch);
 
             } catch (Exception e) {
                 LOGGER.error("Attempted to play note, but met with an exception", e);
             }
         }
-
-
-        lbe.setTicks(ticks);
-        lbe.setChanged();
     }
 
 
@@ -235,8 +259,7 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
     private static LooperBlockEntity getLBE(final Level level, final BlockPos pos) {
-        final BlockEntity be = level.getBlockEntity(pos);
-        return (be instanceof LooperBlockEntity lbe) ? lbe : null;
+        return (level.getBlockEntity(pos) instanceof LooperBlockEntity lbe) ? lbe : null;
     }
 
 
@@ -255,8 +278,7 @@ public class LooperBlockEntity extends BlockEntity {
         if (looperBE == null)
             return;
 
-        // Cap at 255 notes (who needs that many?)
-        if (looperBE.getChannel().getList("notes", Tag.TAG_COMPOUND).size() > 255)
+        if (looperBE.isCapped(level))
             return;
 
 
@@ -273,11 +295,24 @@ public class LooperBlockEntity extends BlockEntity {
         looperBE.setChanged();
     }
 
-    // If the player leaves the world, we should'nt record anymore
+    /**
+     * A capped looper is a looper that cannot have any more notes in it, as defined in {@link ModGameRules#RULE_LOOPER_MAX_NOTES}.
+     * Any negative will make the looper uncappable.
+     * @return Whether this looper is capped
+     */
+    public boolean isCapped(final Level level) {
+        final int cap = level.getGameRules().getInt(ModGameRules.RULE_LOOPER_MAX_NOTES);
+        return (cap >= 0) && (getChannel().getList("notes", Tag.TAG_COMPOUND).size() >= cap);
+    }
+
+
+    // If the player leaves the world, we shouldn't record anymore
     @SubscribeEvent
     public static void onPlayerLeave(final PlayerLoggedOutEvent event) {
         final ArrayList<LooperBlockEntity> toBeRemoved = new ArrayList<>();
 
+        //TODO keep track of where player recording to in (future) record data tag
+        // Thus limit the possibilities of player recording at once to 1
         RECORDING_LOOPERS.forEach((looper) -> {
             if (looper.lockedBy.equals(event.getEntity().getUUID())) {
                 looper.reset();

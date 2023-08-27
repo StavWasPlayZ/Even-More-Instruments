@@ -24,7 +24,7 @@ public class KeyMappings {
         () -> new KeyMapping(CATEGORY+".violin_type_modifier",
             InstrumentKeyMappings.INSTRUMENT_KEY_CONFLICT_CONTEXT,
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_RIGHT_CONTROL
+            GLFW.GLFW_KEY_RIGHT_ALT
         , CATEGORY)
     );
 
