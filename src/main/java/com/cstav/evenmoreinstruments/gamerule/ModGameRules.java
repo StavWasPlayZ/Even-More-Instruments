@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.gamerules;
+package com.cstav.evenmoreinstruments.gamerule;
 
 import com.cstav.evenmoreinstruments.Main;
 
