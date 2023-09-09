@@ -2,7 +2,7 @@
 name: Feature Request
 about: Suggest an idea for this mod
 title: Do this right here right now emer-
-labels: ''
+labels: feature request
 assignees: ''
 
 ---
