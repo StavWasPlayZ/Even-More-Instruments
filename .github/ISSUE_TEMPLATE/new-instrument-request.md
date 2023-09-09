@@ -7,7 +7,9 @@ assignees: ''
 
 ---
 
-# Instrument Type
+**Why this instrument should be added:**
+<!-- This field is optional, but I'd just like and apperciate to know how the thought occurred -->
+
 * Interface Type: Grid / Other
 
 ## If Other
