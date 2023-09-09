@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 # Instrument Type
-Interface Type: Grid / Other
+* Interface Type: Grid / Other
 
 ## If Other
 Explain why:
@@ -28,6 +28,8 @@ Note layout: Default (`C, D, E, F, G A, B`)
 > C, D, E, F, G, A, B,
 > C, D, E, F, G, A, B
 > ```
+
+* Note theme (RGB): 
 
 <!-- PLEASE PROVIDE THE AUDIO FILES FOR YOUR INSTRUMENT! -->
 <!-- Thank you for taking the time to fill this form! -->
