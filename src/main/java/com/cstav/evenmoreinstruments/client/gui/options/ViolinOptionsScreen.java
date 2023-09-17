@@ -39,7 +39,7 @@ public class ViolinOptionsScreen extends SoundTypeOptionsScreen<ViolinSoundType>
 
     @Override
     public TogglablePedalSound<ViolinSoundType> midiPedalListener() {
-        return new TogglablePedalSound<>(values());
+        return new TogglablePedalSound<>(ViolinSoundType.FULL_NOTE, ViolinSoundType.HALF_NOTE);
     }
 
 
