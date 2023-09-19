@@ -1,7 +1,5 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
-import java.util.function.Supplier;
-
 import com.cstav.evenmoreinstruments.client.gui.instrument.noteblockinstrument.NoteBlockInstrumentScreen;
 import com.cstav.genshinstrument.networking.IModPacket;
 
@@ -32,21 +30,15 @@ public class OpenNoteBlockInstrumentPacket implements IModPacket {
         hand = buf.readEnum(InteractionHand.class);
     }
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void write(final FriendlyByteBuf buf) {
         buf.writeEnum(instrument);
         buf.writeEnum(hand);
     }
 
 
     @Override
-    public void handle(Supplier<Context> arg0) {
-        final Context context = arg0.get();
-
-        context.enqueueWork(() ->
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::openScreen)
-        );
-
-        context.setPacketHandled(true);
+    public void handle(final Context context) {
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::openScreen);
     }
     
     @OnlyIn(Dist.CLIENT)
