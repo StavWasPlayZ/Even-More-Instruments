@@ -1,7 +1,6 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
@@ -37,41 +36,35 @@ public class UpdateLooperRemovedForInstrument implements IModPacket {
     }
 
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void write(final FriendlyByteBuf buf) {
         buf.writeOptional(hand, FriendlyByteBuf::writeEnum);
     }
 
     @Override
-    public void handle(Supplier<Context> arg0) {
-        final Context context = arg0.get();
+    public void handle(final Context context) {
+        final ServerPlayer player = context.getSender();
+        final Level level = player.getLevel();
 
-        context.enqueueWork(() -> {
-            final ServerPlayer player = context.getSender();
-            final Level level = player.getLevel();
+        LooperBlockEntity result;
 
-            LooperBlockEntity result;
+        if (hand.isPresent())
+            result = LooperBlockEntity.getLBE(level, player.getItemInHand(hand.get()));
+        else {
+            final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
+            final BlockEntity instrumentBlockEntity = level.getBlockEntity(instrumentBlockPos);
+            
+            result = LooperBlockEntity.getLBE(level, instrumentBlockEntity);
 
-            if (hand.isPresent())
-                result = LooperBlockEntity.getLBE(level, player.getItemInHand(hand.get()));
-            else {
-                final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
-                final BlockEntity instrumentBlockEntity = level.getBlockEntity(instrumentBlockPos);
-                
-                result = LooperBlockEntity.getLBE(level, instrumentBlockEntity);
-
-                // Manually update the tag removal for the client
-                if (result == null)
-                    ModPacketHandler.sendToClient(
-                        new SyncModTagPacket(Main.modTag(instrumentBlockEntity), instrumentBlockPos)
-                    , player);
-
-            }
-
+            // Manually update the tag removal for the client
             if (result == null)
-                ModPacketHandler.sendToClient(new LooperRemovedPacket(), player);
-        });
+                ModPacketHandler.sendToClient(
+                    new SyncModTagPacket(Main.modTag(instrumentBlockEntity), instrumentBlockPos)
+                , player);
 
-        context.setPacketHandled(true);
+        }
+
+        if (result == null)
+            ModPacketHandler.sendToClient(new LooperRemovedPacket(), player);
     }
     
 }

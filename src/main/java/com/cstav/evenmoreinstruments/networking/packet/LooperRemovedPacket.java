@@ -1,7 +1,5 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
-import java.util.function.Supplier;
-
 import com.cstav.evenmoreinstruments.client.gui.instrument.LooperOverlayInjector;
 import com.cstav.genshinstrument.networking.IModPacket;
 
@@ -18,16 +16,10 @@ public class LooperRemovedPacket implements IModPacket {
     public LooperRemovedPacket(final FriendlyByteBuf buf) {}
 
     @Override
-    public void handle(Supplier<Context> arg0) {
-        final Context context = arg0.get();
-
-        context.enqueueWork(() ->
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                LooperOverlayInjector.removeRecordButton()
-            )
+    public void handle(final Context context) {
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
+            LooperOverlayInjector.removeRecordButton()
         );
-
-        context.setPacketHandled(true);
     }
     
 }

@@ -84,7 +84,7 @@ public class ViolinScreen extends AbstractGridInstrumentScreen {
 
 
     private void updateSoundType(final ViolinSoundType sound) {
-        noteGrid.setNoteSounds((soundType = sound).getSoundArr().get());
+        setNoteSounds((soundType = sound).getSoundArr().get());
     }
 
     @Override
