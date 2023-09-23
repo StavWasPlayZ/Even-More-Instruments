@@ -1,7 +1,5 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
-import java.util.function.Supplier;
-
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.genshinstrument.networking.IModPacket;
 
@@ -33,25 +31,19 @@ public class SyncModTagPacket implements IModPacket {
     }
 
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void write(final FriendlyByteBuf buf) {
         buf.writeNbt(modTag);
         buf.writeBlockPos(pos);
     }
 
     @SuppressWarnings("resource")
     @Override
-    public void handle(Supplier<Context> arg0) {
-        final Context context = arg0.get();
-
-        context.enqueueWork(() -> context.enqueueWork(() ->
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                final BlockEntity be = Minecraft.getInstance().player.getLevel().getBlockEntity(pos);
-                
-                if (be != null)
-                    be.getPersistentData().put(Main.MODID, modTag);
-            })
-        ));
-
-        context.setPacketHandled(true);
+    public void handle(final Context context) {
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+            final BlockEntity be = Minecraft.getInstance().player.getLevel().getBlockEntity(pos);
+            
+            if (be != null)
+                be.getPersistentData().put(Main.MODID, modTag);
+        });
     }
 }

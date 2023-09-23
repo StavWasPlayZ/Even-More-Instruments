@@ -1,7 +1,5 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
-import java.util.function.Supplier;
-
 import com.cstav.genshinstrument.networking.IModPacket;
 
 import net.minecraft.client.Minecraft;
@@ -31,7 +29,7 @@ public class LooperPlayStatePacket implements IModPacket {
     }
 
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void write(FriendlyByteBuf buf) {
         buf.writeBoolean(isPlaying);
         buf.writeBlockPos(blockPos);
     }
@@ -39,20 +37,14 @@ public class LooperPlayStatePacket implements IModPacket {
 
     @SuppressWarnings("resource")
     @Override
-    public void handle(Supplier<Context> arg0) {
-        final Context context = arg0.get();
+    public void handle(final Context context) {
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+            final Level level = Minecraft.getInstance().player.level();
 
-        context.enqueueWork(() ->
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                final Level level = Minecraft.getInstance().player.getLevel();
-
-                // Parrots go brrrr
-                for (final LivingEntity livingentity : level.getEntitiesOfClass(LivingEntity.class, (new AABB(blockPos)).inflate(3)))
-                    livingentity.setRecordPlayingNearby(blockPos, isPlaying);
-            }
-        ));
-
-        context.setPacketHandled(true);
+            // Parrots go brrrr
+            for (final LivingEntity livingentity : level.getEntitiesOfClass(LivingEntity.class, (new AABB(blockPos)).inflate(3)))
+                livingentity.setRecordPlayingNearby(blockPos, isPlaying);
+        });
     }
 
 }
