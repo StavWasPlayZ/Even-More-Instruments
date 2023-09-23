@@ -1,7 +1,6 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
@@ -40,7 +39,7 @@ public class LooperRecordStatePacket implements IModPacket {
     }
 
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void write(final FriendlyByteBuf buf) {
         buf.writeBoolean(recording);
         buf.writeOptional(usedHand, FriendlyByteBuf::writeEnum);
     }
@@ -49,19 +48,13 @@ public class LooperRecordStatePacket implements IModPacket {
     //TODO extract all the below to its own method in LooperUtil
 
     @Override
-    public void handle(Supplier<Context> arg0) {
-        final Context context = arg0.get();
+    public void handle(final Context context) {
+        final ServerPlayer player = context.getSender();
 
-        context.enqueueWork(() -> {
-            final ServerPlayer player = context.getSender();
-
-            if (usedHand.isPresent())
-                handleItem(player);
-            else
-                handleBlock(player);
-        });
-
-        context.setPacketHandled(true);
+        if (usedHand.isPresent())
+            handleItem(player);
+        else
+            handleBlock(player);
     }
 
     private void handleBlock(final ServerPlayer player) {

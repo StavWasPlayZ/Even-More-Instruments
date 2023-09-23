@@ -158,12 +158,13 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
-    protected void addNote(NoteSound sound, int pitch, int timestamp) {
+    public void addNote(NoteSound sound, int pitch, float volume, int timestamp) {
         final CompoundTag channel = getChannel();
         final CompoundTag noteTag = new CompoundTag();
 
 
         noteTag.putInt("pitch", pitch);
+        noteTag.putFloat("volume", volume);
 
         noteTag.putString("mono", sound.getMono().getLocation().toString());
         sound.getStereo().ifPresent((stereo) ->
@@ -207,6 +208,8 @@ public class LooperBlockEntity extends BlockEntity {
                 
                 final String stereoLoc = note.getString("stereo");
                 final int pitch = note.getInt("pitch");
+                // Volume property did not exist before v2.1
+                final float volume = note.contains("volume", Tag.TAG_FLOAT) ? note.getFloat("volume") : 1;
                 
                 ServerUtil.sendPlayNotePackets(pLevel, pPos,
                     new NoteSound(
@@ -215,13 +218,13 @@ public class LooperBlockEntity extends BlockEntity {
                             SoundEvent.createVariableRangeEvent(new ResourceLocation(stereoLoc))
                         )
                     ), instrumentId,
-                    pitch
+                    pitch, volume
                 );
 
                 pLevel.blockEvent(pPos, ModBlocks.LOOPER.get(), 42, pitch);
 
             } catch (Exception e) {
-                LOGGER.error("Attempted to play note, but met with an exception", e);
+                LOGGER.error("Attempted to play a looper note, but met with an exception", e);
             }
         }
     }
@@ -291,7 +294,7 @@ public class LooperBlockEntity extends BlockEntity {
             looperBE.getChannel().putString("instrumentId", event.instrumentId.toString());
         }
             
-        looperBE.addNote(event.sound, event.pitch, looperBE.getTicks());
+        looperBE.addNote(event.sound, event.pitch, event.volume, looperBE.getTicks());
         looperBE.setChanged();
     }
 
