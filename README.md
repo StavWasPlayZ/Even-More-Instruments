@@ -7,7 +7,7 @@
 Even More Instruments is an extension mod to the [Genshin Instruments](https://www.curseforge.com/minecraft/mc-mods/genshin-instruments) mod that brings in... more instruments.  
 And a looper.
 
-Check out the Forge port [here](https://github.com/StavWasPlayZ/Even-More-Instruments-Fabric/)!
+Check out the Fabric port [here](https://github.com/StavWasPlayZ/Even-More-Instruments-Fabric/)!
 
 ## I have an idea for a new instrument!
 
