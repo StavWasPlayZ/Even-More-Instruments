@@ -2,7 +2,7 @@
 
 <img align="right" src="https://github.com/StavWasPlayZ/Even-More-Instruments/blob/1.20.1/src/main/resources/icon.png?raw=true" width="100">
 
-# Even More Instruments
+# Even More Instruments!
 
 Even More Instruments is an extension mod to the [Genshin Instruments](https://www.curseforge.com/minecraft/mc-mods/genshin-instruments) mod that brings in... more instruments.  
 And a looper.
