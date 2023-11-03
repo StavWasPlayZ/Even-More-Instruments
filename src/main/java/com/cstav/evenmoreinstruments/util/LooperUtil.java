@@ -64,9 +64,9 @@ public class LooperUtil {
     }
 
     public static CompoundTag getLooperTagFromEvent(final InstrumentPlayedEvent.ByPlayer event) {
-        return (event.itemInstrument.isPresent())
+        return (!event.isBlockInstrument())
             ? looperTag(event.itemInstrument.get())
-            : looperTag(event.level.getBlockEntity(event.blockInstrumentPos.get()));
+            : looperTag(event.level.getBlockEntity(event.playPos));
     }
 
 

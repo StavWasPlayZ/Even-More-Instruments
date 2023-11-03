@@ -66,6 +66,6 @@ description='''A mod that expands on the capabilities of the Genshin Instruments
 [[dependencies.evenmoreinstruments]]
     modId="genshinstrument"
     mandatory=true
-    versionRange="[3.3.1,)"
+    versionRange="[3.3.2,)"
     ordering="AFTER"
     side="BOTH"
