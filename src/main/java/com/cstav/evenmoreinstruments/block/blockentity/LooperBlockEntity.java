@@ -15,7 +15,7 @@ import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.sound.NoteSound;
-import com.cstav.genshinstrument.sound.NoteSoundRegistrer;
+import com.cstav.genshinstrument.sound.NoteSoundRegistrar;
 import com.cstav.genshinstrument.util.ServerUtil;
 import com.mojang.logging.LogUtils;
 
@@ -163,7 +163,7 @@ public class LooperBlockEntity extends BlockEntity {
 
 
         noteTag.putInt("soundIndex", sound.index);
-        noteTag.putString("soundType", sound.baseSoundName.toString());
+        noteTag.putString("soundType", sound.baseSoundLocation.toString());
 
         noteTag.putInt("pitch", pitch);
         noteTag.putFloat("volume", volume / 100f);
@@ -209,7 +209,7 @@ public class LooperBlockEntity extends BlockEntity {
                 final ResourceLocation soundLocation = new ResourceLocation(note.getString("soundType"));
                 
                 ServerUtil.sendPlayNotePackets(pLevel, pPos,
-                    NoteSoundRegistrer.getSounds(soundLocation)[note.getInt("soundIndex")],
+                    NoteSoundRegistrar.getSounds(soundLocation)[note.getInt("soundIndex")],
                     instrumentId, pitch, (int)(volume * 100)
                 );
 

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.genshinstrument.sound.NoteSound;
-import com.cstav.genshinstrument.sound.NoteSoundRegistrer;
+import com.cstav.genshinstrument.sound.NoteSoundRegistrar;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -27,13 +27,13 @@ public class ModSounds {
     
 
     public static final NoteSound[]
-        KEYBOARD = nsr(SOUNDS, loc("keyboard")).stereo().regsiterGrid(),
+        KEYBOARD = nsr(loc("keyboard")).stereo().registerGrid(),
 
-        VIOLIN_FULL_NOTE = nsr(SOUNDS, loc("violin_full")).regsiterGrid(),
-        VIOLIN_HALF_NOTE = nsr(SOUNDS, loc("violin_half")).regsiterGrid(),
+        VIOLIN_FULL_NOTE = nsr(loc("violin_full")).registerGrid(),
+        VIOLIN_HALF_NOTE = nsr(loc("violin_half")).registerGrid(),
 
-        TROMBONE = nsr(SOUNDS, loc("trombone")).regsiterGrid(),
-        GUITAR = nsr(SOUNDS, loc("guitar")).regsiterGrid()
+        TROMBONE = nsr(loc("trombone")).registerGrid(),
+        GUITAR = nsr(loc("guitar")).registerGrid()
     ;
 
 
@@ -43,14 +43,14 @@ public class ModSounds {
     }
 
     private static void registerNoteBlockSounds() {
-        final NoteSoundRegistrer registrer = nsr(SOUNDS, loc("note_block_instrument"));
+        final NoteSoundRegistrar registrar = nsr(loc("note_block_instrument"));
 
         for (NoteBlockInstrument noteSound : NoteBlockInstrument.values()) {
-            registrer.add(noteSound.getSoundEvent().get().getLocation());
-            NOTEBLOCK_SOUNDS.put(noteSound, registrer.peek());
+            registrar.add(noteSound.getSoundEvent().get().getLocation());
+            NOTEBLOCK_SOUNDS.put(noteSound, registrar.peek());
         }
 
-        registrer.registerAll();
+        registrar.registerAll();
     }
 
 
@@ -58,10 +58,10 @@ public class ModSounds {
         return new ResourceLocation(Main.MODID, id);
     }
     /**
-     * Shorthand for {@code new NoteSoundRegistrer(soundRegistrer, instrumentId)}
+     * Shorthand for {@code new NoteSoundRegistrar(soundRegistrar, instrumentId)}
      */
-    private static NoteSoundRegistrer nsr(DeferredRegister<SoundEvent> soundRegistrer, ResourceLocation instrumentId) {
-        return new NoteSoundRegistrer(soundRegistrer, instrumentId);
+    private static NoteSoundRegistrar nsr(ResourceLocation instrumentId) {
+        return new NoteSoundRegistrar(ModSounds.SOUNDS, instrumentId);
     }
 
 }
