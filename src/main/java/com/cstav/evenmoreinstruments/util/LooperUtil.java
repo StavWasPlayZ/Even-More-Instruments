@@ -83,7 +83,7 @@ public class LooperUtil {
         return true;
     }
     public static boolean performChannelCheck(final LooperBlockEntity lbe, final Player pairingPlayer) {
-        if (!lbe.hasChannel())
+        if (!lbe.hasFootage())
             return true;
 
         pairingPlayer.displayClientMessage(

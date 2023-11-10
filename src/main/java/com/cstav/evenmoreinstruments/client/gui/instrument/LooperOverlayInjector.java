@@ -38,10 +38,9 @@ public class LooperOverlayInjector {
     @SuppressWarnings("resource")
     @SubscribeEvent
     public static void onScreenInit(final ScreenEvent.Init.Post event) {
-        if (!(event.getScreen() instanceof AbstractInstrumentScreen))
+        if (!(event.getScreen() instanceof AbstractInstrumentScreen screen))
             return;
 
-        final AbstractInstrumentScreen screen = (AbstractInstrumentScreen) event.getScreen();
         final Player player = Minecraft.getInstance().player;
 
         if (screen.interactionHand.isPresent()) {
@@ -86,9 +85,9 @@ public class LooperOverlayInjector {
         final LocalPlayer player = Minecraft.getInstance().player;
         final Optional<InteractionHand> hand = screen.interactionHand;
 
-        isRecording = hand.isPresent()
-            ? LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(hand.get())))
-            : LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player)));
+        isRecording = hand
+            .map((interactionHand) -> LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(interactionHand))))
+            .orElseGet(() -> LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player))));
 
 
         if (isRecording) {

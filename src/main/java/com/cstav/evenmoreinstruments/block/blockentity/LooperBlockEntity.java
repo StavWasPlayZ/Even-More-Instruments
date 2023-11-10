@@ -46,7 +46,7 @@ public class LooperBlockEntity extends BlockEntity {
         return CommonUtil.getOrCreateElementTag(data, "channel");
     }
 
-    public boolean hasChannel() {
+    public boolean hasFootage() {
         return getPersistentData().contains("channel");
     }
 
@@ -139,14 +139,14 @@ public class LooperBlockEntity extends BlockEntity {
         return getPersistentData().getBoolean("recording");
     }
 
-    public boolean isAllowedToRecord(final UUID player) {
-        return !lockedByAnyone() || isLockedBy(player);
+    public boolean isAllowedToRecord(final UUID playerUUID) {
+        return !lockedByAnyone() || isLockedBy(playerUUID);
     }
     public boolean lockedByAnyone() {
         return lockedBy != null;
     }
-    public boolean isLockedBy(final UUID player) {
-        return lockedBy.equals(player);
+    public boolean isLockedBy(final UUID playerUUID) {
+        return playerUUID.equals(lockedBy);
     }
 
     public int getTicks() {
