@@ -1,15 +1,12 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument;
 
-import java.util.Optional;
-
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
 import com.cstav.evenmoreinstruments.networking.packet.UpdateLooperRemovedForInstrument;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
-import com.cstav.genshinstrument.client.gui.screen.instrument.partial.AbstractInstrumentScreen;
-
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
@@ -26,19 +23,21 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
+import java.util.Optional;
+
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID, value = Dist.CLIENT)
 public class LooperOverlayInjector {
     private static final int REC_BTN_WIDTH = 120;
     
-    private static AbstractInstrumentScreen screen = null;
+    private static GridInstrumentScreen screen = null;
     private static boolean isRecording = false;
     private static Button recordBtn;
 
     @SuppressWarnings("resource")
     @SubscribeEvent
     public static void onScreenInit(final ScreenEvent.Init.Post event) {
-        if (!(event.getScreen() instanceof AbstractInstrumentScreen screen))
+        if (!(event.getScreen() instanceof GridInstrumentScreen screen))
             return;
 
         final Player player = Minecraft.getInstance().player;
