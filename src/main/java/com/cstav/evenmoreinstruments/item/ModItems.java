@@ -64,7 +64,8 @@ public class ModItems {
             )
         )),
 
-        TROMBONE = register("trombone", () -> new TromboneItem()),
+        TROMBONE = register("trombone", TromboneItem::new),
+        SAXOPHONE = register("saxophone", SaxophoneItem::new),
 
 
         KEYBOARD = register("keyboard", () ->
