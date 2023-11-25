@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.evenmoreinstruments.item.partial.WindInstrumentItem;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
@@ -64,8 +65,16 @@ public class ModItems {
             )
         )),
 
-        TROMBONE = register("trombone", TromboneItem::new),
-        SAXOPHONE = register("saxophone", SaxophoneItem::new),
+        TROMBONE = register("trombone", () -> new WindInstrumentItem(
+            (player, hand) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("trombone", hand), player
+            )
+        )),
+        SAXOPHONE = register("saxophone", () -> new WindInstrumentItem(
+            (player, hand) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("saxophone", hand), player
+            )
+        )),
 
 
         KEYBOARD = register("keyboard", () ->

@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ModArmPose {
     public static void register() {}
 
-    public static final ArmPose PLAYING_TROMBONE = ArmPose.create("playing_trombone_instrument", true,
+    public static final ArmPose PLAYING_WIND_INSTRUMENT = ArmPose.create("playing_trombone_instrument", true,
         (model, entity, arm) -> {
             model.rightArm.xRot = -1.5f;
             model.rightArm.zRot = -0.35f;
