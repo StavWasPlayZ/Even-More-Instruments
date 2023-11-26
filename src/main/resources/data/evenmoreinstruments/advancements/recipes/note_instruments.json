@@ -20,22 +20,22 @@
 
     "rewards": {
         "recipes": [
-            "evenmoreinstruments:banjo_note_block_instrument",
-            "evenmoreinstruments:basedrum_note_block_instrument",
-            "evenmoreinstruments:bass_note_block_instrument",
-            "evenmoreinstruments:bell_note_block_instrument",
-            "evenmoreinstruments:bit_note_block_instrument",
-            "evenmoreinstruments:chime_note_block_instrument",
-            "evenmoreinstruments:cow_bell_note_block_instrument",
-            "evenmoreinstruments:didgeridoo_note_block_instrument",
-            "evenmoreinstruments:flute_note_block_instrument",
-            "evenmoreinstruments:guitar_note_block_instrument",
-            "evenmoreinstruments:harp_note_block_instrument",
-            "evenmoreinstruments:hat_note_block_instrument",
-            "evenmoreinstruments:iron_xylophone_note_block_instrument",
-            "evenmoreinstruments:pling_note_block_instrument",
-            "evenmoreinstruments:snare_note_block_instrument",
-            "evenmoreinstruments:xylophone_note_block_instrument"
+            "evenmoreinstruments:noteblock_instrument/banjo_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/basedrum_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/bass_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/bell_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/bit_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/chime_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/cow_bell_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/didgeridoo_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/flute_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/guitar_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/harp_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/hat_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/iron_xylophone_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/pling_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/snare_note_block_instrument",
+            "evenmoreinstruments:noteblock_instrument/xylophone_note_block_instrument"
         ]
     }
 }

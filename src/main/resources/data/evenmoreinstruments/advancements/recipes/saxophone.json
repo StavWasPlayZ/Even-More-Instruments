@@ -25,7 +25,6 @@
 
     "rewards": {
         "recipes": [
-            "evenmoreinstruments:trombone",
             "evenmoreinstruments:saxophone"
         ]
     }
