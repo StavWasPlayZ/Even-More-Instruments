@@ -48,7 +48,7 @@ public class ModSounds {
         final NoteSoundRegistrar registrar = nsr(loc("note_block_instrument"));
 
         for (NoteBlockInstrument noteSound : NoteBlockInstrument.values()) {
-            registrar.chain(noteSound.getSoundEvent().get().getLocation())
+            registrar.chain(noteSound.getSoundEvent().getLocation())
                 .alreadyRegistered()
                 .add();
             NOTEBLOCK_SOUNDS.put(noteSound, registrar.peek());
