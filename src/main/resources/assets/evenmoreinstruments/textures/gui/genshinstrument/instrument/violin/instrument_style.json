@@ -1,4 +1,9 @@
 {
-    "note_theme": [221, 147, 102],
-    "label_theme": [206, 135, 88]
+    "note": {
+        "pressed": [255, 255, 255],
+        "released": [206, 135, 88]
+    },
+    "label": {
+        "released": [221, 147, 102]
+    }
 }

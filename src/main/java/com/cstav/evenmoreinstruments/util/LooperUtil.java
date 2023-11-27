@@ -64,9 +64,9 @@ public class LooperUtil {
     }
 
     public static CompoundTag getLooperTagFromEvent(final InstrumentPlayedEvent.ByPlayer event) {
-        return (event.itemInstrument.isPresent())
+        return (!event.isBlockInstrument())
             ? looperTag(event.itemInstrument.get())
-            : looperTag(event.level.getBlockEntity(event.blockInstrumentPos.get()));
+            : looperTag(event.level.getBlockEntity(event.playPos));
     }
 
 
@@ -83,7 +83,7 @@ public class LooperUtil {
         return true;
     }
     public static boolean performChannelCheck(final LooperBlockEntity lbe, final Player pairingPlayer) {
-        if (!lbe.hasChannel())
+        if (!lbe.hasFootage())
             return true;
 
         pairingPlayer.displayClientMessage(

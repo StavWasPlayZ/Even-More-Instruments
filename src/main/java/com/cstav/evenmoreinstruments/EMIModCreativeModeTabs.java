@@ -11,7 +11,7 @@ public class EMIModCreativeModeTabs {
 
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.LOOPER.get());
+            return new ItemStack(ModItems.KEYBOARD_STAND.get());
         }
         
     };

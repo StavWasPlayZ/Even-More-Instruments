@@ -2,7 +2,6 @@ package com.cstav.evenmoreinstruments.block.blockentity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -16,6 +15,7 @@ import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.sound.NoteSound;
+import com.cstav.genshinstrument.sound.NoteSoundRegistrar;
 import com.cstav.genshinstrument.util.ServerUtil;
 import com.mojang.logging.LogUtils;
 
@@ -23,7 +23,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -47,7 +46,7 @@ public class LooperBlockEntity extends BlockEntity {
         return CommonUtil.getOrCreateElementTag(data, "channel");
     }
 
-    public boolean hasChannel() {
+    public boolean hasFootage() {
         return getPersistentData().contains("channel");
     }
 
@@ -140,14 +139,14 @@ public class LooperBlockEntity extends BlockEntity {
         return getPersistentData().getBoolean("recording");
     }
 
-    public boolean isAllowedToRecord(final UUID player) {
-        return !lockedByAnyone() || isLockedBy(player);
+    public boolean isAllowedToRecord(final UUID playerUUID) {
+        return !lockedByAnyone() || isLockedBy(playerUUID);
     }
     public boolean lockedByAnyone() {
         return lockedBy != null;
     }
-    public boolean isLockedBy(final UUID player) {
-        return lockedBy.equals(player);
+    public boolean isLockedBy(final UUID playerUUID) {
+        return playerUUID.equals(lockedBy);
     }
 
     public int getTicks() {
@@ -158,18 +157,16 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
-    public void addNote(NoteSound sound, int pitch, float volume, int timestamp) {
+    public void addNote(NoteSound sound, int pitch, int volume, int timestamp) {
         final CompoundTag channel = getChannel();
         final CompoundTag noteTag = new CompoundTag();
 
 
-        noteTag.putInt("pitch", pitch);
-        noteTag.putFloat("volume", volume);
+        noteTag.putInt("soundIndex", sound.index);
+        noteTag.putString("soundType", sound.baseSoundLocation.toString());
 
-        noteTag.putString("mono", sound.getMono().getLocation().toString());
-        sound.getStereo().ifPresent((stereo) ->
-            noteTag.putString("stereo", stereo.getLocation().toString())
-        );
+        noteTag.putInt("pitch", pitch);
+        noteTag.putFloat("volume", volume / 100f);
 
         noteTag.putInt("timestamp", timestamp);
 
@@ -197,28 +194,23 @@ public class LooperBlockEntity extends BlockEntity {
         final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
 
         for (final Tag pNote : channel.getList("notes", Tag.TAG_COMPOUND)) {
-            if (!(pNote instanceof CompoundTag))
+            if (!(pNote instanceof CompoundTag note))
                 continue;
 
-            final CompoundTag note = (CompoundTag)pNote;
             if (ticks != note.getInt("timestamp"))
                 continue;
 
             try {
-                
-                final String stereoLoc = note.getString("stereo");
+
                 final int pitch = note.getInt("pitch");
                 // Volume property did not exist before v2.1
                 final float volume = note.contains("volume", Tag.TAG_FLOAT) ? note.getFloat("volume") : 1;
-                
+
+                final ResourceLocation soundLocation = new ResourceLocation(note.getString("soundType"));
+
                 ServerUtil.sendPlayNotePackets(pLevel, pPos,
-                    new NoteSound(
-                        new SoundEvent(new ResourceLocation(note.getString("mono"))),
-                        stereoLoc.equals("") ? Optional.empty() : Optional.of(
-                            new SoundEvent(new ResourceLocation(stereoLoc))
-                        )
-                    ), instrumentId,
-                    pitch, volume
+                    NoteSoundRegistrar.getSounds(soundLocation)[note.getInt("soundIndex")],
+                    instrumentId, pitch, (int)(volume * 100)
                 );
 
                 pLevel.blockEvent(pPos, ModBlocks.LOOPER.get(), 42, pitch);
@@ -276,7 +268,7 @@ public class LooperBlockEntity extends BlockEntity {
             
         final LooperBlockEntity looperBE = event.itemInstrument.isPresent()
             ? getLBE(level, event.itemInstrument.get())
-            : getLBE(level, event.level.getBlockEntity(event.blockInstrumentPos.get()));
+            : getLBE(level, event.level.getBlockEntity(event.playPos));
 
         if (looperBE == null)
             return;
