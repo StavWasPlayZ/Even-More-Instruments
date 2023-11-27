@@ -28,7 +28,8 @@ public class EMIModCreativeModeTabs {
             List.of(ModCreativeModeTabs.getInstrumentsTab()), List.of(),
             (builder) -> builder
                 .title(Component.translatable("evenmoreinstruments.itemGroup.instrument_accessories_tab"))
-                .icon(() -> new ItemStack(ModItems.LOOPER.get()))
+                .icon(() -> new ItemStack(ModItems.KEYBOARD_STAND.get()))
+
             .build()
         );
     }

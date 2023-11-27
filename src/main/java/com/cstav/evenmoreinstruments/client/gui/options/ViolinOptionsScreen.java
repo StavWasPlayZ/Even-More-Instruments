@@ -3,8 +3,8 @@ package com.cstav.evenmoreinstruments.client.gui.options;
 import com.cstav.evenmoreinstruments.client.ModClientConfigs;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinSoundType;
-import com.cstav.genshinstrument.client.gui.screen.instrument.partial.AbstractInstrumentScreen;
-import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.AbstractGridInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.options.instrument.partial.SoundTypeOptionsScreen;
 import com.cstav.genshinstrument.client.util.TogglablePedalSound;
 
@@ -12,7 +12,7 @@ public class ViolinOptionsScreen extends SoundTypeOptionsScreen<ViolinSoundType>
     private static final String SOUND_TYPE_KEY = "button.evenmoreinstruments.violin.soundType",
         OPTIONS_LABEL_KEY = "label.evenmoreinstruments.violin_options";
 
-    public ViolinOptionsScreen(AbstractGridInstrumentScreen screen) {
+    public ViolinOptionsScreen(GridInstrumentScreen screen) {
         super(screen);
     }
 
@@ -33,7 +33,7 @@ public class ViolinOptionsScreen extends SoundTypeOptionsScreen<ViolinSoundType>
     }
 
     @Override
-    protected boolean isValidForSet(AbstractInstrumentScreen arg0) {
+    protected boolean isValidForSet(InstrumentScreen arg0) {
         return arg0 instanceof ViolinScreen;
     }
 

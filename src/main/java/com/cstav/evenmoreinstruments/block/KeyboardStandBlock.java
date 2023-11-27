@@ -60,16 +60,6 @@ public class KeyboardStandBlock extends AbstractInstrumentBlock {
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
 
-    //NOTE: Replace with this on Fabric:
-    // @Override
-    // public void onRemove(BlockState arg0, Level arg1, BlockPos arg2, BlockState arg3, boolean arg4) {
-    //     if (!arg1.isClientSide && arg0.getValue(HAS_KEYBOARD))
-    //         arg1.addFreshEntity(
-    //             new ItemEntity(arg1, arg2.getX(), arg2.getY(), arg2.getZ(), new ItemStack(ModItems.KEYBOARD.get()))
-    //         );
-
-    //     super.onRemove(arg0, arg1, arg2, arg3, arg4);
-    // }
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest,
             FluidState fluid) {
