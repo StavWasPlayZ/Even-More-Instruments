@@ -1,6 +1,6 @@
 {
     "keyboard_note_0": {
-        "catrgory": "record",
+        "category": "record",
         "sounds": ["evenmoreinstruments:keyboard/0"]
     },
     "keyboard_note_1": {
@@ -85,7 +85,7 @@
     },
 
     "keyboard_note_0_stereo": {
-        "catrgory": "record",
+        "category": "record",
         "sounds": ["evenmoreinstruments:keyboard/0.stereo"]
     },
     "keyboard_note_1_stereo": {
@@ -171,7 +171,7 @@
 
 
     "violin_full_note_0": {
-        "catrgory": "record",
+        "category": "record",
         "sounds": ["evenmoreinstruments:violin/full/0"]
     },
     "violin_full_note_1": {
@@ -255,9 +255,8 @@
         "sounds": ["evenmoreinstruments:violin/full/20"]
     },
 
-
     "violin_half_note_0": {
-        "catrgory": "record",
+        "category": "record",
         "sounds": ["evenmoreinstruments:violin/half/0"]
     },
     "violin_half_note_1": {
@@ -343,7 +342,7 @@
     
 
     "trombone_note_0": {
-        "catrgory": "record",
+        "category": "record",
         "sounds": ["evenmoreinstruments:trombone/0"]
     },
     "trombone_note_1": {
@@ -429,7 +428,7 @@
     
 
     "guitar_note_0": {
-        "catrgory": "record",
+        "category": "record",
         "sounds": ["evenmoreinstruments:guitar/0"]
     },
     "guitar_note_1": {
@@ -511,5 +510,91 @@
     "guitar_note_20": {
         "category": "record",
         "sounds": ["evenmoreinstruments:guitar/20"]
+    },
+
+
+    "saxophone_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/0"]
+    },
+    "saxophone_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/1"]
+    },
+    "saxophone_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/2"]
+    },
+    "saxophone_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/3"]
+    },
+    "saxophone_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/4"]
+    },
+    "saxophone_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/5"]
+    },
+    "saxophone_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/6"]
+    },
+    "saxophone_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/7"]
+    },
+    "saxophone_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/8"]
+    },
+    "saxophone_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/9"]
+    },
+    "saxophone_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/10"]
+    },
+    "saxophone_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/11"]
+    },
+    "saxophone_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/12"]
+    },
+    "saxophone_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/13"]
+    },
+    "saxophone_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/14"]
+    },
+    "saxophone_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/15"]
+    },
+    "saxophone_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/16"]
+    },
+    "saxophone_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/17"]
+    },
+    "saxophone_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/18"]
+    },
+    "saxophone_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/19"]
+    },
+    "saxophone_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/20"]
     }
 }

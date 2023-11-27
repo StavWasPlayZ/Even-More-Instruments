@@ -18,11 +18,11 @@ public class CommonUtil {
         return getOrCreateElementTag(Main.modTag(item), key);
     }
     public static CompoundTag getOrCreateElementTag(final CompoundTag parent, final String key) {
-        return getOrCreateTag(parent, key, CompoundTag.TAG_COMPOUND, () -> new CompoundTag());
+        return getOrCreateTag(parent, key, CompoundTag.TAG_COMPOUND, CompoundTag::new);
     }
 
     public static ListTag getOrCreateListTag(final CompoundTag parent, final String key) {
-        return getOrCreateTag(parent, key, CompoundTag.TAG_LIST, () -> new ListTag());
+        return getOrCreateTag(parent, key, CompoundTag.TAG_LIST, ListTag::new);
     }
 
     public static <T extends Tag> T getOrCreateTag(ItemStack item, String key, int type, Supplier<T> orElse) {

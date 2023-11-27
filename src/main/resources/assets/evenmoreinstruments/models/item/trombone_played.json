@@ -1,0 +1,21 @@
+{
+    "parent": "evenmoreinstruments:item/trombone",
+
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [3.64, -29.75, 13.7],
+            "translation": [-3.5, 8.25, -1.25]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [180, -150, -154],
+            "translation": [-4.75, 6, -1.75]
+        },
+
+        "firstperson_righthand": {
+            "translation": [-7.75, 10, -1.5]
+        },
+        "firstperson_lefthand": {
+            "translation": [-10.25, 10, -1.5]
+        }
+    }
+}

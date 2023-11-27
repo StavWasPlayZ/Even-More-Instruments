@@ -1,12 +1,11 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument.noteblockinstrument;
 
-import java.util.Optional;
-
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.item.NoteBlockInstrumentItem;
+import com.cstav.evenmoreinstruments.sound.ModSounds;
 import com.cstav.genshinstrument.client.gui.screen.instrument.floralzither.FloralZitherScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentThemeLoader;
-import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.AbstractGridInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.NoteGridButton;
 import com.cstav.genshinstrument.sound.NoteSound;
 
@@ -20,11 +19,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @OnlyIn(Dist.CLIENT)
 //NOTE: There to load it on startup
 @EventBusSubscriber(Dist.CLIENT)
-public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
+public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     public static final String[] NOTES_LAYOUT = {"F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F"};
-    private static final NoteSound[] DEFAULT_NOTE_SOUNDS = new NoteSound[] {
-        new NoteSound(NoteBlockInstrument.BASS.getSoundEvent().get(), Optional.empty())
-    };
 
     public final NoteBlockInstrument instrumentType;
     public final ResourceLocation instrumentId;
@@ -36,7 +32,7 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
         instrumentId = new ResourceLocation(Main.MODID, NoteBlockInstrumentItem.getId(instrumentType));
 
         // Update the sound to match the note block's
-        noteGrid.setNoteSounds(new NoteSound[] {new NoteSound(instrumentType.getSoundEvent().get(), Optional.empty())});
+        noteGrid.setNoteSounds(ModSounds.getNoteblockSounds(instrumentType));
     }
 
     @Override
@@ -73,7 +69,7 @@ public class NoteBlockInstrumentScreen extends AbstractGridInstrumentScreen {
 
     @Override
     public NoteSound[] getInitSounds() {
-        return DEFAULT_NOTE_SOUNDS;
+        return ModSounds.getNoteblockSounds(NoteBlockInstrument.HARP);
     }
 
     @Override
