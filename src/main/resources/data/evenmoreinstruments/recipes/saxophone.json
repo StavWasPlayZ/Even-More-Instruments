@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+
+    "key": {
+        "#": {
+            "item": "minecraft:polished_blackstone_slab"
+        },
+        "X": {
+            "item": "minecraft:gold_ingot"
+        },
+        "O": {
+            "item": "minecraft:gold_block"
+        },
+        "b": {
+            "item": "minecraft:stone_button"
+        }
+    },
+
+    "pattern": [
+        "#X ",
+        " Ob",
+        " Ob"
+    ],
+
+    "result": {
+        "item": "evenmoreinstruments:saxophone"
+    }
+}

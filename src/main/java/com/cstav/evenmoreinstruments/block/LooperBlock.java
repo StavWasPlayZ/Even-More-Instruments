@@ -96,7 +96,7 @@ public class LooperBlock extends Block implements EntityBlock {
         if (!(be instanceof LooperBlockEntity lbe))
             return InteractionResult.FAIL;
 
-        final boolean hasChannel = lbe.hasChannel();
+        final boolean hasChannel = lbe.hasFootage();
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
         
 
