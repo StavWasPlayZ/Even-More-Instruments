@@ -70,13 +70,15 @@ public class LooperOverlayInjector {
 
     @SubscribeEvent
     public static void onScreenClose(final ScreenEvent.Closing event) {
-        if (isRecording && (event.getScreen() == screen)) {
-            ModPacketHandler.sendToServer(
-                new LooperRecordStatePacket(false, screen.interactionHand)
-            );
-            
-            isRecording = false;
-        }
+        if (!isRecording || (event.getScreen() != screen))
+            return;
+
+        ModPacketHandler.sendToServer(
+            new LooperRecordStatePacket(false, screen.interactionHand)
+        );
+
+        isRecording = false;
+        screen = null;
     }
     
     @SuppressWarnings("resource")
@@ -84,9 +86,9 @@ public class LooperOverlayInjector {
         final LocalPlayer player = Minecraft.getInstance().player;
         final Optional<InteractionHand> hand = screen.interactionHand;
 
-        isRecording = hand
-            .map((interactionHand) -> LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(interactionHand))))
-            .orElseGet(() -> LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player))));
+        isRecording = hand.isPresent()
+            ? LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(hand.get())))
+            : LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player)));
 
 
         if (isRecording) {
@@ -95,7 +97,8 @@ public class LooperOverlayInjector {
         } else
             btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
 
-        ModPacketHandler.sendToServer(new LooperRecordStatePacket(!isRecording, hand));
+        isRecording = !isRecording;
+        ModPacketHandler.sendToServer(new LooperRecordStatePacket(isRecording, hand));
     }
 
     private static BlockEntity getIBE(final Player player) {
