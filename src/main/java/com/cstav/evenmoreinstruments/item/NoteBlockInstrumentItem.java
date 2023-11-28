@@ -5,6 +5,7 @@ import com.cstav.evenmoreinstruments.networking.packet.OpenNoteBlockInstrumentPa
 import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 
@@ -23,7 +24,7 @@ public class NoteBlockInstrumentItem extends InstrumentItem {
 
     @Override
     public Component getName(ItemStack pStack) {
-        return Component.translatable("item.evenmoreinstruments.note_block_instrument", getInstrumentName());
+        return new TranslatableComponent("item.evenmoreinstruments.note_block_instrument", getInstrumentName());
     }
 
     private String getInstrumentName() {

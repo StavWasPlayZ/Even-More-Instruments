@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -118,7 +119,7 @@ public class LooperBlock extends Block implements EntityBlock {
         }
         else {
             pPlayer.displayClientMessage(
-                Component.translatable("evenmoreinstruments.looper.no_footage")
+                new TranslatableComponent("evenmoreinstruments.looper.no_footage")
             , true);
             return InteractionResult.CONSUME_PARTIAL;
         }

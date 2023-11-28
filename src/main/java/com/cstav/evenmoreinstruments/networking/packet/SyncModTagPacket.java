@@ -43,7 +43,7 @@ public class SyncModTagPacket implements IModPacket {
             final BlockEntity be = Minecraft.getInstance().player.getLevel().getBlockEntity(pos);
             
             if (be != null)
-                be.getPersistentData().put(Main.MODID, modTag);
+                be.getTileData().put(Main.MODID, modTag);
         });
     }
 }

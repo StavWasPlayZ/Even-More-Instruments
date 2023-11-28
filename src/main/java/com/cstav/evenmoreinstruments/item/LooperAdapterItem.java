@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -61,7 +62,7 @@ public class LooperAdapterItem extends Item {
 
         adapterTag.put(BLOCK_INSTRUMENT_POS_TAG, NbtUtils.writeBlockPos(blockPos));
         player.displayClientMessage(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.select_looper").withStyle(ChatFormatting.GREEN)
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.select_looper").withStyle(ChatFormatting.GREEN)
         , true);
         return true;
     }
@@ -75,7 +76,7 @@ public class LooperAdapterItem extends Item {
 
         adapterTag.put(LOOPER_POS_TAG, NbtUtils.writeBlockPos(blockPos));
         player.displayClientMessage(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.select_instrument").withStyle(ChatFormatting.GREEN)
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.select_instrument").withStyle(ChatFormatting.GREEN)
         , true);
         return true;
     }

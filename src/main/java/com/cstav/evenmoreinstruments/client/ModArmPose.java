@@ -1,22 +1,26 @@
 package com.cstav.evenmoreinstruments.client;
 
+import com.cstav.genshinstrument.event.PosePlayerArmEvent;
+import com.cstav.genshinstrument.event.PosePlayerArmEvent.HandType;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ModArmPose {
-    public static void register() {}
 
-    public static final ArmPose PLAYING_WIND_INSTRUMENT = ArmPose.create("playing_trombone_instrument", true,
-        (model, entity, arm) -> {
-            model.rightArm.xRot = -1.5f;
-            model.rightArm.zRot = -0.35f;
-            model.rightArm.yRot = -0.5f;
-
-            model.leftArm.xRot = -1.5f;
-            model.leftArm.zRot = 0.55f;
-            model.leftArm.yRot = 0.5f;
+    public static void poseWindInstrument(final PosePlayerArmEvent event) {
+        if (event.hand == HandType.RIGHT) {
+            event.arm.xRot = -1.5f;
+            event.arm.zRot = -0.35f;
+            event.arm.yRot = -0.5f;
+        } else {
+            event.arm.xRot = -1.5f;
+            event.arm.zRot = 0.55f;
+            event.arm.yRot = 0.5f;
         }
-    );
+
+        event.setCanceled(true);
+    }
+
 }

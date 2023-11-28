@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -77,7 +78,7 @@ public class LooperUtil {
         pairPerformer.run();
 
         pairingPlayer.displayClientMessage(
-            Component.translatable("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
+            new TranslatableComponent("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
         , true);
 
         return true;
@@ -87,7 +88,7 @@ public class LooperUtil {
             return true;
 
         pairingPlayer.displayClientMessage(
-            Component.translatable("evenmoreinstruments.looper.pair_conflict").withStyle(ChatFormatting.GREEN)
+            new TranslatableComponent("evenmoreinstruments.looper.pair_conflict").withStyle(ChatFormatting.GREEN)
         , true);
 
         return false;

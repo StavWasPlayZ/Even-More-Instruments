@@ -2,6 +2,7 @@ package com.cstav.evenmoreinstruments;
 
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
+import com.cstav.evenmoreinstruments.client.KeyMappings;
 import com.cstav.evenmoreinstruments.client.ModArmPose;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
@@ -26,7 +27,7 @@ public class Main
         return item.getOrCreateTagElement(MODID);
     }
     public static CompoundTag modTag(final BlockEntity be) {
-        return CommonUtil.getOrCreateElementTag(be.getPersistentData(), MODID);
+        return CommonUtil.getOrCreateElementTag(be.getTileData(), MODID);
     }
     
     public Main()
@@ -47,6 +48,8 @@ public class Main
     }
 
     public static void initClient(final FMLClientSetupEvent event) {
-        ModArmPose.register();
+//        ModArmPose.register();
+
+        KeyMappings.registerKeybinds();
     }
 }

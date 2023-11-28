@@ -40,21 +40,21 @@ public class LooperBlockEntity extends BlockEntity {
     private UUID lockedBy;
 
     public CompoundTag getChannel() {
-        return getChannel(getPersistentData());
+        return getChannel(getTileData());
     }
     public CompoundTag getChannel(final CompoundTag data) {
         return CommonUtil.getOrCreateElementTag(data, "channel");
     }
 
     public boolean hasFootage() {
-        return getPersistentData().contains("channel");
+        return getTileData().contains("channel");
     }
 
 
     public LooperBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.LOOPER.get(), pPos, pBlockState);
 
-        final CompoundTag data = getPersistentData();
+        final CompoundTag data = getTileData();
 
         // Construct all the data stuff
         if (!data.contains("ticks", CompoundTag.TAG_INT))
@@ -69,7 +69,7 @@ public class LooperBlockEntity extends BlockEntity {
     
 
     public void setRecording(final boolean recording) {
-        getPersistentData().putBoolean("recording", recording);
+        getTileData().putBoolean("recording", recording);
 
         if (recording)
             RECORDING_LOOPERS.add(this);
@@ -78,7 +78,7 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
     public void setTicks(final int ticks) {
-        getPersistentData().putInt("ticks", ticks);
+        getTileData().putInt("ticks", ticks);
     }
     /**
      * Increment the ticks of this looper by 1. Wrap back to the start
@@ -101,7 +101,7 @@ public class LooperBlockEntity extends BlockEntity {
         return ticks;
     }
     public void setRepeatTick(final int tick) {
-        getPersistentData().putInt("repeatTick", tick);
+        getTileData().putInt("repeatTick", tick);
     }
 
     public void setLockedBy(final UUID player) {
@@ -109,7 +109,7 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
     public void lock() {
-        getPersistentData().putBoolean("locked", true);
+        getTileData().putBoolean("locked", true);
         lockedBy = null;
 
         setRepeatTick(getTicks());
@@ -122,21 +122,21 @@ public class LooperBlockEntity extends BlockEntity {
      * This method resets the looper, assuming it is not recording.
      */
     public void reset() {
-        getPersistentData().remove("locked");
-        getPersistentData().remove("lockedBy");
+        getTileData().remove("locked");
+        getTileData().remove("lockedBy");
         lockedBy = null;
 
         setRepeatTick(-1);
         setTicks(0);
 
-        getPersistentData().remove("channel");
+        getTileData().remove("channel");
     }
 
     public boolean isLocked() {
-        return lockedByAnyone() || getPersistentData().getBoolean("locked");
+        return lockedByAnyone() || getTileData().getBoolean("locked");
     }
     public boolean isRecording() {
-        return getPersistentData().getBoolean("recording");
+        return getTileData().getBoolean("recording");
     }
 
     public boolean isAllowedToRecord(final UUID playerUUID) {
@@ -150,10 +150,10 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
     public int getTicks() {
-        return getPersistentData().getInt("ticks");
+        return getTileData().getInt("ticks");
     }
     public int getRepeatTick() {
-        return getPersistentData().getInt("repeatTick");
+        return getTileData().getInt("repeatTick");
     }
 
 
@@ -311,7 +311,7 @@ public class LooperBlockEntity extends BlockEntity {
         RECORDING_LOOPERS.forEach((looper) -> {
             if (looper.lockedBy.equals(event.getEntity().getUUID())) {
                 looper.reset();
-                looper.getPersistentData().putBoolean("recording", false);
+                looper.getTileData().putBoolean("recording", false);
                 toBeRemoved.add(looper);
             }
         });
