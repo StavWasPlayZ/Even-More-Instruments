@@ -1,0 +1,23 @@
+{
+    "parent": "evenmoreinstruments:item/saxophone",
+
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [133.71, -53.55, 126.58],
+            "translation": [0, -4.75, 1.25]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [-28.02, 46.51, 12.28],
+            "translation": [0.25, -8.25, 2.5]
+        },
+
+        "firstperson_righthand": {
+            "rotation": [153.47, -80.07, 138.57],
+            "translation": [-7.5, 1, -1.5]
+        },
+        "firstperson_lefthand": {
+            "rotation": [-31.31, 77.09, 48.21],
+            "translation": [-6.75, 1.5, -2.25]
+        }
+    }
+}

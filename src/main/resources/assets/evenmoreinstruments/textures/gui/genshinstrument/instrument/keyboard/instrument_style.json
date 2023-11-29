@@ -1,5 +1,10 @@
 {
-    "note_theme": [150, 150, 150],
-    "label_theme": [20, 20, 20],
-    "note_ring_theme": [50, 50, 50]
+    "note": {
+        "released": [20, 20, 20]
+    },
+    "label": {
+        "released": [130, 130, 130]
+    },
+    
+    "note_ring": [50, 50, 50]
 }
