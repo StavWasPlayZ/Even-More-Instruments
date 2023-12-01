@@ -29,9 +29,9 @@ public class LooperRecordStatePacket implements IModPacket {
     private final Optional<InteractionHand> usedHand;
     private final boolean recording;
 
-    public LooperRecordStatePacket(boolean recording, Optional<InteractionHand> usedHand) {
+    public LooperRecordStatePacket(boolean recording, InteractionHand usedHand) {
         this.recording = recording;
-        this.usedHand = usedHand;
+        this.usedHand = Optional.ofNullable(usedHand);
     }
     public LooperRecordStatePacket(final FriendlyByteBuf buf) {
         recording = buf.readBoolean();

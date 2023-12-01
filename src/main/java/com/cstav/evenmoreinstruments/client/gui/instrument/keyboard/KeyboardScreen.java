@@ -18,9 +18,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class KeyboardScreen extends GridInstrumentScreen {
     public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "keyboard");
 
-    public KeyboardScreen(InteractionHand hand) {
-        super(hand);
-    }
     @Override
     public boolean isGenshinInstrument() {
         return false;

@@ -19,10 +19,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class SaxophoneScreen extends GridInstrumentScreen {
     public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "saxophone");
 
-    public SaxophoneScreen(InteractionHand hand) {
-        super(hand);
-    }
-
     @Override
     public NoteSound[] getInitSounds() {
         return ModSounds.SAXOPHONE;

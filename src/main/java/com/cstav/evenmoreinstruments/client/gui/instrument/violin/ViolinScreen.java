@@ -19,10 +19,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class ViolinScreen extends GridInstrumentScreen {
     public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "violin");
 
-    public ViolinScreen(InteractionHand hand) {
-        super(hand);
-    }
-
 
     //#region Handle long/short sounds
 

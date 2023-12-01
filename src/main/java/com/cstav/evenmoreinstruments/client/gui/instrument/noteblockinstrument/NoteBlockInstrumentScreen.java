@@ -25,9 +25,7 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     public final NoteBlockInstrument instrumentType;
     public final ResourceLocation instrumentId;
     
-    public NoteBlockInstrumentScreen(InteractionHand hand, final NoteBlockInstrument instrumentType) {
-        super(hand);
-
+    public NoteBlockInstrumentScreen(final NoteBlockInstrument instrumentType) {
         this.instrumentType = instrumentType;
         instrumentId = new ResourceLocation(Main.MODID, NoteBlockInstrumentItem.getId(instrumentType));
 

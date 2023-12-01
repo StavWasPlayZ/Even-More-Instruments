@@ -18,10 +18,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class TromboneScreen extends GridInstrumentScreen {
     public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "trombone");
 
-    public TromboneScreen(InteractionHand hand) {
-        super(hand);
-    }
-
     @Override
     public NoteSound[] getInitSounds() {
         return ModSounds.TROMBONE;

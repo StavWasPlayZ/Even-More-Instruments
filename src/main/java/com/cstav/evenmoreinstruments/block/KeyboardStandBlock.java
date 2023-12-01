@@ -74,7 +74,7 @@ public class KeyboardStandBlock extends AbstractInstrumentBlock {
 
     @Override
     protected OpenInstrumentPacketSender instrumentPacketSender() {
-        return (player, hand) -> ModPacketHandler.sendToClient(new ModOpenInstrumentPacket("keyboard", hand), player);
+        return (player) -> ModPacketHandler.sendToClient(new ModOpenInstrumentPacket("keyboard"), player);
     }
 
     @Override

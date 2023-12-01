@@ -18,21 +18,17 @@ public class OpenNoteBlockInstrumentPacket implements IModPacket {
 
 
     private final NoteBlockInstrument instrument;
-    private final InteractionHand hand;
 
-    public OpenNoteBlockInstrumentPacket(final NoteBlockInstrument instrument, final InteractionHand hand) {
+    public OpenNoteBlockInstrumentPacket(final NoteBlockInstrument instrument) {
         this.instrument = instrument;
-        this.hand = hand;
     }
 
     public OpenNoteBlockInstrumentPacket(final FriendlyByteBuf buf) {
         instrument = buf.readEnum(NoteBlockInstrument.class);
-        hand = buf.readEnum(InteractionHand.class);
     }
     @Override
     public void write(final FriendlyByteBuf buf) {
         buf.writeEnum(instrument);
-        buf.writeEnum(hand);
     }
 
 
@@ -43,7 +39,7 @@ public class OpenNoteBlockInstrumentPacket implements IModPacket {
     
     @OnlyIn(Dist.CLIENT)
     private void openScreen() {
-        Minecraft.getInstance().setScreen(new NoteBlockInstrumentScreen(hand, instrument));
+        Minecraft.getInstance().setScreen(new NoteBlockInstrumentScreen(instrument));
     }
 
 }
