@@ -10,7 +10,7 @@ public abstract class ServerUtil {
     @SuppressWarnings("deprecation")
     public static boolean isMaliciousPos(final Player player, final CompoundTag looperTag) {
         final BlockPos looperPos = LooperUtil.getLooperPos(looperTag);
-        return !player.level().hasChunkAt(looperPos);
+        return !player.getLevel().hasChunkAt(looperPos);
     }
 
 
