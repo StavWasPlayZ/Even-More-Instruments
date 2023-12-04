@@ -1,6 +1,7 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument;
 
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.event.ScreenCloseEvent;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
 import com.cstav.evenmoreinstruments.networking.packet.UpdateLooperRemovedForInstrument;
@@ -67,7 +68,7 @@ public class LooperOverlayInjector {
 
     @SubscribeEvent
     public static void onScreenClose(final ScreenCloseEvent event) {
-        if (!isRecording || (event.getScreen() != screen))
+        if (!isRecording || (event.screen != screen))
             return;
 
         ModPacketHandler.sendToServer(
