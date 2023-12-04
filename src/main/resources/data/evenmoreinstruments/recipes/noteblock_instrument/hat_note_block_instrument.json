@@ -1,0 +1,31 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "N",
+        "A"
+    ],
+
+    "key": {
+        "#": {
+            "item": "minecraft:string"
+        },
+        "N": {
+            "item": "minecraft:note_block"
+        },
+        "A": [
+            {"item": "glass"},
+            {"item": "glass_pane"},
+            {"item": "tinted_glass"},
+            {"item": "sea_lantern"},
+            {"item": "beacon"}
+        ]
+    },
+
+    "group": "noteblock_instruments",
+
+    "result": {
+        "item": "evenmoreinstruments:hat_note_block_instrument",
+        "count": 1
+    }
+}

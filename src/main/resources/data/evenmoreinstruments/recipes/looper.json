@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "R ",
+        "JT"
+    ],
+    "key": {
+        "R": {
+            "item": "minecraft:redstone"
+        },
+        "J": {
+            "item": "minecraft:jukebox"
+        },
+        "T": {
+            "item": "minecraft:redstone_torch"
+        }
+    },
+    "result": {
+        "item": "evenmoreinstruments:looper",
+        "count": 1
+    }
+}

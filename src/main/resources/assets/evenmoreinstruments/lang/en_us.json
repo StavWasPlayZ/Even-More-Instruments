@@ -1,0 +1,39 @@
+{
+    "evenmoreinstruments.keymaps": "Even More Instruments! Keymaps",
+    "evenmoreinstruments.keymaps.violin_type_modifier": "Lengthen/Shorten Violin Sound",
+
+    "evenmoreinstruments.itemGroup.instrument_accessories_tab": "Instrument Accessories",
+
+
+    "item.evenmoreinstruments.violin": "Violin",
+    "item.evenmoreinstruments.guitar": "Guitar",
+    "item.evenmoreinstruments.trombone": "Trombone",
+    "item.evenmoreinstruments.saxophone": "Saxophone",
+    "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
+
+    "item.evenmoreinstruments.looper_adapter": "Looper Wireless Adapter",
+    "item.evenmoreinstruments.looper_adapter.select_instrument": "Looper connected successfully. Please select an instrument to pair with it.",
+    "item.evenmoreinstruments.looper_adapter.select_looper": "Instrument connected successfully. Please select a looper to pair with it.",
+
+    "block.evenmoreinstruments.keyboard": "Keyboard",
+    "block.evenmoreinstruments.keyboard_stand": "Keyboard Stand",
+
+
+    "label.evenmoreinstruments.violin_options": "Violin Options",
+    "button.evenmoreinstruments.violin.soundType": "Violin Note Length",
+    "button.evenmoreinstruments.violin.soundType.half_note": "Half Note",
+    "button.evenmoreinstruments.violin.soundType.full_note": "Full Note",
+
+
+    "block.evenmoreinstruments.looper": "Looper",
+
+    "evenmoreinstruments.looper.success_pair": "Paired instrument successfully!",
+    "evenmoreinstruments.looper.pair_conflict": "This Looper already has recorded footage!",
+    "evenmoreinstruments.looper.no_footage": "This looper has no footage! Use an instrument to start recording",
+
+    "button.evenmoreinstruments.record": "Record",
+    "button.evenmoreinstruments.stop": "Stop",
+
+    "gamerule.evenmoreinstruments_looperMaxNotes": "Looper Max Notes",
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable."
+}

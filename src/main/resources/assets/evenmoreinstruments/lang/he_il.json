@@ -1,0 +1,40 @@
+{
+    "evenmoreinstruments.keymaps": "הגדרות המקשים של 'אפילו יותר כלי נגינה!'",
+    "evenmoreinstruments.keymaps.violin_type_modifier": "הארך/קצר את אורך צליל הכינור",
+
+    "evenmoreinstruments.itemGroup.instrument_accessories_tab": "אביזרי כלי נגינה",
+
+
+    "item.evenmoreinstruments.violin": "כינור",
+    "item.evenmoreinstruments.guitar": "גיטרה",
+    "item.evenmoreinstruments.trombone": "טרומבון",
+    "item.evenmoreinstruments.saxophone": "סקסופון",
+    "item.evenmoreinstruments.note_block_instrument": "בלוק הצליל של %s",
+
+    "item.evenmoreinstruments.looper_adapter": "מתאם אלחוטי ללופר",
+    "item.evenmoreinstruments.looper_adapter.select_instrument": "לופר חובר בהצלחה. אנא בחר כלי נגינה לתאם עימו.",
+    "item.evenmoreinstruments.looper_adapter.select_looper": "כלי נגינה חובר בהצלחה. אנא בחר לופר לתאם עימו.",
+
+
+    "block.evenmoreinstruments.keyboard": "אורגן",
+    "block.evenmoreinstruments.keyboard_stand": "מעמד לאורגן",
+
+
+    "label.evenmoreinstruments.violin_options": "אפשרויות הכינור",
+    "button.evenmoreinstruments.violin.soundType": "אורך צליל הכינור",
+    "button.evenmoreinstruments.violin.soundType.half_note": "שתי פעמות",
+    "button.evenmoreinstruments.violin.soundType.full_note": "ארבעה פעמות",
+
+
+    "block.evenmoreinstruments.looper": "לופר",
+
+    "evenmoreinstruments.looper.success_pair": "כלי הנגינה תואם בהצלחה!",
+    "evenmoreinstruments.looper.pair_conflict": "לופר זה הינו תפוס!",
+    "evenmoreinstruments.looper.no_footage": "ללופר זה אין אף הקלטה! השתמש בכלי נגינה כדיי להתחיל להקליט",
+
+    "button.evenmoreinstruments.record": "הקלט",
+    "button.evenmoreinstruments.stop": "עצור",
+
+    "gamerule.evenmoreinstruments_looperMaxNotes": "מגבלת התווים ללופר",
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "מספר התווים שלופר יכול להכיל. כל ערך מתחת ל- 0 יגרום ללופר להיות חסר כל מגבלות."
+}

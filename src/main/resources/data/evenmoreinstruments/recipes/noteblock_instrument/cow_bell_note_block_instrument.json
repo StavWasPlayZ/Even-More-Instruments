@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "N",
+        "A"
+    ],
+
+    "key": {
+        "#": {
+            "item": "minecraft:string"
+        },
+        "N": {
+            "item": "minecraft:note_block"
+        },
+        "A": {
+            "item": "minecraft:soul_sand"
+        }
+    },
+
+    "group": "noteblock_instruments",
+
+    "result": {
+        "item": "evenmoreinstruments:cow_bell_note_block_instrument",
+        "count": 1
+    }
+}

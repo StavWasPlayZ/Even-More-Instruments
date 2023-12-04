@@ -2,17 +2,21 @@ package com.cstav.evenmoreinstruments.networking;
 
 import java.util.List;
 
-import com.cstav.genshinstrument.networking.ModPacket;
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
+import com.cstav.evenmoreinstruments.networking.packet.LooperRemovedPacket;
+import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
+import com.cstav.evenmoreinstruments.networking.packet.OpenNoteBlockInstrumentPacket;
+import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
+import com.cstav.evenmoreinstruments.networking.packet.SyncModTagPacket;
+import com.cstav.evenmoreinstruments.networking.packet.UpdateLooperRemovedForInstrument;
+import com.cstav.genshinstrument.networking.IModPacket;
+import com.cstav.genshinstrument.util.ServerUtil;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -21,16 +25,23 @@ import net.minecraftforge.network.simple.SimpleChannel;
 @EventBusSubscriber(modid = Main.MODID, bus = Bus.MOD)
 public class ModPacketHandler {
     @SuppressWarnings("unchecked")
-    private static final List<Class<ModPacket>> ACCEPTABLE_PACKETS = List.of(new Class[] {
-        RecordStatePacket.class
+    private static final List<Class<IModPacket>> ACCEPTABLE_PACKETS = List.of(new Class[] {
+        LooperRecordStatePacket.class, OpenNoteBlockInstrumentPacket.class, ModOpenInstrumentPacket.class,
+        // Sync stuff
+        UpdateLooperRemovedForInstrument.class, LooperRemovedPacket.class, SyncModTagPacket.class,
+        LooperPlayStatePacket.class
     });
 
+    private static int id = 0;
+    public static void registerPackets() {
+        ServerUtil.registerModPackets(INSTANCE, ACCEPTABLE_PACKETS, () -> id++);
+    }
 
-    private static final String PROTOCOL_VERSION = "1";
-    private static int id;
 
-    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-        new ResourceLocation(Main.MODID, "main"),
+    private static final String PROTOCOL_VERSION = "1.1";
+
+    private static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
+        new ResourceLocation(Main.MODID, "mod_networking"),
         () -> PROTOCOL_VERSION,
         PROTOCOL_VERSION::equals,
         PROTOCOL_VERSION::equals
@@ -42,33 +53,6 @@ public class ModPacketHandler {
     }
     public static <T> void sendToClient(final T packet, final ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
-    }
-
-
-    @SubscribeEvent
-    public static void registerPackets(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-
-            for (final Class<ModPacket> packetType : ACCEPTABLE_PACKETS)
-                try {
-                    
-                    INSTANCE.messageBuilder(packetType, id++, (NetworkDirection)packetType.getField("NETWORK_DIRECTION").get(null))
-                        .decoder((buf) -> {
-                            try {
-                                return packetType.getDeclaredConstructor(FriendlyByteBuf.class).newInstance(buf);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                return null;
-                            }
-                        })
-                        .encoder(ModPacket::toBytes)
-                        .consumerMainThread(ModPacket::handle)
-                        .add();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-        });
     }
 
 }

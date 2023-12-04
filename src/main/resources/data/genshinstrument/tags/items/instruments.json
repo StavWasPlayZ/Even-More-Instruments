@@ -1,0 +1,26 @@
+{
+    "values": [
+        "evenmoreinstruments:keyboard",
+        "evenmoreinstruments:violin",
+        "evenmoreinstruments:guitar",
+        "evenmoreinstruments:trombone",
+        "evenmoreinstruments:saxophone",
+
+        "evenmoreinstruments:banjo_note_block_instrument",
+        "evenmoreinstruments:basedrum_note_block_instrument",
+        "evenmoreinstruments:bass_note_block_instrument",
+        "evenmoreinstruments:bell_note_block_instrument",
+        "evenmoreinstruments:bit_note_block_instrument",
+        "evenmoreinstruments:chime_note_block_instrument",
+        "evenmoreinstruments:cow_bell_note_block_instrument",
+        "evenmoreinstruments:didgeridoo_note_block_instrument",
+        "evenmoreinstruments:flute_note_block_instrument",
+        "evenmoreinstruments:guitar_note_block_instrument",
+        "evenmoreinstruments:harp_note_block_instrument",
+        "evenmoreinstruments:hat_note_block_instrument",
+        "evenmoreinstruments:iron_xylophone_note_block_instrument",
+        "evenmoreinstruments:pling_note_block_instrument",
+        "evenmoreinstruments:snare_note_block_instrument",
+        "evenmoreinstruments:xylophone_note_block_instrument"
+    ]
+}

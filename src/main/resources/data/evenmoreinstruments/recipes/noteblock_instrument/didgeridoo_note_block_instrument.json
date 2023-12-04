@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "N",
+        "A"
+    ],
+
+    "key": {
+        "#": {
+            "item": "minecraft:string"
+        },
+        "N": {
+            "item": "minecraft:note_block"
+        },
+        "A": {
+            "item": "minecraft:pumpkin"
+        }
+    },
+
+    "group": "noteblock_instruments",
+
+    "result": {
+        "item": "evenmoreinstruments:didgeridoo_note_block_instrument",
+        "count": 1
+    }
+}

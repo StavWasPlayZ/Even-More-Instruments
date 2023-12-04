@@ -2,18 +2,13 @@ package com.cstav.evenmoreinstruments.util;
 
 import java.util.function.Supplier;
 
-import com.cstav.genshinstrument.item.InstrumentItem;
 import com.cstav.evenmoreinstruments.Main;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CommonUtil {
 
@@ -23,11 +18,11 @@ public class CommonUtil {
         return getOrCreateElementTag(Main.modTag(item), key);
     }
     public static CompoundTag getOrCreateElementTag(final CompoundTag parent, final String key) {
-        return getOrCreateTag(parent, key, CompoundTag.TAG_COMPOUND, () -> new CompoundTag());
+        return getOrCreateTag(parent, key, CompoundTag.TAG_COMPOUND, CompoundTag::new);
     }
 
     public static ListTag getOrCreateListTag(final CompoundTag parent, final String key) {
-        return getOrCreateTag(parent, key, CompoundTag.TAG_LIST, () -> new ListTag());
+        return getOrCreateTag(parent, key, CompoundTag.TAG_LIST, ListTag::new);
     }
 
     public static <T extends Tag> T getOrCreateTag(ItemStack item, String key, int type, Supplier<T> orElse) {
@@ -44,14 +39,22 @@ public class CommonUtil {
     }
 
 
-    public static InteractionHand getInstrumentHand(final LivingEntity entity) {
-        return (entity.getMainHandItem().getItem() instanceof InstrumentItem)
-            ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+    //idk how to do maths
+    private static final Direction[] DIRECTIONS = {
+        Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST
+    };
+    public static Direction getOffset(final Direction direction, final int offset) {
+        for (int i = 0; i < DIRECTIONS.length; i++)
+            if (DIRECTIONS[i] == direction)
+                return DIRECTIONS[com.cstav.genshinstrument.util.CommonUtil.pyWrap(i + offset, DIRECTIONS.length) % DIRECTIONS.length];
+
+        throw new IllegalStateException("How did we get here?");
     }
-    @SuppressWarnings("resource")
-    @OnlyIn(Dist.CLIENT)
-    public static InteractionHand getInstrumentHand() {
-        return getInstrumentHand(Minecraft.getInstance().player);
+    public static Direction getLeft(final Direction direction) {
+        return getOffset(direction, 1);
+    }
+    public static Direction getRight(final Direction direction) {
+        return getOffset(direction, -1);
     }
 
 }

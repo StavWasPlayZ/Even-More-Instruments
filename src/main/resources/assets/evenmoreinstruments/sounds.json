@@ -1,0 +1,600 @@
+{
+    "keyboard_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/0"]
+    },
+    "keyboard_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/1"]
+    },
+    "keyboard_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/2"]
+    },
+    "keyboard_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/3"]
+    },
+    "keyboard_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/4"]
+    },
+    "keyboard_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/5"]
+    },
+    "keyboard_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/6"]
+    },
+    "keyboard_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/7"]
+    },
+    "keyboard_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/8"]
+    },
+    "keyboard_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/9"]
+    },
+    "keyboard_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/10"]
+    },
+    "keyboard_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/11"]
+    },
+    "keyboard_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/12"]
+    },
+    "keyboard_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/13"]
+    },
+    "keyboard_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/14"]
+    },
+    "keyboard_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/15"]
+    },
+    "keyboard_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/16"]
+    },
+    "keyboard_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/17"]
+    },
+    "keyboard_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/18"]
+    },
+    "keyboard_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/19"]
+    },
+    "keyboard_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/20"]
+    },
+
+    "keyboard_note_0_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/0.stereo"]
+    },
+    "keyboard_note_1_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/1.stereo"]
+    },
+    "keyboard_note_2_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/2.stereo"]
+    },
+    "keyboard_note_3_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/3.stereo"]
+    },
+    "keyboard_note_4_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/4.stereo"]
+    },
+    "keyboard_note_5_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/5.stereo"]
+    },
+    "keyboard_note_6_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/6.stereo"]
+    },
+    "keyboard_note_7_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/7.stereo"]
+    },
+    "keyboard_note_8_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/8.stereo"]
+    },
+    "keyboard_note_9_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/9.stereo"]
+    },
+    "keyboard_note_10_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/10.stereo"]
+    },
+    "keyboard_note_11_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/11.stereo"]
+    },
+    "keyboard_note_12_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/12.stereo"]
+    },
+    "keyboard_note_13_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/13.stereo"]
+    },
+    "keyboard_note_14_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/14.stereo"]
+    },
+    "keyboard_note_15_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/15.stereo"]
+    },
+    "keyboard_note_16_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/16.stereo"]
+    },
+    "keyboard_note_17_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/17.stereo"]
+    },
+    "keyboard_note_18_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/18.stereo"]
+    },
+    "keyboard_note_19_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/19.stereo"]
+    },
+    "keyboard_note_20_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:keyboard/20.stereo"]
+    },
+
+
+    "violin_full_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/0"]
+    },
+    "violin_full_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/1"]
+    },
+    "violin_full_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/2"]
+    },
+    "violin_full_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/3"]
+    },
+    "violin_full_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/4"]
+    },
+    "violin_full_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/5"]
+    },
+    "violin_full_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/6"]
+    },
+    "violin_full_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/7"]
+    },
+    "violin_full_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/8"]
+    },
+    "violin_full_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/9"]
+    },
+    "violin_full_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/10"]
+    },
+    "violin_full_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/11"]
+    },
+    "violin_full_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/12"]
+    },
+    "violin_full_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/13"]
+    },
+    "violin_full_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/14"]
+    },
+    "violin_full_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/15"]
+    },
+    "violin_full_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/16"]
+    },
+    "violin_full_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/17"]
+    },
+    "violin_full_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/18"]
+    },
+    "violin_full_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/19"]
+    },
+    "violin_full_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/full/20"]
+    },
+
+    "violin_half_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/0"]
+    },
+    "violin_half_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/1"]
+    },
+    "violin_half_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/2"]
+    },
+    "violin_half_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/3"]
+    },
+    "violin_half_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/4"]
+    },
+    "violin_half_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/5"]
+    },
+    "violin_half_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/6"]
+    },
+    "violin_half_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/7"]
+    },
+    "violin_half_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/8"]
+    },
+    "violin_half_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/9"]
+    },
+    "violin_half_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/10"]
+    },
+    "violin_half_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/11"]
+    },
+    "violin_half_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/12"]
+    },
+    "violin_half_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/13"]
+    },
+    "violin_half_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/14"]
+    },
+    "violin_half_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/15"]
+    },
+    "violin_half_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/16"]
+    },
+    "violin_half_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/17"]
+    },
+    "violin_half_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/18"]
+    },
+    "violin_half_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/19"]
+    },
+    "violin_half_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:violin/half/20"]
+    },
+    
+
+    "trombone_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/0"]
+    },
+    "trombone_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/1"]
+    },
+    "trombone_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/2"]
+    },
+    "trombone_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/3"]
+    },
+    "trombone_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/4"]
+    },
+    "trombone_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/5"]
+    },
+    "trombone_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/6"]
+    },
+    "trombone_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/7"]
+    },
+    "trombone_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/8"]
+    },
+    "trombone_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/9"]
+    },
+    "trombone_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/10"]
+    },
+    "trombone_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/11"]
+    },
+    "trombone_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/12"]
+    },
+    "trombone_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/13"]
+    },
+    "trombone_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/14"]
+    },
+    "trombone_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/15"]
+    },
+    "trombone_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/16"]
+    },
+    "trombone_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/17"]
+    },
+    "trombone_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/18"]
+    },
+    "trombone_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/19"]
+    },
+    "trombone_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:trombone/20"]
+    },
+    
+
+    "guitar_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/0"]
+    },
+    "guitar_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/1"]
+    },
+    "guitar_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/2"]
+    },
+    "guitar_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/3"]
+    },
+    "guitar_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/4"]
+    },
+    "guitar_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/5"]
+    },
+    "guitar_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/6"]
+    },
+    "guitar_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/7"]
+    },
+    "guitar_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/8"]
+    },
+    "guitar_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/9"]
+    },
+    "guitar_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/10"]
+    },
+    "guitar_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/11"]
+    },
+    "guitar_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/12"]
+    },
+    "guitar_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/13"]
+    },
+    "guitar_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/14"]
+    },
+    "guitar_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/15"]
+    },
+    "guitar_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/16"]
+    },
+    "guitar_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/17"]
+    },
+    "guitar_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/18"]
+    },
+    "guitar_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/19"]
+    },
+    "guitar_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:guitar/20"]
+    },
+
+
+    "saxophone_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/0"]
+    },
+    "saxophone_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/1"]
+    },
+    "saxophone_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/2"]
+    },
+    "saxophone_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/3"]
+    },
+    "saxophone_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/4"]
+    },
+    "saxophone_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/5"]
+    },
+    "saxophone_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/6"]
+    },
+    "saxophone_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/7"]
+    },
+    "saxophone_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/8"]
+    },
+    "saxophone_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/9"]
+    },
+    "saxophone_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/10"]
+    },
+    "saxophone_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/11"]
+    },
+    "saxophone_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/12"]
+    },
+    "saxophone_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/13"]
+    },
+    "saxophone_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/14"]
+    },
+    "saxophone_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/15"]
+    },
+    "saxophone_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/16"]
+    },
+    "saxophone_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/17"]
+    },
+    "saxophone_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/18"]
+    },
+    "saxophone_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/19"]
+    },
+    "saxophone_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:saxophone/20"]
+    }
+}

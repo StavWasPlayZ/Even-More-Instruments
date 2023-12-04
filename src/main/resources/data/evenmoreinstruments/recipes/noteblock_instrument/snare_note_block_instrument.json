@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "N",
+        "A"
+    ],
+
+    "key": {
+        "#": {
+            "item": "minecraft:string"
+        },
+        "N": {
+            "item": "minecraft:note_block"
+        },
+        "A": [
+            {"item": "gravel"},
+            {"item": "sand"},
+            {"item": "white_concrete_powder"}
+        ]
+    },
+
+    "group": "noteblock_instruments",
+
+    "result": {
+        "item": "evenmoreinstruments:snare_note_block_instrument",
+        "count": 1
+    }
+}
