@@ -10,7 +10,6 @@ import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.N
 import com.cstav.genshinstrument.sound.NoteSound;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

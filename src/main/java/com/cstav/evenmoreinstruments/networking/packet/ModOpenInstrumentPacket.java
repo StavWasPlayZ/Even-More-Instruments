@@ -1,7 +1,6 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
 import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.cstav.evenmoreinstruments.client.gui.instrument.guitar.GuitarScreen;
@@ -13,7 +12,6 @@ import com.cstav.genshinstrument.networking.packet.instrument.OpenInstrumentPack
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.InteractionHand;
 
 public class ModOpenInstrumentPacket extends OpenInstrumentPacket {
     private static final Map<String, Supplier<Supplier<Screen>>> INSTRUMENT_MAP = Map.of(
