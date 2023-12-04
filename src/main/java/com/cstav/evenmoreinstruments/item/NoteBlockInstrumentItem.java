@@ -13,8 +13,8 @@ public class NoteBlockInstrumentItem extends InstrumentItem {
 
     public final NoteBlockInstrument instrument;
     public NoteBlockInstrumentItem(NoteBlockInstrument instrument) {
-        super((player, hand) -> ModPacketHandler.sendToClient(
-            new OpenNoteBlockInstrumentPacket(instrument, hand), player
+        super((player) -> ModPacketHandler.sendToClient(
+            new OpenNoteBlockInstrumentPacket(instrument), player
         ));
 
         this.instrument = instrument;

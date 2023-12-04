@@ -52,24 +52,24 @@ public class ModItems {
 
     public static final RegistryObject<Item>
         VIOLIN = register("violin", () -> new InstrumentItem(
-            (player, hand) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("violin", hand), player
+            (player) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("violin"), player
             )
         )),
         GUITAR = register("guitar", () -> new InstrumentItem(
-            (player, hand) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("guitar", hand), player
+            (player) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("guitar"), player
             )
         )),
 
         TROMBONE = register("trombone", () -> new WindInstrumentItem(
-            (player, hand) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("trombone", hand), player
+            (player) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("trombone"), player
             )
         )),
         SAXOPHONE = register("saxophone", () -> new WindInstrumentItem(
-            (player, hand) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("saxophone", hand), player
+            (player) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("saxophone"), player
             )
         )),
 

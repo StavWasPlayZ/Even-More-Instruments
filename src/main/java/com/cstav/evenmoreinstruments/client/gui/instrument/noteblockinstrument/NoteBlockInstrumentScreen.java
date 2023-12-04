@@ -10,7 +10,6 @@ import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.N
 import com.cstav.genshinstrument.sound.NoteSound;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,9 +24,7 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     public final NoteBlockInstrument instrumentType;
     public final ResourceLocation instrumentId;
     
-    public NoteBlockInstrumentScreen(InteractionHand hand, final NoteBlockInstrument instrumentType) {
-        super(hand);
-
+    public NoteBlockInstrumentScreen(final NoteBlockInstrument instrumentType) {
         this.instrumentType = instrumentType;
         instrumentId = new ResourceLocation(Main.MODID, NoteBlockInstrumentItem.getId(instrumentType));
 
