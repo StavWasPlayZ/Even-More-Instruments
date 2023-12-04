@@ -7,7 +7,6 @@ import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.G
 import com.cstav.genshinstrument.sound.NoteSound;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -18,9 +17,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class KeyboardScreen extends GridInstrumentScreen {
     public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "keyboard");
 
-    public KeyboardScreen(InteractionHand hand) {
-        super(hand);
-    }
     @Override
     public boolean isGenshinInstrument() {
         return false;
