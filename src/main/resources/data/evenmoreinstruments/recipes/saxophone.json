@@ -6,10 +6,10 @@
             "item": "minecraft:polished_blackstone_slab"
         },
         "X": {
-            "item": "minecraft:gold_ingot"
+            "item": "minecraft:copper_ingot"
         },
         "O": {
-            "item": "minecraft:gold_block"
+            "item": "minecraft:copper_block"
         },
         "b": {
             "item": "minecraft:stone_button"

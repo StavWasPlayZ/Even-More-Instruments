@@ -7,7 +7,6 @@
                 "items": [
                     {
                         "items": [
-                            "minecraft:gold_ore",
                             "minecraft:gold_block",
                             "minecraft:gold_nugget",
                             "minecraft:gold_ingot"
