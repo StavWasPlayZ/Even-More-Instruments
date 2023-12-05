@@ -52,7 +52,7 @@ public class UpdateLooperRemovedForInstrument implements IModPacket {
 
         if (hand.isPresent()) {
             final ItemStack instrumentItem = player.getItemInHand(hand.get());
-            looperBE = LooperBlockEntity.getLBE(level, instrumentItem);
+            looperBE = LooperUtil.getFromInstrument(level, instrumentItem);
 
             if (looperBE != null)
                 if (!looperBE.getBlockPos().closerToCenterThan(player.position(), MAX_RECORD_DIST)) {
@@ -63,7 +63,7 @@ public class UpdateLooperRemovedForInstrument implements IModPacket {
             final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
             final BlockEntity instrumentBlockEntity = level.getBlockEntity(instrumentBlockPos);
             
-            looperBE = LooperBlockEntity.getLBE(level, instrumentBlockEntity);
+            looperBE = LooperUtil.getFromInstrument(level, instrumentBlockEntity);
 
             // Manually update the tag removal for the client
             if (looperBE == null)
