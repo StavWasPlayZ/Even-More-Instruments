@@ -201,8 +201,7 @@ public class LooperBlockEntity extends BlockEntity {
             try {
 
                 final int pitch = note.getInt("pitch");
-                // Volume property did not exist before v2.1
-                final float volume = note.contains("volume", Tag.TAG_FLOAT) ? note.getFloat("volume") : 1;
+                final float volume = note.getFloat("volume");
 
                 final ResourceLocation soundLocation = new ResourceLocation(note.getString("soundType"));
                 
