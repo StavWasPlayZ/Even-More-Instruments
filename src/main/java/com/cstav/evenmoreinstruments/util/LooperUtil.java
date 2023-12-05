@@ -3,6 +3,7 @@ package com.cstav.evenmoreinstruments.util;
 import javax.annotation.Nullable;
 
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 
@@ -13,7 +14,9 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class LooperUtil {
     public static final String LOOPER_TAG = "looper",
@@ -63,10 +66,60 @@ public class LooperUtil {
             : CommonUtil.TAG_EMPTY;
     }
 
+
     public static CompoundTag getLooperTagFromEvent(final InstrumentPlayedEvent.ByPlayer event) {
         return (!event.isBlockInstrument())
             ? looperTag(event.itemInstrument.get())
             : looperTag(event.level.getBlockEntity(event.playPos));
+    }
+
+    @Nullable
+    public static LooperBlockEntity getFromEvent(final InstrumentPlayedEvent.ByPlayer event) {
+        final Level level = event.level;
+
+        if (event.isItemInstrument())
+            return getFromInstrument(level, event.itemInstrument.get());
+        else if (event.isBlockInstrument())
+            return getFromInstrument(level, event.level.getBlockEntity(event.playPos));
+
+        return null;
+    }
+
+    @Nullable
+    public static LooperBlockEntity getFromInstrument(final Level level, final ItemStack instrument) {
+        return getFromInstrument(level, LooperUtil.looperTag(instrument), () -> LooperUtil.remLooperTag(instrument));
+    }
+    @Nullable
+    public static LooperBlockEntity getFromInstrument(final Level level, final BlockEntity instrument) {
+        return getFromInstrument(level, LooperUtil.looperTag(instrument), () -> {
+            LooperUtil.remLooperTag(instrument);
+
+            final BlockPos pos = instrument.getBlockPos();
+            final BlockState state = level.getBlockState(pos);
+            if (state.getBlock() instanceof IDoubleBlock doubleBlock)
+                LooperUtil.remLooperTag(level.getBlockEntity(doubleBlock.getOtherBlock(state, pos, level)));
+        });
+    }
+    /**
+     * Attempts to get the looper pointed out by {@code looperData}. Removes its reference if not found.
+     * @return The Looper's block entity as pointed in the {@code instrument}'s data.
+     * Null if not found
+     */
+    @Nullable
+    private static LooperBlockEntity getFromInstrument(Level level, CompoundTag looperData, Runnable onInvalid) {
+        if (looperData.isEmpty())
+            return null;
+
+        final LooperBlockEntity looperBE = getFromPos(level, LooperUtil.getLooperPos(looperData));
+
+        if (looperBE == null)
+            onInvalid.run();
+
+        return looperBE;
+    }
+
+    public static LooperBlockEntity getFromPos(final Level level, final BlockPos pos) {
+        return (level.getBlockEntity(pos) instanceof LooperBlockEntity lbe) ? lbe : null;
     }
 
 
