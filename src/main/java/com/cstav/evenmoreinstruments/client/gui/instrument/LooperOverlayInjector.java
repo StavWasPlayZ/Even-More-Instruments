@@ -42,9 +42,9 @@ public class LooperOverlayInjector {
             return;
 
         final Player player = Minecraft.getInstance().player;
-        final InteractionHand hand = InstrumentOpenProvider.getHand(player);
 
-        if (hand != null) {
+        if (InstrumentOpenProvider.isItem(player)) {
+            final InteractionHand hand = InstrumentOpenProvider.getHand(player);
             final ItemStack instrumentItem = player.getItemInHand(hand);
             
             // Send an update request upon opening an item instrument's screen
@@ -83,9 +83,13 @@ public class LooperOverlayInjector {
     @SuppressWarnings("resource")
     private static void onRecordPress(final Button btn) {
         final LocalPlayer player = Minecraft.getInstance().player;
-        final InteractionHand hand = InstrumentOpenProvider.getHand(Minecraft.getInstance().player);
 
-        isRecording = (hand != null)
+        final boolean isItem = InstrumentOpenProvider.isItem(player);
+        final InteractionHand hand = isItem ?
+            InstrumentOpenProvider.getHand(Minecraft.getInstance().player)
+            : null;
+
+        isRecording = isItem
             ? LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(hand)))
             : LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player)));
 
