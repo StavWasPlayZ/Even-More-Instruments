@@ -22,7 +22,7 @@ public class EMIModCreativeModeTabs {
         INSTRUMENT_ACCESSORY_TAB = TABS.register("instrument_accessories_tab",
             () -> CreativeModeTab.builder()
 
-                .title(Component.translatable("evenmoreinstruments.itemGroup.instrument_accessories_tab"))
+                .title(Component.translatable("itemGroup.evenmoreinstruments.instrument_accessories_tab"))
                 .icon(() -> new ItemStack(ModItems.KEYBOARD_STAND.get()))
                 .withTabsBefore(ModCreativeModeTabs.INSTRUMENTS_TAB.getKey())
 
