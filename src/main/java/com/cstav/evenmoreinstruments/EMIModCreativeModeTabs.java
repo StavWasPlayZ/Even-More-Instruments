@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class EMIModCreativeModeTabs {
 
-    public static final CreativeModeTab instrumentAccessoryTab = new CreativeModeTab("evenmoreinstruments.instrument_accessories") {
+    public static final CreativeModeTab instrumentAccessoryTab = new CreativeModeTab("evenmoreinstruments.instrument_accessories_tab") {
 
         @Override
         public ItemStack makeIcon() {
