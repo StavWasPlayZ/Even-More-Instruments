@@ -23,7 +23,7 @@ public class EMIModCreativeModeTabs {
     }
 
     @SubscribeEvent
-    public static void regsiterCreativeModeTabs(final CreativeModeTabEvent.Register event) {
+    public static void registerCreativeModeTabs(final CreativeModeTabEvent.Register event) {
         instrumentAccessoryTab = event.registerCreativeModeTab(new ResourceLocation(Main.MODID, "instrument_accessories_tab"),
             List.of(ModCreativeModeTabs.getInstrumentsTab()), List.of(),
             (builder) -> builder
