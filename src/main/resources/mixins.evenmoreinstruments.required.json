@@ -6,5 +6,8 @@
 	"mixins": [
         "GameRuleIntegerInvoker"
 	],
+    "client": [
+        "ScreenAccessor"
+    ],
 	"minVersion": "0.8"
 }

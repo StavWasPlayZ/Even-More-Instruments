@@ -27,7 +27,7 @@ public class EMIModCreativeModeTabs {
         instrumentAccessoryTab = event.registerCreativeModeTab(new ResourceLocation(Main.MODID, "instrument_accessories_tab"),
             List.of(ModCreativeModeTabs.getInstrumentsTab()), List.of(),
             (builder) -> builder
-                .title(Component.translatable("evenmoreinstruments.itemGroup.instrument_accessories_tab"))
+                .title(Component.translatable("itemGroup.evenmoreinstruments.instrument_accessories_tab"))
                 .icon(() -> new ItemStack(ModItems.KEYBOARD_STAND.get()))
             .build()
         );
