@@ -1,6 +1,10 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/even-more-instruments/",
 
+    "1.18.2": {
+        "3.0": "Backported mod to Minecraft version 1.18.2!\n\nChanges:\n- New instrument: the Saxophone!\n- Implemented better first-person render of the Trombone\n- Added tooltip for Looper Wireless Adapter\n- Accessories tab logo is now the Keyboard Stand\n- Record button is now removed if Looper was removed\n\nFixed\n- Keyboard screen not closing after being destroyed\n- \n- Past Looper recordings will not work on this version\n- Trombone not properly displayed on the player's hands\n- When not paired to a looper: record button flashing for a few seconds before dissapearing on block instruments\n- Recording process not stopping after screen was closed\n\nNotice:\n- New dependency requirement: Genshin Instruments v3.4"
+    },
+
     "1.19.2": {
         "1.0": "Backported mod to Minecraft version 1.19.2!",
         "1.0.1": "- Fixed keyboard not showing in the instruments tab\n- Fixed Looper being in the instruments tab rather than instrument accessories",
@@ -9,7 +13,9 @@
         "1.1.1": "Fixed violin sound length modifier seldom working",
 
         "2.0": "Changes:\n- New instrument: The Guitar!\n- Full MIDI support, as per Genshin Instruments v3.3! (with the exception of note block instruments)\n- The Looper now emits note particles (color-relative to the playing pitch)\n- Parrots now dance to loopers! 🦜🪩\n- The Looper will now reset upon a redstone signal\n- The Trombone in the GUI has been flipped to match the regular rotation of items\n- The default violin sound type modifier is now Right Alt\n\nFixed:\n- Violin & Trombone audio latency\n- Note block instruments' layout being flipped\n- Being unable to play a looper while holding an instrument\n- Trombone's colors being too shiny",
-        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin"
+        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin",
+
+        "3.0": "Changes:\n- New instrument: the Saxophone!\n- Implemented better first-person render of the Trombone\n- Added tooltip for Looper Wireless Adapter\n- Accessories tab logo is now the Keyboard Stand\n- Record button is now removed if Looper was removed\n\nFixed\n- Keyboard screen not closing after being destroyed\n- \n- Past Looper recordings will not work on this version\n- Trombone not properly displayed on the player's hands\n- When not paired to a looper: record button flashing for a few seconds before dissapearing on block instruments\n- Recording process not stopping after screen was closed\n\nNotice:\n- New dependency requirement: Genshin Instruments v3.4"
     },
     "1.19.3": {
         "1.0": "Backported mod to Minecraft version 1.19.3!",
@@ -18,7 +24,9 @@
         "1.1.1": "Fixed violin sound length modifier seldom working",
 
         "2.0": "Changes:\n- New instrument: The Guitar!\n- Full MIDI support, as per Genshin Instruments v3.3! (with the exception of note block instruments)\n- The Looper now emits note particles (color-relative to the playing pitch)\n- Parrots now dance to loopers! 🦜🪩\n- The Looper will now reset upon a redstone signal\n- The Trombone in the GUI has been flipped to match the regular rotation of items\n- The default violin sound type modifier is now Right Alt\n\nFixed:\n- Violin & Trombone audio latency\n- Note block instruments' layout being flipped\n- Being unable to play a looper while holding an instrument\n- Trombone's colors being too shiny",
-        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin"
+        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin",
+
+        "3.0": "Changes:\n- New instrument: the Saxophone!\n- Implemented better first-person render of the Trombone\n- Added tooltip for Looper Wireless Adapter\n- Accessories tab logo is now the Keyboard Stand\n- Record button is now removed if Looper was removed\n\nFixed\n- Keyboard screen not closing after being destroyed\n- \n- Past Looper recordings will not work on this version\n- Trombone not properly displayed on the player's hands\n- When not paired to a looper: record button flashing for a few seconds before dissapearing on block instruments\n- Recording process not stopping after screen was closed\n\nNotice:\n- New dependency requirement: Genshin Instruments v3.4"
     },
     "1.19.4": {
         "1.0": "Backported mod to Minecraft version 1.19.4!",
@@ -27,7 +35,9 @@
         "1.1.1": "Fixed violin sound length modifier seldom working",
 
         "2.0": "Changes:\n- New instrument: The Guitar!\n- Full MIDI support, as per Genshin Instruments v3.3! (with the exception of note block instruments)\n- The Looper now emits note particles (color-relative to the playing pitch)\n- Parrots now dance to loopers! 🦜🪩\n- The Looper will now reset upon a redstone signal\n- The Trombone in the GUI has been flipped to match the regular rotation of items\n- The default violin sound type modifier is now Right Alt\n\nFixed:\n- Violin & Trombone audio latency\n- Note block instruments' layout being flipped\n- Being unable to play a looper while holding an instrument\n- Trombone's colors being too shiny",
-        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin"
+        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin",
+
+        "3.0": "Changes:\n- New instrument: the Saxophone!\n- Implemented better first-person render of the Trombone\n- Added tooltip for Looper Wireless Adapter\n- Accessories tab logo is now the Keyboard Stand\n- Record button is now removed if Looper was removed\n\nFixed\n- Keyboard screen not closing after being destroyed\n- \n- Past Looper recordings will not work on this version\n- Trombone not properly displayed on the player's hands\n- When not paired to a looper: record button flashing for a few seconds before dissapearing on block instruments\n- Recording process not stopping after screen was closed\n\nNotice:\n- New dependency requirement: Genshin Instruments v3.4"
     },
 
     "1.20": {
@@ -37,7 +47,9 @@
         "1.1.1": "Fixed violin sound length modifier seldom working",
 
         "2.0": "Changes:\n- New instrument: The Guitar!\n- Full MIDI support, as per Genshin Instruments v3.3! (with the exception of note block instruments)\n- The Looper now emits note particles (color-relative to the playing pitch)\n- Parrots now dance to loopers! 🦜🪩\n- The Looper will now reset upon a redstone signal\n- The Trombone in the GUI has been flipped to match the regular rotation of items\n- The default violin sound type modifier is now Right Alt\n\nFixed:\n- Violin & Trombone audio latency\n- Note block instruments' layout being flipped\n- Being unable to play a looper while holding an instrument\n- Trombone's colors being too shiny",
-        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin"
+        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin",
+
+        "3.0": "Changes:\n- New instrument: the Saxophone!\n- Implemented better first-person render of the Trombone\n- Added tooltip for Looper Wireless Adapter\n- Accessories tab logo is now the Keyboard Stand\n- Record button is now removed if Looper was removed\n\nFixed\n- Keyboard screen not closing after being destroyed\n- \n- Past Looper recordings will not work on this version\n- Trombone not properly displayed on the player's hands\n- When not paired to a looper: record button flashing for a few seconds before dissapearing on block instruments\n- Recording process not stopping after screen was closed\n\nNotice:\n- New dependency requirement: Genshin Instruments v3.4"
     },
     "1.20.1": {
         "1.0": "Release!",
@@ -46,31 +58,38 @@
         "1.1.1": "Fixed violin sound length modifier seldom working",
 
         "2.0": "Changes:\n- New instrument: The Guitar!\n- Full MIDI support, as per Genshin Instruments v3.3! (with the exception of note block instruments)\n- The Looper now emits note particles (color-relative to the playing pitch)\n- Parrots now dance to loopers! 🦜🪩\n- The Looper will now reset upon a redstone signal\n- The Trombone in the GUI has been flipped to match the regular rotation of items\n- The default violin sound type modifier is now Right Alt\n\nFixed:\n- Violin & Trombone audio latency\n- Note block instruments' layout being flipped\n- Being unable to play a looper while holding an instrument\n- Trombone's colors being too shiny",
-        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin"
+        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin",
+
+        "3.0": "Changes:\n- New instrument: the Saxophone!\n- Implemented better first-person render of the Trombone\n- Added tooltip for Looper Wireless Adapter\n- Accessories tab logo is now the Keyboard Stand\n- Record button is now removed if Looper was removed\n\nFixed\n- Keyboard screen not closing after being destroyed\n- \n- Past Looper recordings will not work on this version\n- Trombone not properly displayed on the player's hands\n- When not paired to a looper: record button flashing for a few seconds before dissapearing on block instruments\n- Recording process not stopping after screen was closed\n\nNotice:\n- New dependency requirement: Genshin Instruments v3.4"
     },
     "1.20.2": {
-        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin"
+        "2.1": "- Updated to Minecraft version 1.20.2!\n- Updated to Genshin Instruments v3.3.1\n- Reworked instrument item textures by GenMode!\n- Added MIDI Pedal input for the Violin",
+
+        "3.0": "Changes:\n- New instrument: the Saxophone!\n- Implemented better first-person render of the Trombone\n- Added tooltip for Looper Wireless Adapter\n- Accessories tab logo is now the Keyboard Stand\n- Record button is now removed if Looper was removed\n\nFixed\n- Keyboard screen not closing after being destroyed\n- \n- Past Looper recordings will not work on this version\n- Trombone not properly displayed on the player's hands\n- When not paired to a looper: record button flashing for a few seconds before dissapearing on block instruments\n- Recording process not stopping after screen was closed\n\nNotice:\n- New dependency requirement: Genshin Instruments v3.4"
     },
 
 
     "promos": {
-        "1.19.2-latest": "2.1",
-        "1.19.2-recommended": "2.1",
+        "1.18.2-latest": "3.0",
+        "1.18.2-recommended": "3.0",
 
-        "1.19.3-latest": "2.1",
-        "1.19.3-recommended": "2.1",
+        "1.19.2-latest": "3.0",
+        "1.19.2-recommended": "3.0",
 
-        "1.19.4-latest": "2.1",
-        "1.19.4-recommended": "2.1",
+        "1.19.3-latest": "3.0",
+        "1.19.3-recommended": "3.0",
+
+        "1.19.4-latest": "3.0",
+        "1.19.4-recommended": "3.0",
 
 
-        "1.20-latest": "2.1",
-        "1.20-recommended": "2.1",
+        "1.20-latest": "3.0",
+        "1.20-recommended": "3.0",
       
-        "1.20.1-latest": "2.1",
-        "1.20.1-recommended": "2.1",
+        "1.20.1-latest": "3.0",
+        "1.20.1-recommended": "3.0",
       
-        "1.20.2-latest": "2.1",
-        "1.20.2-recommended": "2.1"
+        "1.20.2-latest": "3.0",
+        "1.20.2-recommended": "3.0"
     }
 }
