@@ -9,7 +9,7 @@ import com.cstav.evenmoreinstruments.networking.packet.LooperRemovedPacket;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.evenmoreinstruments.networking.packet.OpenNoteBlockInstrumentPacket;
 import com.cstav.evenmoreinstruments.networking.packet.SyncModTagPacket;
-import com.cstav.evenmoreinstruments.networking.packet.UpdateLooperRemovedForInstrument;
+import com.cstav.evenmoreinstruments.networking.packet.DoesLooperExistPacket;
 import com.cstav.genshinstrument.networking.IModPacket;
 import com.cstav.genshinstrument.util.ServerUtil;
 
@@ -29,7 +29,7 @@ public class ModPacketHandler {
     private static final List<Class<IModPacket>> ACCEPTABLE_PACKETS = List.of(new Class[] {
         LooperRecordStatePacket.class, OpenNoteBlockInstrumentPacket.class, ModOpenInstrumentPacket.class,
         // Sync stuff
-        UpdateLooperRemovedForInstrument.class, LooperRemovedPacket.class, SyncModTagPacket.class,
+        DoesLooperExistPacket.class, LooperRemovedPacket.class, SyncModTagPacket.class,
         LooperPlayStatePacket.class
     });
 

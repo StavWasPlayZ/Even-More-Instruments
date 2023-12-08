@@ -17,9 +17,7 @@ public class LooperRemovedPacket implements IModPacket {
 
     @Override
     public void handle(final Context context) {
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-            LooperOverlayInjector.removeRecordButton()
-        );
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> LooperOverlayInjector::handleLooperRemoved);
     }
     
 }
