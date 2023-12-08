@@ -36,7 +36,7 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
         SHAPE_RIGHT_SOUTH = Block.box(0.3D, 0.0D, 4D, 16.0D, 4.4D, 12.8D),
 
         SHAPE_LEFT_EAST = Block.box(3.5D, 0.0D, 0.0D, 12D, 4.4D, 15.65D),
-        SHAPE_RIGHT_EAST = Block.box(3.5D, 0.0D, 0.3D, 12D, 4.4D, 16D);
+        SHAPE_RIGHT_EAST = Block.box(3.5D, 0.0D, 0.3D, 12D, 4.4D, 16D)
     ;
 
 
@@ -95,6 +95,9 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pLevel.isClientSide)
             return;
+
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+
 
         final BlockPos sideBlock = getOtherBlock(pState, pPos, pLevel);
         if (sideBlock == null)

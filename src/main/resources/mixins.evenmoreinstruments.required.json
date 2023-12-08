@@ -1,13 +1,14 @@
 {
     "required": true,
-    "package": "com.cstav.evenmoreinstruments.mixins.required",
-    "compatibilityLevel": "JAVA_17",
-    "refmap": "mixins.evenmoreinstruments.refmap.json",
+	"package": "com.cstav.evenmoreinstruments.mixins.required",
+	"compatibilityLevel": "JAVA_17",
+	"refmap": "mixins.evenmoreinstruments.refmap.json",
     "mixins": [
         "GameRuleIntegerInvoker"
     ],
-    "minVersion": "0.8",
-    "client": [
+	"client": [
+        "ScreenAccessor",
         "ScreenCloseEventInjector"
-    ]
+	],
+	"minVersion": "0.8"
 }
