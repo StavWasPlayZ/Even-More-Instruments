@@ -4,6 +4,7 @@ import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.mixins.required.ScreenAccessor;
 import com.cstav.evenmoreinstruments.event.ScreenCloseEvent;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.DoesLooperExistPacket;
 import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
@@ -13,6 +14,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +38,7 @@ public class LooperOverlayInjector {
     @SuppressWarnings("resource")
     @SubscribeEvent
     public static void onScreenInit(final ScreenEvent.InitScreenEvent.Post event) {
-        if (!(event.getScreen() instanceof InstrumentScreen screen))
+        if (!(event.getScreen() instanceof InstrumentScreen instrumentScreen))
             return;
 
         final Player player = Minecraft.getInstance().player;
@@ -51,7 +53,7 @@ public class LooperOverlayInjector {
             ModPacketHandler.sendToServer(new DoesLooperExistPacket(hand));
         } else {
             final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
-            final BlockEntity instrumentBE = player.level().getBlockEntity(instrumentBlockPos);
+            final BlockEntity instrumentBE = player.getLevel().getBlockEntity(instrumentBlockPos);
 
             if (!LooperUtil.hasLooperTag(instrumentBE))
                 return;

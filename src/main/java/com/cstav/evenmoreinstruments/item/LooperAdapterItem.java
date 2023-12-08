@@ -131,7 +131,7 @@ public class LooperAdapterItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
         tooltipComponents.add(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.description")
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.description")
                 .withStyle(ChatFormatting.GRAY)
         );
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced);
