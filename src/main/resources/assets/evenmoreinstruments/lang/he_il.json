@@ -2,7 +2,7 @@
     "evenmoreinstruments.keymaps": "הגדרות המקשים של 'אפילו יותר כלי נגינה!'",
     "evenmoreinstruments.keymaps.violin_type_modifier": "הארך/קצר את אורך צליל הכינור",
 
-    "evenmoreinstruments.itemGroup.instrument_accessories_tab": "אביזרי כלי נגינה",
+    "itemGroup.evenmoreinstruments.instrument_accessories_tab": "אביזרי כלי נגינה",
 
 
     "item.evenmoreinstruments.violin": "כינור",
@@ -12,6 +12,7 @@
     "item.evenmoreinstruments.note_block_instrument": "בלוק הצליל של %s",
 
     "item.evenmoreinstruments.looper_adapter": "מתאם אלחוטי ללופר",
+    "item.evenmoreinstruments.looper_adapter.description": "מתאם בין בלוק כלי נגינה ללופר",
     "item.evenmoreinstruments.looper_adapter.select_instrument": "לופר חובר בהצלחה. אנא בחר כלי נגינה לתאם עימו.",
     "item.evenmoreinstruments.looper_adapter.select_looper": "כלי נגינה חובר בהצלחה. אנא בחר לופר לתאם עימו.",
 
