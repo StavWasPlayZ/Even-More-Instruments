@@ -51,7 +51,7 @@ public class LooperOverlayInjector {
             ModPacketHandler.sendToServer(new DoesLooperExistPacket(hand));
         } else {
             final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
-            final BlockEntity instrumentBE = player.level().getBlockEntity(instrumentBlockPos);
+            final BlockEntity instrumentBE = player.getLevel().getBlockEntity(instrumentBlockPos);
 
             if (!LooperUtil.hasLooperTag(instrumentBE))
                 return;
