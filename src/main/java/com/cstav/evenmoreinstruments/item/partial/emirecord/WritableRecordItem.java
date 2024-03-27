@@ -11,7 +11,9 @@ public class WritableRecordItem extends EMIRecordItem {
     }
 
     public static boolean isBurned(final ItemStack stack) {
-        return stack.getOrCreateTag().contains("channel", Tag.TAG_COMPOUND);
+        if (!stack.getOrCreateTag().contains("channel", Tag.TAG_COMPOUND))
+            return false;
+        return !stack.getTagElement("channel").getBoolean("writable");
     }
     public static void burn(final ItemStack stack, final CompoundTag data) {
         stack.getOrCreateTag().put("channel", data);

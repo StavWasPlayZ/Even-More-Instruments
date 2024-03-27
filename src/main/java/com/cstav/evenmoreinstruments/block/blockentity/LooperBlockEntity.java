@@ -264,7 +264,7 @@ public class LooperBlockEntity extends BlockEntity {
 
             if (getChannel().getBoolean("writable")) {
                 final CompoundTag channel = new CompoundTag();
-                channel.putBoolean("writable", false);
+                channel.putBoolean("writable", true);
                 record.getOrCreateTag().put("channel", channel);
             } else {
                 record.getOrCreateTag().put("channel", getChannel().copy());

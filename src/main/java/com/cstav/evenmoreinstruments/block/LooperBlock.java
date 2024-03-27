@@ -116,6 +116,8 @@ public class LooperBlock extends Block implements EntityBlock {
             lbe.setRecordData(recordItem.toLooperData(itemStack));
             lbe.setChanged();
 
+            if (!pPlayer.isCreative())
+                itemStack.shrink(1);
             recordInjected = true;
         } else if (!pState.getValue(RECORD_IN)) {
             pPlayer.displayClientMessage(
