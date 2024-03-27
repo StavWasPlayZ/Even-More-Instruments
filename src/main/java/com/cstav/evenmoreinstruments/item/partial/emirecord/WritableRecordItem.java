@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
 public class WritableRecordItem extends EMIRecordItem {
     public WritableRecordItem(Properties properties) {
@@ -12,10 +11,10 @@ public class WritableRecordItem extends EMIRecordItem {
     }
 
     public static boolean isBurned(final ItemStack stack) {
-        return stack.getOrCreateTag().contains("data", Tag.TAG_COMPOUND);
+        return stack.getOrCreateTag().contains("channel", Tag.TAG_COMPOUND);
     }
     public static void burn(final ItemStack stack, final CompoundTag data) {
-        stack.getOrCreateTag().put("data", data);
+        stack.getOrCreateTag().put("channel", data);
     }
 
     @Override
@@ -28,9 +27,12 @@ public class WritableRecordItem extends EMIRecordItem {
         final CompoundTag tag = new CompoundTag();
 
         if (isBurned(stack))
-            tag.put("data", stack.getTagElement("data"));
-        else
-            tag.putBoolean("writable", true);
+            tag.put("channel", stack.getTagElement("channel"));
+        else {
+            final CompoundTag channel = new CompoundTag();
+            channel.putBoolean("writable", true);
+            tag.put("channel", channel);
+        }
 
         return tag;
     }

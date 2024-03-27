@@ -35,15 +35,26 @@ public class LooperBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
     private UUID lockedBy;
 
+    /**
+     * Retrieves the channel (footage) information from the inserted record
+     */
     public CompoundTag getChannel() {
-        return getChannel(getPersistentData());
-    }
-    public CompoundTag getChannel(final CompoundTag data) {
-        return CommonUtil.getOrCreateElementTag(data, "channel");
-    }
+        final CompoundTag recordData = getRecordData();
 
+        if (recordData.contains("channel", Tag.TAG_COMPOUND))
+            return recordData.getCompound("channel");
+        if (recordData.contains("burned_media"))
+            //TODO get compound from repository
+            return new CompoundTag();
+
+        return null;
+    }
     public boolean hasFootage() {
-        return getPersistentData().contains("channel");
+        final CompoundTag channel = getChannel();
+        if (channel == null)
+            return false;
+
+        return channel.contains("notes", Tag.TAG_LIST) && !channel.getList("notes", Tag.TAG_COMPOUND).isEmpty();
     }
 
     public void removeRecordData() {
@@ -51,6 +62,9 @@ public class LooperBlockEntity extends BlockEntity {
     }
     public void setRecordData(final CompoundTag recordData) {
         getPersistentData().put("record", recordData);
+    }
+    public CompoundTag getRecordData() {
+        return getPersistentData().getCompound("record");
     }
 
 
@@ -151,10 +165,14 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
-    public void addNote(NoteSound sound, int pitch, int volume, int timestamp) {
-        final CompoundTag channel = getChannel();
-        final CompoundTag noteTag = new CompoundTag();
+    /**
+     * Writes a new note to the writable record.
+     */
+    public void writeNote(NoteSound sound, int pitch, int volume, int timestamp) {
+        if (!getChannel().getBoolean("writable"))
+            return;
 
+        final CompoundTag noteTag = new CompoundTag();
 
         noteTag.putInt("soundIndex", sound.index);
         noteTag.putString("soundType", sound.baseSoundLocation.toString());
@@ -165,7 +183,7 @@ public class LooperBlockEntity extends BlockEntity {
         noteTag.putInt("timestamp", timestamp);
 
 
-        CommonUtil.getOrCreateListTag(channel, "notes").add(noteTag);
+        CommonUtil.getOrCreateListTag(getChannel(), "notes").add(noteTag);
         setChanged();
     }
 
@@ -183,8 +201,10 @@ public class LooperBlockEntity extends BlockEntity {
         if (!isPlaying)
             return;
 
-
         final CompoundTag channel = lbe.getChannel();
+        if (channel == null)
+            return;
+
         final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
 
         for (final Tag pNote : channel.getList("notes", Tag.TAG_COMPOUND)) {
@@ -215,7 +235,9 @@ public class LooperBlockEntity extends BlockEntity {
     }
 
 
-
+    /**
+     * Writes the note to the record as described by the event.
+     */
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
         if (event.isClientSide || !LooperUtil.isRecording(event.player))
@@ -224,10 +246,11 @@ public class LooperBlockEntity extends BlockEntity {
         final Level level = event.player.level();
             
         final LooperBlockEntity looperBE = LooperUtil.getFromEvent(event);
-        if (looperBE == null)
+        if (looperBE == null || looperBE.isCapped(level))
             return;
 
-        if (looperBE.isCapped(level))
+        // Omit if record is not writable
+        if (!looperBE.getChannel().getBoolean("writable"))
             return;
 
 
@@ -240,7 +263,7 @@ public class LooperBlockEntity extends BlockEntity {
             looperBE.getChannel().putString("instrumentId", event.instrumentId.toString());
         }
             
-        looperBE.addNote(event.sound, event.pitch, event.volume, looperBE.getTicks());
+        looperBE.writeNote(event.sound, event.pitch, event.volume, looperBE.getTicks());
         looperBE.setChanged();
     }
 

@@ -104,11 +104,12 @@ public class LooperBlock extends Block implements EntityBlock {
 
         // Check for a record's presence
         boolean recordInjected = false;
+        BlockState newState = pState;
 
         if (itemStack.getItem() instanceof EMIRecordItem recordItem) {
             if (!pState.getValue(RECORD_IN)) {
                 popRecord();
-                pLevel.setBlockAndUpdate(pPos, pState.setValue(RECORD_IN, true));
+                newState = newState.setValue(RECORD_IN, true);
             }
 
             lbe.setRecordData(recordItem.toLooperData(itemStack));
@@ -136,13 +137,16 @@ public class LooperBlock extends Block implements EntityBlock {
         // Then make it so that only by holding shift can you pause and play
         // since you'll be able to do that there anyways
         if (lbe.hasFootage()) {
-            pLevel.setBlock(pPos, cyclePlaying(pLevel, pState, pPos), 3);
+            pLevel.setBlockAndUpdate(pPos, cyclePlaying(pLevel, newState, pPos));
             return InteractionResult.SUCCESS;
         }
         else {
             pPlayer.displayClientMessage(
                 Component.translatable("evenmoreinstruments.looper.no_footage")
             , true);
+
+            if (newState != pState)
+                pLevel.setBlockAndUpdate(pPos, newState);
             return recordInjected ? InteractionResult.SUCCESS : InteractionResult.CONSUME_PARTIAL;
         }
 
