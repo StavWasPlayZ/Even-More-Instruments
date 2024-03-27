@@ -7,7 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 
 public abstract class EMIRecordItem extends Item {
-
     public EMIRecordItem(final Properties properties) {
         super(properties.stacksTo(1));
     }

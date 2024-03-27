@@ -28,11 +28,17 @@ public class WritableRecordItem extends EMIRecordItem {
         return isBurned(stack) ? stack.getTagElement("data") : null;
     }
 
+
     @Override
     public Component getName(ItemStack pStack) {
         return Component.translatable(String.format(
             "item.evenmoreinstruments.%s_record",
             isBurned(pStack) ? "burned" : "writable"
         ));
+    }
+
+    @Override
+    public int getMaxStackSize(ItemStack stack) {
+        return isBurned(stack) ? super.getMaxStackSize(stack) : 64;
     }
 }
