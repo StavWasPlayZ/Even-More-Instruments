@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 
 import net.minecraft.ChatFormatting;
@@ -19,8 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class LooperUtil {
-    public static final String LOOPER_TAG = "looper",
-        POS_TAG = "pos", RECORDING_TAG = "recording";
+    public static final String LOOPER_TAG = "looper", POS_TAG = "pos";
     
 
     // Handle instrument's looper tag
@@ -51,7 +51,6 @@ public class LooperUtil {
     }
     private static void constructLooperTag(final CompoundTag looperTag, final BlockPos looperPos) {
         looperTag.put(POS_TAG, NbtUtils.writeBlockPos(looperPos));
-        setRecording(looperTag, false);
     }
 
     public static CompoundTag looperTag(final ItemStack instrument) {
@@ -164,13 +163,15 @@ public class LooperUtil {
         final CompoundTag looperPosTag = looperTag.getCompound(POS_TAG);
         return (looperPosTag == null) ? null : NbtUtils.readBlockPos(looperPosTag);
     }
-    
-    //TODO Move recording data to player
-    public static void setRecording(final CompoundTag looperTag, final boolean recording) {
-        looperTag.putBoolean(RECORDING_TAG, recording);
+
+    public static void setRecording(final Player player, final BlockPos looperPos) {
+        RecordingCapabilityProvider.setRecording(player, looperPos);
     }
-    public static boolean isRecording(final CompoundTag looperTag) {
-        return looperTag.getBoolean(RECORDING_TAG);
+    public static void setNotRecording(final Player player) {
+        RecordingCapabilityProvider.setNotRecording(player);
+    }
+    public static boolean isRecording(final Player player) {
+        return RecordingCapabilityProvider.isRecording(player);
     }
     
 }

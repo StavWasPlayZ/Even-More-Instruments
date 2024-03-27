@@ -104,11 +104,6 @@ public class LooperOverlayInjector {
             InstrumentOpenProvider.getHand(Minecraft.getInstance().player)
             : null;
 
-        isRecording = isItem
-            ? LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(hand)))
-            : LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player)));
-
-
         if (isRecording) {
             removeRecordButton();
             screen = null;

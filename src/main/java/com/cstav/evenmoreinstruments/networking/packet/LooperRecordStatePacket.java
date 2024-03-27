@@ -72,7 +72,7 @@ public class LooperRecordStatePacket implements IModPacket {
             return;
         }
 
-        changeRecordingState(player, looperTag, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
+        changeRecordingState(player, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
         ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(instrumentBlock), instrumentBlockPos), player);
     }
 
@@ -90,10 +90,10 @@ public class LooperRecordStatePacket implements IModPacket {
             return;
         }
 
-        changeRecordingState(player, looperTag, lbe, () -> LooperUtil.remLooperTag(instrumentItem));
+        changeRecordingState(player, lbe, () -> LooperUtil.remLooperTag(instrumentItem));
     }
 
-    private void changeRecordingState(ServerPlayer player, CompoundTag looperTag, LooperBlockEntity lbe, Runnable looperTagRemover) {
+    private void changeRecordingState(ServerPlayer player, LooperBlockEntity lbe, Runnable looperTagRemover) {
         if (lbe.isLocked() && !lbe.isLockedBy(player.getUUID()))
             return;
 
@@ -111,8 +111,10 @@ public class LooperRecordStatePacket implements IModPacket {
                 , 3);
 
             looperTagRemover.run();
+
+            LooperUtil.setNotRecording(player);
         } else
-            LooperUtil.setRecording(looperTag, true);
+            LooperUtil.setRecording(player, lbe.getBlockPos());
     }
 
 }
