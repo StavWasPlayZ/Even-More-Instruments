@@ -46,6 +46,13 @@ public class LooperBlockEntity extends BlockEntity {
         return getPersistentData().contains("channel");
     }
 
+    public void removeRecordData() {
+        getPersistentData().remove("record");
+    }
+    public void setRecordData(final CompoundTag recordData) {
+        getPersistentData().put("record", recordData);
+    }
+
 
     public LooperBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.LOOPER.get(), pPos, pBlockState);

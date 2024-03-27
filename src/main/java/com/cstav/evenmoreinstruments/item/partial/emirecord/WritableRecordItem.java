@@ -24,10 +24,16 @@ public class WritableRecordItem extends EMIRecordItem {
     }
 
     @Override
-    public @Nullable CompoundTag getRecording(ItemStack stack) {
-        return isBurned(stack) ? stack.getTagElement("data") : null;
-    }
+    public CompoundTag toLooperData(final ItemStack stack) {
+        final CompoundTag tag = new CompoundTag();
 
+        if (isBurned(stack))
+            tag.put("data", stack.getTagElement("data"));
+        else
+            tag.putBoolean("writable", true);
+
+        return tag;
+    }
 
     @Override
     public Component getName(ItemStack pStack) {

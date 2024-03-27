@@ -2,11 +2,13 @@ package com.cstav.evenmoreinstruments.block;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,19 +37,21 @@ public class LooperBlock extends Block implements EntityBlock {
 
     //TODO: Redstone should trigger this
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
-    
+    public static final BooleanProperty RECORD_IN = BooleanProperty.create("record_in");
+
 
     public LooperBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
             .setValue(PLAYING, false)
+            .setValue(RECORD_IN, false)
             .setValue(FACING, Direction.NORTH)
         );
     }
 
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(PLAYING, FACING);
+        pBuilder.add(PLAYING, FACING, RECORD_IN);
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
@@ -96,8 +100,27 @@ public class LooperBlock extends Block implements EntityBlock {
         if (!(be instanceof LooperBlockEntity lbe))
             return InteractionResult.FAIL;
 
-        final boolean hasChannel = lbe.hasFootage();
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
+
+        // Check for a record's presence
+        boolean recordInjected = false;
+
+        if (itemStack.getItem() instanceof EMIRecordItem recordItem) {
+            if (!pState.getValue(RECORD_IN)) {
+                popRecord();
+                pLevel.setBlockAndUpdate(pPos, pState.setValue(RECORD_IN, true));
+            }
+
+            lbe.setRecordData(recordItem.toLooperData(itemStack));
+            lbe.setChanged();
+
+            recordInjected = true;
+        } else if (!pState.getValue(RECORD_IN)) {
+            pPlayer.displayClientMessage(
+                Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED)
+                , true);
+            return InteractionResult.FAIL;
+        }
         
 
         // Handle pairing
@@ -112,7 +135,7 @@ public class LooperBlock extends Block implements EntityBlock {
         //TODO: Add a GUI for the looper and trigger it for display here
         // Then make it so that only by holding shift can you pause and play
         // since you'll be able to do that there anyways
-        if (hasChannel) {
+        if (lbe.hasFootage()) {
             pLevel.setBlock(pPos, cyclePlaying(pLevel, pState, pPos), 3);
             return InteractionResult.SUCCESS;
         }
@@ -120,9 +143,13 @@ public class LooperBlock extends Block implements EntityBlock {
             pPlayer.displayClientMessage(
                 Component.translatable("evenmoreinstruments.looper.no_footage")
             , true);
-            return InteractionResult.CONSUME_PARTIAL;
+            return recordInjected ? InteractionResult.SUCCESS : InteractionResult.CONSUME_PARTIAL;
         }
 
+    }
+
+    private static void popRecord() {
+        //TODO implement
     }
 
     @Override

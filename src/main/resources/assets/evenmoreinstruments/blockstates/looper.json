@@ -1,37 +1,54 @@
 {
     "variants": {
         
-        "playing=false,facing=north": {
+        "record_in=false,facing=north": {
+            "model": "evenmoreinstruments:block/looper_uninjected",
+            "y": 0
+        },
+        "record_in=false,facing=east": {
+            "model": "evenmoreinstruments:block/looper_uninjected",
+            "y": 90
+        },
+        "record_in=false,facing=south": {
+            "model": "evenmoreinstruments:block/looper_uninjected",
+            "y": 180
+        },
+        "record_in=false,facing=west": {
+            "model": "evenmoreinstruments:block/looper_uninjected",
+            "y": 270
+        },
+
+        "record_in=true,playing=false,facing=north": {
             "model": "evenmoreinstruments:block/looper_idle",
             "y": 0
         },
-        "playing=false,facing=east": {
+        "record_in=true,playing=false,facing=east": {
             "model": "evenmoreinstruments:block/looper_idle",
             "y": 90
         },
-        "playing=false,facing=south": {
+        "record_in=true,playing=false,facing=south": {
             "model": "evenmoreinstruments:block/looper_idle",
             "y": 180
         },
-        "playing=false,facing=west": {
+        "record_in=true,playing=false,facing=west": {
             "model": "evenmoreinstruments:block/looper_idle",
             "y": 270
         },
 
 
-        "playing=true,facing=north": {
+        "record_in=true,playing=true,facing=north": {
             "model": "evenmoreinstruments:block/looper_playing",
             "y": 0
         },
-        "playing=true,facing=east": {
+        "record_in=true,playing=true,facing=east": {
             "model": "evenmoreinstruments:block/looper_playing",
             "y": 90
         },
-        "playing=true,facing=south": {
+        "record_in=true,playing=true,facing=south": {
             "model": "evenmoreinstruments:block/looper_playing",
             "y": 180
         },
-        "playing=true,facing=west": {
+        "record_in=true,playing=true,facing=west": {
             "model": "evenmoreinstruments:block/looper_playing",
             "y": 270
         }
