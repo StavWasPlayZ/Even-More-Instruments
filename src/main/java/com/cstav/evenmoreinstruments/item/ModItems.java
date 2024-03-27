@@ -8,17 +8,16 @@ import java.util.function.Supplier;
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.WindInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -64,7 +63,6 @@ public class ModItems {
                 new ModOpenInstrumentPacket("guitar"), player
             )
         )),
-
         TROMBONE = register("trombone", () -> new WindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("trombone"), player
@@ -75,23 +73,24 @@ public class ModItems {
                 new ModOpenInstrumentPacket("saxophone"), player
             )
         )),
-
-
         KEYBOARD = register("keyboard", () ->
             new KeyboardBlockItem(ModBlocks.KEYBOARD.get(), new Properties()),
             DEFAULT_INSTRUMENT_BLOCK_TABS
         ),
 
+        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
+            EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
+        ),
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER,
-            EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
+            EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
             CreativeModeTabs.REDSTONE_BLOCKS
         ),
         LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()),
-            CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
+            CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
-        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
-            EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
+        WRITABLE_RECORD = register("writable_record", () -> new WritableRecordItem(new Properties()),
+            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         )
     ;
 

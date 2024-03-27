@@ -3,6 +3,7 @@
     "evenmoreinstruments.keymaps.violin_type_modifier": "Lengthen/Shorten Violin Sound",
 
     "itemGroup.evenmoreinstruments.instrument_accessories_tab": "Instrument Accessories",
+    "itemGroup.evenmoreinstruments.music_production_tab": "Music Production",
 
 
     "item.evenmoreinstruments.violin": "Violin",
@@ -15,6 +16,9 @@
     "item.evenmoreinstruments.looper_adapter.description": "Pairs an instrument block to a looper",
     "item.evenmoreinstruments.looper_adapter.select_instrument": "Looper connected successfully. Please select an instrument to pair with it.",
     "item.evenmoreinstruments.looper_adapter.select_looper": "Instrument connected successfully. Please select a looper to pair with it.",
+
+    "item.evenmoreinstruments.writable_record": "Empty Record",
+    "item.evenmoreinstruments.burned_record": "Burned Record",
 
     "block.evenmoreinstruments.keyboard": "Keyboard",
     "block.evenmoreinstruments.keyboard_stand": "Keyboard Stand",

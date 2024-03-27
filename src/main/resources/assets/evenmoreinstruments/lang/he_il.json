@@ -3,6 +3,7 @@
     "evenmoreinstruments.keymaps.violin_type_modifier": "הארך/קצר את אורך צליל הכינור",
 
     "itemGroup.evenmoreinstruments.instrument_accessories_tab": "אביזרי כלי נגינה",
+    "itemGroup.evenmoreinstruments.music_production_tab": "הלחנה",
 
 
     "item.evenmoreinstruments.violin": "כינור",
@@ -15,6 +16,10 @@
     "item.evenmoreinstruments.looper_adapter.description": "מתאם בין בלוק כלי נגינה ללופר",
     "item.evenmoreinstruments.looper_adapter.select_instrument": "לופר חובר בהצלחה. אנא בחר כלי נגינה לתאם עימו.",
     "item.evenmoreinstruments.looper_adapter.select_looper": "כלי נגינה חובר בהצלחה. אנא בחר לופר לתאם עימו.",
+
+
+    "item.evenmoreinstruments.writable_record": "תקליט ריק",
+    "item.evenmoreinstruments.burned_record": "תקליט צרוב",
 
 
     "block.evenmoreinstruments.keyboard": "אורגן",
