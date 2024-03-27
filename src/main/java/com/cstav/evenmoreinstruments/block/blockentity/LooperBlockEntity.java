@@ -204,7 +204,8 @@ public class LooperBlockEntity extends BlockEntity {
         if (!isPlaying && !lbe.isRecording())
             return;
 
-        final int ticks = lbe.incrementTick();
+        if (lbe.isRecording())
+            lbe.incrementTick();
 
         if (!isPlaying)
             return;
@@ -214,6 +215,7 @@ public class LooperBlockEntity extends BlockEntity {
             return;
 
         final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
+        final int ticks = getTicks();
 
         for (final Tag pNote : channel.getList("notes", Tag.TAG_COMPOUND)) {
             if (!(pNote instanceof CompoundTag note))
@@ -240,6 +242,8 @@ public class LooperBlockEntity extends BlockEntity {
                 LOGGER.error("Attempted to play a looper note, but met with an exception", e);
             }
         }
+
+        lbe.incrementTick();
     }
 
 
