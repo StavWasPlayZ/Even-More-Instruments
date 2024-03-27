@@ -2,6 +2,7 @@ package com.cstav.evenmoreinstruments.item.partial.emirecord;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BurnedRecordItem extends EMIRecordItem {
 
@@ -16,6 +17,7 @@ public class BurnedRecordItem extends EMIRecordItem {
     public CompoundTag toLooperData(final ItemStack stack) {
         final CompoundTag tag = new CompoundTag();
         tag.putString("burned_media", burnedMedia);
+        tag.putString("record_id", ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
         return tag;
     }
 }

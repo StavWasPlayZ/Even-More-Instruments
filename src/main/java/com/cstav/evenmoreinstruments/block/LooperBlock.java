@@ -108,8 +108,9 @@ public class LooperBlock extends Block implements EntityBlock {
 
         if (itemStack.getItem() instanceof EMIRecordItem recordItem) {
             if (!pState.getValue(RECORD_IN)) {
-                popRecord();
                 newState = newState.setValue(RECORD_IN, true);
+            } else {
+                lbe.popRecord();
             }
 
             lbe.setRecordData(recordItem.toLooperData(itemStack));
@@ -150,10 +151,6 @@ public class LooperBlock extends Block implements EntityBlock {
             return recordInjected ? InteractionResult.SUCCESS : InteractionResult.CONSUME_PARTIAL;
         }
 
-    }
-
-    private static void popRecord() {
-        //TODO implement
     }
 
     @Override

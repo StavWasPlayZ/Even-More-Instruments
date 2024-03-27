@@ -3,7 +3,14 @@ package com.cstav.evenmoreinstruments.block.blockentity;
 import java.util.UUID;
 
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
+import com.cstav.evenmoreinstruments.item.ModItems;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 import com.cstav.evenmoreinstruments.Main;
@@ -73,11 +80,8 @@ public class LooperBlockEntity extends BlockEntity {
 
         final CompoundTag data = getPersistentData();
 
-        // Construct all the data stuff
         if (!data.contains("ticks", CompoundTag.TAG_INT))
             setTicks(0);
-        if (!data.contains("repeatTick", CompoundTag.TAG_INT))
-            setRepeatTick(-1);
     }
     
 
@@ -109,7 +113,7 @@ public class LooperBlockEntity extends BlockEntity {
         return ticks;
     }
     public void setRepeatTick(final int tick) {
-        getPersistentData().putInt("repeatTick", tick);
+        getChannel().putInt("repeatTick", tick);
     }
 
     public void setLockedBy(final UUID player) {
@@ -134,10 +138,9 @@ public class LooperBlockEntity extends BlockEntity {
         getPersistentData().remove("lockedBy");
         lockedBy = null;
 
-        setRepeatTick(-1);
         setTicks(0);
 
-        getPersistentData().remove("channel");
+        removeRecordData();
     }
 
     public boolean isLocked() {
@@ -161,7 +164,12 @@ public class LooperBlockEntity extends BlockEntity {
         return getPersistentData().getInt("ticks");
     }
     public int getRepeatTick() {
-        return getPersistentData().getInt("repeatTick");
+        final CompoundTag channel = getChannel();
+
+        if (channel.contains("repeatTick", Tag.TAG_INT))
+            return channel.getInt("repeatTick");
+        else
+            return -1;
     }
 
 
@@ -233,6 +241,42 @@ public class LooperBlockEntity extends BlockEntity {
             }
         }
     }
+
+
+    public void popRecord() {
+        final CompoundTag recordData = getRecordData();
+
+        ItemStack record;
+
+        if (recordData.contains("record_id", Tag.TAG_STRING)) {
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(recordData.getString("record_id")));
+            if (item == null)
+                return;
+
+            record = new ItemStack(item);
+        }
+        else {
+            record = new ItemStack(ModItems.WRITABLE_RECORD.get());
+
+            if (getChannel().getBoolean("writable")) {
+                final CompoundTag channel = new CompoundTag();
+                channel.putBoolean("writable", false);
+                record.getOrCreateTag().put("channel", channel);
+            } else {
+                record.getOrCreateTag().put("channel", getChannel().copy());
+            }
+        }
+
+        Vec3 popVec = Vec3.atLowerCornerWithOffset(getBlockPos(), 0.5D, 1.01D, 0.5D)
+            .offsetRandom(getLevel().random, 0.7F);
+
+        ItemEntity itementity = new ItemEntity(getLevel(), popVec.x(), popVec.y(), popVec.z(), record);
+        itementity.setDefaultPickUpDelay();
+        getLevel().addFreshEntity(itementity);
+
+        reset();
+    }
+
 
 
     /**
