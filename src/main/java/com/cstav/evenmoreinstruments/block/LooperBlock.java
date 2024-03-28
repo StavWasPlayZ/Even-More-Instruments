@@ -20,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -31,6 +32,7 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 public class LooperBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -164,6 +166,19 @@ public class LooperBlock extends Block implements EntityBlock {
     }
 
     @Override
+    public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
+        super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
+        if (pLevel.isClientSide())
+            return;
+
+        if (!(pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe))
+            return;
+
+        lbe.popRecord();
+    }
+
+
+    @Override
     public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock,
             BlockPos pNeighborPos, boolean pMovedByPiston) {
         if (pLevel.isClientSide)
@@ -172,7 +187,6 @@ public class LooperBlock extends Block implements EntityBlock {
         if (pLevel.hasNeighborSignal(pPos) && (pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe))
             lbe.setTicks(lbe.getRepeatTick() + 1);
     }
-
 
     @Override
     public boolean triggerEvent(BlockState pState, Level pLevel, BlockPos pPos, int pId, int pParam) {
