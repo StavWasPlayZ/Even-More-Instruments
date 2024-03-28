@@ -102,6 +102,12 @@ public class LooperBlock extends Block implements EntityBlock {
 
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
 
+        if (pPlayer.isShiftKeyDown() && pState.getValue(RECORD_IN)) {
+            pLevel.setBlockAndUpdate(pPos, cyclePlaying(pLevel, pState.setValue(RECORD_IN, false), pPos));
+            lbe.popRecord();
+            return InteractionResult.SUCCESS;
+        }
+
         // Check for a record's presence
         boolean recordInjected = false;
         BlockState newState = pState;
