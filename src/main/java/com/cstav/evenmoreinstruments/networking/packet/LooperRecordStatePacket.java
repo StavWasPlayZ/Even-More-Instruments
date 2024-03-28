@@ -101,15 +101,11 @@ public class LooperRecordStatePacket implements IModPacket {
             lbe.lock();
             lbe.getChannel().putBoolean("writable", false);
 
-            final BlockState blockState = lbe.getBlockState();
-            final Level level = player.level();
-
-            if (!(blockState.getBlock() instanceof LooperBlock looperBlock))
-                return;
-
-            level.setBlock(lbe.getBlockPos(),
-                looperBlock.setPlaying(true, level, blockState, lbe.getBlockPos())
-                , 3);
+            player.level().setBlock(
+                lbe.getBlockPos(),
+                lbe.setPlaying(true, lbe.getBlockState()),
+                3
+            );
 
             looperTagRemover.run();
 

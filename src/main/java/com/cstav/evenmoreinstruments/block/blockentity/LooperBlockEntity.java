@@ -5,6 +5,9 @@ import java.util.UUID;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
+import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -170,6 +173,24 @@ public class LooperBlockEntity extends BlockEntity {
             return channel.getInt("repeatTick");
         else
             return -1;
+    }
+
+
+    /**
+     * Updates the playing state of this looper.
+     * Ignores {@code isPlaying} to be false on the condition this looper contains no footage.
+     * @return The current block state with the set {@code playing} value
+     */
+    public BlockState setPlaying(final boolean playing, final BlockState state) {
+        final boolean isPlaying = hasFootage() && playing;
+        final BlockState newState = state.setValue(LooperBlock.PLAYING, isPlaying);
+
+        if (!getLevel().isClientSide)
+            getLevel().players().forEach((player) ->
+                ModPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, getBlockPos()), (ServerPlayer)player)
+            );
+
+        return newState;
     }
 
 

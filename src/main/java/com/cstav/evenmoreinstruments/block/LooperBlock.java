@@ -73,20 +73,8 @@ public class LooperBlock extends Block implements EntityBlock {
             : null;
     }
 
-
-    public BlockState setPlaying(boolean isPlaying, Level level, BlockState blockState, BlockPos blockPos) {
-        final BlockState newState = blockState.setValue(PLAYING, isPlaying);
-
-        // should always be serverside but whatever
-        if (!level.isClientSide)
-            level.players().forEach((player) ->
-                ModPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, blockPos), (ServerPlayer)player)
-            );
-
-        return newState;
-    }
-    public BlockState cyclePlaying(Level level, BlockState blockState, BlockPos blockPos) {
-        return setPlaying(!blockState.getValue(PLAYING), level, blockState, blockPos);
+    public static BlockState cyclePlaying(LooperBlockEntity lbe, BlockState state) {
+        return lbe.setPlaying(!state.getValue(PLAYING), state);
     }
 
 
@@ -101,12 +89,6 @@ public class LooperBlock extends Block implements EntityBlock {
             return InteractionResult.FAIL;
 
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
-
-        if (pPlayer.isShiftKeyDown() && pState.getValue(RECORD_IN)) {
-            pLevel.setBlockAndUpdate(pPos, cyclePlaying(pLevel, pState.setValue(RECORD_IN, false), pPos));
-            lbe.popRecord();
-            return InteractionResult.SUCCESS;
-        }
 
         // Check for a record's presence
         boolean recordInjected = false;
@@ -141,12 +123,19 @@ public class LooperBlock extends Block implements EntityBlock {
 
         }
 
+        // Ejecting the record
+        if (pState.getValue(RECORD_IN) && (pPlayer.isShiftKeyDown() || !lbe.hasFootage())) {
+            pLevel.setBlockAndUpdate(pPos, cyclePlaying(lbe, pState.setValue(RECORD_IN, false)));
+            lbe.popRecord();
+            return InteractionResult.SUCCESS;
+        }
+
 
         //TODO: Add a GUI for the looper and trigger it for display here
         // Then make it so that only by holding shift can you pause and play
         // since you'll be able to do that there anyways
         if (lbe.hasFootage()) {
-            pLevel.setBlockAndUpdate(pPos, cyclePlaying(pLevel, newState, pPos));
+            pLevel.setBlockAndUpdate(pPos, cyclePlaying(lbe, newState));
             return InteractionResult.SUCCESS;
         }
         else {
