@@ -124,7 +124,7 @@ public class LooperBlock extends Block implements EntityBlock {
         }
 
         // Ejecting the record
-        if (pState.getValue(RECORD_IN) && (pPlayer.isShiftKeyDown() || !lbe.hasFootage())) {
+        if (!recordInjected && pState.getValue(RECORD_IN) && (pPlayer.isShiftKeyDown() || !lbe.hasFootage())) {
             pLevel.setBlockAndUpdate(pPos, cyclePlaying(lbe, pState.setValue(RECORD_IN, false)));
             lbe.popRecord();
             return InteractionResult.SUCCESS;
