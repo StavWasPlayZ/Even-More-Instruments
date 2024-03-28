@@ -67,6 +67,10 @@ public class LooperBlockEntity extends BlockEntity {
         return channel.contains("notes", Tag.TAG_LIST) && !channel.getList("notes", Tag.TAG_COMPOUND).isEmpty();
     }
 
+    public boolean isWritable() {
+        return getChannel().getBoolean("writable");
+    }
+
     public void removeRecordData() {
         getPersistentData().remove("record");
     }
@@ -198,7 +202,7 @@ public class LooperBlockEntity extends BlockEntity {
      * Writes a new note to the writable record.
      */
     public void writeNote(NoteSound sound, int pitch, int volume, int timestamp) {
-        if (!getChannel().getBoolean("writable"))
+        if (!isWritable())
             return;
 
         final CompoundTag noteTag = new CompoundTag();
@@ -283,7 +287,7 @@ public class LooperBlockEntity extends BlockEntity {
         else {
             record = new ItemStack(ModItems.WRITABLE_RECORD.get());
 
-            if (!getChannel().getBoolean("writable"))
+            if (!isWritable())
                 record.getOrCreateTag().put("channel", getChannel().copy());
         }
 
@@ -314,7 +318,7 @@ public class LooperBlockEntity extends BlockEntity {
             return;
 
         // Omit if record is not writable
-        if (!looperBE.getChannel().getBoolean("writable"))
+        if (!looperBE.isWritable())
             return;
 
 
