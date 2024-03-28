@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 import com.cstav.evenmoreinstruments.item.ModItems;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.RecordRepository;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
@@ -53,9 +54,8 @@ public class LooperBlockEntity extends BlockEntity {
 
         if (recordData.contains("channel", Tag.TAG_COMPOUND))
             return recordData.getCompound("channel");
-        if (recordData.contains("burned_media"))
-            //TODO get compound from repository
-            return new CompoundTag();
+        if (recordData.contains("burned_media", Tag.TAG_STRING))
+            return RecordRepository.getRecord(new ResourceLocation(recordData.getString("burned_media")));
 
         return null;
     }
@@ -173,7 +173,7 @@ public class LooperBlockEntity extends BlockEntity {
     public int getRepeatTick() {
         final CompoundTag channel = getChannel();
 
-        if (channel.contains("repeatTick", Tag.TAG_INT))
+        if (channel.contains("repeatTick"))
             return channel.getInt("repeatTick");
         else
             return -1;
