@@ -222,7 +222,7 @@ public class LooperBlockEntity extends BlockEntity {
 
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        // idk why but it needs to be here for it to work
+        // idk why the state isn't updated but here we are
         final LooperBlockEntity lbe = LooperUtil.getFromPos(pLevel, pPos);
         final boolean isPlaying = lbe.getBlockState().getValue(LooperBlock.PLAYING);
 
@@ -239,36 +239,32 @@ public class LooperBlockEntity extends BlockEntity {
         if (channel == null)
             return;
 
-        final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
         final int ticks = getTicks();
+        final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
 
-        for (final Tag pNote : channel.getList("notes", Tag.TAG_COMPOUND)) {
-            if (!(pNote instanceof CompoundTag note))
-                continue;
-
-            if (ticks != note.getInt("timestamp"))
-                continue;
-
-            try {
-
-                final int pitch = note.getInt("pitch");
-                final float volume = note.getFloat("volume");
-
-                final ResourceLocation soundLocation = new ResourceLocation(note.getString("soundType"));
-                
-                ServerUtil.sendPlayNotePackets(pLevel, pPos,
-                    NoteSoundRegistrar.getSounds(soundLocation)[note.getInt("soundIndex")],
-                    instrumentId, pitch, (int)(volume * 100)
-                );
-
-                pLevel.blockEvent(pPos, ModBlocks.LOOPER.get(), 42, pitch);
-
-            } catch (Exception e) {
-                LOGGER.error("Attempted to play a looper note, but met with an exception", e);
-            }
-        }
+        channel.getList("notes", Tag.TAG_COMPOUND).stream()
+            .map((note) -> (CompoundTag) note)
+            .filter((note) -> note.getInt("timestamp") == ticks)
+            .forEach((note) -> lbe.playNote(note, instrumentId));
 
         lbe.incrementTick();
+    }
+    private void playNote(final CompoundTag note, final ResourceLocation instrumentId) {
+        try {
+            final int pitch = note.getInt("pitch");
+            final float volume = note.getFloat("volume");
+
+            final ResourceLocation soundLocation = new ResourceLocation(note.getString("soundType"));
+
+            ServerUtil.sendPlayNotePackets(getLevel(), getBlockPos(),
+                NoteSoundRegistrar.getSounds(soundLocation)[note.getInt("soundIndex")],
+                instrumentId, pitch, (int)(volume * 100)
+            );
+
+            getLevel().blockEvent(getBlockPos(), ModBlocks.LOOPER.get(), 42, pitch);
+        } catch (Exception e) {
+            LOGGER.error("Attempted to play a looper note, but met with an exception", e);
+        }
     }
 
 
