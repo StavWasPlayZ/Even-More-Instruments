@@ -123,9 +123,10 @@ public class LooperBlock extends Block implements EntityBlock {
             if (writable) {
                 if (LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer))
                     return InteractionResult.SUCCESS;
-            } else {
+            }
+            else {
                 pPlayer.displayClientMessage(
-                    Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED)
+                    Component.translatable("evenmoreinstruments.record.not_writable").withStyle(ChatFormatting.YELLOW)
                     , true);
                 return InteractionResult.CONSUME;
             }
