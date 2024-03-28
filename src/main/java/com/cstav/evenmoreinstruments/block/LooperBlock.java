@@ -113,13 +113,22 @@ public class LooperBlock extends Block implements EntityBlock {
                 , true);
             return InteractionResult.FAIL;
         }
-        
+
+
+        final boolean writable = lbe.isWritable();
 
         // Handle pairing
         if (itemStack.getItem() instanceof InstrumentItem) {
 
-            if (LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer))
-                return InteractionResult.SUCCESS;
+            if (writable) {
+                if (LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer))
+                    return InteractionResult.SUCCESS;
+            } else {
+                pPlayer.displayClientMessage(
+                    Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED)
+                    , true);
+                return InteractionResult.CONSUME;
+            }
 
         }
 
@@ -139,9 +148,12 @@ public class LooperBlock extends Block implements EntityBlock {
             return InteractionResult.SUCCESS;
         }
         else {
-            pPlayer.displayClientMessage(
-                Component.translatable("evenmoreinstruments.looper.no_footage")
-            , true);
+            if (writable) {
+                pPlayer.displayClientMessage(
+                    Component.translatable("evenmoreinstruments.looper.no_footage"),
+                    true
+                );
+            }
 
             if (newState != pState)
                 pLevel.setBlockAndUpdate(pPos, newState);
