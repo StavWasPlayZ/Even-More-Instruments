@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.WindInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
@@ -17,6 +18,7 @@ import com.cstav.genshinstrument.ModCreativeModeTabs;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.level.block.Block;
@@ -89,7 +91,15 @@ public class ModItems {
         LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()),
             CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
+
         WRITABLE_RECORD = register("writable_record", () -> new WritableRecordItem(new Properties()),
+            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+        ),
+        RICKROLL_RECORD = register("rickroll_record", () ->
+            new BurnedRecordItem(
+                new Properties(),
+                new ResourceLocation(Main.MODID, "rickroll")
+            ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         )
     ;
