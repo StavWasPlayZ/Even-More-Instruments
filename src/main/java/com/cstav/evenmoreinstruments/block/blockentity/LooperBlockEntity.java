@@ -262,13 +262,8 @@ public class LooperBlockEntity extends BlockEntity {
         else {
             record = new ItemStack(ModItems.WRITABLE_RECORD.get());
 
-            if (getChannel().getBoolean("writable")) {
-                final CompoundTag channel = new CompoundTag();
-                channel.putBoolean("writable", true);
-                record.getOrCreateTag().put("channel", channel);
-            } else {
+            if (!getChannel().getBoolean("writable"))
                 record.getOrCreateTag().put("channel", getChannel().copy());
-            }
         }
 
         Vec3 popVec = Vec3.atLowerCornerWithOffset(getBlockPos(), 0.5D, 1.01D, 0.5D)
