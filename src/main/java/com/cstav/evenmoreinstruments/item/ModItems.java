@@ -96,16 +96,6 @@ public class ModItems {
         RECORD_WRITABLE = register("record_writable", () -> new WritableRecordItem(new Properties()),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
-        RECORD_RICKROLL = register("record_rickroll", () ->
-            new BurnedRecordItem(
-                new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(Main.MODID, "rickroll"),
-                null,
-                "StavWasPlayZ",
-                Component.translatable("item.evenmoreinstruments.interesting_record")
-            ),
-            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
-        ),
         RECORD_JOHNNY = register("record_johnny", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
@@ -121,6 +111,16 @@ public class ModItems {
                     new ResourceLocation(Main.MODID, "super_idol"),
                     "Super Idol - De Xian Rong",
                     "Saxophy"
+                ),
+            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+        ),
+        RECORD_RICKROLL = register("record_rickroll", () ->
+                new BurnedRecordItem(
+                    new Properties().stacksTo(1).rarity(Rarity.EPIC),
+                    new ResourceLocation(Main.MODID, "rickroll"),
+                    null,
+                    "StavWasPlayZ",
+                    Component.translatable("item.evenmoreinstruments.interesting_record")
                 ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         )
