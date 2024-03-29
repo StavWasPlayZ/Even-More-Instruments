@@ -281,7 +281,7 @@ public class LooperBlockEntity extends BlockEntity {
             record = new ItemStack(item);
         }
         else {
-            record = new ItemStack(ModItems.WRITABLE_RECORD.get());
+            record = new ItemStack(ModItems.RECORD_WRITABLE.get());
 
             if (!isWritable())
                 record.getOrCreateTag().put("channel", getChannel().copy());

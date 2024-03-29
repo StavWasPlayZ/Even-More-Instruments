@@ -92,13 +92,20 @@ public class ModItems {
             CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
 
-        WRITABLE_RECORD = register("record_writable", () -> new WritableRecordItem(new Properties()),
+        RECORD_WRITABLE = register("record_writable", () -> new WritableRecordItem(new Properties()),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
-        RICKROLL_RECORD = register("record_rickroll", () ->
+        RECORD_RICKROLL = register("record_rickroll", () ->
             new BurnedRecordItem(
                 new Properties(),
                 new ResourceLocation(Main.MODID, "rickroll")
+            ),
+            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+        ),
+        RECORD_JOHNNY = register("record_johnny", () ->
+            new BurnedRecordItem(
+                new Properties(),
+                new ResourceLocation(Main.MODID, "johnny")
             ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         )
