@@ -115,8 +115,9 @@ public class LooperBlock extends Block implements EntityBlock {
         }
         else if (!pState.getValue(RECORD_IN)) {
             pPlayer.displayClientMessage(
-                Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED)
-                , true);
+                Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED),
+                true
+            );
             return InteractionResult.CONSUME_PARTIAL;
         }
 

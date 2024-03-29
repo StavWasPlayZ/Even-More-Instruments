@@ -79,6 +79,9 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         getChannel().putBoolean("writable", writable);
     }
 
+    public boolean isRecordIn() {
+        return !recordIn.isEmpty();
+    }
     protected CompoundTag getRecordData() {
         return recordIn.getOrCreateTag();
     }
@@ -93,7 +96,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     public ItemStack removeItem(int pSlot, int pAmount) {
-        if (recordIn.isEmpty() || pAmount <= 0)
+        if (!isRecordIn() || pAmount <= 0)
             return ItemStack.EMPTY;
 
         final ItemStack prev = recordIn;
@@ -137,11 +140,11 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     public boolean canPlaceItem(int pIndex, ItemStack pStack) {
-        return (pStack.getItem() instanceof EMIRecordItem) && recordIn.isEmpty();
+        return (pStack.getItem() instanceof EMIRecordItem) && !isRecordIn();
     }
 
     public boolean canTakeItem(Container pTarget, int pIndex, ItemStack pStack) {
-        return recordIn.isEmpty();
+        return !isRecordIn();
     }
 
     //#endregion

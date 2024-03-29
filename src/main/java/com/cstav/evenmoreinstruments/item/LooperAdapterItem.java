@@ -32,7 +32,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 import java.util.List;
 
-//TODO should not accept connection if not writable
 public class LooperAdapterItem extends Item {
     private static final String BLOCK_INSTRUMENT_POS_TAG = "instrument_block",
         LOOPER_POS_TAG = "looper";
@@ -76,13 +75,23 @@ public class LooperAdapterItem extends Item {
         if (!(be instanceof LooperBlockEntity lbe) || !LooperUtil.performChannelCheck(lbe, player))
             return false;
 
+        if (!lbe.isRecordIn()) {
+            player.displayClientMessage(
+                Component.translatable("evenmoreinstruments.looper.no_record")
+                    .withStyle(ChatFormatting.RED),
+                true
+            );
+            return false;
+        }
+
         if (adapterTag.contains(BLOCK_INSTRUMENT_POS_TAG, Tag.TAG_COMPOUND))
             return pair(adapterTag, NbtUtils.readBlockPos(adapterTag.getCompound(BLOCK_INSTRUMENT_POS_TAG)), blockPos, player);
 
         adapterTag.put(LOOPER_POS_TAG, NbtUtils.writeBlockPos(blockPos));
         player.displayClientMessage(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.select_instrument").withStyle(ChatFormatting.GREEN)
-        , true);
+            Component.translatable("item.evenmoreinstruments.looper_adapter.select_instrument").withStyle(ChatFormatting.GREEN),
+            true
+        );
         return true;
     }
 
