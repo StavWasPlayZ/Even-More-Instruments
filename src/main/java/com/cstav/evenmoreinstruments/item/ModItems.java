@@ -82,7 +82,7 @@ public class ModItems {
         ),
 
         KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
-            EMIModCreativeModeTabs.INSTRUMENT_ACCESSORY_TAB.getKey()
+            ModCreativeModeTabs.INSTRUMENTS_TAB.getKey()
         ),
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER,

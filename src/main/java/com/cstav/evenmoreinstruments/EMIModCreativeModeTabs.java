@@ -19,18 +19,11 @@ public class EMIModCreativeModeTabs {
     }
 
     public static final RegistryObject<CreativeModeTab>
-        INSTRUMENT_ACCESSORY_TAB = TABS.register("instrument_accessories_tab",
-            () -> CreativeModeTab.builder()
-                .title(Component.translatable("itemGroup.evenmoreinstruments.instrument_accessories_tab"))
-                .icon(() -> new ItemStack(ModItems.KEYBOARD_STAND.get()))
-                .withTabsBefore(ModCreativeModeTabs.INSTRUMENTS_TAB.getKey())
-            .build()
-        ),
         MUSIC_PRODUCTION_TAB = TABS.register("music_production_tab",
             () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.evenmoreinstruments.music_production_tab"))
                 .icon(() -> new ItemStack(ModItems.LOOPER.get()))
-                .withTabsBefore(INSTRUMENT_ACCESSORY_TAB.getKey())
+                .withTabsBefore(ModCreativeModeTabs.INSTRUMENTS_TAB.getKey())
             .build()
         )
     ;
