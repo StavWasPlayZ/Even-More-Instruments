@@ -9,5 +9,7 @@ public abstract class EMIRecordItem extends Item {
         super(properties.stacksTo(1));
     }
 
+    //TODO make implementors return all their NBT data
+    // The looper should pop back the record with said NBT as a whole
     public abstract CompoundTag toLooperData(final ItemStack stack);
 }
