@@ -106,22 +106,31 @@ public class ModItems {
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
         RECORD_SUPER_IDOL = register("record_super_idol", () ->
-                new BurnedRecordItem(
-                    new Properties().stacksTo(1).rarity(Rarity.RARE),
-                    new ResourceLocation(Main.MODID, "super_idol"),
-                    "Super Idol - De Xian Rong",
-                    "Saxophy"
-                ),
+            new BurnedRecordItem(
+                new Properties().stacksTo(1).rarity(Rarity.RARE),
+                new ResourceLocation(Main.MODID, "super_idol"),
+                "Super Idol - De Xian Rong",
+                "Saxophy"
+            ),
+            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+        ),
+        RECORD_OVEN_KID = register("record_oven_kid", () ->
+            new BurnedRecordItem(
+                new Properties().stacksTo(1).rarity(Rarity.RARE),
+                new ResourceLocation(Main.MODID, "oven_kid"),
+                "Timmy Trumpet & Savage - Freaks",
+                "StavWasPlayZ"
+            ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
         RECORD_RICKROLL = register("record_rickroll", () ->
-                new BurnedRecordItem(
-                    new Properties().stacksTo(1).rarity(Rarity.EPIC),
-                    new ResourceLocation(Main.MODID, "rickroll"),
-                    null,
-                    "StavWasPlayZ",
-                    Component.translatable("item.evenmoreinstruments.interesting_record")
-                ),
+            new BurnedRecordItem(
+                new Properties().stacksTo(1).rarity(Rarity.EPIC),
+                new ResourceLocation(Main.MODID, "rickroll"),
+                null,
+                "StavWasPlayZ",
+                Component.translatable("item.evenmoreinstruments.interesting_record")
+            ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         )
     ;

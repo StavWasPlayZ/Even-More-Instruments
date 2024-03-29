@@ -1,0 +1,33 @@
+{
+    "notes": [
+        { "volume": 1.0, "pitch": -7, "soundIndex": 0, "soundType": "evenmoreinstruments:trombone", "timestamp": 0 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 2, "soundType": "evenmoreinstruments:trombone", "timestamp": 7 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 10 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 15 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 20 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 25 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 30 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 4, "soundType": "evenmoreinstruments:trombone", "timestamp": 34 },
+        { "volume": 1.0, "pitch": -6, "soundIndex": 4, "soundType": "evenmoreinstruments:trombone", "timestamp": 40 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 45 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 50 },
+        { "volume": 1.0, "pitch": -6, "soundIndex": 4, "soundType": "evenmoreinstruments:trombone", "timestamp": 55 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 4, "soundType": "evenmoreinstruments:trombone", "timestamp": 60 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 0, "soundType": "evenmoreinstruments:trombone", "timestamp": 80 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 2, "soundType": "evenmoreinstruments:trombone", "timestamp": 86 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 89 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 93 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 98 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 103 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 7, "soundType": "evenmoreinstruments:trombone", "timestamp": 107 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 4, "soundType": "evenmoreinstruments:trombone", "timestamp": 112 },
+        { "volume": 1.0, "pitch": -6, "soundIndex": 4, "soundType": "evenmoreinstruments:trombone", "timestamp": 117 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 4, "soundType": "evenmoreinstruments:trombone", "timestamp": 121 },
+        { "volume": 1.0, "pitch": -6, "soundIndex": 1, "soundType": "evenmoreinstruments:trombone", "timestamp": 127 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 1, "soundType": "evenmoreinstruments:trombone", "timestamp": 132 },
+        { "volume": 1.0, "pitch": -7, "soundIndex": 0, "soundType": "evenmoreinstruments:trombone", "timestamp": 137 }
+    ],
+    "repeatTick": 155,
+    "instrumentId": "evenmoreinstruments:trombone",
+    "writable": 0
+}
