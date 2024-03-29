@@ -92,24 +92,28 @@ public class LooperBlock extends Block implements EntityBlock {
 
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
 
-        // Check for a record's presence
-        boolean recordInjected = false;
-        BlockState newState = pState;
 
-        if (itemStack.getItem() instanceof EMIRecordItem recordItem) {
-            if (!pState.getValue(RECORD_IN)) {
-                newState = newState.setValue(RECORD_IN, true);
-            } else {
+        // Check for a record's presence
+        if (itemStack.getItem() instanceof EMIRecordItem) {
+            if (pState.getValue(RECORD_IN)) {
                 lbe.popRecord();
             }
 
-            lbe.setRecordData(recordItem.toLooperData(itemStack));
-            lbe.setChanged();
+            lbe.setItem(0, itemStack);
 
             if (!pPlayer.isCreative())
                 itemStack.shrink(1);
-            recordInjected = true;
-        } else if (!pState.getValue(RECORD_IN)) {
+
+            if (!lbe.hasFootage()) {
+                pPlayer.displayClientMessage(
+                    Component.translatable("evenmoreinstruments.looper.no_footage"),
+                    true
+                );
+            }
+
+            return InteractionResult.SUCCESS;
+        }
+        else if (!pState.getValue(RECORD_IN)) {
             pPlayer.displayClientMessage(
                 Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED)
                 , true);
@@ -136,18 +140,17 @@ public class LooperBlock extends Block implements EntityBlock {
         }
 
         // Ejecting the record
-        if (!recordInjected && pState.getValue(RECORD_IN) && (pPlayer.isShiftKeyDown() || !lbe.hasFootage())) {
-            pLevel.setBlockAndUpdate(pPos, cyclePlaying(lbe, pState.setValue(RECORD_IN, false)));
+        if (pState.getValue(RECORD_IN) && (pPlayer.isShiftKeyDown() || !lbe.hasFootage())) {
             lbe.popRecord();
             return InteractionResult.SUCCESS;
         }
 
-
+        // Regular right-click; cycle playing
         //TODO: Add a GUI for the looper and trigger it for display here
         // Then make it so that only by holding shift can you pause and play
         // since you'll be able to do that there anyways
         if (lbe.hasFootage()) {
-            pLevel.setBlockAndUpdate(pPos, cyclePlaying(lbe, newState));
+            pLevel.setBlockAndUpdate(pPos, cyclePlaying(lbe, pState));
             return InteractionResult.SUCCESS;
         }
         else {
@@ -158,9 +161,7 @@ public class LooperBlock extends Block implements EntityBlock {
                 );
             }
 
-            if (newState != pState)
-                pLevel.setBlockAndUpdate(pPos, newState);
-            return recordInjected ? InteractionResult.SUCCESS : InteractionResult.CONSUME_PARTIAL;
+            return InteractionResult.CONSUME_PARTIAL;
         }
 
     }

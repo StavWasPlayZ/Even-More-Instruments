@@ -1,5 +1,7 @@
 package com.cstav.evenmoreinstruments.item.partial.emirecord;
 
+import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.util.CommonUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -11,12 +13,8 @@ public class WritableRecordItem extends EMIRecordItem {
     }
 
     public static boolean isBurned(final ItemStack stack) {
-        if (!stack.getOrCreateTag().contains("channel", Tag.TAG_COMPOUND))
-            return false;
-        return !stack.getTagElement("channel").getBoolean("writable");
-    }
-    public static void burn(final ItemStack stack, final CompoundTag data) {
-        stack.getOrCreateTag().put("channel", data);
+        return stack.getOrCreateTag().contains("channel", Tag.TAG_COMPOUND) &&
+               !stack.getTagElement("channel").getBoolean("writable");
     }
 
     @Override
@@ -25,18 +23,10 @@ public class WritableRecordItem extends EMIRecordItem {
     }
 
     @Override
-    public CompoundTag toLooperData(final ItemStack stack) {
-        final CompoundTag tag = new CompoundTag();
-
-        if (isBurned(stack))
-            tag.put("channel", stack.getTagElement("channel"));
-        else {
-            final CompoundTag channel = new CompoundTag();
+    public void onInsert(final ItemStack stack, final LooperBlockEntity lbe) {
+        final CompoundTag channel = CommonUtil.getOrCreateElementTag(stack.getOrCreateTag(), "channel");
+        if (!channel.getBoolean("writable") && !channel.contains("notes", Tag.TAG_LIST))
             channel.putBoolean("writable", true);
-            tag.put("channel", channel);
-        }
-
-        return tag;
     }
 
     @Override

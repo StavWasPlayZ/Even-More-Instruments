@@ -4,16 +4,17 @@ import java.util.UUID;
 
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 import com.cstav.evenmoreinstruments.item.ModItems;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.RecordRepository;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.ticks.ContainerSingleItem;
 import org.slf4j.Logger;
 
 import com.cstav.evenmoreinstruments.Main;
@@ -40,17 +41,23 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-//TODO Class should derive from ContainerSingleItem instead of defining own implementation
 @EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID)
-public class LooperBlockEntity extends BlockEntity {
+public class LooperBlockEntity extends BlockEntity implements ContainerSingleItem {
     private static final Logger LOGGER = LogUtils.getLogger();
     private UUID lockedBy;
+    private ItemStack recordIn = ItemStack.EMPTY;
+
+    // Too many uses of channel, too heavy to evaluate; cache it
+    private CompoundTag channel = null;
 
     /**
      * Retrieves the channel (footage) information from the inserted record
      */
     public CompoundTag getChannel() {
-        final CompoundTag recordData = getRecordData();
+        return channel;
+    }
+    protected static CompoundTag getChannel(final ItemStack recordIn) {
+        final CompoundTag recordData = recordIn.getOrCreateTag();
 
         if (recordData.contains("channel", Tag.TAG_COMPOUND))
             return recordData.getCompound("channel");
@@ -59,27 +66,88 @@ public class LooperBlockEntity extends BlockEntity {
 
         return null;
     }
-    public boolean hasFootage() {
-        final CompoundTag channel = getChannel();
-        if (channel == null)
-            return false;
 
-        return channel.contains("notes", Tag.TAG_LIST) && !channel.getList("notes", Tag.TAG_COMPOUND).isEmpty();
+    public boolean hasFootage() {
+        return (getChannel() != null) &&
+            channel.contains("notes", Tag.TAG_LIST) && !channel.getList("notes", Tag.TAG_COMPOUND).isEmpty();
     }
 
     public boolean isWritable() {
-        return getChannel().getBoolean("writable");
+        return (getChannel() != null) && getChannel().getBoolean("writable");
+    }
+    public void setWritable(final boolean writable) {
+        getChannel().putBoolean("writable", writable);
     }
 
-    public void removeRecordData() {
+    protected CompoundTag getRecordData() {
+        return recordIn.getOrCreateTag();
+    }
+
+
+    //#region ContainerSingleItem implementation
+
+    // Assuming for single container, slots irrelevant:
+
+    public ItemStack getItem(int pSlot) {
+        return recordIn;
+    }
+
+    public ItemStack removeItem(int pSlot, int pAmount) {
+        if (recordIn.isEmpty() || pAmount <= 0)
+            return ItemStack.EMPTY;
+
+        final ItemStack prev = recordIn;
+        recordIn = ItemStack.EMPTY;
+
+        getLevel().setBlock(getBlockPos(),
+             setPlaying(false, getBlockState())
+            .setValue(LooperBlock.RECORD_IN, false),
+            3
+        );
+
         getPersistentData().remove("record");
+        channel = null;
+        reset();
+
+        return prev;
     }
-    public void setRecordData(final CompoundTag recordData) {
-        getPersistentData().put("record", recordData);
+
+    public void setItem(int pSlot, ItemStack pStack) {
+        if (!(pStack.getItem() instanceof EMIRecordItem recordItem))
+            return;
+
+        recordIn = pStack.copyWithCount(1);
+        recordItem.onInsert(recordIn, this);
+
+        channel = getChannel(recordIn);
+
+        BlockState newState = getBlockState().setValue(LooperBlock.RECORD_IN, true);
+        if (hasFootage())
+            newState = setPlaying(true, newState);
+
+        getPersistentData().put("record", recordIn.save(new CompoundTag()));
+
+        getLevel().setBlock(getBlockPos(), newState, 3);
+        setChanged();
     }
-    public CompoundTag getRecordData() {
-        return getPersistentData().getCompound("record");
+
+    public int getMaxStackSize() {
+        return 1;
     }
+
+    public boolean stillValid(Player pPlayer) {
+        return Container.stillValidBlockEntity(this, pPlayer);
+    }
+
+    public boolean canPlaceItem(int pIndex, ItemStack pStack) {
+        return (pStack.getItem() instanceof EMIRecordItem) && recordIn.isEmpty();
+    }
+
+    public boolean canTakeItem(Container pTarget, int pIndex, ItemStack pStack) {
+        return recordIn.isEmpty();
+    }
+
+    //#endregion
 
 
     public LooperBlockEntity(BlockPos pPos, BlockState pBlockState) {
@@ -115,8 +183,6 @@ public class LooperBlockEntity extends BlockEntity {
             ticks++;
 
         setTicks(ticks);
-        setChanged();
-
         return ticks;
     }
     public void setRepeatTick(final int tick) {
@@ -133,6 +199,7 @@ public class LooperBlockEntity extends BlockEntity {
 
         setRepeatTick(getTicks());
         setRecording(false);
+        setWritable(false);
 
         setChanged();
     }
@@ -147,7 +214,7 @@ public class LooperBlockEntity extends BlockEntity {
 
         setTicks(0);
 
-        removeRecordData();
+        setChanged();
     }
 
     public boolean isLocked() {
@@ -271,30 +338,19 @@ public class LooperBlockEntity extends BlockEntity {
     public void popRecord() {
         final CompoundTag recordData = getRecordData();
 
-        ItemStack record;
-
-        if (recordData.contains("record_id", Tag.TAG_STRING)) {
-            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(recordData.getString("record_id")));
-            if (item == null)
-                return;
-
-            record = new ItemStack(item);
-        }
-        else {
-            record = new ItemStack(ModItems.RECORD_WRITABLE.get());
-
-            if (!isWritable())
-                record.getOrCreateTag().put("channel", getChannel().copy());
+        // Record ejected while player writing to the record; remove notes
+        if (recordIn.is(ModItems.RECORD_WRITABLE.get()) && isWritable()) {
+            recordData.remove("notes");
         }
 
         Vec3 popVec = Vec3.atLowerCornerWithOffset(getBlockPos(), 0.5D, 1.01D, 0.5D)
             .offsetRandom(getLevel().random, 0.7F);
 
-        ItemEntity itementity = new ItemEntity(getLevel(), popVec.x(), popVec.y(), popVec.z(), record);
+        ItemEntity itementity = new ItemEntity(getLevel(), popVec.x(), popVec.y(), popVec.z(), recordIn);
         itementity.setDefaultPickUpDelay();
         getLevel().addFreshEntity(itementity);
 
-        reset();
+        removeItem(0, 1);
     }
 
 
@@ -328,7 +384,6 @@ public class LooperBlockEntity extends BlockEntity {
         }
             
         looperBE.writeNote(event.sound, event.pitch, event.volume, looperBE.getTicks());
-        looperBE.setChanged();
     }
 
     /**

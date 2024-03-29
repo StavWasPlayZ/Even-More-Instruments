@@ -1,5 +1,6 @@
 package com.cstav.evenmoreinstruments.item.partial.emirecord;
 
+import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -31,11 +32,8 @@ public class BurnedRecordItem extends EMIRecordItem {
     }
 
     @Override
-    public CompoundTag toLooperData(final ItemStack stack) {
-        final CompoundTag tag = new CompoundTag();
-        tag.putString("burned_media", burnedMedia.toString());
-        tag.putString("record_id", ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
-        return tag;
+    public void onInsert(final ItemStack stack, final LooperBlockEntity lbe) {
+        stack.getOrCreateTag().putString("burned_media", burnedMedia.toString());
     }
 
 

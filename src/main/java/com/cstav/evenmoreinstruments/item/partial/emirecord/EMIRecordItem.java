@@ -1,5 +1,6 @@
 package com.cstav.evenmoreinstruments.item.partial.emirecord;
 
+import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -9,7 +10,5 @@ public abstract class EMIRecordItem extends Item {
         super(properties.stacksTo(1));
     }
 
-    //TODO make implementors return all their NBT data
-    // The looper should pop back the record with said NBT as a whole
-    public abstract CompoundTag toLooperData(final ItemStack stack);
+    public abstract void onInsert(final ItemStack stack, final LooperBlockEntity lbe);
 }

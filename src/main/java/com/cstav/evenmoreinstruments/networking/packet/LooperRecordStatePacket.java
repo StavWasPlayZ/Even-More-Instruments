@@ -99,7 +99,6 @@ public class LooperRecordStatePacket implements IModPacket {
 
         if (!recording) {
             lbe.lock();
-            lbe.getChannel().putBoolean("writable", false);
 
             player.level().setBlock(
                 lbe.getBlockPos(),
