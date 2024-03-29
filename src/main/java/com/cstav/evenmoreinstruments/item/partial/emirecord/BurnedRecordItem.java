@@ -23,6 +23,9 @@ public class BurnedRecordItem extends EMIRecordItem {
         this.info = info;
         this.title = title;
     }
+    public BurnedRecordItem(final Properties properties, final ResourceLocation burnedMedia, final Component title) {
+        this(properties, burnedMedia, null, title);
+    }
     public BurnedRecordItem(final Properties properties, final ResourceLocation burnedMedia, final String info) {
         this(properties, burnedMedia, info, Component.translatable("item.evenmoreinstruments.record"));
     }
@@ -42,7 +45,8 @@ public class BurnedRecordItem extends EMIRecordItem {
     }
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.literal(info).withStyle(ChatFormatting.GRAY));
+        if (info != null)
+            pTooltipComponents.add(Component.literal(info).withStyle(ChatFormatting.GRAY));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

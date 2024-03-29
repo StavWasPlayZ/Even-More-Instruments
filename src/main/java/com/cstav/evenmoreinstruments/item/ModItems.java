@@ -100,7 +100,6 @@ public class ModItems {
             new BurnedRecordItem(
                 new Properties(),
                 new ResourceLocation(Main.MODID, "rickroll"),
-                "Rick Astley - Never Gonna Give You Up",
                 Component.translatable("item.evenmoreinstruments.record_interesting")
             ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
