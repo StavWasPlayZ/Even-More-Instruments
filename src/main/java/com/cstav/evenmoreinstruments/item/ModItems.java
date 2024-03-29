@@ -98,7 +98,7 @@ public class ModItems {
         ),
         RECORD_RICKROLL = register("record_rickroll", () ->
             new BurnedRecordItem(
-                new Properties(),
+                new Properties().stacksTo(1).rarity(Rarity.RARE),
                 new ResourceLocation(Main.MODID, "rickroll"),
                 null,
                 "StavWasPlayZ",
@@ -108,7 +108,7 @@ public class ModItems {
         ),
         RECORD_JOHNNY = register("record_johnny", () ->
             new BurnedRecordItem(
-                new Properties(),
+                new Properties().stacksTo(1).rarity(Rarity.RARE),
                 new ResourceLocation(Main.MODID, "johnny"),
                 "Hänschen klein - Franz Wiedemann",
                 null
@@ -117,7 +117,7 @@ public class ModItems {
         ),
         RECORD_SUPER_IDOL = register("record_super_idol", () ->
                 new BurnedRecordItem(
-                    new Properties(),
+                    new Properties().stacksTo(1).rarity(Rarity.RARE),
                     new ResourceLocation(Main.MODID, "super_idol"),
                     "Super Idol - De Xian Rong",
                     "Saxophy"

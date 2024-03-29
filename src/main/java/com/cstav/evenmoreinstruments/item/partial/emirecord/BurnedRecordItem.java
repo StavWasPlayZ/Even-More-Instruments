@@ -5,6 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +21,7 @@ public class BurnedRecordItem extends EMIRecordItem {
                             @Nullable String info,
                             @Nullable String arranger,
                             Component title) {
-        super(properties.stacksTo(1));
+        super(properties);
         this.burnedMedia = burnedMedia;
         this.info = info;
         this.arranger = arranger;
