@@ -100,6 +100,8 @@ public class ModItems {
             new BurnedRecordItem(
                 new Properties(),
                 new ResourceLocation(Main.MODID, "rickroll"),
+                null,
+                "StavWasPlayZ",
                 Component.translatable("item.evenmoreinstruments.record_interesting")
             ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
@@ -108,8 +110,18 @@ public class ModItems {
             new BurnedRecordItem(
                 new Properties(),
                 new ResourceLocation(Main.MODID, "johnny"),
-                "Hänschen klein - Franz Wiedemann"
+                "Hänschen klein - Franz Wiedemann",
+                null
             ),
+            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+        ),
+        RECORD_SUPER_IDOL = register("record_super_idol", () ->
+                new BurnedRecordItem(
+                    new Properties(),
+                    new ResourceLocation(Main.MODID, "super_idol"),
+                    "Super Idol - De Xian Rong",
+                    "Saxophy"
+                ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         )
     ;

@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RecordRepository {
     private static final ConcurrentHashMap<ResourceLocation, CompoundTag> RECORDS = new ConcurrentHashMap<>();
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final String DATA_DIR = "records";
+    private static final String DATA_DIR = Main.MODID+"/records";
 
     public static CompoundTag getRecord(final ResourceLocation loc) {
         return RECORDS.get(loc);
