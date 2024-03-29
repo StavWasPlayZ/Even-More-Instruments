@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 import java.util.List;
 
+//TODO should not accept connection if not writable
 public class LooperAdapterItem extends Item {
     private static final String BLOCK_INSTRUMENT_POS_TAG = "instrument_block",
         LOOPER_POS_TAG = "looper";

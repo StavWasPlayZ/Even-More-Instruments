@@ -17,6 +17,7 @@ import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
@@ -98,14 +99,17 @@ public class ModItems {
         RECORD_RICKROLL = register("record_rickroll", () ->
             new BurnedRecordItem(
                 new Properties(),
-                new ResourceLocation(Main.MODID, "rickroll")
+                new ResourceLocation(Main.MODID, "rickroll"),
+                "Rick Astley - Never Gonna Give You Up",
+                Component.translatable("item.evenmoreinstruments.record_interesting")
             ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
         RECORD_JOHNNY = register("record_johnny", () ->
             new BurnedRecordItem(
                 new Properties(),
-                new ResourceLocation(Main.MODID, "johnny")
+                new ResourceLocation(Main.MODID, "johnny"),
+                "Hänschen klein - Franz Wiedemann"
             ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         )
