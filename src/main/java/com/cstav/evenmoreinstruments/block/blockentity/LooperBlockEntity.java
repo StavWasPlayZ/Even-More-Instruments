@@ -47,16 +47,11 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     private UUID lockedBy;
     private ItemStack recordIn = ItemStack.EMPTY;
 
-    // Too many uses of channel, too heavy to evaluate; cache it
-    private CompoundTag channel = null;
 
     /**
      * Retrieves the channel (footage) information from the inserted record
      */
     public CompoundTag getChannel() {
-        return channel;
-    }
-    protected static CompoundTag getChannel(final ItemStack recordIn) {
         final CompoundTag recordData = recordIn.getOrCreateTag();
 
         if (recordData.contains("channel", Tag.TAG_COMPOUND))
@@ -67,8 +62,13 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         return null;
     }
 
+    private void updateRecordNBT() {
+        getPersistentData().put("record", recordIn.save(new CompoundTag()));
+    }
+
     public boolean hasFootage() {
-        return (getChannel() != null) &&
+        final CompoundTag channel = getChannel();
+        return (channel != null) &&
             channel.contains("notes", Tag.TAG_LIST) && !channel.getList("notes", Tag.TAG_COMPOUND).isEmpty();
     }
 
@@ -106,7 +106,6 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         );
 
         getPersistentData().remove("record");
-        channel = null;
         reset();
 
         return prev;
@@ -119,13 +118,11 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         recordIn = pStack.copyWithCount(1);
         recordItem.onInsert(recordIn, this);
 
-        channel = getChannel(recordIn);
-
         BlockState newState = getBlockState().setValue(LooperBlock.RECORD_IN, true);
         if (hasFootage())
             newState = setPlaying(true, newState);
 
-        getPersistentData().put("record", recordIn.save(new CompoundTag()));
+        updateRecordNBT();
 
         getLevel().setBlock(getBlockPos(), newState, 3);
         setChanged();
@@ -201,6 +198,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         setRecording(false);
         setWritable(false);
 
+        updateRecordNBT();
         setChanged();
     }
     //TODO implement to Looper GUI
