@@ -57,7 +57,7 @@
         { "volume": 1.0, "pitch": -12, "soundIndex": 4, "soundType": "evenmoreinstruments:keyboard", "timestamp": 217 },
         { "volume": 1.0, "pitch": 0, "soundIndex": 0, "soundType": "evenmoreinstruments:keyboard", "timestamp": 224 }
     ],
-    "repeatTick": 237,
+    "repeatTick": 236,
     "instrumentId": "evenmoreinstruments:keyboard",
     "writable": 0
 }
