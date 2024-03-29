@@ -21,6 +21,10 @@
     "item.evenmoreinstruments.writable_record": "תקליט ריק",
     "item.evenmoreinstruments.burned_record": "תקליט צרוב",
 
+    "item.evenmoreinstruments.interesting_record": "תקליט מעניין",
+
+    "item.evenmoreinstruments.record.arranger": "מעבד: %s",
+
 
     "block.evenmoreinstruments.keyboard": "אורגן",
     "block.evenmoreinstruments.keyboard_stand": "מעמד לאורגן",
@@ -35,8 +39,12 @@
     "block.evenmoreinstruments.looper": "לופר",
 
     "evenmoreinstruments.looper.success_pair": "כלי הנגינה תואם בהצלחה!",
-    "evenmoreinstruments.looper.pair_conflict": "לופר זה הינו תפוס!",
+    "evenmoreinstruments.looper.pair_conflict": "תקליט זה הינו צרוב!",
     "evenmoreinstruments.looper.no_footage": "ללופר זה אין אף הקלטה! השתמש בכלי נגינה כדיי להתחיל להקליט",
+    "evenmoreinstruments.looper.no_record": "לא הוכנס אף תקליט",
+
+    "evenmoreinstruments.record.no_footage": "תקליט זה אינו צרוב! השתמש בכלי נגינה בכדיי להתחיל להקליט",
+    "evenmoreinstruments.record.not_writable": "תקליט זה כבר צרוב",
 
     "button.evenmoreinstruments.record": "הקלט",
     "button.evenmoreinstruments.stop": "עצור",

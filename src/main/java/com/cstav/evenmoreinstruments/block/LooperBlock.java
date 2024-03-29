@@ -106,7 +106,7 @@ public class LooperBlock extends Block implements EntityBlock {
 
             if (!lbe.hasFootage()) {
                 pPlayer.displayClientMessage(
-                    Component.translatable("evenmoreinstruments.looper.no_footage"),
+                    Component.translatable("evenmoreinstruments.record.no_footage"),
                     true
                 );
             }
@@ -157,7 +157,7 @@ public class LooperBlock extends Block implements EntityBlock {
         else {
             if (writable) {
                 pPlayer.displayClientMessage(
-                    Component.translatable("evenmoreinstruments.looper.no_footage"),
+                    Component.translatable("evenmoreinstruments.record.no_footage"),
                     true
                 );
             }

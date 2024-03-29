@@ -102,7 +102,7 @@ public class ModItems {
                 new ResourceLocation(Main.MODID, "rickroll"),
                 null,
                 "StavWasPlayZ",
-                Component.translatable("item.evenmoreinstruments.record_interesting")
+                Component.translatable("item.evenmoreinstruments.interesting_record")
             ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),

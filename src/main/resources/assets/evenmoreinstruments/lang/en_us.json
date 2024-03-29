@@ -17,8 +17,14 @@
     "item.evenmoreinstruments.looper_adapter.select_instrument": "Looper connected successfully. Please select an instrument to pair with it.",
     "item.evenmoreinstruments.looper_adapter.select_looper": "Instrument connected successfully. Please select a looper to pair with it.",
 
+
     "item.evenmoreinstruments.writable_record": "Empty Record",
     "item.evenmoreinstruments.burned_record": "Burned Record",
+
+    "item.evenmoreinstruments.interesting_record": "Interesting Record",
+
+    "item.evenmoreinstruments.record.arranger": "Arranger: %s",
+
 
     "block.evenmoreinstruments.keyboard": "Keyboard",
     "block.evenmoreinstruments.keyboard_stand": "Keyboard Stand",
@@ -33,8 +39,12 @@
     "block.evenmoreinstruments.looper": "Looper",
 
     "evenmoreinstruments.looper.success_pair": "Instrument paired successfully!",
-    "evenmoreinstruments.looper.pair_conflict": "This Looper already has recorded footage!",
-    "evenmoreinstruments.looper.no_footage": "This looper has no footage! Use an instrument to start recording",
+    "evenmoreinstruments.looper.pair_conflict": "This record already has burned footage!",
+    "evenmoreinstruments.looper.no_record": "No record inserted",
+
+    "evenmoreinstruments.record.no_footage": "This record has no footage! Use an instrument to start recording",
+    "evenmoreinstruments.record.not_writable": "Record already burned",
+
 
     "button.evenmoreinstruments.record": "Record",
     "button.evenmoreinstruments.stop": "Stop",

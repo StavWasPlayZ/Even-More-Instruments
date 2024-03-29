@@ -28,7 +28,7 @@ public class BurnedRecordItem extends EMIRecordItem {
         this.title = title;
     }
     public BurnedRecordItem(Properties properties, ResourceLocation burnedMedia, @Nullable String info, @Nullable String arranger) {
-        this(properties, burnedMedia, info, arranger, Component.translatable("item.evenmoreinstruments.record"));
+        this(properties, burnedMedia, info, arranger, Component.translatable("item.evenmoreinstruments.burned_record"));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class BurnedRecordItem extends EMIRecordItem {
         }
         if (arranger != null) {
             pTooltipComponents.add(
-                Component.translatable("item.evenmoreinstruments.record.arranger").append(": "+arranger)
+                Component.translatable("item.evenmoreinstruments.record.arranger", arranger)
                     .withStyle(ChatFormatting.GRAY)
                     .withStyle(ChatFormatting.ITALIC)
             );
