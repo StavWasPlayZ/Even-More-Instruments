@@ -123,6 +123,15 @@ public class ModItems {
             ),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
+        RECORD_SAD_VIOLIN = register("record_sad_violin", () ->
+            new BurnedRecordItem(
+                new Properties().stacksTo(1).rarity(Rarity.RARE),
+                new ResourceLocation(Main.MODID, "sad_violin"),
+                "Sad Romance - Ji Pyeongkeyon",
+                "StavWasPlayZ"
+            ),
+            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+        ),
         RECORD_RICKROLL = register("record_rickroll", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.EPIC),
