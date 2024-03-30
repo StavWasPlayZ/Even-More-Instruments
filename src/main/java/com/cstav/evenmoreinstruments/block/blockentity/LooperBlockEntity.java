@@ -86,6 +86,11 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         return recordIn.getOrCreateTag();
     }
 
+    @Override
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
+        recordIn = ItemStack.of(getPersistentData().getCompound("record"));
+    }
 
     //#region ContainerSingleItem implementation
 
