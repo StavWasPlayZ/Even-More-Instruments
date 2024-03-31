@@ -1,6 +1,7 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument;
 
 import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.client.KeyMappings;
 import com.cstav.evenmoreinstruments.mixins.required.ScreenAccessor;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.DoesLooperExistPacket;
@@ -13,6 +14,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -63,7 +65,7 @@ public class LooperOverlayInjector {
 
         event.addListener(
             recordBtn = Button.builder(
-                    Component.translatable("button.evenmoreinstruments.record"),
+                    appendRecordKeyHint(Component.translatable("button.evenmoreinstruments.record")),
                     LooperOverlayInjector::onRecordPress
                 )
                 .width(REC_BTN_WIDTH)
@@ -74,6 +76,21 @@ public class LooperOverlayInjector {
     public static void handleLooperRemoved() {
         removeRecordButton();
         screen = null;
+    }
+
+    private static MutableComponent appendRecordKeyHint(final MutableComponent component) {
+        return component
+            .append(" (")
+            .append(KeyMappings.RECORD.get().getKey().getDisplayName())
+            .append(")");
+    }
+
+    @SubscribeEvent
+    public static void onKeyboardPress(final ScreenEvent.KeyPressed.Post event) {
+        if (KeyMappings.RECORD.get().matches(event.getKeyCode(), event.getScanCode()) && (recordBtn != null)) {
+            recordBtn.playDownSound(Minecraft.getInstance().getSoundManager());
+            recordBtn.onPress();
+        }
     }
 
     @SubscribeEvent
@@ -108,7 +125,7 @@ public class LooperOverlayInjector {
             removeRecordButton();
             screen = null;
         } else
-            btn.setMessage(Component.translatable("button.evenmoreinstruments.stop"));
+            btn.setMessage(appendRecordKeyHint(Component.translatable("button.evenmoreinstruments.stop")));
 
         isRecording = !isRecording;
         ModPacketHandler.sendToServer(new LooperRecordStatePacket(isRecording, hand));
@@ -127,5 +144,6 @@ public class LooperOverlayInjector {
             return;
 
         ((ScreenAccessor)screen).invokeRemoveWidget(recordBtn);
+        recordBtn = null;
     }
 }
