@@ -73,7 +73,7 @@ public class ViolinScreen extends GridInstrumentScreen {
         return true;
     }
     private boolean checkSoundTypeKey(int keyCode, int scanCode) {
-        return KeyMappings.VIOLIN_TYPE_MODIFIER.get().matches(keyCode, scanCode);
+        return KeyMappings.INSTRUMENT_TYPE_MODIFIER.get().matches(keyCode, scanCode);
     }
 
 

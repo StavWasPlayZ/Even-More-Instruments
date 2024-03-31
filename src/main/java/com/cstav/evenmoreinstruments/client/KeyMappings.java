@@ -20,8 +20,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class KeyMappings {
     public static final String CATEGORY = Main.MODID+".keymaps";
     
-    public static final Lazy<KeyMapping> VIOLIN_TYPE_MODIFIER = Lazy.of(
-        () -> new KeyMapping(CATEGORY+".violin_type_modifier",
+    public static final Lazy<KeyMapping> INSTRUMENT_TYPE_MODIFIER = Lazy.of(
+        () -> new KeyMapping(CATEGORY+".instrument_type_modifier",
             InstrumentKeyMappings.INSTRUMENT_KEY_CONFLICT_CONTEXT,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_RIGHT_ALT
@@ -30,7 +30,7 @@ public class KeyMappings {
 
     @SubscribeEvent
     public static void registerKeybinds(final RegisterKeyMappingsEvent event) {
-        event.register(VIOLIN_TYPE_MODIFIER.get());
+        event.register(INSTRUMENT_TYPE_MODIFIER.get());
     }
 
 }
