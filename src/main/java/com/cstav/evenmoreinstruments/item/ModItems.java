@@ -66,6 +66,11 @@ public class ModItems {
                 new ModOpenInstrumentPacket("guitar"), player
             )
         )),
+        PIPA = register("pipa", () -> new InstrumentItem(
+            (player) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("pipa"), player
+            )
+        )),
         TROMBONE = register("trombone", () -> new WindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("trombone"), player

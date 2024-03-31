@@ -596,5 +596,91 @@
     "saxophone_note_20": {
         "category": "record",
         "sounds": ["evenmoreinstruments:saxophone/20"]
+    },
+
+
+    "pipa_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/0"]
+    },
+    "pipa_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/1"]
+    },
+    "pipa_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/2"]
+    },
+    "pipa_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/3"]
+    },
+    "pipa_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/4"]
+    },
+    "pipa_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/5"]
+    },
+    "pipa_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/6"]
+    },
+    "pipa_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/7"]
+    },
+    "pipa_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/8"]
+    },
+    "pipa_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/9"]
+    },
+    "pipa_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/10"]
+    },
+    "pipa_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/11"]
+    },
+    "pipa_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/12"]
+    },
+    "pipa_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/13"]
+    },
+    "pipa_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/14"]
+    },
+    "pipa_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/15"]
+    },
+    "pipa_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/16"]
+    },
+    "pipa_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/17"]
+    },
+    "pipa_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/18"]
+    },
+    "pipa_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/19"]
+    },
+    "pipa_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/20"]
     }
 }

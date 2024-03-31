@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.cstav.evenmoreinstruments.client.gui.instrument.guitar.GuitarScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.keyboard.KeyboardScreen;
+import com.cstav.evenmoreinstruments.client.gui.instrument.pipa.PipaScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.saxophone.SaxophoneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.trombone.TromboneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
@@ -19,6 +20,7 @@ public class ModOpenInstrumentPacket extends OpenInstrumentPacket {
         "violin", () -> ViolinScreen::new,
         "trombone", () -> TromboneScreen::new,
         "guitar", () -> GuitarScreen::new,
+        "pipa", () -> PipaScreen::new,
         "saxophone", () -> SaxophoneScreen::new
     );
 

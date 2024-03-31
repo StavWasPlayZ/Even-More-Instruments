@@ -35,7 +35,8 @@ public class ModSounds {
         TROMBONE = nsr(loc("trombone")).registerGrid(),
         SAXOPHONE = nsr(loc("saxophone")).registerGrid(),
 
-        GUITAR = nsr(loc("guitar")).registerGrid()
+        GUITAR = nsr(loc("guitar")).registerGrid(),
+        PIPA = nsr(loc("pipa")).registerGrid()
     ;
 
 
