@@ -7,7 +7,10 @@ import com.cstav.genshinstrument.client.gui.screen.instrument.partial.Instrument
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.options.instrument.partial.SoundTypeOptionsScreen;
 import com.cstav.genshinstrument.client.util.TogglablePedalSound;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ViolinOptionsScreen extends SoundTypeOptionsScreen<ViolinSoundType> {
     private static final String SOUND_TYPE_KEY = "button.evenmoreinstruments.violin.soundType",
         OPTIONS_LABEL_KEY = "label.evenmoreinstruments.violin_options";
