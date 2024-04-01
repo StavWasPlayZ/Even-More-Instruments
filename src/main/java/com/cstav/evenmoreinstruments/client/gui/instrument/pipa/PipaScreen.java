@@ -19,7 +19,7 @@ public class PipaScreen extends GridInstrumentScreen {
 
     @Override
     public NoteSound[] getInitSounds() {
-        return ModSounds.PIPA;
+        return ModSounds.PIPA_REGULAR;
     }
 
     @Override

@@ -599,88 +599,173 @@
     },
 
 
-    "pipa_note_0": {
+    "pipa_regular_note_0": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/0"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/0"]
     },
-    "pipa_note_1": {
+    "pipa_regular_note_1": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/1"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/1"]
     },
-    "pipa_note_2": {
+    "pipa_regular_note_2": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/2"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/2"]
     },
-    "pipa_note_3": {
+    "pipa_regular_note_3": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/3"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/3"]
     },
-    "pipa_note_4": {
+    "pipa_regular_note_4": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/4"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/4"]
     },
-    "pipa_note_5": {
+    "pipa_regular_note_5": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/5"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/5"]
     },
-    "pipa_note_6": {
+    "pipa_regular_note_6": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/6"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/6"]
     },
-    "pipa_note_7": {
+    "pipa_regular_note_7": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/7"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/7"]
     },
-    "pipa_note_8": {
+    "pipa_regular_note_8": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/8"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/8"]
     },
-    "pipa_note_9": {
+    "pipa_regular_note_9": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/9"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/9"]
     },
-    "pipa_note_10": {
+    "pipa_regular_note_10": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/10"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/10"]
     },
-    "pipa_note_11": {
+    "pipa_regular_note_11": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/11"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/11"]
     },
-    "pipa_note_12": {
+    "pipa_regular_note_12": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/12"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/12"]
     },
-    "pipa_note_13": {
+    "pipa_regular_note_13": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/13"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/13"]
     },
-    "pipa_note_14": {
+    "pipa_regular_note_14": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/14"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/14"]
     },
-    "pipa_note_15": {
+    "pipa_regular_note_15": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/15"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/15"]
     },
-    "pipa_note_16": {
+    "pipa_regular_note_16": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/16"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/16"]
     },
-    "pipa_note_17": {
+    "pipa_regular_note_17": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/17"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/17"]
     },
-    "pipa_note_18": {
+    "pipa_regular_note_18": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/18"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/18"]
     },
-    "pipa_note_19": {
+    "pipa_regular_note_19": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/19"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/19"]
     },
-    "pipa_note_20": {
+    "pipa_regular_note_20": {
         "category": "record",
-        "sounds": ["evenmoreinstruments:pipa/20"]
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/20"]
+    },
+
+    "pipa_tremolo_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/0"]
+    },
+    "pipa_tremolo_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/1"]
+    },
+    "pipa_tremolo_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/2"]
+    },
+    "pipa_tremolo_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/3"]
+    },
+    "pipa_tremolo_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/4"]
+    },
+    "pipa_tremolo_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/5"]
+    },
+    "pipa_tremolo_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/6"]
+    },
+    "pipa_tremolo_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/7"]
+    },
+    "pipa_tremolo_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/8"]
+    },
+    "pipa_tremolo_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/9"]
+    },
+    "pipa_tremolo_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/10"]
+    },
+    "pipa_tremolo_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/11"]
+    },
+    "pipa_tremolo_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/12"]
+    },
+    "pipa_tremolo_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/13"]
+    },
+    "pipa_tremolo_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/14"]
+    },
+    "pipa_tremolo_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/15"]
+    },
+    "pipa_tremolo_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/16"]
+    },
+    "pipa_tremolo_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/17"]
+    },
+    "pipa_tremolo_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/18"]
+    },
+    "pipa_tremolo_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/19"]
+    },
+    "pipa_tremolo_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/20"]
     }
 }
