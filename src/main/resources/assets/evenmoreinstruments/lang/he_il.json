@@ -10,6 +10,7 @@
     "item.evenmoreinstruments.guitar": "גיטרה",
     "item.evenmoreinstruments.trombone": "טרומבון",
     "item.evenmoreinstruments.saxophone": "סקסופון",
+    "item.evenmoreinstruments.pipa": "לאוטה יפנית",
     "item.evenmoreinstruments.note_block_instrument": "בלוק הצליל של %s",
 
     "item.evenmoreinstruments.looper_adapter": "מתאם אלחוטי ללופר",
@@ -34,6 +35,11 @@
     "button.evenmoreinstruments.violin.soundType": "אורך צליל הכינור",
     "button.evenmoreinstruments.violin.soundType.half_note": "שתי פעמות",
     "button.evenmoreinstruments.violin.soundType.full_note": "ארבעה פעמות",
+
+    "label.evenmoreinstruments.pipa_options": "אפשרויות הלאוטה",
+    "button.evenmoreinstruments.pipa.soundType": "סוג צליל הלאוטה",
+    "button.evenmoreinstruments.pipa.soundType.regular": "רגיל",
+    "button.evenmoreinstruments.pipa.soundType.tremolo": "טרמולו",
 
 
     "block.evenmoreinstruments.looper": "לופר",

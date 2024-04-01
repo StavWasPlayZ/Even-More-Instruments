@@ -10,6 +10,7 @@
     "item.evenmoreinstruments.guitar": "Guitar",
     "item.evenmoreinstruments.trombone": "Trombone",
     "item.evenmoreinstruments.saxophone": "Saxophone",
+    "item.evenmoreinstruments.pipa": "Pipa",
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
 
     "item.evenmoreinstruments.looper_adapter": "Looper Wireless Adapter",
@@ -34,6 +35,11 @@
     "button.evenmoreinstruments.violin.soundType": "Violin Note Length",
     "button.evenmoreinstruments.violin.soundType.half_note": "Half Note",
     "button.evenmoreinstruments.violin.soundType.full_note": "Full Note",
+
+    "label.evenmoreinstruments.pipa_options": "Pipa Options",
+    "button.evenmoreinstruments.pipa.soundType": "Pipa Sound Type",
+    "button.evenmoreinstruments.pipa.soundType.regular": "Regular",
+    "button.evenmoreinstruments.pipa.soundType.tremolo": "Tremolo",
 
 
     "block.evenmoreinstruments.looper": "Looper",
