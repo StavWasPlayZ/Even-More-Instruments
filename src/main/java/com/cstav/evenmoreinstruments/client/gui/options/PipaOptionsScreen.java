@@ -3,15 +3,15 @@ package com.cstav.evenmoreinstruments.client.gui.options;
 import com.cstav.evenmoreinstruments.client.ModClientConfigs;
 import com.cstav.evenmoreinstruments.client.gui.instrument.pipa.PipaScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.pipa.PipaSoundType;
+import com.cstav.evenmoreinstruments.client.gui.options.partial.CyclableSoundTypeInstrumentOptionsScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
-import com.cstav.genshinstrument.client.gui.screen.options.instrument.partial.SoundTypeOptionsScreen;
 import com.cstav.genshinstrument.client.util.TogglablePedalSound;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PipaOptionsScreen extends SoundTypeOptionsScreen<PipaSoundType> {
+public class PipaOptionsScreen extends CyclableSoundTypeInstrumentOptionsScreen<PipaSoundType> {
     private static final String SOUND_TYPE_KEY = "button.evenmoreinstruments.pipa.soundType",
         OPTIONS_LABEL_KEY = "label.evenmoreinstruments.pipa_options";
 

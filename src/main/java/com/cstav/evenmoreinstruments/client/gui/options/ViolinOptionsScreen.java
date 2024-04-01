@@ -3,15 +3,15 @@ package com.cstav.evenmoreinstruments.client.gui.options;
 import com.cstav.evenmoreinstruments.client.ModClientConfigs;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinSoundType;
+import com.cstav.evenmoreinstruments.client.gui.options.partial.CyclableSoundTypeInstrumentOptionsScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
-import com.cstav.genshinstrument.client.gui.screen.options.instrument.partial.SoundTypeOptionsScreen;
 import com.cstav.genshinstrument.client.util.TogglablePedalSound;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ViolinOptionsScreen extends SoundTypeOptionsScreen<ViolinSoundType> {
+public class ViolinOptionsScreen extends CyclableSoundTypeInstrumentOptionsScreen<ViolinSoundType> {
     private static final String SOUND_TYPE_KEY = "button.evenmoreinstruments.violin.soundType",
         OPTIONS_LABEL_KEY = "label.evenmoreinstruments.violin_options";
 
