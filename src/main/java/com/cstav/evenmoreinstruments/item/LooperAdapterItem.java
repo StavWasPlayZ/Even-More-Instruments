@@ -116,6 +116,7 @@ public class LooperAdapterItem extends Item {
             final BlockPos instrumentBlockPos = ibe.getBlockPos(),
                 looperBlockPos = lbe.getBlockPos();
 
+            // Linked blocks (like the Keyboard) should too have the tag:
             BlockPos otherBlockPos = null;
             if (instrumentBlock instanceof IDoubleBlock doubleBlock)
                 otherBlockPos = doubleBlock.getOtherBlock(instrumentBlockState, instrumentBlockPos, player.level());
@@ -129,11 +130,8 @@ public class LooperAdapterItem extends Item {
             // Handle syncing data to client
             if (player instanceof ServerPlayer serverPlayer) {
                 ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(ibe), instrumentBlockPos), serverPlayer);
-
                 if (otherBlockPos != null)
-                    ModPacketHandler.sendToClient(
-                        new SyncModTagPacket(Main.modTag(ibe), otherBlockPos)
-                    , serverPlayer);
+                    ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(ibe), otherBlockPos), serverPlayer);
             }
 
         }, player);
