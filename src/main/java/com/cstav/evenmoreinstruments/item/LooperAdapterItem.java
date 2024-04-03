@@ -103,30 +103,26 @@ public class LooperAdapterItem extends Item {
     }
 
 
-    private static boolean pairLooperToInstrument(CompoundTag adapterTag, BlockPos instrumentBlockPos, BlockPos looperPos, Player player) {
-        final Level level = player.level();
-
-        final BlockEntity be = level.getBlockEntity(looperPos),
-            ibe = level.getBlockEntity(instrumentBlockPos);
-        if (!(be instanceof LooperBlockEntity) || !(ibe instanceof InstrumentBlockEntity))
-            return false;
-
+    private static boolean pairLooperToInstrument(CompoundTag adapterTag, InstrumentBlockEntity ibe, LooperBlockEntity lbe, Player player) {
         // Clear all compound keys after pairing
         for (final String key : adapterTag.getAllKeys())
             adapterTag.remove(key);
 
-        return LooperUtil.performPair((LooperBlockEntity)be, () -> {
+        return LooperUtil.performPair(lbe, () -> {
 
-            final BlockState instrumentBlockState = level.getBlockState(instrumentBlockPos);
+            final BlockState instrumentBlockState = ibe.getBlockState();
             final Block instrumentBlock = instrumentBlockState.getBlock();
+
+            final BlockPos instrumentBlockPos = ibe.getBlockPos(),
+                looperBlockPos = lbe.getBlockPos();
 
             BlockPos otherBlockPos = null;
             if (instrumentBlock instanceof IDoubleBlock doubleBlock)
-                otherBlockPos = doubleBlock.getOtherBlock(instrumentBlockState, instrumentBlockPos, level);
+                otherBlockPos = doubleBlock.getOtherBlock(instrumentBlockState, instrumentBlockPos, player.level());
 
-            LooperUtil.createLooperTag(ibe, looperPos);
+            LooperUtil.createLooperTag(ibe, looperBlockPos);
             if (otherBlockPos != null)
-                LooperUtil.createLooperTag(level.getBlockEntity(otherBlockPos), looperPos);
+                LooperUtil.createLooperTag(player.level().getBlockEntity(otherBlockPos), looperBlockPos);
 
             ibe.setChanged();
 
@@ -142,24 +138,27 @@ public class LooperAdapterItem extends Item {
 
         }, player);
     }
+    private static boolean pairLooperToInstrument(CompoundTag adapterTag, BlockPos looperPos, BlockPos instrumentPos, Player player) {
+        final Level level = player.level();
+
+        final BlockEntity lbe = level.getBlockEntity(looperPos),
+            ibe = level.getBlockEntity(instrumentPos);
+        if (!(lbe instanceof LooperBlockEntity) || !(ibe instanceof InstrumentBlockEntity))
+            return false;
+
+        return pairLooperToInstrument(adapterTag, (InstrumentBlockEntity)ibe, (LooperBlockEntity)lbe, player);
+    }
 
     /**
      * Syncs the 2 loopers by setting their repeat ticks to be of the lower looper.
      */
-    private static boolean syncLoopers(CompoundTag adapterTag, BlockPos looper1Pos, BlockPos looper2Pos, Player player) {
-        if (looper2Pos.equals(looper1Pos))
-            return false;
-        final Level level = player.level();
-
-        BlockEntity be1 = level.getBlockEntity(looper1Pos),
-            be2 = level.getBlockEntity(looper2Pos);
-        if (!(be1 instanceof LooperBlockEntity lbe1) || !(be2 instanceof LooperBlockEntity lbe2))
+    private static boolean syncLoopers(CompoundTag adapterTag, LooperBlockEntity lbe1, LooperBlockEntity lbe2, Player player) {
+        if (lbe1.getBlockPos().equals(lbe2.getBlockPos()))
             return false;
 
         // Clear all compound keys after pairing
         for (final String key : adapterTag.getAllKeys())
             adapterTag.remove(key);
-
 
         if (!lbe1.hasFootage() || !lbe1.hasFootage()) {
             player.displayClientMessage(
@@ -177,6 +176,20 @@ public class LooperAdapterItem extends Item {
             true
         );
         return true;
+    }
+    private static boolean syncLoopers(CompoundTag adapterTag, BlockPos looper1Pos, BlockPos looper2Pos, Player player) {
+        if (looper2Pos.equals(looper1Pos))
+            return false;
+
+        final Level level = player.level();
+
+        BlockEntity lbe1 = level.getBlockEntity(looper1Pos),
+            lbe2 = level.getBlockEntity(looper2Pos);
+
+        if (!(lbe1 instanceof LooperBlockEntity) || !(lbe2 instanceof LooperBlockEntity))
+            return false;
+
+        return syncLoopers(adapterTag, (LooperBlockEntity)lbe1, (LooperBlockEntity)lbe2, player);
     }
 
 
