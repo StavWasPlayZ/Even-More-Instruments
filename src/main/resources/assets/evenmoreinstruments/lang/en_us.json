@@ -5,6 +5,9 @@
 
     "itemGroup.evenmoreinstruments.music_production_tab": "Music Production",
 
+    "item.shift.hint.show": "Hold Shift to learn more",
+    "item.shift.hint.hide": "Release Shift to hide",
+
 
     "item.evenmoreinstruments.violin": "Violin",
     "item.evenmoreinstruments.guitar": "Guitar",
@@ -13,10 +16,17 @@
     "item.evenmoreinstruments.pipa": "Pipa",
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
 
+
     "item.evenmoreinstruments.looper_adapter": "Looper Wireless Adapter",
-    "item.evenmoreinstruments.looper_adapter.description": "Pairs an instrument block to a looper",
-    "item.evenmoreinstruments.looper_adapter.select_instrument": "Looper connected successfully. Please select an instrument to pair with it.",
-    "item.evenmoreinstruments.looper_adapter.select_looper": "Instrument connected successfully. Please select a looper to pair with it.",
+
+    "item.evenmoreinstruments.looper_adapter.instrument.description": "Pairs an instrument block to a looper",
+    "item.evenmoreinstruments.looper_adapter.instrument.select": "Looper connected. Waiting for instrument or 2nd looper connection.",
+    "item.evenmoreinstruments.looper_adapter.instrument.success_pair": "Instrument paired successfully!",
+
+    "item.evenmoreinstruments.looper_adapter.looper.description": "Syncs 2 loopers together by copying the 1st's properties",
+    "item.evenmoreinstruments.looper_adapter.looper.select": "Instrument connected. Waiting for looper connection.",
+    "item.evenmoreinstruments.looper_adapter.looper.success_pair": "Loopers synced successfully!",
+
 
 
     "item.evenmoreinstruments.writable_record": "Empty Record",
@@ -44,7 +54,6 @@
 
     "block.evenmoreinstruments.looper": "Looper",
 
-    "evenmoreinstruments.looper.success_pair": "Instrument paired successfully!",
     "evenmoreinstruments.looper.pair_conflict": "This record already has burned footage!",
     "evenmoreinstruments.looper.no_record": "No record inserted",
 

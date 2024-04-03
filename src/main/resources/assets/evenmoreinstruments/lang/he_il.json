@@ -6,6 +6,9 @@
     "itemGroup.evenmoreinstruments.music_production_tab": "הלחנה",
 
 
+    "item.shift.hint.show": "החזק Shift כדיי לגלות עוד",
+    "item.shift.hint.hide": "הורד Shift להסתרה",
+
     "item.evenmoreinstruments.violin": "כינור",
     "item.evenmoreinstruments.guitar": "גיטרה",
     "item.evenmoreinstruments.trombone": "טרומבון",
@@ -14,9 +17,14 @@
     "item.evenmoreinstruments.note_block_instrument": "בלוק הצליל של %s",
 
     "item.evenmoreinstruments.looper_adapter": "מתאם אלחוטי ללופר",
-    "item.evenmoreinstruments.looper_adapter.description": "מתאם בין בלוק כלי נגינה ללופר",
-    "item.evenmoreinstruments.looper_adapter.select_instrument": "לופר חובר בהצלחה. אנא בחר כלי נגינה לתאם עימו.",
-    "item.evenmoreinstruments.looper_adapter.select_looper": "כלי נגינה חובר בהצלחה. אנא בחר לופר לתאם עימו.",
+
+    "item.evenmoreinstruments.looper_adapter.instrument.description": "מתאם בין בלוק כלי נגינה ללופר",
+    "item.evenmoreinstruments.looper_adapter.instrument.select": "כלי נגינה חובר. ממתין לחיבורו של לופר.",
+    "item.evenmoreinstruments.looper_adapter.instrument.success_pair": "כלי הנגינה תואם בהצלחה!",
+
+    "item.evenmoreinstruments.looper_adapter.looper.description": "מסנכרן בין 2 לופרים",
+    "item.evenmoreinstruments.looper_adapter.looper.select": "לופר חובר. ממתין לחיבורו של כלי נגינה או לופר נוסף.",
+    "item.evenmoreinstruments.looper_adapter.looper.success_pair": "לופרים סונכרנו בהצלחה!",
 
 
     "item.evenmoreinstruments.writable_record": "תקליט ריק",
@@ -44,7 +52,6 @@
 
     "block.evenmoreinstruments.looper": "לופר",
 
-    "evenmoreinstruments.looper.success_pair": "כלי הנגינה תואם בהצלחה!",
     "evenmoreinstruments.looper.pair_conflict": "תקליט זה הינו צרוב!",
     "evenmoreinstruments.looper.no_footage": "ללופר זה אין אף הקלטה! השתמש בכלי נגינה כדיי להתחיל להקליט",
     "evenmoreinstruments.looper.no_record": "לא הוכנס אף תקליט",

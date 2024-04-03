@@ -129,7 +129,7 @@ public class LooperUtil {
         pairPerformer.run();
 
         pairingPlayer.displayClientMessage(
-            Component.translatable("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
+            Component.translatable("item.evenmoreinstruments.looper_adapter.instrument.success_pair").withStyle(ChatFormatting.GREEN)
         , true);
 
         return true;
