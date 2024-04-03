@@ -67,7 +67,7 @@ public class LooperAdapterItem extends Item {
 
     private static boolean handleInstrumentBlock(BlockPos blockPos, CompoundTag adapterTag, Player player) {
         if (adapterTag.contains(LOOPER_POS_TAG, Tag.TAG_COMPOUND))
-            return pairLooperToInstrument(adapterTag, blockPos, NbtUtils.readBlockPos(adapterTag.getCompound(LOOPER_POS_TAG)), player);
+            return pairLooperToInstrument(adapterTag, NbtUtils.readBlockPos(adapterTag.getCompound(LOOPER_POS_TAG)), blockPos, player);
 
         adapterTag.put(BLOCK_INSTRUMENT_POS_TAG, NbtUtils.writeBlockPos(blockPos));
         player.displayClientMessage(
@@ -90,7 +90,7 @@ public class LooperAdapterItem extends Item {
         }
 
         if (adapterTag.contains(BLOCK_INSTRUMENT_POS_TAG, Tag.TAG_COMPOUND))
-            return pairLooperToInstrument(adapterTag, NbtUtils.readBlockPos(adapterTag.getCompound(BLOCK_INSTRUMENT_POS_TAG)), blockPos, player);
+            return pairLooperToInstrument(adapterTag, blockPos, NbtUtils.readBlockPos(adapterTag.getCompound(BLOCK_INSTRUMENT_POS_TAG)), player);
         if (adapterTag.contains(LOOPER_POS_TAG, Tag.TAG_COMPOUND))
             return syncLoopers(adapterTag, NbtUtils.readBlockPos(adapterTag.getCompound(LOOPER_POS_TAG)), blockPos, player);
 
