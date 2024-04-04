@@ -8,6 +8,7 @@ import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.RecordRepository;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
+import net.minecraft.client.telemetry.events.WorldUnloadEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -47,19 +48,43 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     private UUID lockedBy;
     private ItemStack recordIn = ItemStack.EMPTY;
 
+    private CompoundTag channel;
+
 
     /**
      * Retrieves the channel (footage) information from the inserted record
      */
     public CompoundTag getChannel() {
+        return channel;
+    }
+
+    private void setChannel(final CompoundTag channel) {
+        this.channel = channel;
+    }
+
+    /**
+     * Retrieves the channel (footage) information from the inserted record
+     */
+    private void updateChannel() {
         final CompoundTag recordData = recordIn.getOrCreateTag();
 
-        if (recordData.contains("channel", Tag.TAG_COMPOUND))
-            return recordData.getCompound("channel");
-        if (recordData.contains("burned_media", Tag.TAG_STRING))
-            return RecordRepository.getRecord(new ResourceLocation(recordData.getString("burned_media")));
+        if (recordData.contains("channel", Tag.TAG_COMPOUND)) {
+            channel = recordData.getCompound("channel");
+        }
+        else if (recordData.contains("burned_media", Tag.TAG_STRING)) {
+            final ResourceLocation recLoc = getBurnedMediaLoc();
+            RecordRepository.consumeRecord(getBlockPos(), recLoc, this::setChannel);
+        }
+    }
+    protected ResourceLocation getBurnedMediaLoc() {
+        return new ResourceLocation(recordIn.getTag().getString("burned_media"));
+    }
 
-        return null;
+    private void unloadRecord() {
+        final ResourceLocation burnedMedia = getBurnedMediaLoc();
+        if (burnedMedia != null) {
+            RecordRepository.removeSub(getBlockPos(), burnedMedia);
+        }
     }
 
     private void updateRecordNBT() {
@@ -90,19 +115,44 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     public void load(CompoundTag pTag) {
         super.load(pTag);
         recordIn = ItemStack.of(getPersistentData().getCompound("record"));
+        updateChannel();
     }
 
     //#region ContainerSingleItem implementation
 
     // Assuming for single container, slots irrelevant:
 
+    @Override
     public ItemStack getItem(int pSlot) {
         return recordIn;
     }
 
+    @Override
+    public void setItem(int pSlot, ItemStack pStack) {
+        if (!(pStack.getItem() instanceof EMIRecordItem recordItem))
+            return;
+
+        recordIn = pStack.copyWithCount(1);
+        recordItem.onInsert(recordIn, this);
+
+        updateChannel();
+
+        BlockState newState = getBlockState().setValue(LooperBlock.RECORD_IN, true);
+        if (hasFootage())
+            newState = setPlaying(true, newState);
+
+        updateRecordNBT();
+
+        getLevel().setBlock(getBlockPos(), newState, 3);
+        setChanged();
+    }
+
+    @Override
     public ItemStack removeItem(int pSlot, int pAmount) {
         if (!isRecordIn() || pAmount <= 0)
             return ItemStack.EMPTY;
+
+        unloadRecord();
 
         final ItemStack prev = recordIn;
         recordIn = ItemStack.EMPTY;
@@ -119,35 +169,22 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         return prev;
     }
 
-    public void setItem(int pSlot, ItemStack pStack) {
-        if (!(pStack.getItem() instanceof EMIRecordItem recordItem))
-            return;
-
-        recordIn = pStack.copyWithCount(1);
-        recordItem.onInsert(recordIn, this);
-
-        BlockState newState = getBlockState().setValue(LooperBlock.RECORD_IN, true);
-        if (hasFootage())
-            newState = setPlaying(true, newState);
-
-        updateRecordNBT();
-
-        getLevel().setBlock(getBlockPos(), newState, 3);
-        setChanged();
-    }
-
+    @Override
     public int getMaxStackSize() {
         return 1;
     }
 
+    @Override
     public boolean stillValid(Player pPlayer) {
         return Container.stillValidBlockEntity(this, pPlayer);
     }
 
+    @Override
     public boolean canPlaceItem(int pIndex, ItemStack pStack) {
         return (pStack.getItem() instanceof EMIRecordItem) && !isRecordIn();
     }
 
+    @Override
     public boolean canTakeItem(Container pTarget, int pIndex, ItemStack pStack) {
         return !isRecordIn();
     }
