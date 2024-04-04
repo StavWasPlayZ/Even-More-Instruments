@@ -41,7 +41,6 @@ public class LooperBlock extends Block implements EntityBlock {
     //TODO: Redstone should trigger this
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
     public static final BooleanProperty RECORD_IN = BooleanProperty.create("record_in");
-    public static final BooleanProperty REDSTONE_TRIGGERED = BooleanProperty.create("redstone_triggered");
 
 
     public LooperBlock(Properties properties) {
@@ -50,13 +49,12 @@ public class LooperBlock extends Block implements EntityBlock {
             .setValue(PLAYING, false)
             .setValue(RECORD_IN, false)
             .setValue(FACING, Direction.NORTH)
-            .setValue(REDSTONE_TRIGGERED, false)
         );
     }
 
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(PLAYING, FACING, RECORD_IN, REDSTONE_TRIGGERED);
+        pBuilder.add(PLAYING, FACING, RECORD_IN);
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
@@ -154,10 +152,7 @@ public class LooperBlock extends Block implements EntityBlock {
         // Then make it so that only by holding shift can you pause and play
         // since you'll be able to do that there anyways
         if (lbe.hasFootage()) {
-            pLevel.setBlockAndUpdate(pPos,
-                cyclePlaying(lbe, pState)
-                .setValue(REDSTONE_TRIGGERED, false)
-            );
+            pLevel.setBlockAndUpdate(pPos, cyclePlaying(lbe, pState));
             return InteractionResult.SUCCESS;
         }
         else {
@@ -202,26 +197,19 @@ public class LooperBlock extends Block implements EntityBlock {
         if (!(pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe))
             return;
 
-        boolean wasRedstoneTriggered = pState.getValue(REDSTONE_TRIGGERED);
+        boolean isPlaying = pState.getValue(PLAYING);
         if (pLevel.hasNeighborSignal(pPos)) {
             // This mechanism should act alike as a T-flip-flop.
             // We must be sure that it wasn't just some random block update messing up
             // with the toggle.
-            if (!wasRedstoneTriggered) {
+            if (!isPlaying) {
                 lbe.setTicks(0);
-
-                pLevel.setBlockAndUpdate(pPos,
-                    lbe.setPlaying(true, pState)
-                    .setValue(REDSTONE_TRIGGERED, true)
-                );
+                pLevel.setBlockAndUpdate(pPos, lbe.setPlaying(true, pState));
             }
         }
-        else if (wasRedstoneTriggered) {
+        else if (isPlaying) {
             // Redstone NO LONGER signals
-            pLevel.setBlockAndUpdate(pPos,
-                lbe.setPlaying(false, pState)
-                .setValue(REDSTONE_TRIGGERED, false)
-            );
+            pLevel.setBlockAndUpdate(pPos, lbe.setPlaying(false, pState));
         }
     }
 
