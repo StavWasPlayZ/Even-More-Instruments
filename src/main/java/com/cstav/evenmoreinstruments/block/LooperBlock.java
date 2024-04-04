@@ -228,7 +228,7 @@ public class LooperBlock extends Block implements EntityBlock {
                 return emitNoteParticle(pLevel, pPos, pParam);
         }
 
-        return true;
+        return false;
     }
 
     protected boolean emitNoteParticle(Level level, BlockPos pos, int noteIndex) {
