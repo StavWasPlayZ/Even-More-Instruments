@@ -221,16 +221,21 @@ public class LooperBlock extends Block implements EntityBlock {
     //#endregion
 
 
-
     @Override
     public boolean triggerEvent(BlockState pState, Level pLevel, BlockPos pPos, int pId, int pParam) {
-        if (pId != 42)
-            return false;
+        switch (pId) {
+            case 42:
+                return emitNoteParticle(pLevel, pPos, pParam);
+        }
 
+        return true;
+    }
+
+    protected boolean emitNoteParticle(Level level, BlockPos pos, int noteIndex) {
         // Copied from note block
-        pLevel.addParticle(ParticleTypes.NOTE,
-            (double)pPos.getX() + 0.5D, (double)pPos.getY() + 1.2D, (double)pPos.getZ() + 0.5D,
-            (double)pParam / 24.0D, 0.0D, 0.0D
+        level.addParticle(ParticleTypes.NOTE,
+            (double)pos.getX() + 0.5D, (double)pos.getY() + 1.2D, (double)pos.getZ() + 0.5D,
+            (double)noteIndex / 24.0D, 0.0D, 0.0D
         );
 
         return true;
