@@ -19,6 +19,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -40,6 +41,7 @@ public class LooperBlock extends Block implements EntityBlock {
     //TODO: Redstone should trigger this
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
     public static final BooleanProperty RECORD_IN = BooleanProperty.create("record_in");
+    public static final BooleanProperty REDSTONE_TRIGGERED = BooleanProperty.create("redstone_triggered");
 
 
     public LooperBlock(Properties properties) {
@@ -48,12 +50,13 @@ public class LooperBlock extends Block implements EntityBlock {
             .setValue(PLAYING, false)
             .setValue(RECORD_IN, false)
             .setValue(FACING, Direction.NORTH)
+            .setValue(REDSTONE_TRIGGERED, false)
         );
     }
 
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(PLAYING, FACING, RECORD_IN);
+        pBuilder.add(PLAYING, FACING, RECORD_IN, REDSTONE_TRIGGERED);
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
@@ -151,7 +154,10 @@ public class LooperBlock extends Block implements EntityBlock {
         // Then make it so that only by holding shift can you pause and play
         // since you'll be able to do that there anyways
         if (lbe.hasFootage()) {
-            pLevel.setBlockAndUpdate(pPos, cyclePlaying(lbe, pState));
+            pLevel.setBlockAndUpdate(pPos,
+                cyclePlaying(lbe, pState)
+                .setValue(REDSTONE_TRIGGERED, false)
+            );
             return InteractionResult.SUCCESS;
         }
         else {
@@ -180,15 +186,53 @@ public class LooperBlock extends Block implements EntityBlock {
     }
 
 
+    //#region redstone impl
+    public Direction getLoopDir(final BlockState state) {
+        return state.getValue(FACING);
+    }
+    public Direction getPlayDir(final BlockState state) {
+        return state.getValue(FACING).getOpposite();
+    }
+
     @Override
     public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock,
             BlockPos pNeighborPos, boolean pMovedByPiston) {
         if (pLevel.isClientSide)
             return;
-                
-        if (pLevel.hasNeighborSignal(pPos) && (pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe))
-            lbe.setTicks(lbe.getRepeatTick() + 1);
+        if (!(pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe))
+            return;
+
+        boolean wasRedstoneTriggered = pState.getValue(REDSTONE_TRIGGERED);
+        if (pLevel.hasNeighborSignal(pPos)) {
+            // This mechanism should act alike as a T-flip-flop.
+            // We must be sure that it wasn't just some random block update messing up
+            // with the toggle.
+            if (!wasRedstoneTriggered) {
+                lbe.setTicks(0);
+
+                pLevel.setBlockAndUpdate(pPos,
+                    lbe.setPlaying(true, pState)
+                    .setValue(REDSTONE_TRIGGERED, true)
+                );
+            }
+        }
+        else if (wasRedstoneTriggered) {
+            // Redstone NO LONGER signals
+            pLevel.setBlockAndUpdate(pPos,
+                lbe.setPlaying(false, pState)
+                .setValue(REDSTONE_TRIGGERED, false)
+            );
+        }
     }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
+        return getPlayDir(state) == direction;
+    }
+
+    //#endregion
+
+
 
     @Override
     public boolean triggerEvent(BlockState pState, Level pLevel, BlockPos pPos, int pId, int pParam) {
