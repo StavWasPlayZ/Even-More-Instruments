@@ -98,7 +98,7 @@ public class LooperBlock extends Block implements EntityBlock {
 
         final ItemStack heldStack = pPlayer.getItemInHand(pHand);
 
-        return performedChainedInteractions(
+        return performChainedInteractions(
             List.of(
                 this::cycleLooping,
                 this::insertRecord,
@@ -117,8 +117,8 @@ public class LooperBlock extends Block implements EntityBlock {
      * {@link InteractionResult#FAIL}.
      * @return The interaction result of the successful interaction, or {@link InteractionResult#FAIL if none.
      */
-    protected InteractionResult performedChainedInteractions(final List<LooperInteractionRunnable> interactions,
-                                                Function<LooperInteractionRunnable, InteractionResult> performer) {
+    protected InteractionResult performChainedInteractions(final List<LooperInteractionRunnable> interactions,
+                                                           Function<LooperInteractionRunnable, InteractionResult> performer) {
         for (LooperInteractionRunnable interaction : interactions) {
             final InteractionResult result = performer.apply(interaction);
             if (result != InteractionResult.FAIL)
