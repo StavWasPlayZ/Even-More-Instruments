@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.redstone.Redstone;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -282,6 +283,19 @@ public class LooperBlock extends Block implements EntityBlock {
     @Override
     public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
         return getPlayDir(state).getOpposite() == direction;
+    }
+
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState pState) {
+        return true;
+    }
+    /**
+     * @return A signal of 15 if this looper is activated. 0 otherwise.
+     */
+    @Override
+    public int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
+        return (pState.getValue(PLAYING) ? 1 : 0) * Redstone.SIGNAL_MAX;
     }
 
     //#endregion
