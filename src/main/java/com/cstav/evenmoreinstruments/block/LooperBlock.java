@@ -3,8 +3,6 @@ package com.cstav.evenmoreinstruments.block;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
 
@@ -13,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -34,6 +30,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.function.Function;
 
 public class LooperBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -85,6 +84,8 @@ public class LooperBlock extends Block implements EntityBlock {
     }
 
 
+    //#region Looper interaction handlers
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
             BlockHitResult pHit) {
@@ -95,35 +96,76 @@ public class LooperBlock extends Block implements EntityBlock {
         if (!(be instanceof LooperBlockEntity lbe))
             return InteractionResult.FAIL;
 
-        if (pHit.getDirection() == getLoopDir(pState)) {
-            pLevel.setBlockAndUpdate(pPos, pState.cycle(LOOPING));
-            return InteractionResult.SUCCESS;
+        final ItemStack heldStack = pPlayer.getItemInHand(pHand);
+
+        return performedChainedInteractions(
+            List.of(
+                this::cycleLooping,
+                this::insertRecord,
+                this::validateRecordPresence,
+                //   /\ Do not perform all following interactions if there is no record
+                this::pairInstrumentItem,
+                this::ejectRecord,
+                this::cyclePlaying
+            ),
+            (interaction) -> interaction.run(pState, pLevel, pPos, pPlayer, lbe, heldStack, pHit)
+        );
+    }
+
+    /**
+     * Performs the described interactions one after another, until one does not return
+     * {@link InteractionResult#FAIL}.
+     * @return The interaction result of the successful interaction, or {@link InteractionResult#FAIL if none.
+     */
+    protected InteractionResult performedChainedInteractions(final List<LooperInteractionRunnable> interactions,
+                                                Function<LooperInteractionRunnable, InteractionResult> performer) {
+        for (LooperInteractionRunnable interaction : interactions) {
+            final InteractionResult result = performer.apply(interaction);
+            if (result != InteractionResult.FAIL)
+                return result;
         }
 
-        final ItemStack itemStack = pPlayer.getItemInHand(pHand);
+        return InteractionResult.FAIL;
+    }
+    /**
+     * Attempts to cycle the {@link LooperBlock#LOOPING looping} state of the looper,
+     * provided the player right-clicked on {@link LooperBlock#getLoopDir the correct face}.
+     */
+    protected InteractionResult cycleLooping(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+                                             LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+        if (pHit.getDirection() != getLoopDir(pState))
+            return InteractionResult.FAIL;
 
+        pLevel.setBlockAndUpdate(pPos, pState.cycle(LOOPING));
+        return InteractionResult.SUCCESS;
+    }
+    protected InteractionResult insertRecord(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+                                             LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+        if (!(heldStack.getItem() instanceof EMIRecordItem))
+            return InteractionResult.FAIL;
 
-        // Check for a record's presence
-        if (itemStack.getItem() instanceof EMIRecordItem) {
-            if (pState.getValue(RECORD_IN)) {
-                lbe.popRecord();
-            }
-
-            lbe.setItem(0, itemStack);
-
-            if (!pPlayer.isCreative())
-                itemStack.shrink(1);
-
-            if (!lbe.hasFootage()) {
-                pPlayer.displayClientMessage(
-                    Component.translatable("evenmoreinstruments.record.no_footage"),
-                    true
-                );
-            }
-
-            return InteractionResult.SUCCESS;
+        // Eject previously inserted record
+        if (pState.getValue(RECORD_IN)) {
+            lbe.popRecord();
         }
-        else if (!pState.getValue(RECORD_IN)) {
+
+        lbe.setItem(0, heldStack);
+
+        if (!pPlayer.isCreative())
+            heldStack.shrink(1);
+
+        if (!lbe.hasFootage()) {
+            pPlayer.displayClientMessage(
+                Component.translatable("evenmoreinstruments.record.no_footage"),
+                true
+            );
+        }
+
+        return InteractionResult.SUCCESS;
+    }
+    protected InteractionResult validateRecordPresence(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+                                                       LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+        if (!pState.getValue(RECORD_IN)) {
             pPlayer.displayClientMessage(
                 Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED),
                 true
@@ -131,44 +173,45 @@ public class LooperBlock extends Block implements EntityBlock {
             return InteractionResult.CONSUME_PARTIAL;
         }
 
+        return InteractionResult.FAIL;
+    }
 
-        final boolean writable = lbe.isWritable();
+    /**
+     * Ejects the present record on the condition it is empty or the player is shifting.
+     */
+    protected InteractionResult ejectRecord(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+                                            LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+        if (!pState.getValue(RECORD_IN))
+            return InteractionResult.FAIL;
 
-        // Handle pairing
-        if (itemStack.getItem() instanceof InstrumentItem) {
-
-            if (writable) {
-                if (LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(itemStack, pPos), pPlayer))
-                    return InteractionResult.SUCCESS;
-            }
-            else {
-                pPlayer.displayClientMessage(
-                    Component.translatable("evenmoreinstruments.record.not_writable").withStyle(ChatFormatting.YELLOW)
-                    , true);
-                return InteractionResult.CONSUME;
-            }
-
-        }
-
-        // Ejecting the record
-        if (pState.getValue(RECORD_IN) && (pPlayer.isShiftKeyDown() || !lbe.hasFootage())) {
+        if (pPlayer.isShiftKeyDown() || !lbe.hasFootage()) {
             lbe.popRecord();
             return InteractionResult.SUCCESS;
         }
 
-        // Regular right-click; cycle playing
-        //TODO: Add a GUI for the looper and trigger it for display here
-        // Then make it so that only by holding shift can you pause and play
-        // since you'll be able to do that there anyways
-        if (lbe.hasFootage()) {
-            pLevel.setBlockAndUpdate(pPos,
-                cyclePlaying(lbe, pState)
-                .setValue(REDSTONE_TRIGGERED, false)
-            );
-            return InteractionResult.SUCCESS;
+        return InteractionResult.FAIL;
+    }
+    protected InteractionResult pairInstrumentItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+                                                   LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+        if (!(heldStack.getItem() instanceof InstrumentItem))
+            return InteractionResult.FAIL;
+
+        if (lbe.isWritable()) {
+            if (LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(heldStack, pPos), pPlayer))
+                return InteractionResult.SUCCESS;
+        } else {
+            pPlayer.displayClientMessage(
+                Component.translatable("evenmoreinstruments.record.not_writable").withStyle(ChatFormatting.YELLOW)
+                , true);
+            return InteractionResult.CONSUME;
         }
-        else {
-            if (writable) {
+
+        return InteractionResult.FAIL;
+    }
+    protected InteractionResult cyclePlaying(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+                                             LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+        if (!lbe.hasFootage()) {
+            if (lbe.isWritable()) {
                 pPlayer.displayClientMessage(
                     Component.translatable("evenmoreinstruments.record.no_footage"),
                     true
@@ -178,7 +221,15 @@ public class LooperBlock extends Block implements EntityBlock {
             return InteractionResult.CONSUME_PARTIAL;
         }
 
+        pLevel.setBlockAndUpdate(pPos,
+            cyclePlaying(lbe, pState)
+                .setValue(REDSTONE_TRIGGERED, false)
+        );
+        return InteractionResult.SUCCESS;
     }
+
+    //#endregion
+
 
     @Override
     public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
@@ -194,6 +245,7 @@ public class LooperBlock extends Block implements EntityBlock {
 
 
     //#region redstone impl
+
     public Direction getLoopDir(final BlockState state) {
         return state.getValue(FACING).getOpposite();
     }

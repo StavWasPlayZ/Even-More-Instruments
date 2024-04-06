@@ -123,7 +123,7 @@ public class LooperUtil {
 
 
     public static boolean performPair(LooperBlockEntity lbe, Runnable pairPerformer, Player pairingPlayer) {
-        if (!performChannelCheck(lbe, pairingPlayer))
+        if (!validateFootagePresence(lbe, pairingPlayer))
             return false;
 
         pairPerformer.run();
@@ -134,7 +134,7 @@ public class LooperUtil {
 
         return true;
     }
-    public static boolean performChannelCheck(final LooperBlockEntity lbe, final Player pairingPlayer) {
+    public static boolean validateFootagePresence(final LooperBlockEntity lbe, final Player pairingPlayer) {
         if (!lbe.hasFootage())
             return true;
 
