@@ -247,10 +247,12 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         setRecording(false);
         setWritable(false);
 
+        setTicks(0);
+
         updateRecordNBT();
         setChanged();
     }
-    //TODO implement to Looper GUI
+
     /**
      * This method resets the looper, assuming it is not recording.
      */

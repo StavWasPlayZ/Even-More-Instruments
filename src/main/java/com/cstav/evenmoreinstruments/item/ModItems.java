@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.evenmoreinstruments.item.partial.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.WindInstrumentItem;
@@ -56,33 +57,41 @@ public class ModItems {
 
 
     public static final RegistryObject<Item>
-        VIOLIN = register("violin", () -> new InstrumentItem(
+        VIOLIN = register("violin", () -> new CreditableInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("violin"), player
-            )
+            ),
+            "Philharmonia"
         )),
-        GUITAR = register("guitar", () -> new InstrumentItem(
+        GUITAR = register("guitar", () -> new CreditableInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("guitar"), player
-            )
+            ),
+            "Philharmonia"
         )),
-        PIPA = register("pipa", () -> new InstrumentItem(
+        PIPA = register("pipa", () -> new CreditableInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("pipa"), player
-            )
+            ),
+            "DSK Asian DreamZ"
         )),
         TROMBONE = register("trombone", () -> new WindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("trombone"), player
-            )
+            ),
+            "Philharmonia"
         )),
         SAXOPHONE = register("saxophone", () -> new WindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("saxophone"), player
-            )
+            ),
+            "Philharmonia"
         )),
         KEYBOARD = register("keyboard", () ->
-            new KeyboardBlockItem(ModBlocks.KEYBOARD.get(), new Properties()),
+            new KeyboardBlockItem(
+                ModBlocks.KEYBOARD.get(), new Properties(),
+                "Philharmonia"
+            ),
             DEFAULT_INSTRUMENT_BLOCK_TABS
         ),
 

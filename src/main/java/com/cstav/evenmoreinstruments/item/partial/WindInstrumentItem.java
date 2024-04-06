@@ -2,7 +2,6 @@ package com.cstav.evenmoreinstruments.item.partial;
 
 import com.cstav.evenmoreinstruments.client.ModArmPose;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
-import com.cstav.genshinstrument.item.InstrumentItem;
 import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.InteractionHand;
@@ -14,13 +13,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class WindInstrumentItem extends InstrumentItem {
+public class WindInstrumentItem extends CreditableInstrumentItem {
 
-    public WindInstrumentItem(OpenInstrumentPacketSender onOpenRequest) {
-        super(onOpenRequest);
+    public WindInstrumentItem(OpenInstrumentPacketSender onOpenRequest, String credit) {
+        super(onOpenRequest, credit);
     }
-    public WindInstrumentItem(OpenInstrumentPacketSender onOpenRequest, Properties properties) {
-        super(onOpenRequest, properties);
+    public WindInstrumentItem(OpenInstrumentPacketSender onOpenRequest, Properties properties, String credit) {
+        super(onOpenRequest, properties, credit);
     }
 
     @Override
