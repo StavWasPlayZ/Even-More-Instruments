@@ -274,13 +274,8 @@ public class LooperBlock extends Block implements EntityBlock {
                     .setValue(REDSTONE_TRIGGERED, true)
                 );
             }
-        }
-        else if (wasRedstoneTriggered) {
-            // Redstone NO LONGER signals
-            pLevel.setBlockAndUpdate(pPos,
-                lbe.setPlaying(false, pState)
-                .setValue(REDSTONE_TRIGGERED, false)
-            );
+        } else if (wasRedstoneTriggered) {
+            pLevel.setBlock(pPos, pState.setValue(REDSTONE_TRIGGERED, false), 1);
         }
     }
 
