@@ -40,7 +40,7 @@ public class LooperBlock extends Block implements EntityBlock {
      * Redstone signal above this level will cause the looper to play.
      * Otherwise, will cycle play state.
      */
-    public static final int REDSTONE_PLAY_SIGNAL_TOGGLE = 5;
+    public static final int REDSTONE_PLAY_SIGNAL_TOGGLE = 10;
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
