@@ -2,36 +2,36 @@
     "variants": {
 
         "has_keyboard=false,facing=north": {
-            "model": "evenmoreinstruments:block/keyboard_stand",
+            "model": "evenmoreinstruments:block/keyboard/stand",
             "y": 0
         },
         "has_keyboard=false,facing=east": {
-            "model": "evenmoreinstruments:block/keyboard_stand",
+            "model": "evenmoreinstruments:block/keyboard/stand",
             "y": 90
         },
         "has_keyboard=false,facing=south": {
-            "model": "evenmoreinstruments:block/keyboard_stand",
+            "model": "evenmoreinstruments:block/keyboard/stand",
             "y": 180
         },
         "has_keyboard=false,facing=west": {
-            "model": "evenmoreinstruments:block/keyboard_stand",
+            "model": "evenmoreinstruments:block/keyboard/stand",
             "y": 270
         },
 
         "has_keyboard=true,facing=north": {
-            "model": "evenmoreinstruments:block/keyboard_stand_with_keyboard",
+            "model": "evenmoreinstruments:block/keyboard/stand_with_keyboard",
             "y": 0
         },
         "has_keyboard=true,facing=east": {
-            "model": "evenmoreinstruments:block/keyboard_stand_with_keyboard",
+            "model": "evenmoreinstruments:block/keyboard/stand_with_keyboard",
             "y": 90
         },
         "has_keyboard=true,facing=south": {
-            "model": "evenmoreinstruments:block/keyboard_stand_with_keyboard",
+            "model": "evenmoreinstruments:block/keyboard/stand_with_keyboard",
             "y": 180
         },
         "has_keyboard=true,facing=west": {
-            "model": "evenmoreinstruments:block/keyboard_stand_with_keyboard",
+            "model": "evenmoreinstruments:block/keyboard/stand_with_keyboard",
             "y": 270
         }
 

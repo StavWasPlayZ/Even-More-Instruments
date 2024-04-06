@@ -42,6 +42,7 @@ public class LooperBlock extends Block implements EntityBlock {
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
     public static final BooleanProperty RECORD_IN = BooleanProperty.create("record_in");
     public static final BooleanProperty REDSTONE_TRIGGERED = BooleanProperty.create("redstone_triggered");
+    public static final BooleanProperty LOOPING = BooleanProperty.create("looping");
 
 
     public LooperBlock(Properties properties) {
@@ -51,12 +52,13 @@ public class LooperBlock extends Block implements EntityBlock {
             .setValue(RECORD_IN, false)
             .setValue(FACING, Direction.NORTH)
             .setValue(REDSTONE_TRIGGERED, false)
+            .setValue(LOOPING, false)
         );
     }
 
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(PLAYING, FACING, RECORD_IN, REDSTONE_TRIGGERED);
+        pBuilder.add(PLAYING, FACING, RECORD_IN, REDSTONE_TRIGGERED, LOOPING);
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
@@ -92,6 +94,11 @@ public class LooperBlock extends Block implements EntityBlock {
         final BlockEntity be = pLevel.getBlockEntity(pPos);
         if (!(be instanceof LooperBlockEntity lbe))
             return InteractionResult.FAIL;
+
+        if (pHit.getDirection() == getLoopDir(pState)) {
+            pLevel.setBlockAndUpdate(pPos, pState.cycle(LOOPING));
+            return InteractionResult.SUCCESS;
+        }
 
         final ItemStack itemStack = pPlayer.getItemInHand(pHand);
 
@@ -188,10 +195,10 @@ public class LooperBlock extends Block implements EntityBlock {
 
     //#region redstone impl
     public Direction getLoopDir(final BlockState state) {
-        return state.getValue(FACING);
+        return state.getValue(FACING).getOpposite();
     }
     public Direction getPlayDir(final BlockState state) {
-        return state.getValue(FACING).getOpposite();
+        return state.getValue(FACING);
     }
 
     @Override
@@ -227,7 +234,7 @@ public class LooperBlock extends Block implements EntityBlock {
 
     @Override
     public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
-        return getPlayDir(state) == direction;
+        return getPlayDir(state).getOpposite() == direction;
     }
 
     //#endregion
