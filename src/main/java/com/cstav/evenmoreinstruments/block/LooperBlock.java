@@ -36,9 +36,13 @@ import java.util.List;
 import java.util.function.Function;
 
 public class LooperBlock extends Block implements EntityBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    /**
+     * Redstone signal above this level will cause the looper to play.
+     * Otherwise, will cycle play state.
+     */
+    public static final int REDSTONE_PLAY_SIGNAL_TOGGLE = 5;
 
-    //TODO: Redstone should trigger this
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
     public static final BooleanProperty RECORD_IN = BooleanProperty.create("record_in");
     public static final BooleanProperty REDSTONE_TRIGGERED = BooleanProperty.create("redstone_triggered");
@@ -270,10 +274,14 @@ public class LooperBlock extends Block implements EntityBlock {
             if (!wasRedstoneTriggered) {
                 lbe.setTicks(0);
 
-                pLevel.setBlockAndUpdate(pPos,
-                    lbe.setPlaying(true, pState)
-                    .setValue(REDSTONE_TRIGGERED, true)
-                );
+                BlockState newState = pState;
+                // Determine play/cycle behaviour by redstone signal
+                if (pLevel.getBestNeighborSignal(pPos) > REDSTONE_PLAY_SIGNAL_TOGGLE)
+                    newState = lbe.setPlaying(true, newState);
+                else
+                    newState = cyclePlaying(lbe, newState);
+
+                pLevel.setBlockAndUpdate(pPos, newState.setValue(REDSTONE_TRIGGERED, true));
             }
         } else if (wasRedstoneTriggered) {
             pLevel.setBlock(pPos, pState.setValue(REDSTONE_TRIGGERED, false), 1);
