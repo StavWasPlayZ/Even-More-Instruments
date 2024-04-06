@@ -385,9 +385,13 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     public void popRecord() {
         final CompoundTag recordData = getRecordData();
 
-        // Record ejected while player writing to the record; remove notes
-        if (recordIn.is(ModItems.RECORD_WRITABLE.get()) && isWritable()) {
-            recordData.remove("notes");
+        if (recordIn.is(ModItems.RECORD_WRITABLE.get())) {
+            // Record ejected while player writing to the record; remove notes
+            if (isWritable())
+                recordData.remove("notes");
+            // Empty record; empty data.
+            if (!hasFootage())
+                recordData.remove("channel");
         }
 
         Vec3 popVec = Vec3.atLowerCornerWithOffset(getBlockPos(), 0.5D, 1.01D, 0.5D)
