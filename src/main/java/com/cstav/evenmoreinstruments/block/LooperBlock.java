@@ -51,7 +51,7 @@ public class LooperBlock extends Block implements EntityBlock {
             .setValue(RECORD_IN, false)
             .setValue(FACING, Direction.NORTH)
             .setValue(REDSTONE_TRIGGERED, false)
-            .setValue(LOOPING, false)
+            .setValue(LOOPING, true)
         );
     }
 

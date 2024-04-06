@@ -217,11 +217,15 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     public int incrementTick() {
         int ticks = getTicks();
 
-        // Wrap back to the start when we finished playing
         final int repTick = getRepeatTick();
-        if ((repTick != -1) && (ticks > repTick))
+        // Finished playing
+        if ((repTick != -1) && (ticks > repTick)) {
+            // Wrap back to the start
             ticks = 0;
-        else
+            // If we don't loop, disable playing
+            if (!getBlockState().getValue(LooperBlock.LOOPING))
+                getLevel().setBlockAndUpdate(getBlockPos(), setPlaying(false, getBlockState()));
+        } else
             ticks++;
 
         setTicks(ticks);
