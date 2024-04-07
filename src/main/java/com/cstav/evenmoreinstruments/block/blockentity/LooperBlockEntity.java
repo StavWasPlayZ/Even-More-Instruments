@@ -42,9 +42,27 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
+import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.NOTES_TAG;
+import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.WRITABLE_TAG;
+
 @EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID)
 public class LooperBlockEntity extends BlockEntity implements ContainerSingleItem {
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    public static final String
+        BURNED_MEDIA_TAG = "burned_media",
+        CHANNEL_TAG = "channel",
+    
+        RECORD_TAG = "record",
+        RECORDING_TAG = "recording",
+    
+        TICKS_TAG = "ticks",
+        REPEAT_TICK_TAG = "repeatTick",
+    
+        LOCKED_TAG = "locked",
+        LOCKED_BY_TAG = "lockedBy"
+    ;
+
     private UUID lockedBy;
     private ItemStack recordIn = ItemStack.EMPTY;
 
@@ -68,16 +86,16 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     private void updateChannel() {
         final CompoundTag recordData = recordIn.getOrCreateTag();
 
-        if (recordData.contains("channel", Tag.TAG_COMPOUND)) {
-            channel = recordData.getCompound("channel");
+        if (recordData.contains(CHANNEL_TAG, Tag.TAG_COMPOUND)) {
+            channel = recordData.getCompound(CHANNEL_TAG);
         }
-        else if (recordData.contains("burned_media", Tag.TAG_STRING)) {
+        else if (recordData.contains(BURNED_MEDIA_TAG, Tag.TAG_STRING)) {
             final ResourceLocation recLoc = getBurnedMediaLoc();
             RecordRepository.consumeRecord(getBlockPos(), recLoc, this::setChannel);
         }
     }
     protected ResourceLocation getBurnedMediaLoc() {
-        return new ResourceLocation(recordIn.getTag().getString("burned_media"));
+        return new ResourceLocation(recordIn.getTag().getString(BURNED_MEDIA_TAG));
     }
 
     private void unloadRecord() {
@@ -88,20 +106,20 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     private void updateRecordNBT() {
-        getPersistentData().put("record", recordIn.save(new CompoundTag()));
+        getPersistentData().put(RECORD_TAG, recordIn.save(new CompoundTag()));
     }
 
     public boolean hasFootage() {
         final CompoundTag channel = getChannel();
         return (channel != null) &&
-            channel.contains("notes", Tag.TAG_LIST) && !channel.getList("notes", Tag.TAG_COMPOUND).isEmpty();
+            channel.contains(NOTES_TAG, Tag.TAG_LIST) && !channel.getList(NOTES_TAG, Tag.TAG_COMPOUND).isEmpty();
     }
 
     public boolean isWritable() {
-        return (getChannel() != null) && getChannel().getBoolean("writable");
+        return (getChannel() != null) && getChannel().getBoolean(WRITABLE_TAG);
     }
     public void setWritable(final boolean writable) {
-        getChannel().putBoolean("writable", writable);
+        getChannel().putBoolean(WRITABLE_TAG, writable);
     }
 
     public boolean isRecordIn() {
@@ -114,7 +132,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        recordIn = ItemStack.of(getPersistentData().getCompound("record"));
+        recordIn = ItemStack.of(getPersistentData().getCompound(RECORD_TAG));
         updateChannel();
     }
 
@@ -163,7 +181,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
             3
         );
 
-        getPersistentData().remove("record");
+        getPersistentData().remove(RECORD_TAG);
         reset();
 
         return prev;
@@ -197,17 +215,17 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
         final CompoundTag data = getPersistentData();
 
-        if (!data.contains("ticks", CompoundTag.TAG_INT))
+        if (!data.contains(TICKS_TAG, CompoundTag.TAG_INT))
             setTicks(0);
     }
     
 
     public void setRecording(final boolean recording) {
-        getPersistentData().putBoolean("recording", recording);
+        getPersistentData().putBoolean(RECORDING_TAG, recording);
     }
 
     public void setTicks(final int ticks) {
-        getPersistentData().putInt("ticks", ticks);
+        getPersistentData().putInt(TICKS_TAG, ticks);
     }
     /**
      * Increment the ticks of this looper by 1. Wrap back to the start
@@ -232,7 +250,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         return ticks;
     }
     public void setRepeatTick(final int tick) {
-        getChannel().putInt("repeatTick", tick);
+        getChannel().putInt(REPEAT_TICK_TAG, tick);
     }
 
     public void setLockedBy(final UUID player) {
@@ -240,7 +258,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     public void lock() {
-        getPersistentData().putBoolean("locked", true);
+        getPersistentData().putBoolean(LOCKED_TAG, true);
         lockedBy = null;
 
         setRepeatTick(getTicks());
@@ -257,8 +275,8 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
      * This method resets the looper, assuming it is not recording.
      */
     public void reset() {
-        getPersistentData().remove("locked");
-        getPersistentData().remove("lockedBy");
+        getPersistentData().remove(LOCKED_TAG);
+        getPersistentData().remove(LOCKED_BY_TAG);
         lockedBy = null;
 
         setTicks(0);
@@ -267,10 +285,10 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     public boolean isLocked() {
-        return lockedByAnyone() || getPersistentData().getBoolean("locked");
+        return lockedByAnyone() || getPersistentData().getBoolean(LOCKED_TAG);
     }
     public boolean isRecording() {
-        return getPersistentData().getBoolean("recording");
+        return getPersistentData().getBoolean(RECORDING_TAG);
     }
 
     public boolean isAllowedToRecord(final UUID playerUUID) {
@@ -284,13 +302,13 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     public int getTicks() {
-        return getPersistentData().getInt("ticks");
+        return getPersistentData().getInt(TICKS_TAG);
     }
     public int getRepeatTick() {
         final CompoundTag channel = getChannel();
 
-        if (channel.contains("repeatTick"))
-            return channel.getInt("repeatTick");
+        if (channel.contains(REPEAT_TICK_TAG))
+            return channel.getInt(REPEAT_TICK_TAG);
         else
             return -1;
     }
@@ -332,7 +350,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         noteTag.putInt("timestamp", timestamp);
 
 
-        CommonUtil.getOrCreateListTag(getChannel(), "notes").add(noteTag);
+        CommonUtil.getOrCreateListTag(getChannel(), NOTES_TAG).add(noteTag);
         setChanged();
     }
 
@@ -358,7 +376,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         final int ticks = getTicks();
         final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
 
-        channel.getList("notes", Tag.TAG_COMPOUND).stream()
+        channel.getList(NOTES_TAG, Tag.TAG_COMPOUND).stream()
             .map((note) -> (CompoundTag) note)
             .filter((note) -> note.getInt("timestamp") == ticks)
             .forEach((note) -> lbe.playNote(note, instrumentId));
@@ -390,10 +408,10 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         if (recordIn.is(ModItems.RECORD_WRITABLE.get())) {
             // Record ejected while player writing to the record; remove notes
             if (isWritable())
-                recordData.remove("notes");
+                recordData.remove(NOTES_TAG);
             // Empty record; empty data.
             if (!hasFootage())
-                recordData.remove("channel");
+                recordData.remove(CHANNEL_TAG);
         }
 
         Vec3 popVec = Vec3.atLowerCornerWithOffset(getBlockPos(), 0.5D, 1.01D, 0.5D)
@@ -446,7 +464,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
      */
     public boolean isCapped(final Level level) {
         final int cap = level.getGameRules().getInt(ModGameRules.RULE_LOOPER_MAX_NOTES);
-        return (cap >= 0) && (getChannel().getList("notes", Tag.TAG_COMPOUND).size() >= cap);
+        return (cap >= 0) && (getChannel().getList(NOTES_TAG, Tag.TAG_COMPOUND).size() >= cap);
     }
 
 
@@ -462,7 +480,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
             .filter((lbe) -> lbe.lockedBy.equals(event.getEntity().getUUID()))
             .ifPresent((lbe) -> {
                     lbe.reset();
-                    lbe.getPersistentData().putBoolean("recording", false);
+                    lbe.getPersistentData().putBoolean(RECORDING_TAG, false);
                 }
             );
 

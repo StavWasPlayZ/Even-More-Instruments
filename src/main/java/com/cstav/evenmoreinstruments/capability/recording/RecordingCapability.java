@@ -7,8 +7,10 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 @AutoRegisterCapability
 public class RecordingCapability {
-
-    public static final String RECORDING_TAG = "recording", REC_POS_TAG = "looper_pos";
+    public static final String
+        RECORDING_TAG = "recording",
+        REC_POS_TAG = "looper_pos"
+    ;
 
     private boolean isRecording = false;
     private BlockPos looperPos = null;

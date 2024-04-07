@@ -5,12 +5,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+
+import static com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity.BURNED_MEDIA_TAG;
 
 public class BurnedRecordItem extends EMIRecordItem {
     private final ResourceLocation burnedMedia;
@@ -33,7 +34,7 @@ public class BurnedRecordItem extends EMIRecordItem {
 
     @Override
     public void onInsert(final ItemStack stack, final LooperBlockEntity lbe) {
-        stack.getOrCreateTag().putString("burned_media", burnedMedia.toString());
+        stack.getOrCreateTag().putString(BURNED_MEDIA_TAG, burnedMedia.toString());
     }
 
 
