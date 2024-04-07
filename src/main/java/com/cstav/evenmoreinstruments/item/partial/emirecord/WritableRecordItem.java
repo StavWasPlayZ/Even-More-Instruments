@@ -11,8 +11,7 @@ import static com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity.
 
 public class WritableRecordItem extends EMIRecordItem {
     public static final String
-        WRITABLE_TAG = "writable",
-        NOTES_TAG = "notes"
+        NOTES_TAG = "Notes"
     ;
 
     public WritableRecordItem(Properties properties) {

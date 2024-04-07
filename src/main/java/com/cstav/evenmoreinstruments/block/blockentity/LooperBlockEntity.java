@@ -42,6 +42,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
+import static com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem.*;
 import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.NOTES_TAG;
 import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.WRITABLE_TAG;
 
@@ -50,17 +51,17 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final String
-        BURNED_MEDIA_TAG = "burned_media",
-        CHANNEL_TAG = "channel",
+        BURNED_MEDIA_TAG = "BurnedMedia",
+        CHANNEL_TAG = "Channel",
     
-        RECORD_TAG = "record",
-        RECORDING_TAG = "recording",
+        RECORD_TAG = "Record",
+        RECORDING_TAG = "Recording",
     
-        TICKS_TAG = "ticks",
-        REPEAT_TICK_TAG = "repeatTick",
+        TICKS_TAG = "Ticks",
+        REPEAT_TICK_TAG = "RepeatTicks",
     
-        LOCKED_TAG = "locked",
-        LOCKED_BY_TAG = "lockedBy"
+        LOCKED_TAG = "Locked",
+        LOCKED_BY_TAG = "LockedBy"
     ;
 
     private UUID lockedBy;
@@ -341,13 +342,13 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
         final CompoundTag noteTag = new CompoundTag();
 
-        noteTag.putInt("soundIndex", sound.index);
-        noteTag.putString("soundType", sound.baseSoundLocation.toString());
+        noteTag.putInt(SOUND_INDEX_TAG, sound.index);
+        noteTag.putString(SOUND_TYPE_TAG, sound.baseSoundLocation.toString());
 
-        noteTag.putInt("pitch", pitch);
-        noteTag.putFloat("volume", volume / 100f);
+        noteTag.putInt(PITCH_TAG, pitch);
+        noteTag.putFloat(VOLUME_TAG, volume / 100f);
 
-        noteTag.putInt("timestamp", timestamp);
+        noteTag.putInt(TIMESTAMP_TAG, timestamp);
 
 
         CommonUtil.getOrCreateListTag(getChannel(), NOTES_TAG).add(noteTag);
@@ -374,24 +375,24 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
             return;
 
         final int ticks = getTicks();
-        final ResourceLocation instrumentId = new ResourceLocation(channel.getString("instrumentId"));
+        final ResourceLocation instrumentId = new ResourceLocation(channel.getString(INSTRUMENT_ID_TAG));
 
         channel.getList(NOTES_TAG, Tag.TAG_COMPOUND).stream()
             .map((note) -> (CompoundTag) note)
-            .filter((note) -> note.getInt("timestamp") == ticks)
+            .filter((note) -> note.getInt(TIMESTAMP_TAG) == ticks)
             .forEach((note) -> lbe.playNote(note, instrumentId));
 
         lbe.incrementTick();
     }
     private void playNote(final CompoundTag note, final ResourceLocation instrumentId) {
         try {
-            final int pitch = note.getInt("pitch");
-            final float volume = note.getFloat("volume");
+            final int pitch = note.getInt(PITCH_TAG);
+            final float volume = note.getFloat(VOLUME_TAG);
 
-            final ResourceLocation soundLocation = new ResourceLocation(note.getString("soundType"));
+            final ResourceLocation soundLocation = new ResourceLocation(note.getString(SOUND_TYPE_TAG));
 
             ServerUtil.sendPlayNotePackets(getLevel(), getBlockPos(),
-                NoteSoundRegistrar.getSounds(soundLocation)[note.getInt("soundIndex")],
+                NoteSoundRegistrar.getSounds(soundLocation)[note.getInt(SOUND_INDEX_TAG)],
                 instrumentId, pitch, (int)(volume * 100)
             );
 
@@ -451,7 +452,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         } else {
             looperBE.setLockedBy(event.player.getUUID());
             looperBE.setRecording(true);
-            looperBE.getChannel().putString("instrumentId", event.instrumentId.toString());
+            looperBE.getChannel().putString(INSTRUMENT_ID_TAG, event.instrumentId.toString());
         }
             
         looperBE.writeNote(event.sound, event.pitch, event.volume, looperBE.getTicks());

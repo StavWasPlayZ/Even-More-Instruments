@@ -8,8 +8,8 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 @AutoRegisterCapability
 public class RecordingCapability {
     public static final String
-        RECORDING_TAG = "recording",
-        REC_POS_TAG = "looper_pos"
+        RECORDING_TAG = "Recording",
+        REC_POS_TAG = "LooperPos"
     ;
 
     private boolean isRecording = false;
