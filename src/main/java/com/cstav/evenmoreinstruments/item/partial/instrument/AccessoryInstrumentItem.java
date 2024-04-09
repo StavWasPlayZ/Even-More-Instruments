@@ -21,6 +21,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 import java.util.function.Supplier;
 
+/**
+ * An instrument that requires the usage of a {@link InstrumentAccessoryItem}
+ */
 @EventBusSubscriber(modid = Main.MODID, bus = Bus.FORGE)
 public class AccessoryInstrumentItem extends CreditableInstrumentItem {
     private final Supplier<Item> accessorySupplier;
@@ -35,8 +38,8 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
         this.accessorySupplier = accessorySupplier;
     }
 
-    public Item getAccessoryItem() {
-        return accessorySupplier.get();
+    public InstrumentAccessoryItem getAccessoryItem() {
+        return (InstrumentAccessoryItem) accessorySupplier.get();
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.item.partial.instrument.AccessoryInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.InstrumentAccessoryItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.WindInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
@@ -54,7 +55,11 @@ public class ModItems {
 
 
     public static final RegistryObject<Item>
-        VIOLIN_BOW = register("violin_bow", () -> new Item(new Properties().stacksTo(1).durability(960))),
+        VIOLIN_BOW = register("violin_bow",
+            () -> new InstrumentAccessoryItem(
+                new Properties().stacksTo(1).durability(960)
+            )
+        ),
         VIOLIN = register("violin", ViolinItem::new, DEFAULT_INSTRUMENTS_TABS, VIOLIN_BOW),
 
         GUITAR = register("guitar", () -> new CreditableInstrumentItem(
