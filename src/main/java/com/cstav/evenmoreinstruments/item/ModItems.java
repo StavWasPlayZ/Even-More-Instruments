@@ -54,17 +54,8 @@ public class ModItems {
 
 
     public static final RegistryObject<Item>
-        VIOLIN_BOW = register("violin_bow", () -> new Item(new Properties().stacksTo(1))),
-        VIOLIN = register(
-            "violin", () -> new AccessoryInstrumentItem(
-                (player) -> ModPacketHandler.sendToClient(
-                    new ModOpenInstrumentPacket("violin"), player
-                ),
-                VIOLIN_BOW,
-                "Philharmonia"
-            ),
-            DEFAULT_INSTRUMENTS_TABS, VIOLIN_BOW
-        ),
+        VIOLIN_BOW = register("violin_bow", () -> new Item(new Properties().stacksTo(1).durability(960))),
+        VIOLIN = register("violin", ViolinItem::new, DEFAULT_INSTRUMENTS_TABS, VIOLIN_BOW),
 
         GUITAR = register("guitar", () -> new CreditableInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
