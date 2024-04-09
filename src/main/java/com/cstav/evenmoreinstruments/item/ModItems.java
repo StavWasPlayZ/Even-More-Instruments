@@ -57,7 +57,7 @@ public class ModItems {
     public static final RegistryObject<Item>
         VIOLIN_BOW = register("violin_bow",
             () -> new InstrumentAccessoryItem(
-                new Properties().stacksTo(1).durability(1555)
+                new Properties().stacksTo(1).durability(2048)
             )
         ),
         VIOLIN = register("violin", ViolinItem::new, DEFAULT_INSTRUMENTS_TABS, VIOLIN_BOW),
