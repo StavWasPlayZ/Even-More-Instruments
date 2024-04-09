@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.item.partial;
+package com.cstav.evenmoreinstruments.item.partial.instrument;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

@@ -16,6 +16,9 @@
     "item.evenmoreinstruments.pipa": "לאוטה יפנית",
     "item.evenmoreinstruments.note_block_instrument": "בלוק הצליל של %s",
 
+    "item.evenmoreinstruments.instrument.accessory.not_present": "עליך להחזיק ב%s על מנת לנגן בכלי הנגינה",
+
+
     "item.evenmoreinstruments.looper_adapter": "מתאם אלחוטי ללופר",
 
     "item.evenmoreinstruments.looper_adapter.instrument.description": "מתאם בין בלוק כלי נגינה ללופר",

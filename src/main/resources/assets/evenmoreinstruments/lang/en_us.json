@@ -16,6 +16,8 @@
     "item.evenmoreinstruments.pipa": "Pipa",
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
 
+    "item.evenmoreinstruments.instrument.accessory.not_present": "You must hold a %s to use this instrument",
+
 
     "item.evenmoreinstruments.looper_adapter": "Looper Wireless Adapter",
 

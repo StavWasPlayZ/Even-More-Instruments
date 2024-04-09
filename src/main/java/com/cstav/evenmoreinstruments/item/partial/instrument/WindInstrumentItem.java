@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.item.partial;
+package com.cstav.evenmoreinstruments.item.partial.instrument;
 
 import com.cstav.evenmoreinstruments.client.ModArmPose;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
