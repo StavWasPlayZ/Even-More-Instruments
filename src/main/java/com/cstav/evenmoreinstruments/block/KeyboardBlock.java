@@ -81,7 +81,7 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
         if (pLevel.isClientSide)
             return;
 
-        final BlockPos sidePos = pPos.relative(CommonUtil.getRight(pState.getValue(FACING)));
+        final BlockPos sidePos = pPos.relative(pState.getValue(FACING).getCounterClockWise());
 
         pLevel.setBlock(sidePos,
             pState.setValue(PART, KeyboardPart.RIGHT)
@@ -115,7 +115,7 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         final Direction direction = pContext.getHorizontalDirection();
         final BlockPos pos = pContext.getClickedPos();
-        final BlockPos sidePos = pos.relative(CommonUtil.getLeft(direction));
+        final BlockPos sidePos = pos.relative(direction.getClockWise());
 
         final Level level = pContext.getLevel();
 
@@ -146,8 +146,8 @@ public class KeyboardBlock extends AbstractInstrumentBlock implements IDoubleBlo
     @Override
     public BlockPos getOtherBlock(final BlockState state, BlockPos blockPos, Level level) {
         final BlockPos sideBlock = blockPos.relative((state.getValue(PART) == KeyboardPart.LEFT)
-            ? CommonUtil.getRight(state.getValue(FACING))
-            : CommonUtil.getLeft(state.getValue(FACING))
+            ? state.getValue(FACING).getCounterClockWise()
+            : state.getValue(FACING).getClockWise()
         );
 
         return (!level.getBlockState(sideBlock).is(ModBlocks.KEYBOARD.get())) ? null : sideBlock;

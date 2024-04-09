@@ -38,23 +38,4 @@ public class CommonUtil {
         return tag;
     }
 
-
-    //idk how to do maths
-    private static final Direction[] DIRECTIONS = {
-        Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST
-    };
-    public static Direction getOffset(final Direction direction, final int offset) {
-        for (int i = 0; i < DIRECTIONS.length; i++)
-            if (DIRECTIONS[i] == direction)
-                return DIRECTIONS[com.cstav.genshinstrument.util.CommonUtil.pyWrap(i + offset, DIRECTIONS.length) % DIRECTIONS.length];
-
-        throw new IllegalStateException("How did we get here?");
-    }
-    public static Direction getLeft(final Direction direction) {
-        return getOffset(direction, 1);
-    }
-    public static Direction getRight(final Direction direction) {
-        return getOffset(direction, -1);
-    }
-
 }
