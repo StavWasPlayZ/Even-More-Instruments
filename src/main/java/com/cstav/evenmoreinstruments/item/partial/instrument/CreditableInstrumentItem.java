@@ -25,13 +25,14 @@ public class CreditableInstrumentItem extends InstrumentItem implements Creditab
     }
 
     @Override
-    public String getCredit() {
+    public @Nullable String getCredit() {
         return credit;
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(getCreditAsComponent());
+        if (hasCredit())
+            pTooltipComponents.add(getCreditAsComponent());
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

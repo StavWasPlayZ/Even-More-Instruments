@@ -89,7 +89,7 @@ public class ModItems {
         KEYBOARD = register("keyboard", () ->
             new KeyboardBlockItem(
                 ModBlocks.KEYBOARD.get(), new Properties(),
-                "Philharmonia"
+                null
             ),
             DEFAULT_INSTRUMENT_BLOCK_TABS
         ),

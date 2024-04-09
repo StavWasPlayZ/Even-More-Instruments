@@ -27,7 +27,7 @@ displayURL="https://www.curseforge.com/minecraft/mc-mods/even-more-instruments" 
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="icon.png" #optional
 # A text field displayed in the mod UI
-credits='''Some sound assets were taken from: https://philharmonia.co.uk/ and Acoustic Piano ("keyboard") from Kisu-Lyre+: https://ko-fi.com/s/665c3cc518''' #optional
+credits='''All sound assets credited in instruments' descriptions''' #optional
 # A text field displayed in the mod UI
 authors="Stav (IGN StavWasPlayZ)" #optional
 # Display Test controls the display for your mod in the server connection screen
