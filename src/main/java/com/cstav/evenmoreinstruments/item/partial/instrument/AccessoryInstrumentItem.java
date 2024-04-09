@@ -5,6 +5,7 @@ import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
+import com.cstav.genshinstrument.util.ServerUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -66,7 +67,10 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
         accessory.hurtAndBreak(
             hurtInstrumentBy(event, accessory),
             event.player,
-            (player) -> player.broadcastBreakEvent(player.getUsedItemHand())
+            (player) -> {
+                player.broadcastBreakEvent(player.getUsedItemHand());
+                ServerUtil.setInstrumentClosed(player);
+            }
         );
     }
 
