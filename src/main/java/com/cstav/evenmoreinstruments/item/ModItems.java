@@ -1,22 +1,19 @@
 package com.cstav.evenmoreinstruments.item;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.Main;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
-import com.cstav.evenmoreinstruments.item.partial.CreditableInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.AccessoryInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.WindInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.WindInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
-import com.cstav.genshinstrument.item.InstrumentItem;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -57,12 +54,18 @@ public class ModItems {
 
 
     public static final RegistryObject<Item>
-        VIOLIN = register("violin", () -> new CreditableInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("violin"), player
+        VIOLIN_BOW = register("violin_bow", () -> new Item(new Properties().stacksTo(1))),
+        VIOLIN = register(
+            "violin", () -> new AccessoryInstrumentItem(
+                (player) -> ModPacketHandler.sendToClient(
+                    new ModOpenInstrumentPacket("violin"), player
+                ),
+                VIOLIN_BOW,
+                "Philharmonia"
             ),
-            "Philharmonia"
-        )),
+            DEFAULT_INSTRUMENTS_TABS, VIOLIN_BOW
+        ),
+
         GUITAR = register("guitar", () -> new CreditableInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("guitar"), player
@@ -189,6 +192,26 @@ public class ModItems {
         , tabs);
     }
 
+    private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>[] tabs,
+                                                 RegistryObject<Item> appearsBefore) {
+        final RegistryObject<Item> item = ITEMS.register(name, supplier);
+
+        final LinkedHashMap<RegistryObject<Item>, ResourceKey<CreativeModeTab>[]> temp = new LinkedHashMap<>();
+        final List<RegistryObject<Item>> keys = new ArrayList<>(CREATIVE_TABS_MAP.keySet().stream().toList());
+
+        RegistryObject<Item> removed = null;
+        // Pop every element up to and including the specified element to temp; later re-add
+        while (removed != appearsBefore) {
+            removed = keys.get(keys.size() - 1);
+            temp.put(removed, CREATIVE_TABS_MAP.remove(removed));
+            keys.remove(keys.size() - 1);
+        }
+
+        CREATIVE_TABS_MAP.put(item, tabs);
+        CREATIVE_TABS_MAP.putAll(temp);
+
+        return item;
+    }
     @SafeVarargs
     private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>... tabs) {
         final RegistryObject<Item> item = ITEMS.register(name, supplier);

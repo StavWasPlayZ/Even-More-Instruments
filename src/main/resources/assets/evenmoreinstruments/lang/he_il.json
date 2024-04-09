@@ -41,6 +41,8 @@
     "block.evenmoreinstruments.keyboard": "אורגן",
     "block.evenmoreinstruments.keyboard_stand": "מעמד לאורגן",
 
+    "item.evenmoreinstruments.violin_bow": "קשת כינור",
+
 
     "label.evenmoreinstruments.violin_options": "אפשרויות הכינור",
     "button.evenmoreinstruments.violin.soundType": "אורך צליל הכינור",

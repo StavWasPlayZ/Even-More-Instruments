@@ -16,6 +16,12 @@
     "item.evenmoreinstruments.pipa": "Pipa",
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
 
+    "block.evenmoreinstruments.keyboard": "Keyboard",
+
+
+    "block.evenmoreinstruments.keyboard_stand": "Keyboard Stand",
+    "item.evenmoreinstruments.violin_bow": "Violin Bow",
+
     "item.evenmoreinstruments.instrument.accessory.not_present": "You must hold a %s to use this instrument",
 
 
@@ -37,10 +43,6 @@
     "item.evenmoreinstruments.interesting_record": "Interesting Record",
 
     "item.evenmoreinstruments.record.arranger": "Arranger: %s",
-
-
-    "block.evenmoreinstruments.keyboard": "Keyboard",
-    "block.evenmoreinstruments.keyboard_stand": "Keyboard Stand",
 
 
     "label.evenmoreinstruments.violin_options": "Violin Options",
