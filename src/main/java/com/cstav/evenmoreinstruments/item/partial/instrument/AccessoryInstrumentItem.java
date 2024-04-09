@@ -45,17 +45,17 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         final ItemStack handItem = pPlayer.getItemInHand(pUsedHand);
-        if (pLevel.isClientSide)
-            return InteractionResultHolder.success(handItem);
 
         if (!pPlayer.getItemInHand(CommonUtil.getOffhand(pUsedHand)).is(getAccessoryItem())) {
-            pPlayer.displayClientMessage(
-                Component.translatable(
-                    "item.evenmoreinstruments.instrument.accessory.not_present",
-                    getAccessoryItem().getName(new ItemStack(getAccessoryItem()))
-                ),
-                true
-            );
+            if (!pLevel.isClientSide) {
+                pPlayer.displayClientMessage(
+                    Component.translatable(
+                        "item.evenmoreinstruments.instrument.accessory.not_present",
+                        getAccessoryItem().getName(new ItemStack(getAccessoryItem()))
+                    ),
+                    true
+                );
+            }
 
             return InteractionResultHolder.fail(handItem);
         }
