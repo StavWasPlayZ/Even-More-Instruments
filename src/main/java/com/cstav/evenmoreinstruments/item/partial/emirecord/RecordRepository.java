@@ -1,12 +1,11 @@
 package com.cstav.evenmoreinstruments.item.partial.emirecord;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.util.BiKey;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
-import net.minecraft.client.telemetry.events.WorldUnloadEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -16,7 +15,6 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.level.ChunkEvent;
@@ -27,17 +25,16 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-@EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID)
+@EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class RecordRepository {
     // idk of thread safety is important here, idk how minecraft handles data loading. better be safe than sorry.
     private static final ConcurrentHashMap<ResourceLocation, CompoundTag> RECORDS = new ConcurrentHashMap<>();
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final String DATA_DIR = Main.MODID+"/records";
+    private static final String DATA_DIR = EMIMain.MODID+"/records";
 
     private static final ConcurrentHashMap<BiKey<ResourceLocation, BlockPos>, Consumer<CompoundTag>> reloadSubscribers = new ConcurrentHashMap<>();
 

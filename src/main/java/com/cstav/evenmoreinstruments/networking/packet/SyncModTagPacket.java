@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.genshinstrument.networking.IModPacket;
 
 import net.minecraft.client.Minecraft;
@@ -43,7 +43,7 @@ public class SyncModTagPacket implements IModPacket {
             final BlockEntity be = Minecraft.getInstance().player.level().getBlockEntity(pos);
             
             if (be != null)
-                be.getPersistentData().put(Main.MODID, modTag);
+                be.getPersistentData().put(EMIMain.MODID, modTag);
         });
     }
 }

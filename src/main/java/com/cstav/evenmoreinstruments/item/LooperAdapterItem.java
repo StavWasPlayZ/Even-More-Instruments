@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.item;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
@@ -12,7 +12,6 @@ import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -51,7 +50,7 @@ public class LooperAdapterItem extends Item {
         final BlockPos pos = pContext.getClickedPos();
         final Block block = pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock();
 
-        final CompoundTag adapterTag = CommonUtil.getOrCreateElementTag(Main.modTag(pContext.getItemInHand()), "looperAdapter");
+        final CompoundTag adapterTag = CommonUtil.getOrCreateElementTag(EMIMain.modTag(pContext.getItemInHand()), "looperAdapter");
         final Player player = pContext.getPlayer();
 
         boolean pairSucceed;
@@ -129,9 +128,9 @@ public class LooperAdapterItem extends Item {
 
             // Handle syncing data to client
             if (player instanceof ServerPlayer serverPlayer) {
-                ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(ibe), instrumentBlockPos), serverPlayer);
+                ModPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(ibe), instrumentBlockPos), serverPlayer);
                 if (otherBlockPos != null)
-                    ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(ibe), otherBlockPos), serverPlayer);
+                    ModPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(ibe), otherBlockPos), serverPlayer);
             }
 
         }, player);

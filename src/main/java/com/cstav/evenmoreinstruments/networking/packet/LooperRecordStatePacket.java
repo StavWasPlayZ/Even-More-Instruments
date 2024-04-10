@@ -1,7 +1,6 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
-import com.cstav.evenmoreinstruments.Main;
-import com.cstav.evenmoreinstruments.block.LooperBlock;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
@@ -14,9 +13,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent.Context;
 
@@ -73,7 +70,7 @@ public class LooperRecordStatePacket implements IModPacket {
         }
 
         changeRecordingState(player, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
-        ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(instrumentBlock), instrumentBlockPos), player);
+        ModPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(instrumentBlock), instrumentBlockPos), player);
     }
 
     private void handleItem(final ServerPlayer player) {

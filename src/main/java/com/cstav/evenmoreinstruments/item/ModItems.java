@@ -4,9 +4,8 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
-import com.cstav.evenmoreinstruments.item.partial.instrument.AccessoryInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.InstrumentAccessoryItem;
@@ -33,10 +32,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-@EventBusSubscriber(modid = Main.MODID, bus = Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = EMIMain.MODID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ModItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EMIMain.MODID);
     public static void register(final IEventBus bus) {
         ITEMS.register(bus);
     }
@@ -112,7 +111,7 @@ public class ModItems {
         RECORD_JOHNNY = register("record_johnny", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(Main.MODID, "johnny"),
+                new ResourceLocation(EMIMain.MODID, "johnny"),
                 "Hänschen klein - Franz Wiedemann",
                 null
             ),
@@ -121,7 +120,7 @@ public class ModItems {
         RECORD_SUPER_IDOL = register("record_super_idol", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(Main.MODID, "super_idol"),
+                new ResourceLocation(EMIMain.MODID, "super_idol"),
                 "Super Idol - De Xian Rong",
                 "Saxophy"
             ),
@@ -130,7 +129,7 @@ public class ModItems {
         RECORD_OVEN_KID = register("record_oven_kid", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(Main.MODID, "oven_kid"),
+                new ResourceLocation(EMIMain.MODID, "oven_kid"),
                 "Timmy Trumpet & Savage - Freaks",
                 "StavWasPlayZ"
             ),
@@ -139,7 +138,7 @@ public class ModItems {
         RECORD_SAD_VIOLIN = register("record_sad_violin", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(Main.MODID, "sad_violin"),
+                new ResourceLocation(EMIMain.MODID, "sad_violin"),
                 "Sad Romance - Ji Pyeongkeyon",
                 "StavWasPlayZ"
             ),
@@ -148,7 +147,7 @@ public class ModItems {
         RECORD_RICKROLL = register("record_rickroll", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.EPIC),
-                new ResourceLocation(Main.MODID, "rickroll"),
+                new ResourceLocation(EMIMain.MODID, "rickroll"),
                 null,
                 "StavWasPlayZ",
                 Component.translatable("item.evenmoreinstruments.interesting_record")

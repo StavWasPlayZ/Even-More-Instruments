@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.client;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.client.gui.instrument.pipa.PipaSoundType;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinSoundType;
 
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 
 @OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(bus = Bus.MOD, modid = EMIMain.MODID, value = Dist.CLIENT)
 public class ModClientConfigs {
     public static final ForgeConfigSpec CONFIGS;
 

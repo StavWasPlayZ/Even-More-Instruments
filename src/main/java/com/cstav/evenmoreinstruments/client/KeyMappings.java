@@ -2,7 +2,7 @@ package com.cstav.evenmoreinstruments.client;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.genshinstrument.client.keyMaps.InstrumentKeyMappings;
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -15,10 +15,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(bus = Bus.MOD, modid = EMIMain.MODID, value = Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
 public class KeyMappings {
-    public static final String CATEGORY = Main.MODID+".keymaps";
+    public static final String CATEGORY = EMIMain.MODID+".keymaps";
     
     public static final Lazy<KeyMapping>
         INSTRUMENT_TYPE_MODIFIER = Lazy.of(

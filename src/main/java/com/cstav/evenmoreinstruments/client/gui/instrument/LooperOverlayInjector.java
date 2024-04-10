@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.client.KeyMappings;
 import com.cstav.evenmoreinstruments.mixins.required.ScreenAccessor;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID, value = Dist.CLIENT)
 public class LooperOverlayInjector {
     private static final int REC_BTN_WIDTH = 120;
 

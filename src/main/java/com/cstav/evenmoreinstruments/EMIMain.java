@@ -18,8 +18,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(Main.MODID)
-public class Main
+/**
+ * The main mod class of the "Even More Instruments!" mod
+ */
+@Mod(EMIMain.MODID)
+public class EMIMain
 {
     public static final String MODID = "evenmoreinstruments";
     public static CompoundTag modTag(final ItemStack item) {
@@ -29,11 +32,11 @@ public class Main
         return CommonUtil.getOrCreateElementTag(be.getPersistentData(), MODID);
     }
     
-    public Main()
+    public EMIMain()
     {
         final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModPacketHandler.registerPackets();
-        bus.addListener(Main::initClient);
+        bus.addListener(EMIMain::initClient);
 
         ModSounds.register(bus);
         ModGameRules.load();

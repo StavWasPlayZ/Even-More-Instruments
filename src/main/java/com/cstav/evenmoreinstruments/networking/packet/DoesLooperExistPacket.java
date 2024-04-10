@@ -2,7 +2,7 @@ package com.cstav.evenmoreinstruments.networking.packet;
 
 import java.util.Optional;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
@@ -69,7 +69,7 @@ public class DoesLooperExistPacket implements IModPacket {
             // Manually update the tag removal for the client
             if (looperBE == null)
                 ModPacketHandler.sendToClient(
-                    new SyncModTagPacket(Main.modTag(instrumentBlockEntity), instrumentBlockPos), player);
+                    new SyncModTagPacket(EMIMain.modTag(instrumentBlockEntity), instrumentBlockPos), player);
         }
 
         if (looperBE == null)

@@ -2,7 +2,7 @@ package com.cstav.evenmoreinstruments.util;
 
 import javax.annotation.Nullable;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
@@ -25,28 +25,28 @@ public class LooperUtil {
 
     // Handle instrument's looper tag
     public static boolean hasLooperTag(final ItemStack instrument) {
-        return hasLooperTag(Main.modTag(instrument));
+        return hasLooperTag(EMIMain.modTag(instrument));
     }
     public static boolean hasLooperTag(final BlockEntity instrument) {
-        return hasLooperTag(Main.modTag(instrument));
+        return hasLooperTag(EMIMain.modTag(instrument));
     }
     private static boolean hasLooperTag(final CompoundTag modTag) {
         return modTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND) && !modTag.getCompound(LOOPER_TAG).isEmpty();
     }
 
     public static void remLooperTag(final ItemStack instrument) {
-        Main.modTag(instrument).remove(LOOPER_TAG);
+        EMIMain.modTag(instrument).remove(LOOPER_TAG);
     }
     public static void remLooperTag(final BlockEntity instrument) {
-        Main.modTag(instrument).remove(LOOPER_TAG);
+        EMIMain.modTag(instrument).remove(LOOPER_TAG);
     }
 
     public static void createLooperTag(final ItemStack instrument, final BlockPos looperPos) {
-        Main.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
+        EMIMain.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
         constructLooperTag(looperTag(instrument), looperPos);
     }
     public static void createLooperTag(final BlockEntity instrument, final BlockPos looperPos) {
-        Main.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
+        EMIMain.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
         constructLooperTag(looperTag(instrument), looperPos);
     }
     private static void constructLooperTag(final CompoundTag looperTag, final BlockPos looperPos) {
@@ -54,10 +54,10 @@ public class LooperUtil {
     }
 
     public static CompoundTag looperTag(final ItemStack instrument) {
-        return looperTag(Main.modTag(instrument));
+        return looperTag(EMIMain.modTag(instrument));
     }
     public static CompoundTag looperTag(final BlockEntity instrument) {
-        return looperTag(Main.modTag(instrument));
+        return looperTag(EMIMain.modTag(instrument));
     }
     public static CompoundTag looperTag(final CompoundTag parentTag) {
         return parentTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND)

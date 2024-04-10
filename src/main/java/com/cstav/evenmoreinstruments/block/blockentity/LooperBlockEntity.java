@@ -8,7 +8,6 @@ import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.RecordRepository;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
-import net.minecraft.client.telemetry.events.WorldUnloadEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -18,7 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.ContainerSingleItem;
 import org.slf4j.Logger;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
@@ -46,7 +45,7 @@ import static com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem
 import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.NOTES_TAG;
 import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.WRITABLE_TAG;
 
-@EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID)
+@EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class LooperBlockEntity extends BlockEntity implements ContainerSingleItem {
     private static final Logger LOGGER = LogUtils.getLogger();
 

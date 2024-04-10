@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.capability;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID)
+@EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class ModCapabilities {
 
     @SubscribeEvent
@@ -19,7 +19,7 @@ public class ModCapabilities {
         if (event.getObject() instanceof Player) {
 
             if (!event.getObject().getCapability(RecordingCapabilityProvider.CAPABILITY).isPresent())
-                event.addCapability(new ResourceLocation(Main.MODID, "emi_caps"), new RecordingCapabilityProvider());
+                event.addCapability(new ResourceLocation(EMIMain.MODID, "emi_caps"), new RecordingCapabilityProvider());
 
         }
     }
