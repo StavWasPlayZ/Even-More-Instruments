@@ -44,7 +44,7 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         final ItemStack handItem = pPlayer.getItemInHand(pUsedHand);
 
-        if (!pPlayer.isCreative() && !pPlayer.getItemInHand(CommonUtil.getOffhand(pUsedHand)).is(getAccessoryItem())) {
+        if (!pPlayer.getItemInHand(CommonUtil.getOffhand(pUsedHand)).is(getAccessoryItem())) {
             if (!pLevel.isClientSide) {
                 pPlayer.displayClientMessage(
                     Component.translatable(
