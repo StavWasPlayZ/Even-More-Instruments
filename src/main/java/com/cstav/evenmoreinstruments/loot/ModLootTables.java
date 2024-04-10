@@ -2,10 +2,8 @@ package com.cstav.evenmoreinstruments.loot;
 
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.item.ModItems;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
