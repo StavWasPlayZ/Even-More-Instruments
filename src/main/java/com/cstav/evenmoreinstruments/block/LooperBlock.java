@@ -5,7 +5,6 @@ import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -105,8 +104,8 @@ public class LooperBlock extends Block implements EntityBlock {
 
         return performChainedInteractions(
             List.of(
-                this::cycleLooping,
                 this::insertRecord,
+                this::cycleLooping,
                 this::validateRecordPresence,
                 //   /\ Do not perform all following interactions if there is no record
                 this::pairInstrumentItem,
