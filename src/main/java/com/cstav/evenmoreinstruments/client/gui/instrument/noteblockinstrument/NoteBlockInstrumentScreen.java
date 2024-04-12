@@ -8,7 +8,6 @@ import com.cstav.genshinstrument.client.gui.screen.instrument.partial.Instrument
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.NoteGridButton;
 import com.cstav.genshinstrument.sound.NoteSound;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
@@ -80,8 +79,10 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     }
 
 
-    private static final InstrumentThemeLoader THEME_LOADER =
-        InstrumentThemeLoader.fromOther(FloralZitherScreen.INSTRUMENT_ID, new ResourceLocation(EMIMain.MODID, "note_block_instrument"));
+    private static final InstrumentThemeLoader THEME_LOADER = InstrumentThemeLoader.fromOther(
+        FloralZitherScreen.INSTRUMENT_ID,
+        new ResourceLocation(EMIMain.MODID, "note_block_instrument")
+    );
         
     @Override
     public InstrumentThemeLoader getThemeLoader() {

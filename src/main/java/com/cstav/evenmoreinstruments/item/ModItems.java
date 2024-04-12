@@ -1,20 +1,16 @@
 package com.cstav.evenmoreinstruments.item;
 
-import java.util.*;
-import java.util.function.Supplier;
-
-import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.EMIMain;
+import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
-import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.InstrumentAccessoryItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.WindInstrumentItem;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +27,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.*;
+import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = EMIMain.MODID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ModItems {
@@ -72,6 +71,12 @@ public class ModItems {
                 new ModOpenInstrumentPacket("pipa"), player
             ),
             "DSK Asian DreamZ"
+        )),
+        SHAMISEN = register("shamisen", () -> new CreditableInstrumentItem(
+            (player) -> ModPacketHandler.sendToClient(
+                new ModOpenInstrumentPacket("shamisen"), player
+            ),
+            "Roland SC-88"
         )),
         TROMBONE = register("trombone", () -> new WindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
