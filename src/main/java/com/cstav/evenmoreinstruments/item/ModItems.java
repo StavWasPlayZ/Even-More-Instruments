@@ -5,6 +5,7 @@ import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.AccessoryInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.InstrumentAccessoryItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.WindInstrumentItem;
@@ -55,7 +56,7 @@ public class ModItems {
     public static final RegistryObject<Item>
         VIOLIN_BOW = register("violin_bow",
             () -> new InstrumentAccessoryItem(
-                new Properties().stacksTo(1).durability(2048)
+                new Properties().stacksTo(1).durability(InstrumentAccessoryItem.MAX_DURABILITY)
             )
         ),
         VIOLIN = register("violin", ViolinItem::new, DEFAULT_INSTRUMENTS_TABS, VIOLIN_BOW),
@@ -72,12 +73,24 @@ public class ModItems {
             ),
             "DSK Asian DreamZ"
         )),
-        SHAMISEN = register("shamisen", () -> new CreditableInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("shamisen"), player
+
+        BACHI = register("bachi",
+            () -> new InstrumentAccessoryItem(
+                new Properties().stacksTo(1).durability(InstrumentAccessoryItem.MAX_DURABILITY)
+            )
+        ),
+        SHAMISEN = register("shamisen",
+            () -> new AccessoryInstrumentItem(
+                (player) -> ModPacketHandler.sendToClient(
+                    new ModOpenInstrumentPacket("shamisen"), player
+                ),
+                BACHI,
+                "Roland SC-88"
             ),
-            "Roland SC-88"
-        )),
+            DEFAULT_INSTRUMENTS_TABS,
+            BACHI
+        ),
+
         TROMBONE = register("trombone", () -> new WindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("trombone"), player

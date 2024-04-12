@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
  * An item acting for an {@link AccessoryInstrumentItem}
  */
 public class InstrumentAccessoryItem extends Item {
+    public static final int MAX_DURABILITY = 2048;
+
     public InstrumentAccessoryItem(Properties pProperties) {
         super(pProperties);
     }
