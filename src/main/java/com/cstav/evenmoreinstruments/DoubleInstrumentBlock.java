@@ -1,7 +1,6 @@
 package com.cstav.evenmoreinstruments;
 
 import com.cstav.evenmoreinstruments.block.IDoubleBlock;
-import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.block.blockentity.ModInstrumentBlockEntity;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
@@ -122,7 +121,7 @@ public abstract class DoubleInstrumentBlock extends AbstractInstrumentBlock impl
             : state.getValue(FACING).getClockWise()
         );
 
-        return (!level.getBlockState(sideBlock).is(ModBlocks.KEYBOARD.get())) ? null : sideBlock;
+        return (!level.getBlockState(sideBlock).is(state.getBlock())) ? null : sideBlock;
     }
 
 }

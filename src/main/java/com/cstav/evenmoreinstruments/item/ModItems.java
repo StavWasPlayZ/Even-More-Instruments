@@ -5,10 +5,7 @@ import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.instrument.AccessoryInstrumentItem;
-import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
-import com.cstav.evenmoreinstruments.item.partial.instrument.InstrumentAccessoryItem;
-import com.cstav.evenmoreinstruments.item.partial.instrument.WindInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.*;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
@@ -89,6 +86,14 @@ public class ModItems {
             ),
             DEFAULT_INSTRUMENTS_TABS,
             BACHI
+        ),
+
+        KOTO = register("koto", () ->
+                new CreditableBlockInstrumentItem(
+                    ModBlocks.KOTO.get(), new Properties(),
+                    "DSK Asian DreamZ"
+                ),
+            DEFAULT_INSTRUMENT_BLOCK_TABS
         ),
 
         TROMBONE = register("trombone", () -> new WindInstrumentItem(
