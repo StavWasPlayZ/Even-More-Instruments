@@ -15,7 +15,6 @@
     "item.evenmoreinstruments.saxophone": "סקסופון",
     "item.evenmoreinstruments.pipa": "לאוטה יפנית",
     "item.evenmoreinstruments.shamisen": "שמיסן",
-    "item.evenmoreinstruments.koto": "קוטו",
     "item.evenmoreinstruments.note_block_instrument": "בלוק הצליל של %s",
 
     "item.evenmoreinstruments.instrument.accessory.not_present": "עליך להחזיק ב%s על מנת לנגן בכלי הנגינה",
@@ -42,6 +41,7 @@
 
     "block.evenmoreinstruments.keyboard": "אורגן",
     "block.evenmoreinstruments.keyboard_stand": "מעמד לאורגן",
+    "block.evenmoreinstruments.koto": "קוטו",
 
     "item.evenmoreinstruments.violin_bow": "קשת כינור",
     "item.evenmoreinstruments.bachi": "באצ'י",
