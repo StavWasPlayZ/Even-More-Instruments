@@ -938,5 +938,90 @@
     "shamisen_note_20_stereo": {
         "category": "record",
         "sounds": ["evenmoreinstruments:shamisen/20.stereo"]
+    },
+
+    "koto_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/0"]
+    },
+    "koto_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/1"]
+    },
+    "koto_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/2"]
+    },
+    "koto_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/3"]
+    },
+    "koto_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/4"]
+    },
+    "koto_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/5"]
+    },
+    "koto_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/6"]
+    },
+    "koto_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/7"]
+    },
+    "koto_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/8"]
+    },
+    "koto_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/9"]
+    },
+    "koto_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/10"]
+    },
+    "koto_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/11"]
+    },
+    "koto_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/12"]
+    },
+    "koto_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/13"]
+    },
+    "koto_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/14"]
+    },
+    "koto_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/15"]
+    },
+    "koto_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/16"]
+    },
+    "koto_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/17"]
+    },
+    "koto_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/18"]
+    },
+    "koto_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/19"]
+    },
+    "koto_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/20"]
     }
 }

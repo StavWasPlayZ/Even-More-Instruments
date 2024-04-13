@@ -36,6 +36,7 @@ public class ModSounds {
 
         GUITAR = nsr(loc("guitar")).registerGrid(),
         SHAMISEN = nsr(loc("shamisen")).stereo().registerGrid(),
+        KOTO = nsr(loc("koto")).registerGrid(),
 
         PIPA_REGULAR = nsr(loc("pipa_regular")).registerGrid(),
         PIPA_TERMOLO = nsr(loc("pipa_tremolo")).registerGrid()

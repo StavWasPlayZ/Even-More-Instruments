@@ -5,6 +5,7 @@ import com.cstav.evenmoreinstruments.client.gui.instrument.keyboard.KeyboardScre
 import com.cstav.evenmoreinstruments.client.gui.instrument.pipa.PipaScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.saxophone.SaxophoneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.ShamisenScreen;
+import com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.shamisen.KotoScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.trombone.TromboneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
 import com.cstav.genshinstrument.networking.packet.instrument.OpenInstrumentPacket;
@@ -22,6 +23,7 @@ public class ModOpenInstrumentPacket extends OpenInstrumentPacket {
         "guitar", () -> GuitarScreen::new,
         "pipa", () -> PipaScreen::new,
         "shamisen", () -> ShamisenScreen::new,
+        "koto", () -> KotoScreen::new,
         "saxophone", () -> SaxophoneScreen::new
     );
 
