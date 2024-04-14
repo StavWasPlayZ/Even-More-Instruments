@@ -70,6 +70,16 @@
     "button.evenmoreinstruments.record": "הקלט",
     "button.evenmoreinstruments.stop": "עצור",
 
+
     "gamerule.evenmoreinstruments_looperMaxNotes": "מגבלת התווים ללופר",
-    "gamerule.evenmoreinstruments_looperMaxNotes.description": "מספר התווים שלופר יכול להכיל. כל ערך מתחת ל- 0 יגרום ללופר להיות חסר כל מגבלות."
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "מספר התווים שלופר יכול להכיל. כל ערך מתחת ל- 0 יגרום ללופר להיות חסר כל מגבלות.",
+
+    "evenmoreinstruments.advancements.main.record_rickroll_in.title": "תקליט מעניין",
+    "evenmoreinstruments.advancements.main.record_rickroll_in.description": "נגד את התקליט החשוד ביותר",
+
+    "evenmoreinstruments.advancements.main.record_writable_in.title": "מלחין",
+    "evenmoreinstruments.advancements.main.record_writable_in.description": "הכנס או צרוב מוזיקה לתקליט",
+
+    "evenmoreinstruments.advancements.main.records_all.title": "חולני",
+    "evenmoreinstruments.advancements.main.records_all.description": "נגן את כל התקליטים הצרובים"
 }

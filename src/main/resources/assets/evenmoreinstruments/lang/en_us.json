@@ -75,6 +75,16 @@
     "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable.",
 
 
+
     "evenmoreinstruments.advancements.main.japanese.title": "True Weeb",
-    "evenmoreinstruments.advancements.main.japanese.description": "Play on all Japanese instruments"
+    "evenmoreinstruments.advancements.main.japanese.description": "Play on all Japanese instruments",
+
+    "evenmoreinstruments.advancements.main.record_rickroll_in.title": "Interesting Record",
+    "evenmoreinstruments.advancements.main.record_rickroll_in.description": "Play the utterly suspicious record",
+
+    "evenmoreinstruments.advancements.main.record_writable_in.title": "Composer",
+    "evenmoreinstruments.advancements.main.record_writable_in.description": "Insert or burn music into a record",
+
+    "evenmoreinstruments.advancements.main.records_all.title": "Holan'i",
+    "evenmoreinstruments.advancements.main.records_all.description": "Play all burned records"
 }
