@@ -3,6 +3,7 @@ package com.cstav.evenmoreinstruments;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.client.ModArmPose;
+import com.cstav.evenmoreinstruments.criteria.ModCriteria;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.crafting.ModRecipeSerializers;
@@ -39,7 +40,9 @@ public class EMIMain
         bus.addListener(EMIMain::initClient);
 
         ModSounds.register(bus);
+
         ModGameRules.load();
+        ModCriteria.load();
 
         EMIModCreativeModeTabs.register(bus);
 

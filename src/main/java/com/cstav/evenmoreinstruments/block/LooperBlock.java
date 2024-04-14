@@ -2,6 +2,7 @@ package com.cstav.evenmoreinstruments.block;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
+import com.cstav.evenmoreinstruments.criteria.ModCriteria;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
@@ -10,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -143,6 +145,9 @@ public class LooperBlock extends Block implements EntityBlock {
         pLevel.setBlockAndUpdate(pPos, pState.cycle(LOOPING));
         return InteractionResult.SUCCESS;
     }
+    /**
+     * Assuming server-only call.
+     */
     protected InteractionResult insertRecord(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
                                              LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
         if (!(heldStack.getItem() instanceof EMIRecordItem))
@@ -154,6 +159,8 @@ public class LooperBlock extends Block implements EntityBlock {
         }
 
         lbe.setItem(0, heldStack);
+        // Trigger record injected criterion
+        ModCriteria.RECORD_INJECTED_TRIGGER.trigger((ServerPlayer)pPlayer, heldStack);
 
         if (!pPlayer.isCreative())
             heldStack.shrink(1);
