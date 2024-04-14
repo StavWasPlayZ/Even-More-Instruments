@@ -89,10 +89,10 @@ public class ModItems {
         ),
 
         KOTO = register("koto", () ->
-                new CreditableBlockInstrumentItem(
-                    ModBlocks.KOTO.get(), new Properties(),
-                    "DSK Asian DreamZ"
-                ),
+            new CreditableBlockInstrumentItem(
+                ModBlocks.KOTO.get(), new Properties().stacksTo(1),
+                "DSK Asian DreamZ"
+            ),
             DEFAULT_INSTRUMENT_BLOCK_TABS
         ),
 
@@ -110,7 +110,7 @@ public class ModItems {
         )),
         KEYBOARD = register("keyboard", () ->
             new KeyboardBlockItem(
-                ModBlocks.KEYBOARD.get(), new Properties(),
+                ModBlocks.KEYBOARD.get(), new Properties().stacksTo(1),
                 null
             ),
             DEFAULT_INSTRUMENT_BLOCK_TABS
