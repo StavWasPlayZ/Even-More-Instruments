@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+
+    "key": {
+        "#": {
+            "item": "minecraft:stripped_birch_log"
+        },
+        "X": {
+            "item": "minecraft:string"
+        },
+        "Y": {
+            "item": "minecraft:stick"
+        }
+    },
+
+    "pattern": [
+        "  Y",
+        "#X ",
+        "## "
+    ],
+
+    "result": {
+        "item": "evenmoreinstruments:shamisen"
+    }
+}
