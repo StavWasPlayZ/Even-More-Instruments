@@ -1,5 +1,5 @@
 {
-    "parent": "genshinstrument:genshin_instruments/root",
+    "parent": "genshinstrument:genshin_instruments/master",
 
     "display": {
         "icon": {
