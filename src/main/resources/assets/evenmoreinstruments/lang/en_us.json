@@ -72,5 +72,9 @@
     "button.evenmoreinstruments.stop": "Stop",
 
     "gamerule.evenmoreinstruments_looperMaxNotes": "Looper Max Notes",
-    "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable."
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable.",
+
+
+    "evenmoreinstruments.advancements.main.japanese.title": "True Weeb",
+    "evenmoreinstruments.advancements.main.japanese.description": "Play on all Japanese instruments"
 }
