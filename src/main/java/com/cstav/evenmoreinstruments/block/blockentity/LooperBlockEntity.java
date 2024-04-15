@@ -40,8 +40,6 @@ import org.slf4j.Logger;
 import java.util.UUID;
 
 import static com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem.*;
-import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.NOTES_TAG;
-import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.WRITABLE_TAG;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class LooperBlockEntity extends BlockEntity implements ContainerSingleItem {
@@ -49,14 +47,12 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
     public static final String
         BURNED_MEDIA_TAG = "BurnedMedia",
-        CHANNEL_TAG = "Channel",
-    
+
         RECORD_TAG = "Record",
         RECORDING_TAG = "Recording",
     
         TICKS_TAG = "Ticks",
-        REPEAT_TICK_TAG = "RepeatTick",
-    
+
         LOCKED_TAG = "Locked",
         LOCKED_BY_TAG = "LockedBy"
     ;
