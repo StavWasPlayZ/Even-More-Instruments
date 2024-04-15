@@ -1,26 +1,15 @@
 package com.cstav.evenmoreinstruments.block.blockentity;
 
-import java.util.UUID;
-
+import com.cstav.evenmoreinstruments.EMIMain;
+import com.cstav.evenmoreinstruments.block.LooperBlock;
+import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
+import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.RecordRepository;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.ticks.ContainerSingleItem;
-import org.slf4j.Logger;
-
-import com.cstav.evenmoreinstruments.EMIMain;
-import com.cstav.evenmoreinstruments.block.LooperBlock;
-import com.cstav.evenmoreinstruments.block.ModBlocks;
-import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
@@ -28,18 +17,27 @@ import com.cstav.genshinstrument.sound.NoteSound;
 import com.cstav.genshinstrument.sound.NoteSoundRegistrar;
 import com.cstav.genshinstrument.util.ServerUtil;
 import com.mojang.logging.LogUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.ticks.ContainerSingleItem;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import org.slf4j.Logger;
+
+import java.util.UUID;
 
 import static com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem.*;
 import static com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem.NOTES_TAG;
@@ -57,7 +55,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         RECORDING_TAG = "Recording",
     
         TICKS_TAG = "Ticks",
-        REPEAT_TICK_TAG = "RepeatTicks",
+        REPEAT_TICK_TAG = "RepeatTick",
     
         LOCKED_TAG = "Locked",
         LOCKED_BY_TAG = "LockedBy"
