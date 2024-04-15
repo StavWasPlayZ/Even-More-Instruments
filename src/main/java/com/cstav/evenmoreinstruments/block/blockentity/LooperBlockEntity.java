@@ -84,19 +84,11 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
             channel = recordData.getCompound(CHANNEL_TAG);
         }
         else if (recordData.contains(BURNED_MEDIA_TAG, Tag.TAG_STRING)) {
-            final ResourceLocation recLoc = getBurnedMediaLoc();
-            RecordRepository.consumeRecord(getBlockPos(), recLoc, this::setChannel);
+            setChannel(RecordRepository.getRecord(getBurnedMediaLoc()));
         }
     }
     protected ResourceLocation getBurnedMediaLoc() {
         return new ResourceLocation(recordIn.getTag().getString(BURNED_MEDIA_TAG));
-    }
-
-    private void unloadRecord() {
-        final ResourceLocation burnedMedia = getBurnedMediaLoc();
-        if (burnedMedia != null) {
-            RecordRepository.removeSub(getBlockPos(), burnedMedia);
-        }
     }
 
     private void updateRecordNBT() {
@@ -163,8 +155,6 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     public ItemStack removeItem(int pSlot, int pAmount) {
         if (!isRecordIn() || pAmount <= 0)
             return ItemStack.EMPTY;
-
-        unloadRecord();
 
         final ItemStack prev = recordIn;
         recordIn = ItemStack.EMPTY;
