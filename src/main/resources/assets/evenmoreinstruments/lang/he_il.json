@@ -70,9 +70,12 @@
     "button.evenmoreinstruments.record": "הקלט",
     "button.evenmoreinstruments.stop": "עצור",
 
-
     "gamerule.evenmoreinstruments_looperMaxNotes": "מגבלת התווים ללופר",
     "gamerule.evenmoreinstruments_looperMaxNotes.description": "מספר התווים שלופר יכול להכיל. כל ערך מתחת ל- 0 יגרום ללופר להיות חסר כל מגבלות.",
+
+
+    "evenmoreinstruments.advancements.main.japanese.title": "וויב אמיתי",
+    "evenmoreinstruments.advancements.main.japanese.description": "נגן בכל כלי הנגינה האסייתיים",
 
     "evenmoreinstruments.advancements.main.record_rickroll_in.title": "תקליט מעניין",
     "evenmoreinstruments.advancements.main.record_rickroll_in.description": "נגד את התקליט החשוד ביותר",
