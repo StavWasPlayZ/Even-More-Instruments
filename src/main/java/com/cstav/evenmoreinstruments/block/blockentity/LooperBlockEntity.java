@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 
 import java.util.UUID;
 
+import static com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem.BURNED_MEDIA_TAG;
 import static com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem.*;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
@@ -46,8 +47,6 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final String
-        BURNED_MEDIA_TAG = "BurnedMedia",
-
         RECORD_TAG = "Record",
         RECORDING_TAG = "Recording",
     

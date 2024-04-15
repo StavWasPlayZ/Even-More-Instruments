@@ -11,9 +11,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity.BURNED_MEDIA_TAG;
-
 public class BurnedRecordItem extends EMIRecordItem {
+    public static final String BURNED_MEDIA_TAG = "BurnedMedia";
+
     private final ResourceLocation burnedMedia;
     private final Component title;
     private final @Nullable String info, arranger;
