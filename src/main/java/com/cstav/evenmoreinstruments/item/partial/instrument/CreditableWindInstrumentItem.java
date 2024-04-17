@@ -1,20 +1,25 @@
 package com.cstav.evenmoreinstruments.item.partial.instrument;
 
+import com.cstav.genshinstrument.item.WindInstrumentItem;
+import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CreditableBlockInstrumentItem extends BlockItem implements CreditableInstrument {
+public class CreditableWindInstrumentItem extends WindInstrumentItem implements CreditableInstrument {
+
     private final String credit;
 
-    public CreditableBlockInstrumentItem(Block pBlock, Properties pProperties, String credit) {
-        super(pBlock, pProperties);
+    public CreditableWindInstrumentItem(OpenInstrumentPacketSender onOpenRequest, String credit) {
+        super(onOpenRequest);
+        this.credit = credit;
+    }
+    public CreditableWindInstrumentItem(OpenInstrumentPacketSender onOpenRequest, Properties properties, String credit) {
+        super(onOpenRequest, properties);
         this.credit = credit;
     }
 
@@ -28,4 +33,5 @@ public class CreditableBlockInstrumentItem extends BlockItem implements Creditab
         creditHoverText(pTooltipComponents);
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
+
 }

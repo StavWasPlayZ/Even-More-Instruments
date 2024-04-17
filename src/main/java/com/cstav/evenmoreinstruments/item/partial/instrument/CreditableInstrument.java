@@ -4,6 +4,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
+/**
+ * An instrument item that derives sounds from a 3rd-party.
+ */
 public interface CreditableInstrument {
     @Nullable String getCredit();
 
@@ -12,5 +17,10 @@ public interface CreditableInstrument {
     }
     default boolean hasCredit() {
         return getCredit() != null;
+    }
+
+    default void creditHoverText(final List<Component> pTooltipComponents) {
+        if (hasCredit())
+            pTooltipComponents.add(getCreditAsComponent());
     }
 }

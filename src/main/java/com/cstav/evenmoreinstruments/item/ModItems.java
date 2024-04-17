@@ -96,13 +96,13 @@ public class ModItems {
             DEFAULT_INSTRUMENT_BLOCK_TABS
         ),
 
-        TROMBONE = register("trombone", () -> new WindInstrumentItem(
+        TROMBONE = register("trombone", () -> new CreditableWindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("trombone"), player
             ),
             "Philharmonia"
         )),
-        SAXOPHONE = register("saxophone", () -> new WindInstrumentItem(
+        SAXOPHONE = register("saxophone", () -> new CreditableWindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("saxophone"), player
             ),

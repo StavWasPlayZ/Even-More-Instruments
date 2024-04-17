@@ -10,9 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-/**
- * An instrument item that derives sounds from a 3rd-party.
- */
 public class CreditableInstrumentItem extends InstrumentItem implements CreditableInstrument {
     private final String credit;
     public CreditableInstrumentItem(OpenInstrumentPacketSender onOpenRequest, String credit) {
@@ -31,8 +28,7 @@ public class CreditableInstrumentItem extends InstrumentItem implements Creditab
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        if (hasCredit())
-            pTooltipComponents.add(getCreditAsComponent());
+        creditHoverText(pTooltipComponents);
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }
