@@ -3,9 +3,9 @@ package com.cstav.evenmoreinstruments.block;
 import com.cstav.evenmoreinstruments.DoubleInstrumentBlock;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
-import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,8 +27,8 @@ public class KotoBlock extends DoubleInstrumentBlock {
     }
 
     @Override
-    protected OpenInstrumentPacketSender instrumentPacketSender() {
-        return (player) -> ModPacketHandler.sendToClient(new ModOpenInstrumentPacket("koto"), player);
+    protected void onInstrumentOpen(ServerPlayer player) {
+        ModPacketHandler.sendToClient(new ModOpenInstrumentPacket("koto"), player);
     }
 
 

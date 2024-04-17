@@ -414,7 +414,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
      */
     @SubscribeEvent
     public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
-        if (event.isClientSide || !LooperUtil.isRecording(event.player))
+        if (event.level.isClientSide || !LooperUtil.isRecording(event.player))
             return;
 
         final Level level = event.player.level();

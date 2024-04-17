@@ -2,7 +2,6 @@ package com.cstav.evenmoreinstruments.item.partial.instrument;
 
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
-import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
 import com.cstav.genshinstrument.util.ServerUtil;
@@ -83,18 +82,17 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
     // Call AccessoryInstrumentItem#onAccessoryUsed
     @SubscribeEvent
     public static void onInstrumentPlayedEvent(final InstrumentPlayedEvent.ByPlayer event) {
-        if (event.isClientSide)
+        if (event.level.isClientSide)
             return;
 
         if (!event.isItemInstrument())
             return;
 
-        final Item instruemntItem = event.itemInstrument.get().getItem();
+        final Item instruemntItem = event.player.getItemInHand(event.hand.get()).getItem();
         if (!(instruemntItem instanceof AccessoryInstrumentItem aiItem))
             return;
 
-        //TODO replace with event.usedHand
-        final ItemStack offhandStack = event.player.getItemInHand(CommonUtil.getOffhand(InstrumentOpenProvider.getHand(event.player)));
+        final ItemStack offhandStack = event.player.getItemInHand(CommonUtil.getOffhand(event.hand.get()));
         if (!(offhandStack.getItem() instanceof InstrumentAccessoryItem))
             return;
 
