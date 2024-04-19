@@ -43,7 +43,7 @@ public class ModLootTables {
 
     @SubscribeEvent
     public static void onLootTablesLoad(final LootTableLoadEvent event) {
-        final ResourceLocation id = event.getTable().getLootTableId();
+        final ResourceLocation id = event.getName();
         if (!TO_INJECT.containsKey(id))
             return;
 

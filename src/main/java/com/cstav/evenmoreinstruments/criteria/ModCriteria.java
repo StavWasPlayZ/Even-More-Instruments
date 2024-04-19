@@ -1,10 +1,16 @@
 package com.cstav.evenmoreinstruments.criteria;
 
-import static net.minecraft.advancements.CriteriaTriggers.register;
+import com.cstav.genshinstrument.mixins.required.CriterionRegisterInvoker;
+import net.minecraft.advancements.CriterionTrigger;
 
 public class ModCriteria {
     public static void load() {}
 
-    public static final RecordInjectedTrigger RECORD_INJECTED_TRIGGER = register(new RecordInjectedTrigger());
+    // It doesn't account for namespaces, so will use evenmoreinstruments_ prefix instead
+    public static final RecordInjectedTrigger RECORD_INJECTED_TRIGGER = register("evenmoreinstruments_record_injected", new RecordInjectedTrigger());
 
+
+    private static <T extends CriterionTrigger<?>> T register(String id, T criterion) {
+        return CriterionRegisterInvoker.callRegister(id, criterion);
+    }
 }

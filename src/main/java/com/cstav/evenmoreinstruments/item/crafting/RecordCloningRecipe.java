@@ -4,7 +4,6 @@ import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -15,8 +14,8 @@ import net.minecraft.world.level.Level;
 import java.util.Optional;
 
 public class RecordCloningRecipe extends CustomRecipe {
-    public RecordCloningRecipe(ResourceLocation pId, CraftingBookCategory pCategory) {
-        super(pId, pCategory);
+    public RecordCloningRecipe(CraftingBookCategory pCategory) {
+        super(pCategory);
     }
 
     /**
