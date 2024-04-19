@@ -1,0 +1,26 @@
+{
+    "variants": {
+
+        "part=left,facing=north": {
+            "model": "evenmoreinstruments:block/koto_left",
+            "y": 0
+        },
+        "part=left,facing=east": {
+            "model": "evenmoreinstruments:block/koto_left",
+            "y": 90
+        },
+        "part=left,facing=south": {
+            "model": "evenmoreinstruments:block/koto_left",
+            "y": 180
+        },
+        "part=left,facing=west": {
+            "model": "evenmoreinstruments:block/koto_left",
+            "y": 270
+        },
+
+        "part=right": {
+            "model": "evenmoreinstruments:block/koto_right"
+        }
+
+    }
+}

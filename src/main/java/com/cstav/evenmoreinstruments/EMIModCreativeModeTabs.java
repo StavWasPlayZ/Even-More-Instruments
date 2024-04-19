@@ -13,19 +13,17 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class EMIModCreativeModeTabs {
     
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Main.MODID);
+    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, EMIMain.MODID);
     public static void register(final IEventBus bus) {
         TABS.register(bus);
     }
 
     public static final RegistryObject<CreativeModeTab>
-        INSTRUMENT_ACCESSORY_TAB = TABS.register("instrument_accessories_tab",
+        MUSIC_PRODUCTION_TAB = TABS.register("music_production_tab",
             () -> CreativeModeTab.builder()
-
-                .title(Component.translatable("evenmoreinstruments.itemGroup.instrument_accessories_tab"))
-                .icon(() -> new ItemStack(ModItems.KEYBOARD_STAND.get()))
+                .title(Component.translatable("itemGroup.evenmoreinstruments.music_production_tab"))
+                .icon(() -> new ItemStack(ModItems.LOOPER.get()))
                 .withTabsBefore(ModCreativeModeTabs.INSTRUMENTS_TAB.getKey())
-
             .build()
         )
     ;

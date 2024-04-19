@@ -1,0 +1,14 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "up": "#record",
+        "north": "#playing",
+        "south": "#looping",
+
+        "east": "minecraft:block/note_block",
+        "west": "minecraft:block/note_block",
+        "down": "minecraft:block/note_block",
+
+        "particle": "minecraft:block/note_block"
+    }
+}

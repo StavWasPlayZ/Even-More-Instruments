@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+
+    "key": {
+        "L": {
+            "item": "minecraft:spruce_log"
+        },
+        "W": {
+            "item": "minecraft:stripped_spruce_wood"
+        },
+        "S": {
+            "item": "minecraft:string"
+        }
+    },
+
+    "pattern": [
+        "SSS",
+        "WWW",
+        "L L"
+    ],
+
+    "result": {
+        "item": "evenmoreinstruments:koto"
+    }
+}

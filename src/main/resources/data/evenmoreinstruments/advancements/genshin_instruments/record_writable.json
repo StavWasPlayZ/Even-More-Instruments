@@ -1,0 +1,33 @@
+{
+    "parent": "genshinstrument:genshin_instruments/root",
+
+    "display": {
+        "icon": {
+            "item": "evenmoreinstruments:record_writable"
+        },
+        "hidden": false,
+
+        "title": {
+            "translate": "evenmoreinstruments.advancements.main.record_writable_in.title"
+        },
+        "description": {
+            "translate": "evenmoreinstruments.advancements.main.record_writable_in.description"
+        }
+    },
+
+    "criteria": {
+        "record_injected": {
+            "trigger": "evenmoreinstruments_record_injected",
+
+            "conditions": {
+                "record": {
+                    "items": ["evenmoreinstruments:record_writable"]
+                }
+            }
+        }
+    },
+
+    "requirements": [
+        ["record_injected"]
+    ]
+}

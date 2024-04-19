@@ -1,0 +1,55 @@
+{
+    "parent": "genshinstrument:genshin_instruments/master",
+
+    "display": {
+        "icon": {
+            "item": "evenmoreinstruments:shamisen"
+        },
+        "hidden": false,
+
+        "title": {
+            "translate": "evenmoreinstruments.advancements.main.japanese.title"
+        },
+        "description": {
+            "translate": "evenmoreinstruments.advancements.main.japanese.description"
+        },
+
+        "frame": "goal"
+    },
+
+    "criteria": {
+        "koto_played": {
+            "trigger": "genshinstrument_instrument_played",
+
+            "conditions": {
+                "instrument": {
+                    "items": ["evenmoreinstruments:koto"]
+                }
+            }
+        },
+        "pipa_played": {
+            "trigger": "genshinstrument_instrument_played",
+
+            "conditions": {
+                "instrument": {
+                    "items": ["evenmoreinstruments:pipa"]
+                }
+            }
+        },
+        "shamisen_played": {
+            "trigger": "genshinstrument_instrument_played",
+
+            "conditions": {
+                "instrument": {
+                    "items": ["evenmoreinstruments:shamisen"]
+                }
+            }
+        }
+    },
+
+    "requirements": [
+        ["koto_played"],
+        ["pipa_played"],
+        ["shamisen_played"]
+    ]
+}

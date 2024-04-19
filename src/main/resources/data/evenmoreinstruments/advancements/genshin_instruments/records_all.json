@@ -1,0 +1,79 @@
+{
+    "parent": "evenmoreinstruments:genshin_instruments/record_writable",
+
+    "display": {
+        "icon": {
+            "item": "evenmoreinstruments:record_sad_violin"
+        },
+        "hidden": false,
+
+        "title": {
+            "translate": "evenmoreinstruments.advancements.main.records_all.title"
+        },
+        "description": {
+            "translate": "evenmoreinstruments.advancements.main.records_all.description"
+        },
+
+        "frame": "challenge"
+    },
+
+    "criteria": {
+        "record_rickroll": {
+            "trigger": "evenmoreinstruments_record_injected",
+
+            "conditions": {
+                "record": {
+                    "items": ["evenmoreinstruments:record_rickroll"]
+                }
+            }
+        },
+        "record_johnny": {
+            "trigger": "evenmoreinstruments_record_injected",
+
+            "conditions": {
+                "record": {
+                    "items": ["evenmoreinstruments:record_johnny"]
+                }
+            }
+        },
+        "record_super_idol": {
+            "trigger": "evenmoreinstruments_record_injected",
+
+            "conditions": {
+                "record": {
+                    "items": ["evenmoreinstruments:record_super_idol"]
+                }
+            }
+        },
+        "record_oven_kid": {
+            "trigger": "evenmoreinstruments_record_injected",
+
+            "conditions": {
+                "record": {
+                    "items": ["evenmoreinstruments:record_oven_kid"]
+                }
+            }
+        },
+        "record_sad_violin": {
+            "trigger": "evenmoreinstruments_record_injected",
+
+            "conditions": {
+                "record": {
+                    "items": ["evenmoreinstruments:record_sad_violin"]
+                }
+            }
+        }
+    },
+
+    "requirements": [
+        ["record_rickroll"],
+        ["record_johnny"],
+        ["record_super_idol"],
+        ["record_oven_kid"],
+        ["record_sad_violin"]
+    ],
+
+    "rewards": {
+        "experience": 20
+    }
+}
