@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument.saxophone;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.client.gui.instrument.trombone.TromboneScreen;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentThemeLoader;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //NOTE: There to load it on startup
 @EventBusSubscriber(Dist.CLIENT)
 public class SaxophoneScreen extends GridInstrumentScreen {
-    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "saxophone");
+    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(EMIMain.MODID, "saxophone");
 
     @Override
     public NoteSound[] getInitSounds() {

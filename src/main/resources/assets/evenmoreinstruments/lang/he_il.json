@@ -1,24 +1,50 @@
 {
     "evenmoreinstruments.keymaps": "הגדרות המקשים של 'אפילו יותר כלי נגינה!'",
-    "evenmoreinstruments.keymaps.violin_type_modifier": "הארך/קצר את אורך צליל הכינור",
+    "evenmoreinstruments.keymaps.instrument_type_modifier": "החלף סוג צליל כלי הנגינה",
+    "evenmoreinstruments.keymaps.record": "הקלט",
 
-    "itemGroup.evenmoreinstruments.instrument_accessories_tab": "אביזרי כלי נגינה",
+    "itemGroup.evenmoreinstruments.music_production_tab": "הלחנה",
 
+
+    "item.shift.hint.show": "החזק Shift כדיי לגלות עוד",
+    "item.shift.hint.hide": "הורד Shift להסתרה",
 
     "item.evenmoreinstruments.violin": "כינור",
     "item.evenmoreinstruments.guitar": "גיטרה",
     "item.evenmoreinstruments.trombone": "טרומבון",
     "item.evenmoreinstruments.saxophone": "סקסופון",
+    "item.evenmoreinstruments.pipa": "לאוטה יפנית",
+    "item.evenmoreinstruments.shamisen": "שמיסן",
     "item.evenmoreinstruments.note_block_instrument": "בלוק הצליל של %s",
 
+    "item.evenmoreinstruments.instrument.accessory.not_present": "עליך להחזיק ב%s על מנת לנגן בכלי הנגינה",
+
+
     "item.evenmoreinstruments.looper_adapter": "מתאם אלחוטי ללופר",
-    "item.evenmoreinstruments.looper_adapter.description": "מתאם בין בלוק כלי נגינה ללופר",
-    "item.evenmoreinstruments.looper_adapter.select_instrument": "לופר חובר בהצלחה. אנא בחר כלי נגינה לתאם עימו.",
-    "item.evenmoreinstruments.looper_adapter.select_looper": "כלי נגינה חובר בהצלחה. אנא בחר לופר לתאם עימו.",
+
+    "item.evenmoreinstruments.looper_adapter.instrument.description": "מתאם בין בלוק כלי נגינה ללופר",
+    "item.evenmoreinstruments.looper_adapter.instrument.select": "כלי נגינה חובר. ממתין לחיבורו של לופר.",
+    "item.evenmoreinstruments.looper_adapter.instrument.success_pair": "כלי הנגינה תואם בהצלחה!",
+
+    "item.evenmoreinstruments.looper_adapter.looper.description": "מסנכרן בין 2 לופרים",
+    "item.evenmoreinstruments.looper_adapter.looper.select": "לופר חובר. ממתין לחיבורו של כלי נגינה או לופר נוסף.",
+    "item.evenmoreinstruments.looper_adapter.looper.success_pair": "לופרים סונכרנו בהצלחה!",
+
+
+    "item.evenmoreinstruments.writable_record": "תקליט ריק",
+    "item.evenmoreinstruments.burned_record": "תקליט צרוב",
+
+    "item.evenmoreinstruments.interesting_record": "תקליט מעניין",
+
+    "item.evenmoreinstruments.record.arranger": "מעבד: %s",
 
 
     "block.evenmoreinstruments.keyboard": "אורגן",
     "block.evenmoreinstruments.keyboard_stand": "מעמד לאורגן",
+    "block.evenmoreinstruments.koto": "קוטו",
+
+    "item.evenmoreinstruments.violin_bow": "קשת כינור",
+    "item.evenmoreinstruments.bachi": "באצ'י",
 
 
     "label.evenmoreinstruments.violin_options": "אפשרויות הכינור",
@@ -26,16 +52,37 @@
     "button.evenmoreinstruments.violin.soundType.half_note": "שתי פעמות",
     "button.evenmoreinstruments.violin.soundType.full_note": "ארבעה פעמות",
 
+    "label.evenmoreinstruments.pipa_options": "אפשרויות הלאוטה",
+    "button.evenmoreinstruments.pipa.soundType": "סוג צליל הלאוטה",
+    "button.evenmoreinstruments.pipa.soundType.regular": "רגיל",
+    "button.evenmoreinstruments.pipa.soundType.tremolo": "טרמולו",
+
 
     "block.evenmoreinstruments.looper": "לופר",
 
-    "evenmoreinstruments.looper.success_pair": "כלי הנגינה תואם בהצלחה!",
-    "evenmoreinstruments.looper.pair_conflict": "לופר זה הינו תפוס!",
+    "evenmoreinstruments.looper.pair_conflict": "תקליט זה הינו צרוב!",
     "evenmoreinstruments.looper.no_footage": "ללופר זה אין אף הקלטה! השתמש בכלי נגינה כדיי להתחיל להקליט",
+    "evenmoreinstruments.looper.no_record": "לא הוכנס אף תקליט",
+
+    "evenmoreinstruments.record.no_footage": "תקליט זה אינו צרוב! השתמש בכלי נגינה בכדיי להתחיל להקליט",
+    "evenmoreinstruments.record.not_writable": "תקליט זה כבר צרוב",
 
     "button.evenmoreinstruments.record": "הקלט",
     "button.evenmoreinstruments.stop": "עצור",
 
     "gamerule.evenmoreinstruments_looperMaxNotes": "מגבלת התווים ללופר",
-    "gamerule.evenmoreinstruments_looperMaxNotes.description": "מספר התווים שלופר יכול להכיל. כל ערך מתחת ל- 0 יגרום ללופר להיות חסר כל מגבלות."
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "מספר התווים שלופר יכול להכיל. כל ערך מתחת ל- 0 יגרום ללופר להיות חסר כל מגבלות.",
+
+
+    "evenmoreinstruments.advancements.main.japanese.title": "וויב אמיתי",
+    "evenmoreinstruments.advancements.main.japanese.description": "נגן בכל כלי הנגינה האסייתיים",
+
+    "evenmoreinstruments.advancements.main.record_rickroll_in.title": "תקליט מעניין",
+    "evenmoreinstruments.advancements.main.record_rickroll_in.description": "נגד את התקליט החשוד ביותר",
+
+    "evenmoreinstruments.advancements.main.record_writable_in.title": "מלחין",
+    "evenmoreinstruments.advancements.main.record_writable_in.description": "הכנס או צרוב מוזיקה לתקליט",
+
+    "evenmoreinstruments.advancements.main.records_all.title": "חולני",
+    "evenmoreinstruments.advancements.main.records_all.description": "נגן את כל התקליטים הצרובים"
 }

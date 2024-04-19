@@ -2,18 +2,18 @@ package com.cstav.evenmoreinstruments.item;
 
 import com.cstav.evenmoreinstruments.block.KeyboardStandBlock;
 
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableBlockInstrumentItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class KeyboardBlockItem extends BlockItem {
+public class KeyboardBlockItem extends CreditableBlockInstrumentItem {
 
-    public KeyboardBlockItem(Block pBlock, Properties pProperties) {
-        super(pBlock, pProperties);
+    public KeyboardBlockItem(Block pBlock, Properties pProperties, String credit) {
+        super(pBlock, pProperties, credit);
     }
     
     @Override
@@ -23,7 +23,7 @@ public class KeyboardBlockItem extends BlockItem {
         final BlockPos pos = pContext.getClickedPos();
         final BlockState bs = level.getBlockState(pos);
         
-
+        // Add this keyboard to the used keyboard stand
         if (bs.getBlock() instanceof KeyboardStandBlock) {
             if (bs.getValue(KeyboardStandBlock.HAS_KEYBOARD))
                 return InteractionResult.FAIL;

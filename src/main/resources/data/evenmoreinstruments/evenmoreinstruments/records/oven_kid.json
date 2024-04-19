@@ -1,0 +1,33 @@
+{
+    "Notes": [
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 0, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 0 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 2, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 7 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 10 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 15 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 20 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 25 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 30 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 4, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 34 },
+        { "Volume": 1.0, "Pitch": -6, "SoundIndex": 4, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 40 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 45 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 50 },
+        { "Volume": 1.0, "Pitch": -6, "SoundIndex": 4, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 55 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 4, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 60 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 0, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 80 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 2, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 86 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 89 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 93 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 98 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 103 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 7, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 107 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 4, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 112 },
+        { "Volume": 1.0, "Pitch": -6, "SoundIndex": 4, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 117 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 4, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 121 },
+        { "Volume": 1.0, "Pitch": -6, "SoundIndex": 1, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 127 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 1, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 132 },
+        { "Volume": 1.0, "Pitch": -7, "SoundIndex": 0, "SoundType": "evenmoreinstruments:trombone", "Timestamp": 137 }
+    ],
+    "RepeatTick": 155,
+    "InstrumentId": "evenmoreinstruments:trombone",
+    "Writable": 0
+}
