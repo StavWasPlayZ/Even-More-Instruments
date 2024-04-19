@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument.noteblockinstrument;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.item.NoteBlockInstrumentItem;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
 import com.cstav.genshinstrument.client.gui.screen.instrument.floralzither.FloralZitherScreen;
@@ -8,7 +8,6 @@ import com.cstav.genshinstrument.client.gui.screen.instrument.partial.Instrument
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.NoteGridButton;
 import com.cstav.genshinstrument.sound.NoteSound;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,7 +25,7 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     
     public NoteBlockInstrumentScreen(final NoteBlockInstrument instrumentType) {
         this.instrumentType = instrumentType;
-        instrumentId = new ResourceLocation(Main.MODID, NoteBlockInstrumentItem.getId(instrumentType));
+        instrumentId = new ResourceLocation(EMIMain.MODID, NoteBlockInstrumentItem.getId(instrumentType));
 
         // Update the sound to match the note block's
         noteGrid.setNoteSounds(ModSounds.getNoteblockSounds(instrumentType));
@@ -80,8 +79,10 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     }
 
 
-    private static final InstrumentThemeLoader THEME_LOADER =
-        InstrumentThemeLoader.fromOther(FloralZitherScreen.INSTRUMENT_ID, new ResourceLocation(Main.MODID, "note_block_instrument"));
+    private static final InstrumentThemeLoader THEME_LOADER = InstrumentThemeLoader.fromOther(
+        FloralZitherScreen.INSTRUMENT_ID,
+        new ResourceLocation(EMIMain.MODID, "note_block_instrument")
+    );
         
     @Override
     public InstrumentThemeLoader getThemeLoader() {

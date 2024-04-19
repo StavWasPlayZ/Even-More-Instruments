@@ -1,38 +1,107 @@
 {
     "variants": {
         
-        "playing=false,facing=north": {
-            "model": "evenmoreinstruments:block/looper_idle",
+        "record_in=false,facing=north,looping=false": {
+            "model": "evenmoreinstruments:block/looper/uninjected_not_looping",
             "y": 0
         },
-        "playing=false,facing=east": {
-            "model": "evenmoreinstruments:block/looper_idle",
+        "record_in=false,facing=east,looping=false": {
+            "model": "evenmoreinstruments:block/looper/uninjected_not_looping",
             "y": 90
         },
-        "playing=false,facing=south": {
-            "model": "evenmoreinstruments:block/looper_idle",
+        "record_in=false,facing=south,looping=false": {
+            "model": "evenmoreinstruments:block/looper/uninjected_not_looping",
             "y": 180
         },
-        "playing=false,facing=west": {
-            "model": "evenmoreinstruments:block/looper_idle",
+        "record_in=false,facing=west,looping=false": {
+            "model": "evenmoreinstruments:block/looper/uninjected_not_looping",
+            "y": 270
+        },
+
+        "record_in=true,playing=false,facing=north,looping=false": {
+            "model": "evenmoreinstruments:block/looper/idle_not_looping",
+            "y": 0
+        },
+        "record_in=true,playing=false,facing=east,looping=false": {
+            "model": "evenmoreinstruments:block/looper/idle_not_looping",
+            "y": 90
+        },
+        "record_in=true,playing=false,facing=south,looping=false": {
+            "model": "evenmoreinstruments:block/looper/idle_not_looping",
+            "y": 180
+        },
+        "record_in=true,playing=false,facing=west,looping=false": {
+            "model": "evenmoreinstruments:block/looper/idle_not_looping",
+            "y": 270
+        },
+
+        "record_in=true,playing=true,facing=north,looping=false": {
+            "model": "evenmoreinstruments:block/looper/playing_not_looping",
+            "y": 0
+        },
+        "record_in=true,playing=true,facing=east,looping=false": {
+            "model": "evenmoreinstruments:block/looper/playing_not_looping",
+            "y": 90
+        },
+        "record_in=true,playing=true,facing=south,looping=false": {
+            "model": "evenmoreinstruments:block/looper/playing_not_looping",
+            "y": 180
+        },
+        "record_in=true,playing=true,facing=west,looping=false": {
+            "model": "evenmoreinstruments:block/looper/playing_not_looping",
             "y": 270
         },
 
 
-        "playing=true,facing=north": {
-            "model": "evenmoreinstruments:block/looper_playing",
+
+        "record_in=false,facing=north,looping=true": {
+            "model": "evenmoreinstruments:block/looper/uninjected_looping",
             "y": 0
         },
-        "playing=true,facing=east": {
-            "model": "evenmoreinstruments:block/looper_playing",
+        "record_in=false,facing=east,looping=true": {
+            "model": "evenmoreinstruments:block/looper/uninjected_looping",
             "y": 90
         },
-        "playing=true,facing=south": {
-            "model": "evenmoreinstruments:block/looper_playing",
+        "record_in=false,facing=south,looping=true": {
+            "model": "evenmoreinstruments:block/looper/uninjected_looping",
             "y": 180
         },
-        "playing=true,facing=west": {
-            "model": "evenmoreinstruments:block/looper_playing",
+        "record_in=false,facing=west,looping=true": {
+            "model": "evenmoreinstruments:block/looper/uninjected_looping",
+            "y": 270
+        },
+
+        "record_in=true,playing=false,facing=north,looping=true": {
+            "model": "evenmoreinstruments:block/looper/idle_looping",
+            "y": 0
+        },
+        "record_in=true,playing=false,facing=east,looping=true": {
+            "model": "evenmoreinstruments:block/looper/idle_looping",
+            "y": 90
+        },
+        "record_in=true,playing=false,facing=south,looping=true": {
+            "model": "evenmoreinstruments:block/looper/idle_looping",
+            "y": 180
+        },
+        "record_in=true,playing=false,facing=west,looping=true": {
+            "model": "evenmoreinstruments:block/looper/idle_looping",
+            "y": 270
+        },
+
+        "record_in=true,playing=true,facing=north,looping=true": {
+            "model": "evenmoreinstruments:block/looper/playing_looping",
+            "y": 0
+        },
+        "record_in=true,playing=true,facing=east,looping=true": {
+            "model": "evenmoreinstruments:block/looper/playing_looping",
+            "y": 90
+        },
+        "record_in=true,playing=true,facing=south,looping=true": {
+            "model": "evenmoreinstruments:block/looper/playing_looping",
+            "y": 180
+        },
+        "record_in=true,playing=true,facing=west,looping=true": {
+            "model": "evenmoreinstruments:block/looper/playing_looping",
             "y": 270
         }
 

@@ -1,0 +1,8 @@
+{
+    "parent": "evenmoreinstruments:block/looper/root",
+    "textures": {
+        "record": "evenmoreinstruments:block/looper_top_uninjected",
+        "playing": "evenmoreinstruments:block/looper_front_uninjected",
+        "looping": "evenmoreinstruments:block/looper_loop_off"
+    }
+}

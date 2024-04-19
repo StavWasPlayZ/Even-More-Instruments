@@ -1,0 +1,33 @@
+{
+    "parent": "evenmoreinstruments:genshin_instruments/record_writable",
+
+    "display": {
+        "icon": {
+            "item": "evenmoreinstruments:record_rickroll"
+        },
+        "hidden": true,
+
+        "title": {
+            "translate": "evenmoreinstruments.advancements.main.record_rickroll_in.title"
+        },
+        "description": {
+            "translate": "evenmoreinstruments.advancements.main.record_rickroll_in.description"
+        }
+    },
+
+    "criteria": {
+        "record_injected": {
+            "trigger": "evenmoreinstruments_record_injected",
+
+            "conditions": {
+                "record": {
+                    "items": ["evenmoreinstruments:record_rickroll"]
+                }
+            }
+        }
+    },
+
+    "requirements": [
+        ["record_injected"]
+    ]
+}

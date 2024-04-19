@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.block.blockentity;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockEntities {
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Main.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, EMIMain.MODID);
     public static void register(final IEventBus bus) {
         BLOCK_ENTITIES.register(bus);
     }
@@ -23,7 +23,7 @@ public class ModBlockEntities {
         ).build(null)
     );
 
-    public static final RegistryObject<BlockEntityType<ModInstrumentBlockEntity>> INSTRUMENT = BLOCK_ENTITIES.register(Main.MODID+"_instrument", () ->
+    public static final RegistryObject<BlockEntityType<ModInstrumentBlockEntity>> INSTRUMENT = BLOCK_ENTITIES.register(EMIMain.MODID+"_instrument", () ->
         BlockEntityType.Builder.of(
             ModInstrumentBlockEntity::new, ModBlocks.KEYBOARD.get(), ModBlocks.KEYBOARD_STAND.get()
         ).build(null)

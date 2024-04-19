@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "A",
+        "B"
+    ],
+    "key": {
+        "B": {
+            "item": "minecraft:stripped_birch_log"
+        },
+        "A": {
+            "item": "minecraft:black_dye"
+        }
+    },
+    "result": {
+        "item": "evenmoreinstruments:bachi",
+        "count": 1
+    }
+}

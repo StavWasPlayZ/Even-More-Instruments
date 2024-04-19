@@ -2,7 +2,7 @@ package com.cstav.evenmoreinstruments.networking;
 
 import java.util.List;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
 import com.cstav.evenmoreinstruments.networking.packet.LooperRemovedPacket;
@@ -23,7 +23,7 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.SimpleChannel;
 
 // Copy pasta
-@EventBusSubscriber(modid = Main.MODID, bus = Bus.MOD)
+@EventBusSubscriber(modid = EMIMain.MODID, bus = Bus.MOD)
 public class ModPacketHandler {
     @SuppressWarnings("unchecked")
     private static final List<Class<IModPacket>> ACCEPTABLE_PACKETS = List.of(new Class[] {
@@ -47,7 +47,7 @@ public class ModPacketHandler {
 
 
     private static final SimpleChannel INSTANCE = ChannelBuilder
-        .named(new ResourceLocation(Main.MODID, "mod_networking"))
+        .named(new ResourceLocation(EMIMain.MODID, "mod_networking"))
         .networkProtocolVersion(protocolVersion())
         .acceptedVersions(VersionTest.exact(protocolVersion()))
     .simpleChannel();

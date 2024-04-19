@@ -6,10 +6,9 @@ import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
-import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -73,8 +72,8 @@ public class KeyboardStandBlock extends AbstractInstrumentBlock {
 
 
     @Override
-    protected OpenInstrumentPacketSender instrumentPacketSender() {
-        return (player) -> ModPacketHandler.sendToClient(new ModOpenInstrumentPacket("keyboard"), player);
+    protected void onInstrumentOpen(ServerPlayer player) {
+        ModPacketHandler.sendToClient(new ModOpenInstrumentPacket("keyboard"), player);
     }
 
     @Override

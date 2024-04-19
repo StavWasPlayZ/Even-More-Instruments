@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+
+    "key": {
+        "X": {
+            "item": "minecraft:amethyst_shard"
+        }
+    },
+
+    "pattern": [
+        " X ",
+        "X X",
+        " X "
+    ],
+
+    "result": {
+        "item": "evenmoreinstruments:record_writable"
+    }
+}

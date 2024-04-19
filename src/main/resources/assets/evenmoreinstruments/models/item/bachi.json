@@ -1,0 +1,19 @@
+{
+    "parent": "genshinstrument:item/instrument",
+    "textures": {
+        "layer0": "evenmoreinstruments:item/bachi"
+    },
+
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [146.5, 88, 180],
+            "translation": [-2.25, -1, 2.25],
+            "scale": [0.55, 0.55, 0.55]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [33.5, 88, -180],
+            "translation": [-2.25, -1, 2.25],
+            "scale": [0.55, 0.55, 0.55]
+        }
+    }
+}
