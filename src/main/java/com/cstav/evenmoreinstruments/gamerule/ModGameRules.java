@@ -1,9 +1,7 @@
 package com.cstav.evenmoreinstruments.gamerule;
 
-import com.cstav.evenmoreinstruments.Main;
-import com.cstav.evenmoreinstruments.mixins.required.GameRuleIntegerInvoker;
 import com.cstav.evenmoreinstruments.EMIMain;
-
+import com.cstav.evenmoreinstruments.mixins.required.GameRuleIntegerInvoker;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameRules.Category;
 

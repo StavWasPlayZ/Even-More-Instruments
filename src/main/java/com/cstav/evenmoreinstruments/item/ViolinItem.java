@@ -4,6 +4,7 @@ import com.cstav.evenmoreinstruments.item.partial.instrument.AccessoryInstrument
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
+import com.cstav.genshinstrument.ModCreativeModeTabs;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import net.minecraft.world.item.ItemStack;
 
@@ -11,9 +12,11 @@ import java.util.Arrays;
 
 class ViolinItem extends AccessoryInstrumentItem {
     public ViolinItem() {
-        super((player) -> ModPacketHandler.sendToClient(
+        super(
+            (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("violin"), player
             ),
+            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             ModItems.VIOLIN_BOW,
             "Philharmonia"
         );

@@ -10,7 +10,6 @@ import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -75,7 +74,7 @@ public class LooperAdapterItem extends Item {
         return true;
     }
     private static boolean handleLooperBlock(BlockPos blockPos, CompoundTag adapterTag, Player player) {
-        final BlockEntity be = player.level().getBlockEntity(blockPos);
+        final BlockEntity be = player.getLevel().getBlockEntity(blockPos);
         if (!(be instanceof LooperBlockEntity lbe))
             return false;
 
@@ -118,11 +117,11 @@ public class LooperAdapterItem extends Item {
             // Linked blocks (like the Keyboard) should too have the tag:
             BlockPos otherBlockPos = null;
             if (instrumentBlock instanceof IDoubleBlock doubleBlock)
-                otherBlockPos = doubleBlock.getOtherBlock(instrumentBlockState, instrumentBlockPos, player.level());
+                otherBlockPos = doubleBlock.getOtherBlock(instrumentBlockState, instrumentBlockPos, player.getLevel());
 
             LooperUtil.createLooperTag(ibe, looperBlockPos);
             if (otherBlockPos != null)
-                LooperUtil.createLooperTag(player.level().getBlockEntity(otherBlockPos), looperBlockPos);
+                LooperUtil.createLooperTag(player.getLevel().getBlockEntity(otherBlockPos), looperBlockPos);
 
             ibe.setChanged();
 
@@ -136,7 +135,7 @@ public class LooperAdapterItem extends Item {
         }, player);
     }
     private static boolean pairLooperToInstrument(CompoundTag adapterTag, BlockPos looperPos, BlockPos instrumentPos, Player player) {
-        final Level level = player.level();
+        final Level level = player.getLevel();
 
         final BlockEntity lbe = level.getBlockEntity(looperPos),
             ibe = level.getBlockEntity(instrumentPos);
@@ -178,7 +177,7 @@ public class LooperAdapterItem extends Item {
         if (looper2Pos.equals(looper1Pos))
             return false;
 
-        final Level level = player.level();
+        final Level level = player.getLevel();
 
         BlockEntity lbe1 = level.getBlockEntity(looper1Pos),
             lbe2 = level.getBlockEntity(looper2Pos);

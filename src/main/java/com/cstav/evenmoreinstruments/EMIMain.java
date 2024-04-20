@@ -41,8 +41,6 @@ public class EMIMain
         ModGameRules.load();
         ModCriteria.load();
 
-        EMIModCreativeModeTabs.register(bus);
-
         ModBlocks.register(bus);
         ModBlockEntities.register(bus);
         ModItems.register(bus);

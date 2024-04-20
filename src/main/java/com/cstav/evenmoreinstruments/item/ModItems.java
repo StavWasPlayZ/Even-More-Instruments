@@ -1,9 +1,5 @@
 package com.cstav.evenmoreinstruments.item;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
-
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
@@ -14,24 +10,23 @@ import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = EMIMain.MODID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EMIMain.MODID);
@@ -43,27 +38,35 @@ public class ModItems {
     public static final RegistryObject<Item>
         VIOLIN_BOW = register("violin_bow",
             () -> new InstrumentAccessoryItem(
-                new Properties().stacksTo(1).durability(InstrumentAccessoryItem.MAX_DURABILITY)
+                new Properties()
+                    .stacksTo(1)
+                    .durability(InstrumentAccessoryItem.MAX_DURABILITY)
+                    .tab(ModCreativeModeTabs.instrumentsTab)
             )
         ),
-        VIOLIN = register("violin", ViolinItem::new, DEFAULT_INSTRUMENTS_TABS, VIOLIN_BOW),
+        VIOLIN = register("violin", ViolinItem::new),
 
         GUITAR = register("guitar", () -> new CreditableInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("guitar"), player
             ),
+            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             "Philharmonia"
         )),
         PIPA = register("pipa", () -> new CreditableInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("pipa"), player
             ),
+            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             "DSK Asian DreamZ"
         )),
 
         BACHI = register("bachi",
             () -> new InstrumentAccessoryItem(
-                new Properties().stacksTo(1).durability(InstrumentAccessoryItem.MAX_DURABILITY)
+                new Properties()
+                    .stacksTo(1)
+                    .durability(InstrumentAccessoryItem.MAX_DURABILITY)
+                    .tab(ModCreativeModeTabs.instrumentsTab)
             )
         ),
         SHAMISEN = register("shamisen",
@@ -71,31 +74,33 @@ public class ModItems {
                 (player) -> ModPacketHandler.sendToClient(
                     new ModOpenInstrumentPacket("shamisen"), player
                 ),
+                new Properties().tab(ModCreativeModeTabs.instrumentsTab),
                 BACHI,
                 "Roland SC-88"
-            ),
-            DEFAULT_INSTRUMENTS_TABS,
-            BACHI
+            )
         ),
 
         KOTO = register("koto", () ->
             new CreditableBlockInstrumentItem(
-                ModBlocks.KOTO.get(), new Properties().stacksTo(1),
+                ModBlocks.KOTO.get(), new Properties()
+                    .stacksTo(1)
+                    .tab(ModCreativeModeTabs.instrumentsTab),
                 "DSK Asian DreamZ"
-            ),
-            DEFAULT_INSTRUMENT_BLOCK_TABS
+            )
         ),
 
         TROMBONE = register("trombone", () -> new CreditableWindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("trombone"), player
             ),
+            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             "Philharmonia"
         )),
         SAXOPHONE = register("saxophone", () -> new CreditableWindInstrumentItem(
             (player) -> ModPacketHandler.sendToClient(
                 new ModOpenInstrumentPacket("saxophone"), player
             ),
+            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             "Philharmonia"
         )),
         KEYBOARD = register("keyboard", () ->
@@ -106,64 +111,75 @@ public class ModItems {
                 null
             )
         ),
-
-        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
-            ModCreativeModeTabs.INSTRUMENTS_TAB.getKey()
-        ),
+        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND, ModCreativeModeTabs.instrumentsTab),
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER, EMIModCreativeModeTabs.musicProductionTab),
-        LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()
-            .tab(EMIModCreativeModeTabs.musicProductionTab)
-        )),
+        LOOPER_ADAPTER = register(
+            "looper_adapter", () -> new LooperAdapterItem(new Properties()
+                .tab(EMIModCreativeModeTabs.musicProductionTab)
+            )
+        ),
 
-        RECORD_WRITABLE = register("record_writable", () -> new WritableRecordItem(new Properties()),
-            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+        RECORD_WRITABLE = register(
+            "record_writable", () -> new WritableRecordItem(new Properties()
+                .tab(EMIModCreativeModeTabs.musicProductionTab)
+            )
         ),
         RECORD_JOHNNY = register("record_johnny", () ->
             new BurnedRecordItem(
-                new Properties().stacksTo(1).rarity(Rarity.RARE),
+                new Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.RARE)
+                    .tab(EMIModCreativeModeTabs.musicProductionTab),
                 new ResourceLocation(EMIMain.MODID, "johnny"),
                 "Hänschen klein - Franz Wiedemann",
                 null
-            ),
-            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+            )
         ),
         RECORD_SUPER_IDOL = register("record_super_idol", () ->
             new BurnedRecordItem(
-                new Properties().stacksTo(1).rarity(Rarity.RARE),
+                new Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.RARE)
+                    .tab(EMIModCreativeModeTabs.musicProductionTab),
                 new ResourceLocation(EMIMain.MODID, "super_idol"),
                 "Super Idol - De Xian Rong",
                 "Saxophy"
-            ),
-            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+            )
         ),
         RECORD_OVEN_KID = register("record_oven_kid", () ->
             new BurnedRecordItem(
-                new Properties().stacksTo(1).rarity(Rarity.RARE),
+                new Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.RARE)
+                    .tab(EMIModCreativeModeTabs.musicProductionTab),
                 new ResourceLocation(EMIMain.MODID, "oven_kid"),
                 "Timmy Trumpet & Savage - Freaks",
                 "StavWasPlayZ"
-            ),
-            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+            )
         ),
         RECORD_SAD_VIOLIN = register("record_sad_violin", () ->
             new BurnedRecordItem(
-                new Properties().stacksTo(1).rarity(Rarity.RARE),
+                new Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.RARE)
+                    .tab(EMIModCreativeModeTabs.musicProductionTab),
                 new ResourceLocation(EMIMain.MODID, "sad_violin"),
                 "Sad Romance - Ji Pyeongkeyon",
                 "StavWasPlayZ"
-            ),
-            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+            )
         ),
         RECORD_RICKROLL = register("record_rickroll", () ->
             new BurnedRecordItem(
-                new Properties().stacksTo(1).rarity(Rarity.EPIC),
+                new Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.EPIC)
+                    .tab(EMIModCreativeModeTabs.musicProductionTab),
                 new ResourceLocation(EMIMain.MODID, "rickroll"),
                 null,
                 "StavWasPlayZ",
                 Component.translatable("item.evenmoreinstruments.interesting_record")
-            ),
-            CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
+            )
         )
     ;
 
@@ -175,7 +191,8 @@ public class ModItems {
 
         for (final NoteBlockInstrument instrument : instruments) {
             result.put(instrument,
-                register(NoteBlockInstrumentItem.getId(instrument),
+                register(
+                    NoteBlockInstrumentItem.getId(instrument),
                     () -> new NoteBlockInstrumentItem(instrument)
                 )
             );
