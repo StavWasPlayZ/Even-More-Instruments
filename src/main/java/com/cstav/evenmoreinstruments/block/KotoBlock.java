@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.block;
 
-import com.cstav.evenmoreinstruments.DoubleInstrumentBlock;
+import com.cstav.evenmoreinstruments.block.partial.DoubleInstrumentBlock;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import net.minecraft.core.BlockPos;
