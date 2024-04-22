@@ -6,6 +6,7 @@ import com.cstav.evenmoreinstruments.util.LooperUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
 public class WritableRecordItem extends EMIRecordItem {
@@ -39,14 +40,14 @@ public class WritableRecordItem extends EMIRecordItem {
 
     @Override
     public Component getName(ItemStack pStack) {
-        return Component.translatable(String.format(
+        return new TranslatableComponent(String.format(
             "item.evenmoreinstruments.%s_record",
             isBurned(pStack) ? "burned" : "writable"
         ));
     }
 
     @Override
-    public int getMaxStackSize(ItemStack stack) {
-        return isBurned(stack) ? super.getMaxStackSize(stack) : 64;
+    public int getItemStackLimit(ItemStack stack) {
+        return isBurned(stack) ? super.getItemStackLimit(stack) : 64;
     }
 }

@@ -11,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -211,7 +210,7 @@ public class LooperUtil {
      * To be burned into a record.
      */
     public static Optional<CompoundTag> migrateLegacyLooper(final LooperBlockEntity lbe) {
-        final CompoundTag lbed = lbe.getPersistentData();
+        final CompoundTag lbed = lbe.getTileData();
 
         if (!lbed.contains("channel", Tag.TAG_COMPOUND))
             return Optional.empty();

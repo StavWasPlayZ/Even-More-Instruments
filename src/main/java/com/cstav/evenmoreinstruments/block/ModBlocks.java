@@ -1,9 +1,7 @@
 package com.cstav.evenmoreinstruments.block;
 
-import com.cstav.evenmoreinstruments.Main;
-
-import net.minecraft.world.item.DyeColor;
 import com.cstav.evenmoreinstruments.EMIMain;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -30,7 +28,7 @@ public class ModBlocks {
         )),
 
         KOTO = BLOCKS.register("koto", () -> new KotoBlock(
-            Properties.of().noOcclusion().strength(.3f).sound(SoundType.WOOD)
+            Properties.of(Material.WOOD).noOcclusion().strength(.3f).sound(SoundType.WOOD)
         )),
 
         LOOPER = BLOCKS.register("looper", () -> new LooperBlock(Properties.copy(Blocks.NOTE_BLOCK)))

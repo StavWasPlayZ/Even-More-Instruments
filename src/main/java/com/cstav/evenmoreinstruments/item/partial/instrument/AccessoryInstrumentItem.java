@@ -5,7 +5,7 @@ import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
 import com.cstav.genshinstrument.util.ServerUtil;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -46,7 +46,7 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
         if (!pPlayer.getItemInHand(CommonUtil.getOffhand(pUsedHand)).is(getAccessoryItem())) {
             if (!pLevel.isClientSide) {
                 pPlayer.displayClientMessage(
-                    Component.translatable(
+                    new TranslatableComponent(
                         "item.evenmoreinstruments.instrument.accessory.not_present",
                         getAccessoryItem().getName(new ItemStack(getAccessoryItem()))
                     ),

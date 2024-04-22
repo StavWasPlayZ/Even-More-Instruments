@@ -3,9 +3,7 @@ package com.cstav.evenmoreinstruments.capability.recording;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
-@AutoRegisterCapability
 public class RecordingCapability {
     public static final String
         RECORDING_TAG = "Recording",

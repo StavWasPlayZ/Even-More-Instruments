@@ -10,7 +10,6 @@ import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -18,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -70,18 +70,18 @@ public class LooperAdapterItem extends Item {
 
         adapterTag.put(BLOCK_INSTRUMENT_POS_TAG, NbtUtils.writeBlockPos(blockPos));
         player.displayClientMessage(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.looper.select")
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.looper.select")
         , true);
         return true;
     }
     private static boolean handleLooperBlock(BlockPos blockPos, CompoundTag adapterTag, Player player) {
-        final BlockEntity be = player.level().getBlockEntity(blockPos);
+        final BlockEntity be = player.getLevel().getBlockEntity(blockPos);
         if (!(be instanceof LooperBlockEntity lbe))
             return false;
 
         if (!lbe.isRecordIn()) {
             player.displayClientMessage(
-                Component.translatable("evenmoreinstruments.looper.no_record")
+                new TranslatableComponent("evenmoreinstruments.looper.no_record")
                     .withStyle(ChatFormatting.RED),
                 true
             );
@@ -95,7 +95,7 @@ public class LooperAdapterItem extends Item {
 
         adapterTag.put(LOOPER_POS_TAG, NbtUtils.writeBlockPos(blockPos));
         player.displayClientMessage(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.instrument.select").withStyle(ChatFormatting.GREEN),
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.instrument.select").withStyle(ChatFormatting.GREEN),
             true
         );
         return true;
@@ -118,11 +118,11 @@ public class LooperAdapterItem extends Item {
             // Linked blocks (like the Keyboard) should too have the tag:
             BlockPos otherBlockPos = null;
             if (instrumentBlock instanceof IDoubleBlock doubleBlock)
-                otherBlockPos = doubleBlock.getOtherBlock(instrumentBlockState, instrumentBlockPos, player.level());
+                otherBlockPos = doubleBlock.getOtherBlock(instrumentBlockState, instrumentBlockPos, player.getLevel());
 
             LooperUtil.createLooperTag(ibe, looperBlockPos);
             if (otherBlockPos != null)
-                LooperUtil.createLooperTag(player.level().getBlockEntity(otherBlockPos), looperBlockPos);
+                LooperUtil.createLooperTag(player.getLevel().getBlockEntity(otherBlockPos), looperBlockPos);
 
             ibe.setChanged();
 
@@ -136,7 +136,7 @@ public class LooperAdapterItem extends Item {
         }, player);
     }
     private static boolean pairLooperToInstrument(CompoundTag adapterTag, BlockPos looperPos, BlockPos instrumentPos, Player player) {
-        final Level level = player.level();
+        final Level level = player.getLevel();
 
         final BlockEntity lbe = level.getBlockEntity(looperPos),
             ibe = level.getBlockEntity(instrumentPos);
@@ -159,7 +159,7 @@ public class LooperAdapterItem extends Item {
 
         if (!lbe1.hasFootage() || !lbe1.hasFootage()) {
             player.displayClientMessage(
-                Component.translatable("evenmoreinstruments.record.no_footage").withStyle(ChatFormatting.RED),
+                new TranslatableComponent("evenmoreinstruments.record.no_footage").withStyle(ChatFormatting.RED),
                 true
             );
             return true;
@@ -169,7 +169,7 @@ public class LooperAdapterItem extends Item {
         lbe2.setTicks(lbe1.getTicks());
 
         player.displayClientMessage(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.instrument.success_pair").withStyle(ChatFormatting.GREEN),
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.instrument.success_pair").withStyle(ChatFormatting.GREEN),
             true
         );
         return true;
@@ -178,7 +178,7 @@ public class LooperAdapterItem extends Item {
         if (looper2Pos.equals(looper1Pos))
             return false;
 
-        final Level level = player.level();
+        final Level level = player.getLevel();
 
         BlockEntity lbe1 = level.getBlockEntity(looper1Pos),
             lbe2 = level.getBlockEntity(looper2Pos);
@@ -194,23 +194,23 @@ public class LooperAdapterItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
         if (!Screen.hasShiftDown()) {
             tooltipComponents.add(
-                Component.translatable("item.shift.hint.show")
+                new TranslatableComponent("item.shift.hint.show")
                     .withStyle(ChatFormatting.YELLOW)
             );
             return;
         } else {
             tooltipComponents.add(
-                Component.translatable("item.shift.hint.hide")
+                new TranslatableComponent("item.shift.hint.hide")
                     .withStyle(ChatFormatting.YELLOW)
             );
         }
 
         tooltipComponents.add(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.instrument.description")
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.instrument.description")
                 .withStyle(ChatFormatting.GRAY)
         );
         tooltipComponents.add(
-            Component.translatable("item.evenmoreinstruments.looper_adapter.looper.description")
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.looper.description")
                 .withStyle(ChatFormatting.GRAY)
         );
 

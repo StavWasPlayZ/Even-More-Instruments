@@ -2,8 +2,8 @@ package com.cstav.evenmoreinstruments.client.gui.instrument;
 
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.client.KeyMappings;
-import com.cstav.evenmoreinstruments.mixins.required.ScreenAccessor;
 import com.cstav.evenmoreinstruments.event.ScreenCloseEvent;
+import com.cstav.evenmoreinstruments.mixins.required.ScreenAccessor;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.DoesLooperExistPacket;
 import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
@@ -14,9 +14,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,6 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent.KeyboardKeyPressedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -85,7 +85,7 @@ public class LooperOverlayInjector {
     }
 
     @SubscribeEvent
-    public static void onKeyboardPress(final ScreenEvent.KeyPressed.Pre event) {
+    public static void onKeyboardPress(final KeyboardKeyPressedEvent.Pre event) {
         if (KeyMappings.RECORD.get().matches(event.getKeyCode(), event.getScanCode()) && (recordBtn != null)) {
             recordBtn.playDownSound(Minecraft.getInstance().getSoundManager());
             recordBtn.onPress();

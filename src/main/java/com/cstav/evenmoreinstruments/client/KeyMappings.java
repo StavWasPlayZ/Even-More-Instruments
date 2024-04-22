@@ -1,8 +1,5 @@
 package com.cstav.evenmoreinstruments.client;
 
-import com.cstav.evenmoreinstruments.Main;
-import org.lwjgl.glfw.GLFW;
-
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.genshinstrument.client.keyMaps.InstrumentKeyMappings;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -38,7 +35,7 @@ public class KeyMappings {
 
     public static void registerKeybinds() {
         ClientRegistry.registerKeyBinding(INSTRUMENT_TYPE_MODIFIER.get());
-        event.register(RECORD.get());
+        ClientRegistry.registerKeyBinding(RECORD.get());
     }
 
 }

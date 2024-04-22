@@ -10,7 +10,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -168,7 +167,7 @@ public class LooperBlock extends Block implements EntityBlock {
 
         if (!lbe.hasFootage()) {
             pPlayer.displayClientMessage(
-                Component.translatable("evenmoreinstruments.record.no_footage"),
+                new TranslatableComponent("evenmoreinstruments.record.no_footage"),
                 true
             );
         }
@@ -179,7 +178,7 @@ public class LooperBlock extends Block implements EntityBlock {
                                                        LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
         if (!pState.getValue(RECORD_IN)) {
             pPlayer.displayClientMessage(
-                Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED),
+                new TranslatableComponent("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED),
                 true
             );
             return InteractionResult.CONSUME_PARTIAL;
@@ -225,7 +224,7 @@ public class LooperBlock extends Block implements EntityBlock {
         if (!lbe.hasFootage()) {
             if (lbe.isWritable()) {
                 pPlayer.displayClientMessage(
-                    Component.translatable("evenmoreinstruments.record.no_footage"),
+                    new TranslatableComponent("evenmoreinstruments.record.no_footage"),
                     true
                 );
             }

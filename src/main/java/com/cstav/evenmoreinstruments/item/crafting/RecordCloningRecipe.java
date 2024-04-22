@@ -3,11 +3,9 @@ package com.cstav.evenmoreinstruments.item.crafting;
 import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -15,8 +13,8 @@ import net.minecraft.world.level.Level;
 import java.util.Optional;
 
 public class RecordCloningRecipe extends CustomRecipe {
-    public RecordCloningRecipe(ResourceLocation pId, CraftingBookCategory pCategory) {
-        super(pId, pCategory);
+    public RecordCloningRecipe(ResourceLocation pId) {
+        super(pId);
     }
 
     /**
@@ -34,7 +32,7 @@ public class RecordCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(CraftingContainer pContainer) {
         final Optional<ItemStack[]> ingredients = getIngredientsFromContainer(pContainer);
         if (ingredients.isEmpty())
             return ItemStack.EMPTY;
@@ -53,7 +51,9 @@ public class RecordCloningRecipe extends CustomRecipe {
             ItemStack stack = pInv.getItem(i);
 
             if (isBurnedRecord(stack)) {
-                result.set(i, stack.copyWithCount(1));
+                final ItemStack remainder = stack.copy();
+                remainder.setCount(1);
+                result.set(i, remainder);
                 return result;
             }
         }

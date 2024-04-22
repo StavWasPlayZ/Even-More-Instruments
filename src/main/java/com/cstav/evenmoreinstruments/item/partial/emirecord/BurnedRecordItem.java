@@ -3,6 +3,8 @@ package com.cstav.evenmoreinstruments.item.partial.emirecord;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -29,7 +31,7 @@ public class BurnedRecordItem extends EMIRecordItem {
         this.title = title;
     }
     public BurnedRecordItem(Properties properties, ResourceLocation burnedMedia, @Nullable String info, @Nullable String arranger) {
-        this(properties, burnedMedia, info, arranger, Component.translatable("item.evenmoreinstruments.burned_record"));
+        this(properties, burnedMedia, info, arranger, new TranslatableComponent("item.evenmoreinstruments.burned_record"));
     }
 
     @Override
@@ -46,13 +48,13 @@ public class BurnedRecordItem extends EMIRecordItem {
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         if (info != null) {
             pTooltipComponents.add(
-                Component.literal(info)
+                new TextComponent(info)
                     .withStyle(ChatFormatting.GRAY)
             );
         }
         if (arranger != null) {
             pTooltipComponents.add(
-                Component.translatable("item.evenmoreinstruments.record.arranger", arranger)
+                new TranslatableComponent("item.evenmoreinstruments.record.arranger", arranger)
                     .withStyle(ChatFormatting.GRAY)
                     .withStyle(ChatFormatting.ITALIC)
             );

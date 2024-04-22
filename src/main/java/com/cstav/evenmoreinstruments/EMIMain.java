@@ -2,7 +2,8 @@ package com.cstav.evenmoreinstruments;
 
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
-import com.cstav.evenmoreinstruments.client.ModArmPose;
+import com.cstav.evenmoreinstruments.client.KeyMappings;
+import com.cstav.evenmoreinstruments.criteria.ModCriteria;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.crafting.ModRecipeSerializers;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
@@ -35,14 +37,12 @@ public class EMIMain
     {
         final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModPacketHandler.registerPackets();
-        bus.addListener(Main::initClient);
+        bus.addListener(EMIMain::initClient);
 
         ModSounds.register(bus);
 
         ModGameRules.load();
         ModCriteria.load();
-
-        EMIModCreativeModeTabs.register(bus);
 
         ModBlocks.register(bus);
         ModBlockEntities.register(bus);
