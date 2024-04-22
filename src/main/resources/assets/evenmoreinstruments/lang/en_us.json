@@ -1,23 +1,51 @@
 {
     "evenmoreinstruments.keymaps": "Even More Instruments! Keymaps",
-    "evenmoreinstruments.keymaps.violin_type_modifier": "Lengthen/Shorten Violin Sound",
+    "evenmoreinstruments.keymaps.instrument_type_modifier": "Cycle Instrument Sound",
+    "evenmoreinstruments.keymaps.record": "Record",
 
-    "itemGroup.evenmoreinstruments.instrument_accessories_tab": "Instrument Accessories",
+    "itemGroup.evenmoreinstruments.music_production_tab": "Music Production",
+
+    "item.shift.hint.show": "Hold Shift to learn more",
+    "item.shift.hint.hide": "Release Shift to hide",
 
 
     "item.evenmoreinstruments.violin": "Violin",
     "item.evenmoreinstruments.guitar": "Guitar",
     "item.evenmoreinstruments.trombone": "Trombone",
     "item.evenmoreinstruments.saxophone": "Saxophone",
+    "item.evenmoreinstruments.pipa": "Pipa",
+    "item.evenmoreinstruments.shamisen": "Shamisen",
     "item.evenmoreinstruments.note_block_instrument": "%s Note Block Instrument",
 
-    "item.evenmoreinstruments.looper_adapter": "Looper Wireless Adapter",
-    "item.evenmoreinstruments.looper_adapter.description": "Pairs an instrument block to a looper",
-    "item.evenmoreinstruments.looper_adapter.select_instrument": "Looper connected successfully. Please select an instrument to pair with it.",
-    "item.evenmoreinstruments.looper_adapter.select_looper": "Instrument connected successfully. Please select a looper to pair with it.",
-
     "block.evenmoreinstruments.keyboard": "Keyboard",
+    "block.evenmoreinstruments.koto": "Koto",
+
+
     "block.evenmoreinstruments.keyboard_stand": "Keyboard Stand",
+    "item.evenmoreinstruments.violin_bow": "Violin Bow",
+    "item.evenmoreinstruments.bachi": "Bachi",
+
+    "item.evenmoreinstruments.instrument.accessory.not_present": "You must hold a %s to use this instrument",
+
+
+    "item.evenmoreinstruments.looper_adapter": "Looper Wireless Adapter",
+
+    "item.evenmoreinstruments.looper_adapter.instrument.description": "Pairs an instrument block to a looper",
+    "item.evenmoreinstruments.looper_adapter.instrument.select": "Looper connected. Waiting for instrument or 2nd looper connection.",
+    "item.evenmoreinstruments.looper_adapter.instrument.success_pair": "Instrument paired successfully!",
+
+    "item.evenmoreinstruments.looper_adapter.looper.description": "Syncs 2 loopers together by copying the 1st's properties",
+    "item.evenmoreinstruments.looper_adapter.looper.select": "Instrument connected. Waiting for looper connection.",
+    "item.evenmoreinstruments.looper_adapter.looper.success_pair": "Loopers synced successfully!",
+
+
+
+    "item.evenmoreinstruments.writable_record": "Empty Record",
+    "item.evenmoreinstruments.burned_record": "Burned Record",
+
+    "item.evenmoreinstruments.interesting_record": "Interesting Record",
+
+    "item.evenmoreinstruments.record.arranger": "Arranger: %s",
 
 
     "label.evenmoreinstruments.violin_options": "Violin Options",
@@ -25,16 +53,38 @@
     "button.evenmoreinstruments.violin.soundType.half_note": "Half Note",
     "button.evenmoreinstruments.violin.soundType.full_note": "Full Note",
 
+    "label.evenmoreinstruments.pipa_options": "Pipa Options",
+    "button.evenmoreinstruments.pipa.soundType": "Pipa Sound Type",
+    "button.evenmoreinstruments.pipa.soundType.regular": "Regular",
+    "button.evenmoreinstruments.pipa.soundType.tremolo": "Tremolo",
+
 
     "block.evenmoreinstruments.looper": "Looper",
 
-    "evenmoreinstruments.looper.success_pair": "Instrument paired successfully!",
-    "evenmoreinstruments.looper.pair_conflict": "This Looper already has recorded footage!",
-    "evenmoreinstruments.looper.no_footage": "This looper has no footage! Use an instrument to start recording",
+    "evenmoreinstruments.looper.pair_conflict": "This record already has burned footage!",
+    "evenmoreinstruments.looper.no_record": "No record inserted",
+
+    "evenmoreinstruments.record.no_footage": "This record has no footage! Use an instrument to start recording",
+    "evenmoreinstruments.record.not_writable": "Record already burned",
+
 
     "button.evenmoreinstruments.record": "Record",
     "button.evenmoreinstruments.stop": "Stop",
 
     "gamerule.evenmoreinstruments_looperMaxNotes": "Looper Max Notes",
-    "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable."
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable.",
+
+
+
+    "evenmoreinstruments.advancements.main.japanese.title": "True Weeb",
+    "evenmoreinstruments.advancements.main.japanese.description": "Play on all Asian instruments",
+
+    "evenmoreinstruments.advancements.main.record_rickroll_in.title": "Interesting Record",
+    "evenmoreinstruments.advancements.main.record_rickroll_in.description": "Play the utterly suspicious record",
+
+    "evenmoreinstruments.advancements.main.record_writable_in.title": "Composer",
+    "evenmoreinstruments.advancements.main.record_writable_in.description": "Insert or burn music into a record",
+
+    "evenmoreinstruments.advancements.main.records_all.title": "Holan'i",
+    "evenmoreinstruments.advancements.main.records_all.description": "Play all burned records"
 }

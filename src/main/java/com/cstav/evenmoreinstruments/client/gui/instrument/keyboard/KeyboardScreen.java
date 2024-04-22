@@ -1,6 +1,6 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument.keyboard;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentThemeLoader;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //NOTE there just to make it load on setup
 @EventBusSubscriber(Dist.CLIENT)
 public class KeyboardScreen extends GridInstrumentScreen {
-    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(Main.MODID, "keyboard");
+    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(EMIMain.MODID, "keyboard");
 
     @Override
     public boolean isGenshinInstrument() {

@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " SA",
+        "S/ ",
+        "A  "
+    ],
+    "key": {
+        "/": {
+            "item": "minecraft:stick"
+        },
+        "A": {
+            "tag": "minecraft:planks"
+        },
+        "S": {
+            "item": "minecraft:string"
+        }
+    },
+    "result": {
+        "item": "evenmoreinstruments:violin_bow",
+        "count": 1
+    }
+}

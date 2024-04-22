@@ -1,3 +1,3 @@
 {
-    "parent": "evenmoreinstruments:block/looper_idle"
+    "parent": "evenmoreinstruments:block/looper/idle_not_looping"
 }

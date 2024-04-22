@@ -1,7 +1,6 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
-import com.cstav.evenmoreinstruments.Main;
-import com.cstav.evenmoreinstruments.block.LooperBlock;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
@@ -14,9 +13,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent.Context;
 
@@ -72,8 +69,8 @@ public class LooperRecordStatePacket implements IModPacket {
             return;
         }
 
-        changeRecordingState(player, looperTag, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
-        ModPacketHandler.sendToClient(new SyncModTagPacket(Main.modTag(instrumentBlock), instrumentBlockPos), player);
+        changeRecordingState(player, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
+        ModPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(instrumentBlock), instrumentBlockPos), player);
     }
 
     private void handleItem(final ServerPlayer player) {
@@ -90,29 +87,26 @@ public class LooperRecordStatePacket implements IModPacket {
             return;
         }
 
-        changeRecordingState(player, looperTag, lbe, () -> LooperUtil.remLooperTag(instrumentItem));
+        changeRecordingState(player, lbe, () -> LooperUtil.remLooperTag(instrumentItem));
     }
 
-    private void changeRecordingState(ServerPlayer player, CompoundTag looperTag, LooperBlockEntity lbe, Runnable looperTagRemover) {
+    private void changeRecordingState(ServerPlayer player, LooperBlockEntity lbe, Runnable looperTagRemover) {
         if (lbe.isLocked() && !lbe.isLockedBy(player.getUUID()))
             return;
 
         if (!recording) {
             lbe.lock();
 
-            final BlockState blockState = lbe.getBlockState();
-            final Level level = player.getLevel();
-
-            if (!(blockState.getBlock() instanceof LooperBlock looperBlock))
-                return;
-
-            level.setBlock(lbe.getBlockPos(),
-                looperBlock.setPlaying(true, level, blockState, lbe.getBlockPos())
-                , 3);
+            player.getLevel().setBlockAndUpdate(
+                lbe.getBlockPos(),
+                lbe.setPlaying(true, lbe.getBlockState())
+            );
 
             looperTagRemover.run();
+
+            LooperUtil.setNotRecording(player);
         } else
-            LooperUtil.setRecording(looperTag, true);
+            LooperUtil.setRecording(player, lbe.getBlockPos());
     }
 
 }

@@ -1,16 +1,16 @@
 package com.cstav.evenmoreinstruments.util;
 
-import javax.annotation.Nullable;
-
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
+import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
@@ -19,47 +19,51 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.Optional;
+
+import static java.util.Map.entry;
+
 public class LooperUtil {
-    public static final String LOOPER_TAG = "looper",
-        POS_TAG = "pos", RECORDING_TAG = "recording";
+    public static final String LOOPER_TAG = "looper", POS_TAG = "pos";
     
 
     // Handle instrument's looper tag
     public static boolean hasLooperTag(final ItemStack instrument) {
-        return hasLooperTag(Main.modTag(instrument));
+        return hasLooperTag(EMIMain.modTag(instrument));
     }
     public static boolean hasLooperTag(final BlockEntity instrument) {
-        return hasLooperTag(Main.modTag(instrument));
+        return hasLooperTag(EMIMain.modTag(instrument));
     }
     private static boolean hasLooperTag(final CompoundTag modTag) {
         return modTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND) && !modTag.getCompound(LOOPER_TAG).isEmpty();
     }
 
     public static void remLooperTag(final ItemStack instrument) {
-        Main.modTag(instrument).remove(LOOPER_TAG);
+        EMIMain.modTag(instrument).remove(LOOPER_TAG);
     }
     public static void remLooperTag(final BlockEntity instrument) {
-        Main.modTag(instrument).remove(LOOPER_TAG);
+        EMIMain.modTag(instrument).remove(LOOPER_TAG);
     }
 
     public static void createLooperTag(final ItemStack instrument, final BlockPos looperPos) {
-        Main.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
+        EMIMain.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
         constructLooperTag(looperTag(instrument), looperPos);
     }
     public static void createLooperTag(final BlockEntity instrument, final BlockPos looperPos) {
-        Main.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
+        EMIMain.modTag(instrument).put(LOOPER_TAG, new CompoundTag());
         constructLooperTag(looperTag(instrument), looperPos);
     }
     private static void constructLooperTag(final CompoundTag looperTag, final BlockPos looperPos) {
         looperTag.put(POS_TAG, NbtUtils.writeBlockPos(looperPos));
-        setRecording(looperTag, false);
     }
 
     public static CompoundTag looperTag(final ItemStack instrument) {
-        return looperTag(Main.modTag(instrument));
+        return looperTag(EMIMain.modTag(instrument));
     }
     public static CompoundTag looperTag(final BlockEntity instrument) {
-        return looperTag(Main.modTag(instrument));
+        return looperTag(EMIMain.modTag(instrument));
     }
     public static CompoundTag looperTag(final CompoundTag parentTag) {
         return parentTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND)
@@ -70,7 +74,7 @@ public class LooperUtil {
 
     public static CompoundTag getLooperTagFromEvent(final InstrumentPlayedEvent.ByPlayer event) {
         return (!event.isBlockInstrument())
-            ? looperTag(event.itemInstrument.get())
+            ? looperTag(event.player.getItemInHand(event.hand.get()))
             : looperTag(event.level.getBlockEntity(event.playPos));
     }
 
@@ -79,7 +83,7 @@ public class LooperUtil {
         final Level level = event.level;
 
         if (event.isItemInstrument())
-            return getFromInstrument(level, event.itemInstrument.get());
+            return getFromInstrument(level, event.player.getItemInHand(event.hand.get()));
         else if (event.isBlockInstrument())
             return getFromInstrument(level, event.level.getBlockEntity(event.playPos));
 
@@ -125,18 +129,18 @@ public class LooperUtil {
 
 
     public static boolean performPair(LooperBlockEntity lbe, Runnable pairPerformer, Player pairingPlayer) {
-        if (!performChannelCheck(lbe, pairingPlayer))
+        if (!validateFootagePresence(lbe, pairingPlayer))
             return false;
 
         pairPerformer.run();
 
         pairingPlayer.displayClientMessage(
-            new TranslatableComponent("evenmoreinstruments.looper.success_pair").withStyle(ChatFormatting.GREEN)
+            new TranslatableComponent("item.evenmoreinstruments.looper_adapter.instrument.success_pair").withStyle(ChatFormatting.GREEN)
         , true);
 
         return true;
     }
-    public static boolean performChannelCheck(final LooperBlockEntity lbe, final Player pairingPlayer) {
+    public static boolean validateFootagePresence(final LooperBlockEntity lbe, final Player pairingPlayer) {
         if (!lbe.hasFootage())
             return true;
 
@@ -165,13 +169,73 @@ public class LooperUtil {
         final CompoundTag looperPosTag = looperTag.getCompound(POS_TAG);
         return (looperPosTag == null) ? null : NbtUtils.readBlockPos(looperPosTag);
     }
-    
-    //TODO Move recording data to player
-    public static void setRecording(final CompoundTag looperTag, final boolean recording) {
-        looperTag.putBoolean(RECORDING_TAG, recording);
+
+    public static void setRecording(final Player player, final BlockPos looperPos) {
+        RecordingCapabilityProvider.setRecording(player, looperPos);
     }
-    public static boolean isRecording(final CompoundTag looperTag) {
-        return looperTag.getBoolean(RECORDING_TAG);
+    public static void setNotRecording(final Player player) {
+        RecordingCapabilityProvider.setNotRecording(player);
     }
-    
+    public static boolean isRecording(final Player player) {
+        return RecordingCapabilityProvider.isRecording(player);
+    }
+
+
+    //#region Legacy Looper Migration
+
+    /**
+     * Maps the old keys to the new ones
+     */
+    private static final Map<String, String> LOOPER_LEGACY_MAPPER = Map.ofEntries(
+        // Record
+        entry("instrumentId", EMIRecordItem.INSTRUMENT_ID_TAG),
+        entry("notes", EMIRecordItem.NOTES_TAG),
+        entry("volume", EMIRecordItem.VOLUME_TAG),
+        entry("pitch", EMIRecordItem.PITCH_TAG),
+        entry("soundIndex", EMIRecordItem.SOUND_INDEX_TAG),
+        entry("soundType", EMIRecordItem.SOUND_TYPE_TAG),
+        entry("timestamp", EMIRecordItem.TIMESTAMP_TAG),
+        // Looper
+        entry("recording", LooperBlockEntity.RECORDING_TAG),
+        entry("ticks", LooperBlockEntity.TICKS_TAG),
+        entry("locked", LooperBlockEntity.LOCKED_TAG),
+        entry("lockedBy", LooperBlockEntity.LOCKED_BY_TAG),
+        // Looper -> Record
+        entry("channel", EMIRecordItem.CHANNEL_TAG),
+        entry("repeatTick", EMIRecordItem.REPEAT_TICK_TAG)
+    );
+
+    /**
+     * Migrates all keys of a looper, if it is a legacy one.
+     * @return A new record channel compound data containing the old looper's data.
+     * To be burned into a record.
+     */
+    public static Optional<CompoundTag> migrateLegacyLooper(final LooperBlockEntity lbe) {
+        final CompoundTag lbed = lbe.getPersistentData();
+
+        if (!lbed.contains("channel", Tag.TAG_COMPOUND))
+            return Optional.empty();
+
+        final CompoundTag looperData = CommonUtil.deepConvertCompound(lbed, LOOPER_LEGACY_MAPPER);
+        final CompoundTag channel = looperData.getCompound(EMIRecordItem.CHANNEL_TAG);
+        // Writable is a new tag. This record will be burned:
+        looperData.putBoolean(EMIRecordItem.WRITABLE_TAG, false);
+        // RepeatTick moved from looper to channel
+        CommonUtil.moveTags(looperData, channel, EMIRecordItem.REPEAT_TICK_TAG);
+
+        // Remove all old looper tags
+        lbed.getAllKeys()
+            .stream().toList() // Convert to list as to not mess with the internal map
+            .forEach(lbed::remove);
+
+        // Add everything back except for the channel; which belongs to a record
+        looperData.getAllKeys().stream()
+            .filter((key) -> !key.equals(EMIRecordItem.CHANNEL_TAG))
+            .forEach((key) -> lbed.put(key, looperData.get(key)));
+
+        return Optional.of(channel);
+    }
+
+    //#endregion
+
 }

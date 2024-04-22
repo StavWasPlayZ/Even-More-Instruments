@@ -596,5 +596,432 @@
     "saxophone_note_20": {
         "category": "record",
         "sounds": ["evenmoreinstruments:saxophone/20"]
+    },
+
+
+    "pipa_regular_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/0"]
+    },
+    "pipa_regular_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/1"]
+    },
+    "pipa_regular_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/2"]
+    },
+    "pipa_regular_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/3"]
+    },
+    "pipa_regular_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/4"]
+    },
+    "pipa_regular_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/5"]
+    },
+    "pipa_regular_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/6"]
+    },
+    "pipa_regular_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/7"]
+    },
+    "pipa_regular_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/8"]
+    },
+    "pipa_regular_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/9"]
+    },
+    "pipa_regular_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/10"]
+    },
+    "pipa_regular_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/11"]
+    },
+    "pipa_regular_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/12"]
+    },
+    "pipa_regular_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/13"]
+    },
+    "pipa_regular_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/14"]
+    },
+    "pipa_regular_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/15"]
+    },
+    "pipa_regular_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/16"]
+    },
+    "pipa_regular_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/17"]
+    },
+    "pipa_regular_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/18"]
+    },
+    "pipa_regular_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/19"]
+    },
+    "pipa_regular_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_regular/20"]
+    },
+
+    "pipa_tremolo_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/0"]
+    },
+    "pipa_tremolo_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/1"]
+    },
+    "pipa_tremolo_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/2"]
+    },
+    "pipa_tremolo_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/3"]
+    },
+    "pipa_tremolo_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/4"]
+    },
+    "pipa_tremolo_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/5"]
+    },
+    "pipa_tremolo_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/6"]
+    },
+    "pipa_tremolo_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/7"]
+    },
+    "pipa_tremolo_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/8"]
+    },
+    "pipa_tremolo_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/9"]
+    },
+    "pipa_tremolo_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/10"]
+    },
+    "pipa_tremolo_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/11"]
+    },
+    "pipa_tremolo_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/12"]
+    },
+    "pipa_tremolo_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/13"]
+    },
+    "pipa_tremolo_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/14"]
+    },
+    "pipa_tremolo_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/15"]
+    },
+    "pipa_tremolo_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/16"]
+    },
+    "pipa_tremolo_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/17"]
+    },
+    "pipa_tremolo_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/18"]
+    },
+    "pipa_tremolo_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/19"]
+    },
+    "pipa_tremolo_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:pipa/pipa_tremolo/20"]
+    },
+
+
+    "shamisen_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/0"]
+    },
+    "shamisen_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/1"]
+    },
+    "shamisen_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/2"]
+    },
+    "shamisen_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/3"]
+    },
+    "shamisen_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/4"]
+    },
+    "shamisen_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/5"]
+    },
+    "shamisen_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/6"]
+    },
+    "shamisen_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/7"]
+    },
+    "shamisen_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/8"]
+    },
+    "shamisen_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/9"]
+    },
+    "shamisen_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/10"]
+    },
+    "shamisen_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/11"]
+    },
+    "shamisen_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/12"]
+    },
+    "shamisen_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/13"]
+    },
+    "shamisen_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/14"]
+    },
+    "shamisen_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/15"]
+    },
+    "shamisen_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/16"]
+    },
+    "shamisen_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/17"]
+    },
+    "shamisen_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/18"]
+    },
+    "shamisen_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/19"]
+    },
+    "shamisen_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/20"]
+    },
+
+    "shamisen_note_0_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/0.stereo"]
+    },
+    "shamisen_note_1_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/1.stereo"]
+    },
+    "shamisen_note_2_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/2.stereo"]
+    },
+    "shamisen_note_3_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/3.stereo"]
+    },
+    "shamisen_note_4_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/4.stereo"]
+    },
+    "shamisen_note_5_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/5.stereo"]
+    },
+    "shamisen_note_6_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/6.stereo"]
+    },
+    "shamisen_note_7_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/7.stereo"]
+    },
+    "shamisen_note_8_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/8.stereo"]
+    },
+    "shamisen_note_9_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/9.stereo"]
+    },
+    "shamisen_note_10_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/10.stereo"]
+    },
+    "shamisen_note_11_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/11.stereo"]
+    },
+    "shamisen_note_12_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/12.stereo"]
+    },
+    "shamisen_note_13_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/13.stereo"]
+    },
+    "shamisen_note_14_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/14.stereo"]
+    },
+    "shamisen_note_15_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/15.stereo"]
+    },
+    "shamisen_note_16_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/16.stereo"]
+    },
+    "shamisen_note_17_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/17.stereo"]
+    },
+    "shamisen_note_18_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/18.stereo"]
+    },
+    "shamisen_note_19_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/19.stereo"]
+    },
+    "shamisen_note_20_stereo": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:shamisen/20.stereo"]
+    },
+
+    "koto_note_0": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/0"]
+    },
+    "koto_note_1": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/1"]
+    },
+    "koto_note_2": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/2"]
+    },
+    "koto_note_3": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/3"]
+    },
+    "koto_note_4": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/4"]
+    },
+    "koto_note_5": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/5"]
+    },
+    "koto_note_6": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/6"]
+    },
+    "koto_note_7": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/7"]
+    },
+    "koto_note_8": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/8"]
+    },
+    "koto_note_9": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/9"]
+    },
+    "koto_note_10": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/10"]
+    },
+    "koto_note_11": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/11"]
+    },
+    "koto_note_12": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/12"]
+    },
+    "koto_note_13": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/13"]
+    },
+    "koto_note_14": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/14"]
+    },
+    "koto_note_15": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/15"]
+    },
+    "koto_note_16": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/16"]
+    },
+    "koto_note_17": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/17"]
+    },
+    "koto_note_18": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/18"]
+    },
+    "koto_note_19": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/19"]
+    },
+    "koto_note_20": {
+        "category": "record",
+        "sounds": ["evenmoreinstruments:koto/20"]
     }
 }

@@ -1,11 +1,8 @@
 package com.cstav.evenmoreinstruments.sound;
 
-import java.util.HashMap;
-
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.genshinstrument.sound.NoteSound;
 import com.cstav.genshinstrument.sound.NoteSoundRegistrar;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -13,9 +10,11 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.HashMap;
+
 public class ModSounds {
     
-    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Main.MODID);
+    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, EMIMain.MODID);
     public static void register(final IEventBus bus) {
         SOUNDS.register(bus);
     }
@@ -35,7 +34,12 @@ public class ModSounds {
         TROMBONE = nsr(loc("trombone")).registerGrid(),
         SAXOPHONE = nsr(loc("saxophone")).registerGrid(),
 
-        GUITAR = nsr(loc("guitar")).registerGrid()
+        GUITAR = nsr(loc("guitar")).registerGrid(),
+        SHAMISEN = nsr(loc("shamisen")).stereo().registerGrid(),
+        KOTO = nsr(loc("koto")).registerGrid(),
+
+        PIPA_REGULAR = nsr(loc("pipa_regular")).registerGrid(),
+        PIPA_TERMOLO = nsr(loc("pipa_tremolo")).registerGrid()
     ;
 
 
@@ -59,7 +63,7 @@ public class ModSounds {
 
 
     private static ResourceLocation loc(final String id) {
-        return new ResourceLocation(Main.MODID, id);
+        return new ResourceLocation(EMIMain.MODID, id);
     }
     /**
      * Shorthand for {@code new NoteSoundRegistrar(soundRegistrar, instrumentId)}

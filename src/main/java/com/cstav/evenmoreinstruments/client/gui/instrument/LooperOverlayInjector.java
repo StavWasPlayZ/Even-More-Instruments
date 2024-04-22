@@ -1,6 +1,7 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument;
 
-import com.cstav.evenmoreinstruments.Main;
+import com.cstav.evenmoreinstruments.EMIMain;
+import com.cstav.evenmoreinstruments.client.KeyMappings;
 import com.cstav.evenmoreinstruments.mixins.required.ScreenAccessor;
 import com.cstav.evenmoreinstruments.event.ScreenCloseEvent;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
@@ -15,6 +16,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +29,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID, value = Dist.CLIENT)
 public class LooperOverlayInjector {
     private static final int REC_BTN_WIDTH = 120;
 
@@ -65,7 +67,7 @@ public class LooperOverlayInjector {
 
         event.addListener(
             recordBtn = new Button((screen.width - REC_BTN_WIDTH) / 2, 5, REC_BTN_WIDTH, 20,
-                new TranslatableComponent("button.evenmoreinstruments.record"),
+                appendRecordKeyHint(new TranslatableComponent("button.evenmoreinstruments.record")),
                 LooperOverlayInjector::onRecordPress
             )
         );
@@ -73,6 +75,21 @@ public class LooperOverlayInjector {
     public static void handleLooperRemoved() {
         removeRecordButton();
         screen = null;
+    }
+
+    private static MutableComponent appendRecordKeyHint(final MutableComponent component) {
+        return component
+            .append(" (")
+            .append(KeyMappings.RECORD.get().getKey().getDisplayName())
+            .append(")");
+    }
+
+    @SubscribeEvent
+    public static void onKeyboardPress(final ScreenEvent.KeyPressed.Pre event) {
+        if (KeyMappings.RECORD.get().matches(event.getKeyCode(), event.getScanCode()) && (recordBtn != null)) {
+            recordBtn.playDownSound(Minecraft.getInstance().getSoundManager());
+            recordBtn.onPress();
+        }
     }
 
     @SubscribeEvent
@@ -103,16 +120,11 @@ public class LooperOverlayInjector {
             InstrumentOpenProvider.getHand(Minecraft.getInstance().player)
             : null;
 
-        isRecording = isItem
-            ? LooperUtil.isRecording(LooperUtil.looperTag(player.getItemInHand(hand)))
-            : LooperUtil.isRecording(LooperUtil.looperTag(getIBE(player)));
-
-
         if (isRecording) {
             removeRecordButton();
             screen = null;
         } else
-            btn.setMessage(new TranslatableComponent("button.evenmoreinstruments.stop"));
+            btn.setMessage(appendRecordKeyHint(new TranslatableComponent("button.evenmoreinstruments.stop")));
 
         isRecording = !isRecording;
         ModPacketHandler.sendToServer(new LooperRecordStatePacket(isRecording, hand));
@@ -131,5 +143,6 @@ public class LooperOverlayInjector {
             return;
 
         ((ScreenAccessor)screen).invokeRemoveWidget(recordBtn);
+        recordBtn = null;
     }
 }

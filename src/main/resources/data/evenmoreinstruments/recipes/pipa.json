@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+
+    "key": {
+        "#": {
+            "item": "minecraft:stripped_birch_log"
+        },
+        "X": {
+            "item": "minecraft:string"
+        }
+    },
+
+    "pattern": [
+        "  #",
+        "#X ",
+        "## "
+    ],
+
+    "result": {
+        "item": "evenmoreinstruments:pipa"
+    }
+}

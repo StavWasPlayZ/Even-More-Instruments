@@ -1,0 +1,29 @@
+{
+    "parent": "evenmoreinstruments:recipes/root",
+
+    "criteria": {
+        "has_item": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "minecraft:birch_log",
+                            "minecraft:stripped_birch_log"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+
+    "requirements": [
+        ["has_item"]
+    ],
+
+    "rewards": {
+        "recipes": [
+            "evenmoreinstruments:shamisen"
+        ]
+    }
+}
