@@ -4,6 +4,7 @@ import com.cstav.evenmoreinstruments.EMIMain;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -27,7 +28,7 @@ public class ModBlocks {
         )),
 
         KOTO = BLOCKS.register("koto", () -> new KotoBlock(
-            Properties.of(Material.WOOD, DyeColor.BROWN).noOcclusion().strength(.3f)
+            Properties.of(Material.WOOD, DyeColor.BROWN).noOcclusion().strength(.3f).sound(SoundType.WOOD)
         )),
 
         LOOPER = BLOCKS.register("looper", () -> new LooperBlock(Properties.copy(Blocks.NOTE_BLOCK)))
