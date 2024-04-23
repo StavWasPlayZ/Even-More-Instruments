@@ -1,6 +1,7 @@
-package com.cstav.evenmoreinstruments.item.partial.instrument;
+package com.cstav.evenmoreinstruments.item;
 
 import com.cstav.evenmoreinstruments.EMIMain;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
