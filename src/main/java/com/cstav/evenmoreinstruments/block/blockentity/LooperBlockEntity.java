@@ -458,9 +458,9 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         if (!RecordingCapabilityProvider.isRecording(player))
             return;
 
-        event.getEntity().level()
+        player.level()
             .getBlockEntity(RecordingCapabilityProvider.getLooperPos(player), ModBlockEntities.LOOPER.get())
-            .filter((lbe) -> lbe.lockedBy.equals(event.getEntity().getUUID()))
+            .filter((lbe) -> lbe.lockedBy.equals(player.getUUID()))
             .ifPresent((lbe) -> {
                     lbe.reset();
                     lbe.getPersistentData().putBoolean(RECORDING_TAG, false);
