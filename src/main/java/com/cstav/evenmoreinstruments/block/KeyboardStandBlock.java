@@ -2,7 +2,7 @@ package com.cstav.evenmoreinstruments.block;
 
 import com.cstav.evenmoreinstruments.block.blockentity.ModInstrumentBlockEntity;
 import com.cstav.evenmoreinstruments.item.ModItems;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
@@ -73,7 +73,7 @@ public class KeyboardStandBlock extends AbstractInstrumentBlock {
 
     @Override
     protected void onInstrumentOpen(ServerPlayer player) {
-        ModPacketHandler.sendToClient(new ModOpenInstrumentPacket("keyboard"), player);
+        EMIPacketHandler.sendToClient(new ModOpenInstrumentPacket("keyboard"), player);
     }
 
     @Override

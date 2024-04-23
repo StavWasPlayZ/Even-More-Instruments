@@ -4,7 +4,7 @@ import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.partial.IDoubleBlock;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.SyncModTagPacket;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
@@ -127,9 +127,9 @@ public class LooperAdapterItem extends Item {
 
             // Handle syncing data to client
             if (player instanceof ServerPlayer serverPlayer) {
-                ModPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(ibe), instrumentBlockPos), serverPlayer);
+                EMIPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(ibe), instrumentBlockPos), serverPlayer);
                 if (otherBlockPos != null)
-                    ModPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(ibe), otherBlockPos), serverPlayer);
+                    EMIPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(ibe), otherBlockPos), serverPlayer);
             }
 
         }, player);
