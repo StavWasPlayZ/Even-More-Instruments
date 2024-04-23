@@ -4,7 +4,7 @@ import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.partial.IDoubleBlock;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
+import com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

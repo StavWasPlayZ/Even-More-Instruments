@@ -6,8 +6,8 @@ import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.RecordRepository;
+import com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem;
+import com.cstav.evenmoreinstruments.item.emirecord.RecordRepository;
 import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
@@ -39,8 +39,8 @@ import org.slf4j.Logger;
 
 import java.util.UUID;
 
-import static com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem.BURNED_MEDIA_TAG;
-import static com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem.*;
+import static com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem.BURNED_MEDIA_TAG;
+import static com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem.*;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class LooperBlockEntity extends BlockEntity implements ContainerSingleItem {

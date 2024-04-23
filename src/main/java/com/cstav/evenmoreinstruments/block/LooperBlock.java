@@ -4,7 +4,7 @@ import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.block.util.LooperInteractionRunnable;
 import com.cstav.evenmoreinstruments.criteria.ModCriteria;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
+import com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.item.InstrumentItem;
 import net.minecraft.ChatFormatting;
