@@ -89,7 +89,7 @@ public class ModItems {
                 (player) -> ModPacketHandler.sendToClient(
                     new ModOpenInstrumentPacket("shamisen"), player
                 ),
-                BACHI,
+                (InstrumentAccessoryItem) BACHI.get(),
                 "Roland SC-88"
             ),
             DEFAULT_INSTRUMENTS_TABS,

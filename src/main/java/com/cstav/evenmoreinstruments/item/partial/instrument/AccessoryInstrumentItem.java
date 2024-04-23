@@ -16,27 +16,25 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-import java.util.function.Supplier;
-
 /**
  * An instrument that requires the usage of a {@link InstrumentAccessoryItem}
  */
 @EventBusSubscriber(modid = EMIMain.MODID, bus = Bus.FORGE)
 public class AccessoryInstrumentItem extends CreditableInstrumentItem {
-    private final Supplier<Item> accessorySupplier;
+    private final InstrumentAccessoryItem accessory;
 
-    public AccessoryInstrumentItem(OpenInstrumentPacketSender onOpenRequest, Supplier<Item> accessorySupplier, String credit) {
+    public AccessoryInstrumentItem(OpenInstrumentPacketSender onOpenRequest, InstrumentAccessoryItem accessory, String credit) {
         super(onOpenRequest, credit);
-        this.accessorySupplier = accessorySupplier;
+        this.accessory = accessory;
     }
-    public AccessoryInstrumentItem(OpenInstrumentPacketSender onOpenRequest, Properties properties, Supplier<Item> accessorySupplier,
+    public AccessoryInstrumentItem(OpenInstrumentPacketSender onOpenRequest, Properties properties, InstrumentAccessoryItem accessory,
                                    String credit) {
         super(onOpenRequest, properties, credit);
-        this.accessorySupplier = accessorySupplier;
+        this.accessory = accessory;
     }
 
     public InstrumentAccessoryItem getAccessoryItem() {
-        return (InstrumentAccessoryItem) accessorySupplier.get();
+        return accessory;
     }
 
     @Override
