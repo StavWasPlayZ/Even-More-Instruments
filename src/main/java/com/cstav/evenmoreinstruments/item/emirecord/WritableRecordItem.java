@@ -47,6 +47,6 @@ public class WritableRecordItem extends EMIRecordItem {
 
     @Override
     public int getMaxStackSize(ItemStack stack) {
-        return isBurned(stack) ? super.getMaxStackSize(stack) : 64;
+        return isBurned(stack) ? super.getMaxStackSize(stack) : 16;
     }
 }
