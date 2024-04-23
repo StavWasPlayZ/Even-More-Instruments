@@ -213,9 +213,11 @@ public class ModItems {
     // }
     @SafeVarargs
     private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, ResourceKey<CreativeModeTab>... tabs) {
-        return register(block.getId().getPath(),
-            () -> new BlockItem(block.get(), new Properties())
-        , tabs);
+        return register(
+            block.getId().getPath(),
+            () -> new BlockItem(block.get(), new Properties()),
+            tabs
+        );
     }
 
     private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>[] tabs,
