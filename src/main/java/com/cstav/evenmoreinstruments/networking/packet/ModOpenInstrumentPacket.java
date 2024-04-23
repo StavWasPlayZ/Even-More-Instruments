@@ -2,10 +2,10 @@ package com.cstav.evenmoreinstruments.networking.packet;
 
 import com.cstav.evenmoreinstruments.client.gui.instrument.guitar.GuitarScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.keyboard.KeyboardScreen;
+import com.cstav.evenmoreinstruments.client.gui.instrument.koto.KotoScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.pipa.PipaScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.saxophone.SaxophoneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.ShamisenScreen;
-import com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.shamisen.KotoScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.trombone.TromboneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
 import com.cstav.genshinstrument.networking.packet.instrument.OpenInstrumentPacket;
