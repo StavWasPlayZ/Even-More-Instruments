@@ -15,7 +15,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class ModOpenInstrumentPacket extends OpenInstrumentPacket {
+public class EMIOpenInstrumentPacket extends OpenInstrumentPacket {
     private static final Map<String, Supplier<Supplier<Screen>>> INSTRUMENT_MAP = Map.of(
         "keyboard", () -> KeyboardScreen::new,
         "violin", () -> ViolinScreen::new,
@@ -28,11 +28,11 @@ public class ModOpenInstrumentPacket extends OpenInstrumentPacket {
     );
 
 
-    public ModOpenInstrumentPacket(final String instrumentId) {
+    public EMIOpenInstrumentPacket(final String instrumentId) {
         super(instrumentId);
     }
     
-    public ModOpenInstrumentPacket(final FriendlyByteBuf buf) {
+    public EMIOpenInstrumentPacket(final FriendlyByteBuf buf) {
         super(buf);
     }
 

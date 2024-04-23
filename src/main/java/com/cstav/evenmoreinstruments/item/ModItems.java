@@ -9,7 +9,7 @@ import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableBlockInst
 import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
 import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableWindInstrumentItem;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
+import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -70,13 +70,13 @@ public class ModItems {
 
         GUITAR = register("guitar", () -> new CreditableInstrumentItem(
             (player) -> EMIPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("guitar"), player
+                new EMIOpenInstrumentPacket("guitar"), player
             ),
             "Philharmonia"
         )),
         PIPA = register("pipa", () -> new CreditableInstrumentItem(
             (player) -> EMIPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("pipa"), player
+                new EMIOpenInstrumentPacket("pipa"), player
             ),
             "DSK Asian DreamZ"
         )),
@@ -89,7 +89,7 @@ public class ModItems {
         SHAMISEN = register("shamisen",
             () -> new AccessoryInstrumentItem(
                 (player) -> EMIPacketHandler.sendToClient(
-                    new ModOpenInstrumentPacket("shamisen"), player
+                    new EMIOpenInstrumentPacket("shamisen"), player
                 ),
                 (InstrumentAccessoryItem) BACHI.get(),
                 "Roland SC-88"
@@ -108,13 +108,13 @@ public class ModItems {
 
         TROMBONE = register("trombone", () -> new CreditableWindInstrumentItem(
             (player) -> EMIPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("trombone"), player
+                new EMIOpenInstrumentPacket("trombone"), player
             ),
             "Philharmonia"
         )),
         SAXOPHONE = register("saxophone", () -> new CreditableWindInstrumentItem(
             (player) -> EMIPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("saxophone"), player
+                new EMIOpenInstrumentPacket("saxophone"), player
             ),
             "Philharmonia"
         )),
