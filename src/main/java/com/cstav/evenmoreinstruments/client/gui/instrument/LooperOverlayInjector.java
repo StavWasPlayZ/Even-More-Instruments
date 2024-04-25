@@ -4,7 +4,7 @@ import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.client.KeyMappings;
 import com.cstav.evenmoreinstruments.event.ScreenCloseEvent;
 import com.cstav.evenmoreinstruments.mixins.required.ScreenAccessor;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.DoesLooperExistPacket;
 import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
@@ -52,7 +52,7 @@ public class LooperOverlayInjector {
             if (!LooperUtil.hasLooperTag(instrumentItem))
                 return;
 
-            ModPacketHandler.sendToServer(new DoesLooperExistPacket(hand));
+            EMIPacketHandler.sendToServer(new DoesLooperExistPacket(hand));
         } else {
             final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
             final BlockEntity instrumentBE = player.getLevel().getBlockEntity(instrumentBlockPos);
@@ -60,7 +60,7 @@ public class LooperOverlayInjector {
             if (!LooperUtil.hasLooperTag(instrumentBE))
                 return;
 
-            ModPacketHandler.sendToServer(new DoesLooperExistPacket());
+            EMIPacketHandler.sendToServer(new DoesLooperExistPacket());
         }
 
         LooperOverlayInjector.screen = instrumentScreen;
@@ -99,7 +99,7 @@ public class LooperOverlayInjector {
 
         final Player player = Minecraft.getInstance().player;
 
-        ModPacketHandler.sendToServer(
+        EMIPacketHandler.sendToServer(
             new LooperRecordStatePacket(false,
                 InstrumentOpenProvider.isItem(player)
                     ? InstrumentOpenProvider.getHand(player)
@@ -127,7 +127,7 @@ public class LooperOverlayInjector {
             btn.setMessage(appendRecordKeyHint(new TranslatableComponent("button.evenmoreinstruments.stop")));
 
         isRecording = !isRecording;
-        ModPacketHandler.sendToServer(new LooperRecordStatePacket(isRecording, hand));
+        EMIPacketHandler.sendToServer(new LooperRecordStatePacket(isRecording, hand));
     }
 
     private static BlockEntity getIBE(final Player player) {

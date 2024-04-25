@@ -19,19 +19,24 @@ public class KeyMappings {
     
     public static final Lazy<KeyMapping>
         INSTRUMENT_TYPE_MODIFIER = Lazy.of(
-            () -> new KeyMapping(CATEGORY+".instrument_type_modifier",
+            () -> new KeyMapping(
+                CATEGORY+".instrument_type_modifier",
                 InstrumentKeyMappings.INSTRUMENT_KEY_CONFLICT_CONTEXT,
                 InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_RIGHT_ALT
-            , CATEGORY)
+                GLFW.GLFW_KEY_RIGHT_ALT,
+                CATEGORY
+            )
         ),
         RECORD = Lazy.of(
-            () -> new KeyMapping(CATEGORY+".record",
+            () -> new KeyMapping(
+                CATEGORY+".record",
                 InstrumentKeyMappings.INSTRUMENT_KEY_CONFLICT_CONTEXT,
                 InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_GRAVE_ACCENT
-            , CATEGORY)
-        );
+                GLFW.GLFW_KEY_GRAVE_ACCENT,
+                CATEGORY
+            )
+        )
+    ;
 
     public static void registerKeybinds() {
         ClientRegistry.registerKeyBinding(INSTRUMENT_TYPE_MODIFIER.get());

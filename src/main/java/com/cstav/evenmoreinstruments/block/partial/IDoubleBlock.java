@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.block;
+package com.cstav.evenmoreinstruments.block.partial;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

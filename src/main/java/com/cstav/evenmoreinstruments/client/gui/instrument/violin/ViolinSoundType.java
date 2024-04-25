@@ -1,14 +1,12 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument.violin;
 
-import java.util.function.Supplier;
-
 import com.cstav.evenmoreinstruments.client.gui.instrument.partial.CyclableSoundType;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
-import com.cstav.genshinstrument.client.config.enumType.SoundType;
 import com.cstav.genshinstrument.sound.NoteSound;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.function.Supplier;
 
 @OnlyIn(Dist.CLIENT)
 public enum ViolinSoundType implements CyclableSoundType<ViolinSoundType> {

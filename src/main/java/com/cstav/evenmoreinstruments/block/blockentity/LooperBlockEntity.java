@@ -6,9 +6,9 @@ import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.RecordRepository;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem;
+import com.cstav.evenmoreinstruments.item.emirecord.RecordRepository;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
@@ -38,8 +38,8 @@ import org.slf4j.Logger;
 
 import java.util.UUID;
 
-import static com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem.BURNED_MEDIA_TAG;
-import static com.cstav.evenmoreinstruments.item.partial.emirecord.EMIRecordItem.*;
+import static com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem.BURNED_MEDIA_TAG;
+import static com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem.*;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class LooperBlockEntity extends BlockEntity implements Clearable {
@@ -50,7 +50,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
         RECORDING_TAG = "Recording",
 
         TICKS_TAG = "Ticks",
-    
+
         LOCKED_TAG = "Locked",
         LOCKED_BY_TAG = "LockedBy"
     ;
@@ -302,7 +302,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
 
         if (!getLevel().isClientSide)
             getLevel().players().forEach((player) ->
-                ModPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, getBlockPos()), (ServerPlayer)player)
+                EMIPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, getBlockPos()), (ServerPlayer)player)
             );
 
         return newState;
@@ -459,9 +459,9 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
         if (!RecordingCapabilityProvider.isRecording(player))
             return;
 
-        event.getEntity().getLevel()
+        player.getLevel()
             .getBlockEntity(RecordingCapabilityProvider.getLooperPos(player), ModBlockEntities.LOOPER.get())
-            .filter((lbe) -> lbe.lockedBy.equals(event.getEntity().getUUID()))
+            .filter((lbe) -> lbe.lockedBy.equals(player.getUUID()))
             .ifPresent((lbe) -> {
                     lbe.reset();
                     lbe.getTileData().putBoolean(RECORDING_TAG, false);

@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.block;
+package com.cstav.evenmoreinstruments.block.util;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import net.minecraft.core.BlockPos;

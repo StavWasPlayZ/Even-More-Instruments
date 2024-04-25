@@ -7,7 +7,7 @@ import com.cstav.evenmoreinstruments.criteria.ModCriteria;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.crafting.ModRecipeSerializers;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +36,7 @@ public class EMIMain
     public EMIMain()
     {
         final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModPacketHandler.registerPackets();
+        EMIPacketHandler.registerPackets();
         bus.addListener(EMIMain::initClient);
 
         ModSounds.register(bus);

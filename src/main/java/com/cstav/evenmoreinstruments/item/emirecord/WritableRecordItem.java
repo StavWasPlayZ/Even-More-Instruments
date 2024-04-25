@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.item.partial.emirecord;
+package com.cstav.evenmoreinstruments.item.emirecord;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
@@ -48,6 +48,6 @@ public class WritableRecordItem extends EMIRecordItem {
 
     @Override
     public int getItemStackLimit(ItemStack stack) {
-        return isBurned(stack) ? super.getItemStackLimit(stack) : 64;
+        return isBurned(stack) ? super.getItemStackLimit(stack) : 16;
     }
 }
