@@ -16,7 +16,7 @@ class ViolinItem extends AccessoryInstrumentItem {
                 new EMIOpenInstrumentPacket("violin"), player
             ),
             new Properties().tab(ModCreativeModeTabs.instrumentsTab),
-            (InstrumentAccessoryItem) ModItems.VIOLIN_BOW,
+            (InstrumentAccessoryItem) ModItems.VIOLIN_BOW.get(),
             "Philharmonia"
         );
     }
