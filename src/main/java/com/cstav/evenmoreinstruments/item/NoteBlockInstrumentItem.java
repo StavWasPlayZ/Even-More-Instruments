@@ -1,9 +1,8 @@
 package com.cstav.evenmoreinstruments.item;
 
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.OpenNoteBlockInstrumentPacket;
 import com.cstav.genshinstrument.item.InstrumentItem;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -13,7 +12,7 @@ public class NoteBlockInstrumentItem extends InstrumentItem {
 
     public final NoteBlockInstrument instrument;
     public NoteBlockInstrumentItem(NoteBlockInstrument instrument) {
-        super((player) -> ModPacketHandler.sendToClient(
+        super((player) -> EMIPacketHandler.sendToClient(
             new OpenNoteBlockInstrumentPacket(instrument), player
         ));
 

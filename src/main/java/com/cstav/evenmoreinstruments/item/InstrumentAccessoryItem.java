@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.item.partial.instrument;
+package com.cstav.evenmoreinstruments.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;

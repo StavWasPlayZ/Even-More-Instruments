@@ -1,6 +1,5 @@
-package com.cstav.evenmoreinstruments;
+package com.cstav.evenmoreinstruments.block.partial;
 
-import com.cstav.evenmoreinstruments.block.IDoubleBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.ModInstrumentBlockEntity;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
