@@ -38,12 +38,6 @@ import java.util.List;
 import java.util.function.Function;
 
 public class LooperBlock extends Block implements EntityBlock {
-    /**
-     * Redstone signal above this level will cause the looper to play.
-     * Otherwise, will cycle play state.
-     */
-    public static final int REDSTONE_PLAY_SIGNAL_TOGGLE = 10;
-
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty PLAYING = BooleanProperty.create("playing");
     public static final BooleanProperty RECORD_IN = BooleanProperty.create("record_in");
@@ -274,6 +268,7 @@ public class LooperBlock extends Block implements EntityBlock {
             return;
 
         boolean wasRedstoneTriggered = pState.getValue(REDSTONE_TRIGGERED);
+
         if (pLevel.hasNeighborSignal(pPos)) {
             // This mechanism should act alike as a T-flip-flop.
             // We must be sure that it wasn't just some random block update messing up
@@ -282,11 +277,10 @@ public class LooperBlock extends Block implements EntityBlock {
                 lbe.setTicks(0);
 
                 BlockState newState = pState;
-                // Determine play/cycle behaviour by redstone signal
-                if (pLevel.getBestNeighborSignal(pPos) > REDSTONE_PLAY_SIGNAL_TOGGLE)
-                    newState = lbe.setPlaying(true, newState);
-                else
+                if (pState.getValue(LOOPING))
                     newState = cyclePlaying(lbe, newState);
+                else
+                    newState = lbe.setPlaying(true, newState);
 
                 pLevel.setBlockAndUpdate(pPos, newState.setValue(REDSTONE_TRIGGERED, true));
             }
