@@ -10,7 +10,7 @@ import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumen
 import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableWindInstrumentItem;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
-import com.cstav.genshinstrument.ModCreativeModeTabs;
+import com.cstav.genshinstrument.GICreativeModeTabs;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -52,11 +52,11 @@ public class ModItems {
 
     @SuppressWarnings("unchecked")
     private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENTS_TABS = new ResourceKey[] {
-        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES
+        GICreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES
     };
     @SuppressWarnings("unchecked")
     private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENT_BLOCK_TABS = new ResourceKey[] {
-        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES, CreativeModeTabs.FUNCTIONAL_BLOCKS
+        GICreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES, CreativeModeTabs.FUNCTIONAL_BLOCKS
     };
 
 
@@ -127,7 +127,7 @@ public class ModItems {
         ),
 
         KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
-            ModCreativeModeTabs.INSTRUMENTS_TAB.getKey()
+            GICreativeModeTabs.INSTRUMENTS_TAB.getKey()
         ),
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER,
