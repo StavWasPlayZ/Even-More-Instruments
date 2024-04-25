@@ -3,7 +3,7 @@ package com.cstav.evenmoreinstruments.item;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
-import com.cstav.genshinstrument.ModCreativeModeTabs;
+import com.cstav.genshinstrument.GICreativeModeTabs;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import net.minecraft.world.item.ItemStack;
 
@@ -15,7 +15,7 @@ class ViolinItem extends AccessoryInstrumentItem {
             (player) -> EMIPacketHandler.sendToClient(
                 new EMIOpenInstrumentPacket("violin"), player
             ),
-            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
+            new Properties().tab(GICreativeModeTabs.instrumentsTab),
             (InstrumentAccessoryItem) ModItems.VIOLIN_BOW.get(),
             "Philharmonia"
         );
