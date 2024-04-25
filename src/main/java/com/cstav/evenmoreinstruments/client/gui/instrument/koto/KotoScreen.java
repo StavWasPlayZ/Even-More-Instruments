@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.shamisen;
+package com.cstav.evenmoreinstruments.client.gui.instrument.koto;
 
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.client.gui.instrument.pipa.PipaScreen;

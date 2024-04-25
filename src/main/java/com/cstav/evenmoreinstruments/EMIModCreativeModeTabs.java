@@ -1,8 +1,7 @@
 package com.cstav.evenmoreinstruments;
 
 import com.cstav.evenmoreinstruments.item.ModItems;
-import com.cstav.genshinstrument.ModCreativeModeTabs;
-
+import com.cstav.genshinstrument.GICreativeModeTabs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -23,7 +22,7 @@ public class EMIModCreativeModeTabs {
             () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.evenmoreinstruments.music_production_tab"))
                 .icon(() -> new ItemStack(ModItems.LOOPER.get()))
-                .withTabsBefore(ModCreativeModeTabs.INSTRUMENTS_TAB.getKey())
+                .withTabsBefore(GICreativeModeTabs.INSTRUMENTS_TAB.getKey())
             .build()
         )
     ;

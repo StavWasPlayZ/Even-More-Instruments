@@ -2,7 +2,7 @@ package com.cstav.evenmoreinstruments.networking.packet;
 
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.evenmoreinstruments.util.ServerUtil;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
@@ -66,12 +66,12 @@ public class LooperRecordStatePacket implements IModPacket {
 
         final LooperBlockEntity lbe = LooperUtil.getFromInstrument(player.level(), instrumentBlock);
         if (lbe == null) {
-            ModPacketHandler.sendToClient(new LooperRemovedPacket(), player);
+            EMIPacketHandler.sendToClient(new LooperRemovedPacket(), player);
             return;
         }
 
         changeRecordingState(player, lbe, () -> LooperUtil.remLooperTag(instrumentBlock));
-        ModPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(instrumentBlock), instrumentBlockPos), player);
+        EMIPacketHandler.sendToClient(new SyncModTagPacket(EMIMain.modTag(instrumentBlock), instrumentBlockPos), player);
     }
 
     private void handleItem(final ServerPlayer player) {
@@ -84,7 +84,7 @@ public class LooperRecordStatePacket implements IModPacket {
 
         final LooperBlockEntity lbe = LooperUtil.getFromInstrument(player.level(), instrumentItem);
         if (lbe == null) {
-            ModPacketHandler.sendToClient(new LooperRemovedPacket(), player);
+            EMIPacketHandler.sendToClient(new LooperRemovedPacket(), player);
             return;
         }
 

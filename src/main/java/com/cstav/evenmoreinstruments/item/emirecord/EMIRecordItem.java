@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.item.partial.emirecord;
+package com.cstav.evenmoreinstruments.item.emirecord;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import net.minecraft.world.item.Item;

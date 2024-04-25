@@ -3,12 +3,14 @@ package com.cstav.evenmoreinstruments.item;
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.instrument.*;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
-import com.cstav.genshinstrument.ModCreativeModeTabs;
+import com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem;
+import com.cstav.evenmoreinstruments.item.emirecord.WritableRecordItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableBlockInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableWindInstrumentItem;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
+import com.cstav.genshinstrument.GICreativeModeTabs;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +28,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = EMIMain.MODID, bus = Bus.MOD, value = Dist.CLIENT)
@@ -38,15 +43,20 @@ public class ModItems {
     }
 
 
-    private static final LinkedHashMap<RegistryObject<Item>, ResourceKey<CreativeModeTab>[]> CREATIVE_TABS_MAP = new LinkedHashMap<>();
+    private static final LinkedHashMap<ResourceKey<CreativeModeTab>, ArrayList<RegistryObject<Item>>> CREATIVE_TABS_MAP = new LinkedHashMap<>();
+    private static ArrayList<RegistryObject<Item>> getCreativeItems(final ResourceKey<CreativeModeTab> tabKey) {
+        if (!CREATIVE_TABS_MAP.containsKey(tabKey))
+            CREATIVE_TABS_MAP.put(tabKey, new ArrayList<>());
+        return CREATIVE_TABS_MAP.get(tabKey);
+    }
 
     @SuppressWarnings("unchecked")
     private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENTS_TABS = new ResourceKey[] {
-        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES
+        GICreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES
     };
     @SuppressWarnings("unchecked")
     private static final ResourceKey<CreativeModeTab>[] DEFAULT_INSTRUMENT_BLOCK_TABS = new ResourceKey[] {
-        ModCreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES, CreativeModeTabs.FUNCTIONAL_BLOCKS
+        GICreativeModeTabs.INSTRUMENTS_TAB.getKey(), CreativeModeTabs.TOOLS_AND_UTILITIES, CreativeModeTabs.FUNCTIONAL_BLOCKS
     };
 
 
@@ -59,14 +69,14 @@ public class ModItems {
         VIOLIN = register("violin", ViolinItem::new, DEFAULT_INSTRUMENTS_TABS, VIOLIN_BOW),
 
         GUITAR = register("guitar", () -> new CreditableInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("guitar"), player
+            (player) -> EMIPacketHandler.sendToClient(
+                new EMIOpenInstrumentPacket("guitar"), player
             ),
             "Philharmonia"
         )),
         PIPA = register("pipa", () -> new CreditableInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("pipa"), player
+            (player) -> EMIPacketHandler.sendToClient(
+                new EMIOpenInstrumentPacket("pipa"), player
             ),
             "DSK Asian DreamZ"
         )),
@@ -78,10 +88,10 @@ public class ModItems {
         ),
         SHAMISEN = register("shamisen",
             () -> new AccessoryInstrumentItem(
-                (player) -> ModPacketHandler.sendToClient(
-                    new ModOpenInstrumentPacket("shamisen"), player
+                (player) -> EMIPacketHandler.sendToClient(
+                    new EMIOpenInstrumentPacket("shamisen"), player
                 ),
-                BACHI,
+                (InstrumentAccessoryItem) BACHI.get(),
                 "Roland SC-88"
             ),
             DEFAULT_INSTRUMENTS_TABS,
@@ -97,14 +107,14 @@ public class ModItems {
         ),
 
         TROMBONE = register("trombone", () -> new CreditableWindInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("trombone"), player
+            (player) -> EMIPacketHandler.sendToClient(
+                new EMIOpenInstrumentPacket("trombone"), player
             ),
             "Philharmonia"
         )),
         SAXOPHONE = register("saxophone", () -> new CreditableWindInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("saxophone"), player
+            (player) -> EMIPacketHandler.sendToClient(
+                new EMIOpenInstrumentPacket("saxophone"), player
             ),
             "Philharmonia"
         )),
@@ -117,7 +127,7 @@ public class ModItems {
         ),
 
         KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND,
-            ModCreativeModeTabs.INSTRUMENTS_TAB.getKey()
+            GICreativeModeTabs.INSTRUMENTS_TAB.getKey()
         ),
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER,
@@ -205,35 +215,35 @@ public class ModItems {
     // }
     @SafeVarargs
     private static RegistryObject<Item> registerBlockItem(RegistryObject<Block> block, ResourceKey<CreativeModeTab>... tabs) {
-        return register(block.getId().getPath(),
-            () -> new BlockItem(block.get(), new Properties())
-        , tabs);
+        return register(
+            block.getId().getPath(),
+            () -> new BlockItem(block.get(), new Properties()),
+            tabs
+        );
     }
 
     private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>[] tabs,
                                                  RegistryObject<Item> appearsBefore) {
         final RegistryObject<Item> item = ITEMS.register(name, supplier);
 
-        final LinkedHashMap<RegistryObject<Item>, ResourceKey<CreativeModeTab>[]> temp = new LinkedHashMap<>();
-        final List<RegistryObject<Item>> keys = new ArrayList<>(CREATIVE_TABS_MAP.keySet().stream().toList());
-
-        RegistryObject<Item> removed = null;
-        // Pop every element up to and including the specified element to temp; later re-add
-        while (removed != appearsBefore) {
-            removed = keys.get(keys.size() - 1);
-            temp.put(removed, CREATIVE_TABS_MAP.remove(removed));
-            keys.remove(keys.size() - 1);
+        for (final ResourceKey<CreativeModeTab> tabKey : tabs) {
+            final ArrayList<RegistryObject<Item>> items = getCreativeItems(tabKey);
+            if (items.contains(appearsBefore)) {
+                items.add(items.indexOf(appearsBefore), item);
+            } else {
+                items.add(item);
+            }
         }
-
-        CREATIVE_TABS_MAP.put(item, tabs);
-        CREATIVE_TABS_MAP.putAll(temp);
 
         return item;
     }
     @SafeVarargs
     private static RegistryObject<Item> register(String name, Supplier<Item> supplier, ResourceKey<CreativeModeTab>... tabs) {
         final RegistryObject<Item> item = ITEMS.register(name, supplier);
-        CREATIVE_TABS_MAP.put(item, tabs);
+
+        for (final ResourceKey<CreativeModeTab> tabKey: tabs) {
+            getCreativeItems(tabKey).add(item);
+        }
 
         return item;
     }
@@ -244,10 +254,15 @@ public class ModItems {
 
     @SubscribeEvent
     public static void addCreative(final BuildCreativeModeTabContentsEvent event) {
-        CREATIVE_TABS_MAP.forEach((key, value) -> {
-            for (final ResourceKey<CreativeModeTab> tabKey : value) 
-                if (event.getTabKey().equals(tabKey))
-                    event.accept(key);
+        CREATIVE_TABS_MAP.keySet().forEach((tabKey) -> {
+            if (!event.getTabKey().equals(tabKey))
+                return;
+
+            event.acceptAll(
+                getCreativeItems(tabKey).stream()
+                    .map((item) -> new ItemStack(item.get()))
+                    .toList()
+            );
         });
     }
 

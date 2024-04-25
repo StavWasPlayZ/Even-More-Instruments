@@ -1,7 +1,7 @@
 package com.cstav.evenmoreinstruments.item.crafting;
 
 import com.cstav.evenmoreinstruments.item.ModItems;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
+import com.cstav.evenmoreinstruments.item.emirecord.WritableRecordItem;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.inventory.CraftingContainer;

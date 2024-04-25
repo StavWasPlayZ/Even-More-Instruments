@@ -2,10 +2,10 @@ package com.cstav.evenmoreinstruments.networking.packet;
 
 import com.cstav.evenmoreinstruments.client.gui.instrument.guitar.GuitarScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.keyboard.KeyboardScreen;
+import com.cstav.evenmoreinstruments.client.gui.instrument.koto.KotoScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.pipa.PipaScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.saxophone.SaxophoneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.ShamisenScreen;
-import com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.shamisen.KotoScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.trombone.TromboneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
 import com.cstav.genshinstrument.networking.packet.instrument.OpenInstrumentPacket;
@@ -15,7 +15,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class ModOpenInstrumentPacket extends OpenInstrumentPacket {
+public class EMIOpenInstrumentPacket extends OpenInstrumentPacket {
     private static final Map<String, Supplier<Supplier<Screen>>> INSTRUMENT_MAP = Map.of(
         "keyboard", () -> KeyboardScreen::new,
         "violin", () -> ViolinScreen::new,
@@ -28,11 +28,11 @@ public class ModOpenInstrumentPacket extends OpenInstrumentPacket {
     );
 
 
-    public ModOpenInstrumentPacket(final String instrumentId) {
+    public EMIOpenInstrumentPacket(final String instrumentId) {
         super(instrumentId);
     }
     
-    public ModOpenInstrumentPacket(final FriendlyByteBuf buf) {
+    public EMIOpenInstrumentPacket(final FriendlyByteBuf buf) {
         super(buf);
     }
 
