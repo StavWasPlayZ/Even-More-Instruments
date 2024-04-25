@@ -3,11 +3,13 @@ package com.cstav.evenmoreinstruments.item;
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.EMIModCreativeModeTabs;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.BurnedRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.emirecord.WritableRecordItem;
-import com.cstav.evenmoreinstruments.item.partial.instrument.*;
-import com.cstav.evenmoreinstruments.networking.ModPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
+import com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem;
+import com.cstav.evenmoreinstruments.item.emirecord.WritableRecordItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableBlockInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumentItem;
+import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableWindInstrumentItem;
+import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
+import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
 import com.cstav.genshinstrument.ModCreativeModeTabs;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -47,15 +49,15 @@ public class ModItems {
         VIOLIN = register("violin", ViolinItem::new),
 
         GUITAR = register("guitar", () -> new CreditableInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("guitar"), player
+            (player) -> EMIPacketHandler.sendToClient(
+                new EMIOpenInstrumentPacket("guitar"), player
             ),
             new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             "Philharmonia"
         )),
         PIPA = register("pipa", () -> new CreditableInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("pipa"), player
+            (player) -> EMIPacketHandler.sendToClient(
+                new EMIOpenInstrumentPacket("pipa"), player
             ),
             new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             "DSK Asian DreamZ"
@@ -71,11 +73,11 @@ public class ModItems {
         ),
         SHAMISEN = register("shamisen",
             () -> new AccessoryInstrumentItem(
-                (player) -> ModPacketHandler.sendToClient(
-                    new ModOpenInstrumentPacket("shamisen"), player
+                (player) -> EMIPacketHandler.sendToClient(
+                    new EMIOpenInstrumentPacket("shamisen"), player
                 ),
                 new Properties().tab(ModCreativeModeTabs.instrumentsTab),
-                BACHI,
+                (InstrumentAccessoryItem) BACHI.get(),
                 "Roland SC-88"
             )
         ),
@@ -90,15 +92,15 @@ public class ModItems {
         ),
 
         TROMBONE = register("trombone", () -> new CreditableWindInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("trombone"), player
+            (player) -> EMIPacketHandler.sendToClient(
+                new EMIOpenInstrumentPacket("trombone"), player
             ),
             new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             "Philharmonia"
         )),
         SAXOPHONE = register("saxophone", () -> new CreditableWindInstrumentItem(
-            (player) -> ModPacketHandler.sendToClient(
-                new ModOpenInstrumentPacket("saxophone"), player
+            (player) -> EMIPacketHandler.sendToClient(
+                new EMIOpenInstrumentPacket("saxophone"), player
             ),
             new Properties().tab(ModCreativeModeTabs.instrumentsTab),
             "Philharmonia"
