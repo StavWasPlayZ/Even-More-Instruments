@@ -1,13 +1,6 @@
 package com.cstav.evenmoreinstruments.networking;
 
 import com.cstav.evenmoreinstruments.EMIMain;
-import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
-import com.cstav.evenmoreinstruments.networking.packet.LooperRecordStatePacket;
-import com.cstav.evenmoreinstruments.networking.packet.LooperRemovedPacket;
-import com.cstav.evenmoreinstruments.networking.packet.ModOpenInstrumentPacket;
-import com.cstav.evenmoreinstruments.networking.packet.OpenNoteBlockInstrumentPacket;
-import com.cstav.evenmoreinstruments.networking.packet.SyncModTagPacket;
-import com.cstav.evenmoreinstruments.networking.packet.DoesLooperExistPacket;
 import com.cstav.evenmoreinstruments.networking.packet.*;
 import com.cstav.genshinstrument.networking.IModPacket;
 import com.cstav.genshinstrument.util.ServerUtil;
