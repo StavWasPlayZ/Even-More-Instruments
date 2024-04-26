@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
@@ -29,8 +30,10 @@ public class RecordRepository {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String DATA_DIR = EMIMain.MODID+"/records";
 
-    public static CompoundTag getRecord(final ResourceLocation loc) {
-        return RECORDS.get(loc).copy();
+    public static Optional<CompoundTag> getRecord(final ResourceLocation loc) {
+        return RECORDS.containsKey(loc)
+            ? Optional.of(RECORDS.get(loc).copy())
+            : Optional.empty();
     }
 
     public static Collection<ResourceLocation> records() {
@@ -44,6 +47,7 @@ public class RecordRepository {
         event.addListener(new SimpleJsonResourceReloadListener(GSON, DATA_DIR) {
             @Override
             protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+                //TODO load generated into map
                 reloadRecords(pObject);
             }
         });
