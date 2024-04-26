@@ -5,10 +5,12 @@ import com.cstav.evenmoreinstruments.mixins.optional.MinecraftServerAccessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.FileUtil;
 import net.minecraft.ResourceLocationException;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +26,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.slf4j.Logger;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -46,7 +49,33 @@ public class RecordRepository {
     public static Optional<CompoundTag> getRecord(final ResourceLocation loc) {
         return RECORDS.containsKey(loc)
             ? Optional.of(RECORDS.get(loc).copy())
-            : Optional.empty();
+            : tryGetRecordFromGen(loc);
+    }
+
+    private static Optional<CompoundTag> tryGetRecordFromGen(final ResourceLocation loc) {
+        try {
+            final Path genPath = getGenPath(Minecraft.getInstance().getSingleplayerServer());
+            final Path path = genPath.resolve(loc.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
+
+            if (!Files.isDirectory(path))
+                return Optional.empty();
+
+            final Path file = FileUtil.createPathToResource(path, loc.getPath(), ".json");
+
+            // Copied from StructureTemplateManager#createAndValidatePathToStructure
+            if (!(path.startsWith(genPath) && FileUtil.isPathNormalized(path) && FileUtil.isPathPortable(path)))
+                throw new ResourceLocationException("Invalid resource path: " + path);
+
+            try (final BufferedReader reader = Files.newBufferedReader(file)) {
+                loadRecord(loc, JsonParser.parseReader(reader));
+            } catch (Exception e) {
+                return Optional.empty();
+            }
+
+            return Optional.of(RECORDS.get(loc).copy());
+        } catch (IOException e) {
+            return Optional.empty();
+        }
     }
 
 
@@ -63,13 +92,12 @@ public class RecordRepository {
 
     private static void reloadRecords(Map<ResourceLocation, JsonElement> pObject) {
         RECORDS.clear();
+        pObject.forEach((loc, tag) -> loadRecord(loc, pObject.get(loc)));
+    }
 
-        pObject.forEach((loc, tag) -> {
-            final JsonElement channelObj = pObject.get(loc);
-
-            RECORDS.put(loc, (CompoundTag) JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, channelObj));
-            LOGGER.info("Successfully loaded burned record {}", loc);
-        });
+    private static void loadRecord(final ResourceLocation loc, final JsonElement channelObj) {
+        RECORDS.put(loc, (CompoundTag) JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, channelObj));
+        LOGGER.info("Successfully loaded burned record {}", loc);
     }
 
 
