@@ -24,15 +24,16 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.slf4j.Logger;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class RecordRepository {
@@ -48,10 +49,6 @@ public class RecordRepository {
             : Optional.empty();
     }
 
-    public static Collection<ResourceLocation> records() {
-        return Collections.unmodifiableSet(RECORDS.keySet());
-    }
-
 
     private static final Gson GSON = new Gson();
     @SubscribeEvent
@@ -59,7 +56,6 @@ public class RecordRepository {
         event.addListener(new SimpleJsonResourceReloadListener(GSON, DATA_DIR) {
             @Override
             protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
-                //TODO load generated into map
                 reloadRecords(pObject);
             }
         });
@@ -77,9 +73,23 @@ public class RecordRepository {
     }
 
 
+
+    public static Stream<ResourceLocation> listGenRecords(final Level level) {
+        try {
+            return Files.list(getGenPath(level.getServer()))
+                .filter(Files::isDirectory)
+                .flatMap(RecordRepository::listGeneratedInNamespace);
+        } catch (Exception e) {
+            LOGGER.error("Error encountered while attempting to load record data", e);
+            return null;
+        }
+    }
+
     public static boolean saveRecord(final Level level, final ResourceLocation name, final CompoundTag channel) {
         try {
-            final Path genPath = getGenPath(level.getServer(), name);
+            final Path genPath = getGenPath(level.getServer())
+                .resolve(name.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
+
             final Path path = FileUtil.createPathToResource(genPath, name.getPath(), ".json");
 
             // Copied from StructureTemplateManager#createAndValidatePathToStructure
@@ -103,7 +113,43 @@ public class RecordRepository {
         }
     }
 
-    private static Path getGenPath(final MinecraftServer server, final ResourceLocation loc) throws IOException {
+    // Copied from StructureTemplateManager#listGeneratedInNamespace etc.
+    private static Stream<ResourceLocation> listGeneratedInNamespace(Path pPath) {
+        Path path = pPath.resolve(EMIMain.MODID).resolve(RECORDS_DIR);
+        return listFolderContents(path, pPath.getFileName().toString(), ".json");
+    }
+    private static Stream<ResourceLocation> listFolderContents(Path pFolder, String pNamespace, String pPath) {
+        if (!Files.isDirectory(pFolder)) {
+            return Stream.empty();
+        } else {
+            int i = pPath.length();
+            Function<String, String> function = (p_230358_) -> {
+                return p_230358_.substring(0, p_230358_.length() - i);
+            };
+
+            try {
+                return Files.walk(pFolder).filter((p_230381_) -> {
+                    return p_230381_.toString().endsWith(pPath);
+                }).mapMulti((p_230386_, p_230387_) -> {
+                    try {
+                        p_230387_.accept(new ResourceLocation(pNamespace, function.apply(relativize(pFolder, p_230386_))));
+                    } catch (ResourceLocationException resourcelocationexception) {
+                        LOGGER.error("Invalid location while listing pack contents", (Throwable)resourcelocationexception);
+                    }
+
+                });
+            } catch (IOException ioexception) {
+                LOGGER.error("Failed to list folder contents", (Throwable)ioexception);
+                return Stream.empty();
+            }
+        }
+    }
+    private static String relativize(Path pRoot, Path pPath) {
+        return pRoot.relativize(pPath).toString().replace(File.separator, "/");
+    }
+
+
+    private static Path getGenPath(final MinecraftServer server) throws IOException {
         final Path path = ((MinecraftServerAccessor)server).getStorageSource()
             .getLevelPath(LevelResource.GENERATED_DIR)
             .normalize();
@@ -111,6 +157,6 @@ public class RecordRepository {
         if (!Files.isDirectory(path))
             throw new IOException("Path "+path+" is not directory");
 
-        return path.resolve(loc.getNamespace()).resolve(RECORDS_DIR);
+        return path;
     }
 }

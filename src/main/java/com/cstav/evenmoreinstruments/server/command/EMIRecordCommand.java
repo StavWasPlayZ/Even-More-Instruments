@@ -33,9 +33,7 @@ load to hand [name]
 public class EMIRecordCommand {
     private static final SuggestionProvider<CommandSourceStack> SUGGEST_RECORDS = (stack, builder) ->
         SharedSuggestionProvider.suggestResource(
-            RecordRepository.records().stream()
-                // Filter only non-built-ins
-                .filter((_record) -> !_record.getNamespace().equals(EMIMain.MODID)),
+            RecordRepository.listGenRecords(stack.getSource().getLevel()),
             builder
         );
 
