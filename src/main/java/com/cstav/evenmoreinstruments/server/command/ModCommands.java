@@ -11,7 +11,7 @@ public class ModCommands {
 
     @SubscribeEvent
     public static void onCommandsRegister(final RegisterCommandsEvent event) {
-        EMIRecordCommand.register(event.getDispatcher());
+//        EMIRecordCommand.register(event.getDispatcher());
     }
 
 }
