@@ -75,9 +75,6 @@
     "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable.",
 
 
-    "commands.evenmoreinstruments.emirecord.clipboard_success": "Copied record to clipboard",
-
-
 
     "evenmoreinstruments.advancements.main.japanese.title": "True Weeb",
     "evenmoreinstruments.advancements.main.japanese.description": "Play on all Asian instruments",
