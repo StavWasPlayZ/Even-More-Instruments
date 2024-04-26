@@ -10,7 +10,6 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.FileUtil;
 import net.minecraft.ResourceLocationException;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +23,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
@@ -54,7 +54,7 @@ public class RecordRepository {
 
     private static Optional<CompoundTag> tryGetRecordFromGen(final ResourceLocation loc) {
         try {
-            final Path genPath = getGenPath(Minecraft.getInstance().getSingleplayerServer());
+            final Path genPath = getGenPath(ServerLifecycleHooks.getCurrentServer());
             final Path path = genPath.resolve(loc.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
 
             if (!Files.isDirectory(path))
