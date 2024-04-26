@@ -85,4 +85,16 @@ public class CommonUtil {
         source.remove(key);
     }
 
+    public static void loadClasses(final Class<?>[] classes) {
+        for (final Class<?> loadMe : classes) {
+
+            try {
+                Class.forName(loadMe.getName());
+            } catch (ClassNotFoundException e) {
+                EMIMain.LOGGER.error("Failed to load class "+ loadMe.getSimpleName() +": class not found", e);
+            }
+
+        }
+    }
+
 }
