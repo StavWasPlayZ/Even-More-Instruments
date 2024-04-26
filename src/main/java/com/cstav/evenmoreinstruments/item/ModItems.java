@@ -134,7 +134,8 @@ public class ModItems {
             EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey(), CreativeModeTabs.FUNCTIONAL_BLOCKS,
             CreativeModeTabs.REDSTONE_BLOCKS
         ),
-        LOOPER_ADAPTER = register("looper_adapter", () -> new LooperAdapterItem(new Properties()),
+        LOOPER_ADAPTER = register("looper_adapter",
+            () -> new LooperAdapterItem(new Properties().stacksTo(1)),
             CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
 
