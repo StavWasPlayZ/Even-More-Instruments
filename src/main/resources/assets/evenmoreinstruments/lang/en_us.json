@@ -75,10 +75,14 @@
     "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable.",
 
 
-    "commands.evenmoreinstruments.emirecord.record_loaded": "Record successfully loaded",
     "commands.evenmoreinstruments.emirecord.failed.record_burned": "Held record for %s is already burned",
+    "commands.evenmoreinstruments.emirecord.failed.record_empty": "Held record for %s is empty",
     "commands.evenmoreinstruments.emirecord.failed.record_invalid": "Provided record name '%s' is unrecognizable",
     "commands.evenmoreinstruments.emirecord.failed.too_many": "Too many records present at %s's hand. Exactly 1 record must be held to load a track.",
+    "commands.evenmoreinstruments.emirecord.failed.invalid_name": "Cannot save record by the namespace of %s (provided %s)",
+
+    "commands.evenmoreinstruments.emirecord.success.record_loaded": "Record successfully loaded",
+    "commands.evenmoreinstruments.emirecord.success.save": "Record successfully saved",
 
 
 

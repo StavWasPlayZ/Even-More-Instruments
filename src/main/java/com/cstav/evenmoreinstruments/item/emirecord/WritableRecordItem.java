@@ -14,8 +14,10 @@ public class WritableRecordItem extends EMIRecordItem {
     }
 
     public boolean isBurned(final ItemStack stack) {
-        return stack.getOrCreateTag().contains(CHANNEL_TAG, Tag.TAG_COMPOUND) &&
-               !stack.getTagElement(CHANNEL_TAG).getBoolean(WRITABLE_TAG);
+        return (stack.getOrCreateTag().contains(CHANNEL_TAG, Tag.TAG_COMPOUND) &&
+               !stack.getTagElement(CHANNEL_TAG).getBoolean(WRITABLE_TAG))
+            // May also be media burned
+            || stack.getTag().contains(BurnedRecordItem.BURNED_MEDIA_TAG);
     }
 
     @Override
@@ -25,6 +27,9 @@ public class WritableRecordItem extends EMIRecordItem {
 
     @Override
     public void onInsert(final ItemStack stack, final LooperBlockEntity lbe) {
+        if (stack.getOrCreateTag().contains(BurnedRecordItem.BURNED_MEDIA_TAG))
+            return;
+
         final CompoundTag channel = CommonUtil.getOrCreateElementTag(stack.getOrCreateTag(), CHANNEL_TAG);
 
         if (!channel.getBoolean(WRITABLE_TAG) && !channel.contains(NOTES_TAG, Tag.TAG_LIST)) {
