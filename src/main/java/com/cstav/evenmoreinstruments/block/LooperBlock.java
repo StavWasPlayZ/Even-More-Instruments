@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -63,6 +64,23 @@ public class LooperBlock extends Block implements EntityBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+    }
+
+    @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
+        final boolean hasFootage = pLevel
+            .getBlockEntity(pPos, ModBlockEntities.LOOPER.get())
+            .orElseThrow()
+            .hasFootage();
+
+        if (hasFootage) {
+            pLevel.setBlockAndUpdate(pPos, pState
+                .setValue(RECORD_IN, true)
+                .setValue(PLAYING, true)
+            );
+        }
+
+        super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
     }
 
 
