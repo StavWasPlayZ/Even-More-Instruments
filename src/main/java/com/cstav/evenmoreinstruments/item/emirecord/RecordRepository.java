@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.slf4j.Logger;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -29,6 +31,10 @@ public class RecordRepository {
 
     public static CompoundTag getRecord(final ResourceLocation loc) {
         return RECORDS.get(loc).copy();
+    }
+
+    public static Collection<ResourceLocation> records() {
+        return Collections.unmodifiableSet(RECORDS.keySet());
     }
 
 

@@ -5,9 +5,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class CommonUtil {
@@ -95,6 +98,18 @@ public class CommonUtil {
             }
 
         }
+    }
+
+    public static Optional<ItemStack> getItemInBothHands(final Player player, final Item item) {
+        ItemStack result = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (result.is(item))
+            return Optional.of(result);
+
+        result = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (result.is(item))
+            return Optional.of(result);
+
+        return Optional.empty();
     }
 
 }
