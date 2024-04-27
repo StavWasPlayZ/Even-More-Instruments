@@ -119,6 +119,7 @@ public class ModItems {
         LOOPER_ADAPTER = register(
             "looper_adapter", () -> new LooperAdapterItem(new Properties()
                 .tab(EMIModCreativeModeTabs.musicProductionTab)
+                .stacksTo(1)
             )
         ),
 

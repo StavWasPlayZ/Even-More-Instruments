@@ -9,11 +9,8 @@ import com.cstav.genshinstrument.sound.NoteSound;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @OnlyIn(Dist.CLIENT)
-//NOTE: There to load it on startup
-@EventBusSubscriber(Dist.CLIENT)
 public class ShamisenScreen extends GridInstrumentScreen {
     public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(EMIMain.MODID, "shamisen");
 
