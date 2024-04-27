@@ -12,11 +12,9 @@ import net.minecraft.ResourceLocationException;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -53,17 +51,7 @@ public class RecordRepository {
 
     private static Optional<CompoundTag> tryGetRecordFromGen(final ResourceLocation loc) {
         try {
-            final Path genPath = getGenPath(ServerLifecycleHooks.getCurrentServer());
-            final Path path = genPath.resolve(loc.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
-
-            if (!Files.isDirectory(path))
-                return Optional.empty();
-
-            final Path file = FileUtil.createPathToResource(path, loc.getPath(), ".json");
-
-            // Copied from StructureTemplateManager#createAndValidatePathToStructure
-            if (!(path.startsWith(genPath) && FileUtil.isPathNormalized(path) && FileUtil.isPathPortable(path)))
-                throw new ResourceLocationException("Invalid resource path: " + path);
+            final Path file = getRecordPath(loc, true);
 
             try (final BufferedReader reader = Files.newBufferedReader(file)) {
                 loadRecord(loc, JsonParser.parseReader(reader));
@@ -72,7 +60,7 @@ public class RecordRepository {
             }
 
             return Optional.of(RECORDS.get(loc).copy());
-        } catch (IOException e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
@@ -93,52 +81,90 @@ public class RecordRepository {
         RECORDS.clear();
         pObject.forEach((loc, tag) -> loadRecord(loc, pObject.get(loc)));
     }
-
     private static void loadRecord(final ResourceLocation loc, final JsonElement channelObj) {
         RECORDS.put(loc, (CompoundTag) JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, channelObj));
         LOGGER.info("Successfully loaded burned record {}", loc);
     }
 
 
-
-    public static Stream<ResourceLocation> listGenRecords(final Level level) {
+    public static Stream<ResourceLocation> listGenRecords() {
         try {
-            return Files.list(getGenPath(level.getServer()))
+            return Files.list(getGenPath())
                 .filter(Files::isDirectory)
                 .flatMap(RecordRepository::listGeneratedInNamespace);
         } catch (Exception e) {
-            LOGGER.error("Error encountered while attempting to load record data", e);
-            return null;
+            LOGGER.error("Error encountered while attempting to list available records", e);
+            return Stream.empty();
         }
     }
 
-    public static boolean saveRecord(final Level level, final ResourceLocation name, final CompoundTag channel) {
-        try {
-            final Path genPath = getGenPath(level.getServer())
-                .resolve(name.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
+    public static void saveRecord(final ResourceLocation name, final CompoundTag channel) throws IOException {
+        final Path path = getRecordPath(name, false);
+        Files.createDirectories(path.getParent());
 
-            final Path path = FileUtil.createPathToResource(genPath, name.getPath(), ".json");
+        try (final FileWriter outStream = new FileWriter(path.toFile())) {
+            final JsonElement jsonData = NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, channel);
 
-            // Copied from StructureTemplateManager#createAndValidatePathToStructure
-            if (!(path.startsWith(genPath) && FileUtil.isPathNormalized(path) && FileUtil.isPathPortable(path)))
-                throw new ResourceLocationException("Invalid resource path: " + path);
-
-            Files.createDirectories(path.getParent());
-
-            try (final FileWriter outStream = new FileWriter(path.toFile())) {
-                final JsonElement jsonData = NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, channel);
-
-                final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                gson.toJson(jsonData, outStream);
-            }
-
-            RECORDS.put(name, channel);
-            return true;
-        } catch (Exception e) {
-            LOGGER.error("Error encountered while attempting to save record data", e);
-            return false;
+            final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            gson.toJson(jsonData, outStream);
         }
+
+        RECORDS.put(name, channel);
     }
+
+    public static void removeRecord(final ResourceLocation name) throws IOException {
+        final Path path = getRecordPath(name, true);
+
+        if (!Files.isRegularFile(path))
+            throw new ResourceLocationException("Could not find resource "+name);
+
+        Files.delete(path);
+        RECORDS.remove(name);
+    }
+
+
+    /**
+     * Queries the {@code generated} level directory
+     */
+    private static Path getGenPath(final boolean failIfNone) throws IOException {
+        final Path path = ServerLifecycleHooks.getCurrentServer().storageSource
+            .getLevelPath(LevelResource.GENERATED_DIR)
+            .normalize();
+
+        if (!Files.isDirectory(path)) {
+            if (failIfNone)
+                throw new IOException("Directory not found: "+path);
+        } else {
+            Files.createDirectories(path);
+        }
+
+        return path;
+    }
+    private static Path getGenPath() throws IOException {
+        return getGenPath(false);
+    }
+
+    /**
+     * Queries the record path from the {@code generated} level directory
+     */
+    private static Path getRecordPath(ResourceLocation name, boolean failIfNone) throws IOException {
+        final Path genPath = getGenPath(failIfNone)
+            .resolve(name.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
+
+        final Path path = FileUtil.createPathToResource(genPath, name.getPath(), ".json");
+
+        // Copied from StructureTemplateManager#createAndValidatePathToStructure
+        if (!(path.startsWith(genPath) && FileUtil.isPathNormalized(path) && FileUtil.isPathPortable(path)))
+            throw new ResourceLocationException("Invalid resource path: " + path);
+
+        if (!Files.isRegularFile(path)) {
+            if (failIfNone)
+                throw new ResourceLocationException("Could not find resource "+name);
+        }
+
+        return path;
+    }
+
 
     // Copied from StructureTemplateManager#listGeneratedInNamespace etc.
     private static Stream<ResourceLocation> listGeneratedInNamespace(Path pPath) {
@@ -175,14 +201,4 @@ public class RecordRepository {
         return pRoot.relativize(pPath).toString().replace(File.separator, "/");
     }
 
-
-    private static Path getGenPath(final MinecraftServer server) throws IOException {
-        final Path path = server.storageSource
-            .getLevelPath(LevelResource.GENERATED_DIR)
-            .normalize();
-
-        Files.createDirectories(path);
-
-        return path;
-    }
 }

@@ -82,7 +82,8 @@
     "commands.evenmoreinstruments.emirecord.failed.invalid_name": "Cannot save record by the namespace of %s (provided %s)",
 
     "commands.evenmoreinstruments.emirecord.success.record_loaded": "Record successfully loaded",
-    "commands.evenmoreinstruments.emirecord.success.save": "Record successfully saved",
+    "commands.evenmoreinstruments.emirecord.success.record_removed": "Record removed successfully",
+    "commands.evenmoreinstruments.emirecord.success.record_saved": "Record successfully saved",
 
 
 

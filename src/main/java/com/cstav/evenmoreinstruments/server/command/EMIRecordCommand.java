@@ -10,7 +10,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -23,6 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /*
@@ -33,7 +33,7 @@ load to hand [name]
 public class EMIRecordCommand {
     private static final SuggestionProvider<CommandSourceStack> SUGGEST_RECORDS = (stack, builder) ->
         SharedSuggestionProvider.suggestResource(
-            RecordRepository.listGenRecords(stack.getSource().getLevel()),
+            RecordRepository.listGenRecords(),
             builder
         );
 
@@ -99,16 +99,16 @@ public class EMIRecordCommand {
             throw ERROR_RECORD_EMPTY.create(target.getDisplayName());
 
 
-        final boolean opSucceed = RecordRepository.saveRecord(
-            target.level(), saveLoc,
-            record.get().getTagElement(WritableRecordItem.CHANNEL_TAG)
-        );
-
-        if (!opSucceed) {
-            throw new SimpleCommandExceptionType(Component.translatable("command.failed")).create();
+        try {
+            RecordRepository.saveRecord(saveLoc,
+                record.get().getTagElement(WritableRecordItem.CHANNEL_TAG)
+            );
+        } catch (IOException e) {
+            EMIMain.LOGGER.error("Error encountered while saving record data", e);
+            throw new RuntimeException(e);
         }
 
-        stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.save"), true);
+        stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.record_saved"), true);
         return 1;
     }
 
@@ -137,8 +137,17 @@ public class EMIRecordCommand {
         return 1;
     }
 
-    private static int removeRecord(CommandContext<CommandSourceStack> stack) {
-        stack.getSource().sendSuccess(() -> Component.literal("okie"), true);
+    private static int removeRecord(CommandContext<CommandSourceStack> stack) throws CommandSyntaxException {
+        final ResourceLocation name = ResourceLocationArgument.getId(stack, "name");
+
+        try {
+            RecordRepository.removeRecord(name);
+        } catch (Exception e) {
+            // just assume its i/o
+            throw ERROR_RECORD_INVALID.create(name);
+        }
+
+        stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.record_removed"), true);
         return 1;
     }
 }
