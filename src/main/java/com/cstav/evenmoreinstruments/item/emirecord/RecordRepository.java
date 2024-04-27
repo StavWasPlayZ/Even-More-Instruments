@@ -1,25 +1,42 @@
 package com.cstav.evenmoreinstruments.item.emirecord;
 
 import com.cstav.evenmoreinstruments.EMIMain;
+import com.cstav.evenmoreinstruments.mixins.optional.MinecraftServerAccessor;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.FileUtil;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class RecordRepository {
@@ -32,8 +49,33 @@ public class RecordRepository {
     public static Optional<CompoundTag> getRecord(final ResourceLocation loc) {
         return RECORDS.containsKey(loc)
             ? Optional.of(RECORDS.get(loc).copy())
-//            : tryGetRecordFromGen(loc);
-            : Optional.empty();
+            : tryGetRecordFromGen(loc);
+    }
+
+    private static Optional<CompoundTag> tryGetRecordFromGen(final ResourceLocation loc) {
+        try {
+            final Path genPath = getGenPath(ServerLifecycleHooks.getCurrentServer());
+            final Path path = genPath.resolve(loc.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
+
+            if (!Files.isDirectory(path))
+                return Optional.empty();
+
+            final Path file = FileUtil.createPathToResource(path, loc.getPath(), ".json");
+
+            // Copied from StructureTemplateManager#createAndValidatePathToStructure
+            if (!(path.startsWith(genPath) && FileUtil.isPathNormalized(path) && FileUtil.isPathPortable(path)))
+                throw new ResourceLocationException("Invalid resource path: " + path);
+
+            try (final BufferedReader reader = Files.newBufferedReader(file)) {
+                loadRecord(loc, JsonParser.parseReader(reader));
+            } catch (Exception e) {
+                return Optional.empty();
+            }
+
+            return Optional.of(RECORDS.get(loc).copy());
+        } catch (IOException e) {
+            return Optional.empty();
+        }
     }
 
 
@@ -59,118 +101,90 @@ public class RecordRepository {
     }
 
 
-    //#region dumpstertrash
 
-//    private static Optional<CompoundTag> tryGetRecordFromGen(final ResourceLocation loc) {
-//        try {
-//            final Path genPath = getGenPath(ServerLifecycleHooks.getCurrentServer());
-//            final Path path = genPath.resolve(loc.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
-//
-//            if (!Files.isDirectory(path))
-//                return Optional.empty();
-//
-//            final Path file = FileUtil.createPathToResource(path, loc.getPath(), ".json");
-//
-//            // Copied from StructureTemplateManager#createAndValidatePathToStructure
-//            if (!(path.startsWith(genPath) && FileUtil.isPathNormalized(path) && FileUtil.isPathPortable(path)))
-//                throw new ResourceLocationException("Invalid resource path: " + path);
-//
-//            try (final BufferedReader reader = Files.newBufferedReader(file)) {
-//                loadRecord(loc, JsonParser.parseReader(reader));
-//            } catch (Exception e) {
-//                return Optional.empty();
-//            }
-//
-//            return Optional.of(RECORDS.get(loc).copy());
-//        } catch (IOException e) {
-//            return Optional.empty();
-//        }
-//    }
-//    public static Stream<ResourceLocation> listGenRecords(final Level level) {
-//        try {
-//            return Files.list(getGenPath(level.getServer()))
-//                .filter(Files::isDirectory)
-//                .flatMap(RecordRepository::listGeneratedInNamespace);
-//        } catch (Exception e) {
-//            LOGGER.error("Error encountered while attempting to load record data", e);
-//            return null;
-//        }
-//    }
-//
-//    public static boolean saveRecord(final Level level, final ResourceLocation name, final CompoundTag channel) {
-//        try {
-//            final Path genPath = getGenPath(level.getServer())
-//                .resolve(name.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
-//
-//            final Path path = FileUtil.createPathToResource(genPath, name.getPath(), ".json");
-//
-//            // Copied from StructureTemplateManager#createAndValidatePathToStructure
-//            if (!(path.startsWith(genPath) && FileUtil.isPathNormalized(path) && FileUtil.isPathPortable(path)))
-//                throw new ResourceLocationException("Invalid resource path: " + path);
-//
-//            Files.createDirectories(path.getParent());
-//
-//            try (final FileWriter outStream = new FileWriter(path.toFile())) {
-//                final JsonElement jsonData = NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, channel);
-//
-//                final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                gson.toJson(jsonData, outStream);
-//            }
-//
-//            RECORDS.put(name, channel);
-//            return true;
-//        } catch (Exception e) {
-//            LOGGER.error("Error encountered while attempting to save record data", e);
-//            return false;
-//        }
-//    }
-//
-//    // Copied from StructureTemplateManager#listGeneratedInNamespace etc.
-//    private static Stream<ResourceLocation> listGeneratedInNamespace(Path pPath) {
-//        Path path = pPath.resolve(EMIMain.MODID).resolve(RECORDS_DIR);
-//        return listFolderContents(path, pPath.getFileName().toString(), ".json");
-//    }
-//    private static Stream<ResourceLocation> listFolderContents(Path pFolder, String pNamespace, String pPath) {
-//        if (!Files.isDirectory(pFolder)) {
-//            return Stream.empty();
-//        } else {
-//            int i = pPath.length();
-//            Function<String, String> function = (p_230358_) -> {
-//                return p_230358_.substring(0, p_230358_.length() - i);
-//            };
-//
-//            try {
-//                return Files.walk(pFolder).filter((p_230381_) -> {
-//                    return p_230381_.toString().endsWith(pPath);
-//                }).mapMulti((p_230386_, p_230387_) -> {
-//                    try {
-//                        p_230387_.accept(new ResourceLocation(pNamespace, function.apply(relativize(pFolder, p_230386_))));
-//                    } catch (ResourceLocationException resourcelocationexception) {
-//                        LOGGER.error("Invalid location while listing pack contents", (Throwable)resourcelocationexception);
-//                    }
-//
-//                });
-//            } catch (IOException ioexception) {
-//                LOGGER.error("Failed to list folder contents", (Throwable)ioexception);
-//                return Stream.empty();
-//            }
-//        }
-//    }
-//    private static String relativize(Path pRoot, Path pPath) {
-//        return pRoot.relativize(pPath).toString().replace(File.separator, "/");
-//    }
-//
-//
-//    private static Path getGenPath(final MinecraftServer server) throws IOException {
-//        final Path path = ((MinecraftServerAccessor)server).getStorageSource()
-//            .getLevelPath(LevelResource.GENERATED_DIR)
-//            .normalize();
-//
-//        if (!Files.isDirectory(path))
-//            throw new IOException("Path "+path+" is not directory");
-//
-//        return path;
-//    }
+    public static Stream<ResourceLocation> listGenRecords(final Level level) {
+        try {
+            return Files.list(getGenPath(level.getServer()))
+                .filter(Files::isDirectory)
+                .flatMap(RecordRepository::listGeneratedInNamespace);
+        } catch (Exception e) {
+            LOGGER.error("Error encountered while attempting to load record data", e);
+            return null;
+        }
+    }
 
-    //#endregion
+    public static boolean saveRecord(final Level level, final ResourceLocation name, final CompoundTag channel) {
+        try {
+            final Path genPath = getGenPath(level.getServer())
+                .resolve(name.getNamespace()).resolve(EMIMain.MODID).resolve(RECORDS_DIR);
+
+            final Path path = FileUtil.createPathToResource(genPath, name.getPath(), ".json");
+
+            // Copied from StructureTemplateManager#createAndValidatePathToStructure
+            if (!(path.startsWith(genPath) && FileUtil.isPathNormalized(path) && FileUtil.isPathPortable(path)))
+                throw new ResourceLocationException("Invalid resource path: " + path);
+
+            Files.createDirectories(path.getParent());
+
+            try (final FileWriter outStream = new FileWriter(path.toFile())) {
+                final JsonElement jsonData = NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, channel);
+
+                final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                gson.toJson(jsonData, outStream);
+            }
+
+            RECORDS.put(name, channel);
+            return true;
+        } catch (Exception e) {
+            LOGGER.error("Error encountered while attempting to save record data", e);
+            return false;
+        }
+    }
+
+    // Copied from StructureTemplateManager#listGeneratedInNamespace etc.
+    private static Stream<ResourceLocation> listGeneratedInNamespace(Path pPath) {
+        Path path = pPath.resolve(EMIMain.MODID).resolve(RECORDS_DIR);
+        return listFolderContents(path, pPath.getFileName().toString(), ".json");
+    }
+    private static Stream<ResourceLocation> listFolderContents(Path pFolder, String pNamespace, String pPath) {
+        if (!Files.isDirectory(pFolder)) {
+            return Stream.empty();
+        } else {
+            int i = pPath.length();
+            Function<String, String> function = (p_230358_) -> {
+                return p_230358_.substring(0, p_230358_.length() - i);
+            };
+
+            try {
+                return Files.walk(pFolder).filter((p_230381_) -> {
+                    return p_230381_.toString().endsWith(pPath);
+                }).mapMulti((p_230386_, p_230387_) -> {
+                    try {
+                        p_230387_.accept(new ResourceLocation(pNamespace, function.apply(relativize(pFolder, p_230386_))));
+                    } catch (ResourceLocationException resourcelocationexception) {
+                        LOGGER.error("Invalid location while listing pack contents", (Throwable)resourcelocationexception);
+                    }
+
+                });
+            } catch (IOException ioexception) {
+                LOGGER.error("Failed to list folder contents", (Throwable)ioexception);
+                return Stream.empty();
+            }
+        }
+    }
+    private static String relativize(Path pRoot, Path pPath) {
+        return pRoot.relativize(pPath).toString().replace(File.separator, "/");
+    }
+
+
+    private static Path getGenPath(final MinecraftServer server) throws IOException {
+        final Path path = ((MinecraftServerAccessor)server).getStorageSource()
+            .getLevelPath(LevelResource.GENERATED_DIR)
+            .normalize();
+
+        if (!Files.isDirectory(path))
+            throw new IOException("Path "+path+" is not directory");
+
+        return path;
+    }
 }
