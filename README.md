@@ -54,7 +54,7 @@ Feel free to suggest anything that suits the theme of this mod. :)
 
 ## Code Contributions
 A few points to take in mind before committing:
-- New features should first be [suggested as an issue](https://github.com/StavWasPlayZ/Genshin-Instruments/issues)
+- New features should first be [suggested as an issue](https://github.com/StavWasPlayZ/Even-More-Instruments/issues)
   before being put into production.
 - Contributions should keep in mind the regular Java conventions,
   as well as my own code practices, to better match with the codebase.  
