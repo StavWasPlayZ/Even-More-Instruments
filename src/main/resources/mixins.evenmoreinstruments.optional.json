@@ -5,6 +5,6 @@
 	"refmap": "mixins.evenmoreinstruments.refmap.json",
 	"client": [
         "ParrotLooperDanceInjector"
-	],
+    ],
 	"minVersion": "0.8"
 }
