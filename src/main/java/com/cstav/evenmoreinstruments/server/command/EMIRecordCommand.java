@@ -86,7 +86,7 @@ public class EMIRecordCommand {
     }
 
     private static int saveRecord(CommandContext<CommandSourceStack> stack) throws CommandSyntaxException {
-        final ResourceLocation saveLoc = ResourceLocationArgument.getId(stack, "name");
+        final ResourceLocation saveLoc = ResourceLocationArgument.getId(stack, "record");
         if (saveLoc.getNamespace().equals(EMIMain.MODID))
             throw ERROR_INVALID_NAME.create(saveLoc);
 
@@ -126,7 +126,7 @@ public class EMIRecordCommand {
             throw ERROR_RECORD_BURNED.create(target.getDisplayName());
 
 
-        final ResourceLocation recordName = stack.getArgument("name", ResourceLocation.class);
+        final ResourceLocation recordName = stack.getArgument("record", ResourceLocation.class);
         final Optional<CompoundTag> recordChannel = RecordRepository.getRecord(recordName);
 
         if (recordChannel.isEmpty())
@@ -139,7 +139,7 @@ public class EMIRecordCommand {
     }
 
     private static int removeRecord(CommandContext<CommandSourceStack> stack) throws CommandSyntaxException {
-        final ResourceLocation name = ResourceLocationArgument.getId(stack, "name");
+        final ResourceLocation name = ResourceLocationArgument.getId(stack, "record");
         if (name.getNamespace().equals(EMIMain.MODID))
             throw ERROR_INVALID_NAME.create(name);
 
