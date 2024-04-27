@@ -10,7 +10,7 @@ import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumen
 import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableWindInstrumentItem;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
-import com.cstav.genshinstrument.ModCreativeModeTabs;
+import com.cstav.genshinstrument.GICreativeModeTabs;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -43,7 +43,7 @@ public class ModItems {
                 new Properties()
                     .stacksTo(1)
                     .durability(InstrumentAccessoryItem.MAX_DURABILITY)
-                    .tab(ModCreativeModeTabs.instrumentsTab)
+                    .tab(GICreativeModeTabs.instrumentsTab)
             )
         ),
         VIOLIN = register("violin", ViolinItem::new),
@@ -52,14 +52,14 @@ public class ModItems {
             (player) -> EMIPacketHandler.sendToClient(
                 new EMIOpenInstrumentPacket("guitar"), player
             ),
-            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
+            new Properties().tab(GICreativeModeTabs.instrumentsTab),
             "Philharmonia"
         )),
         PIPA = register("pipa", () -> new CreditableInstrumentItem(
             (player) -> EMIPacketHandler.sendToClient(
                 new EMIOpenInstrumentPacket("pipa"), player
             ),
-            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
+            new Properties().tab(GICreativeModeTabs.instrumentsTab),
             "DSK Asian DreamZ"
         )),
 
@@ -68,7 +68,7 @@ public class ModItems {
                 new Properties()
                     .stacksTo(1)
                     .durability(InstrumentAccessoryItem.MAX_DURABILITY)
-                    .tab(ModCreativeModeTabs.instrumentsTab)
+                    .tab(GICreativeModeTabs.instrumentsTab)
             )
         ),
         SHAMISEN = register("shamisen",
@@ -76,7 +76,7 @@ public class ModItems {
                 (player) -> EMIPacketHandler.sendToClient(
                     new EMIOpenInstrumentPacket("shamisen"), player
                 ),
-                new Properties().tab(ModCreativeModeTabs.instrumentsTab),
+                new Properties().tab(GICreativeModeTabs.instrumentsTab),
                 (InstrumentAccessoryItem) BACHI.get(),
                 "Roland SC-88"
             )
@@ -86,7 +86,7 @@ public class ModItems {
             new CreditableBlockInstrumentItem(
                 ModBlocks.KOTO.get(), new Properties()
                 .stacksTo(1)
-                .tab(ModCreativeModeTabs.instrumentsTab),
+                .tab(GICreativeModeTabs.instrumentsTab),
                 "DSK Asian DreamZ"
             )
         ),
@@ -95,25 +95,25 @@ public class ModItems {
             (player) -> EMIPacketHandler.sendToClient(
                 new EMIOpenInstrumentPacket("trombone"), player
             ),
-            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
+            new Properties().tab(GICreativeModeTabs.instrumentsTab),
             "Philharmonia"
         )),
         SAXOPHONE = register("saxophone", () -> new CreditableWindInstrumentItem(
             (player) -> EMIPacketHandler.sendToClient(
                 new EMIOpenInstrumentPacket("saxophone"), player
             ),
-            new Properties().tab(ModCreativeModeTabs.instrumentsTab),
+            new Properties().tab(GICreativeModeTabs.instrumentsTab),
             "Philharmonia"
         )),
         KEYBOARD = register("keyboard", () ->
             new KeyboardBlockItem(
                 ModBlocks.KEYBOARD.get(), new Properties()
-                .tab(ModCreativeModeTabs.instrumentsTab)
+                .tab(GICreativeModeTabs.instrumentsTab)
                 .stacksTo(1),
                 null
             )
         ),
-        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND, ModCreativeModeTabs.instrumentsTab),
+        KEYBOARD_STAND = registerBlockItem(ModBlocks.KEYBOARD_STAND, GICreativeModeTabs.instrumentsTab),
 
         LOOPER = registerBlockItem(ModBlocks.LOOPER, EMIModCreativeModeTabs.musicProductionTab),
         LOOPER_ADAPTER = register(

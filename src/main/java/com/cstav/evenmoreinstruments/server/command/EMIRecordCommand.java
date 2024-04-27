@@ -17,7 +17,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,22 +38,22 @@ public class EMIRecordCommand {
         );
 
     private static final DynamicCommandExceptionType ERROR_NO_ITEM = new DynamicCommandExceptionType((player) ->
-        Component.translatable("commands.evenmoreinstruments.emirecord.failed.no_record", player)
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.no_record", player)
     );
     private static final DynamicCommandExceptionType ERROR_RECORD_BURNED = new DynamicCommandExceptionType((player) ->
-        Component.translatable("commands.evenmoreinstruments.emirecord.failed.record_burned", player)
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.record_burned", player)
     );
     private static final DynamicCommandExceptionType ERROR_RECORD_EMPTY = new DynamicCommandExceptionType((player) ->
-        Component.translatable("commands.evenmoreinstruments.emirecord.failed.record_empty", player)
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.record_empty", player)
     );
     private static final DynamicCommandExceptionType ERROR_RECORD_INVALID = new DynamicCommandExceptionType((id) ->
-        Component.translatable("commands.evenmoreinstruments.emirecord.failed.record_invalid", id)
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.record_invalid", id)
     );
     private static final DynamicCommandExceptionType ERROR_TOO_MANY = new DynamicCommandExceptionType((player) ->
-        Component.translatable("commands.evenmoreinstruments.emirecord.failed.too_many", player)
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.too_many", player)
     );
     private static final DynamicCommandExceptionType ERROR_INVALID_NAME = new DynamicCommandExceptionType((id) ->
-        Component.translatable("commands.evenmoreinstruments.emirecord.failed.invalid_name", EMIMain.MODID, id)
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.invalid_name", EMIMain.MODID, id)
     );
 
 
@@ -62,7 +62,7 @@ public class EMIRecordCommand {
             .then(Commands.literal("burn")
                 .then(Commands.argument("record", ResourceLocationArgument.id())
                     .suggests(SUGGEST_RECORDS)
-                    .executes((stack) -> loadRecordToHand(stack, stack.getSource().getPlayer()))
+                    .executes((stack) -> loadRecordToHand(stack, stack.getSource().getPlayerOrException()))
                     .then(Commands.argument("target", EntityArgument.player())
                         .requires((stack) -> stack.hasPermission(2))
                         .executes((stack) -> loadRecordToHand(stack, EntityArgument.getPlayer(stack,"target")))
@@ -70,7 +70,7 @@ public class EMIRecordCommand {
                 )
             )
             .then(Commands.literal("save")
-                .requires((stack) -> stack.isPlayer() && stack.hasPermission(2))
+                .requires((stack) -> (stack.getEntity() instanceof Player) && stack.hasPermission(2))
                 .then(Commands.argument("record", ResourceLocationArgument.id())
                     .executes(EMIRecordCommand::saveRecord)
                 )
@@ -91,7 +91,7 @@ public class EMIRecordCommand {
             throw ERROR_INVALID_NAME.create(saveLoc);
 
 
-        final Player target = stack.getSource().getPlayer();
+        final Player target = stack.getSource().getPlayerOrException();
         final Optional<ItemStack> record = CommonUtil.getItemInBothHands(target, ModItems.RECORD_WRITABLE.get());
 
         if (record.isEmpty())
@@ -110,7 +110,7 @@ public class EMIRecordCommand {
             throw new RuntimeException(e);
         }
 
-        stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.record_saved"), true);
+        stack.getSource().sendSuccess(new TranslatableComponent("commands.evenmoreinstruments.emirecord.success.record_saved"), true);
         return 1;
     }
 
@@ -134,7 +134,7 @@ public class EMIRecordCommand {
 
         record.get().getOrCreateTag().putString(BurnedRecordItem.BURNED_MEDIA_TAG, recordName.toString());
 
-        stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.record_burned"), true);
+        stack.getSource().sendSuccess(new TranslatableComponent("commands.evenmoreinstruments.emirecord.success.record_burned"), true);
         return 1;
     }
 
@@ -150,7 +150,7 @@ public class EMIRecordCommand {
             throw ERROR_RECORD_INVALID.create(name);
         }
 
-        stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.record_removed"), true);
+        stack.getSource().sendSuccess(new TranslatableComponent("commands.evenmoreinstruments.emirecord.success.record_removed"), true);
         return 1;
     }
 }
