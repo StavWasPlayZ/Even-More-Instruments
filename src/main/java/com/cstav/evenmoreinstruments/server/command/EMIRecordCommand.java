@@ -139,6 +139,8 @@ public class EMIRecordCommand {
 
     private static int removeRecord(CommandContext<CommandSourceStack> stack) throws CommandSyntaxException {
         final ResourceLocation name = ResourceLocationArgument.getId(stack, "name");
+        if (name.getNamespace().equals(EMIMain.MODID))
+            throw ERROR_INVALID_NAME.create(name);
 
         try {
             RecordRepository.removeRecord(name);
