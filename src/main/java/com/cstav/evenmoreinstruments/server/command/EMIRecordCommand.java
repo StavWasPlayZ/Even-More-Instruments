@@ -38,7 +38,7 @@ public class EMIRecordCommand {
         );
 
     private static final DynamicCommandExceptionType ERROR_NO_ITEM = new DynamicCommandExceptionType((player) ->
-        Component.translatable("commands.enchant.failed.itemless", player)
+        Component.translatable("commands.evenmoreinstruments.emirecord.failed.no_record", player)
     );
     private static final DynamicCommandExceptionType ERROR_RECORD_BURNED = new DynamicCommandExceptionType((player) ->
         Component.translatable("commands.evenmoreinstruments.emirecord.failed.record_burned", player)
@@ -60,10 +60,12 @@ public class EMIRecordCommand {
     public static void register(CommandDispatcher<CommandSourceStack> pDispatcher) {
         pDispatcher.register(Commands.literal("emirecord")
             .then(Commands.literal("load")
-                .then(Commands.argument("target", EntityArgument.player())
-                    .then(Commands.argument("name", ResourceLocationArgument.id())
-                        .suggests(SUGGEST_RECORDS)
-                        .executes(EMIRecordCommand::loadRecordToHand)
+                .then(Commands.argument("name", ResourceLocationArgument.id())
+                    .suggests(SUGGEST_RECORDS)
+                    .executes((stack) -> loadRecordToHand(stack, stack.getSource().getPlayer()))
+                    .then(Commands.argument("target", EntityArgument.player())
+                        .requires((stack) -> stack.hasPermission(2))
+                        .executes((stack) -> loadRecordToHand(stack, EntityArgument.getPlayer(stack,"target")))
                     )
                 )
             )
@@ -112,8 +114,7 @@ public class EMIRecordCommand {
         return 1;
     }
 
-    private static int loadRecordToHand(CommandContext<CommandSourceStack> stack) throws CommandSyntaxException {
-        final Player target = EntityArgument.getPlayer(stack,"target");
+    private static int loadRecordToHand(CommandContext<CommandSourceStack> stack, Player target) throws CommandSyntaxException {
         final Optional<ItemStack> record = CommonUtil.getItemInBothHands(target, ModItems.RECORD_WRITABLE.get());
 
         if (record.isEmpty())
