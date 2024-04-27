@@ -25,15 +25,10 @@ import net.minecraft.world.item.ItemStack;
 import java.io.IOException;
 import java.util.Optional;
 
-/*
-copy give to clipboard in hand
-save to datapack from hand [name]
-load to hand [name]
- */
 public class EMIRecordCommand {
     private static final SuggestionProvider<CommandSourceStack> SUGGEST_RECORDS = (stack, builder) ->
         SharedSuggestionProvider.suggestResource(
-            RecordRepository.listGenRecords(),
+            RecordRepository.listRecords(false),
             builder
         );
 
