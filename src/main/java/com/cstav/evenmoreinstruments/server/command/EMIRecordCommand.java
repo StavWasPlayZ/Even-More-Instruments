@@ -28,7 +28,7 @@ import java.util.Optional;
 public class EMIRecordCommand {
     private static final SuggestionProvider<CommandSourceStack> SUGGEST_RECORDS = (stack, builder) ->
         SharedSuggestionProvider.suggestResource(
-            RecordRepository.listGenRecords(),
+            RecordRepository.listRecords(false),
             builder
         );
 
