@@ -70,7 +70,7 @@ public class EMIRecordCommand {
                 )
             )
             .then(Commands.literal("save")
-                .requires((stack) -> (stack.getEntity() instanceof Player) && stack.hasPermission(2))
+                .requires((stack) -> stack.hasPermission(2))
                 .then(Commands.argument("record", ResourceLocationArgument.id())
                     .executes(EMIRecordCommand::saveRecord)
                 )
@@ -86,12 +86,12 @@ public class EMIRecordCommand {
     }
 
     private static int saveRecord(CommandContext<CommandSourceStack> stack) throws CommandSyntaxException {
+        final Player target = stack.getSource().getPlayerOrException();
+
         final ResourceLocation saveLoc = ResourceLocationArgument.getId(stack, "record");
         if (saveLoc.getNamespace().equals(EMIMain.MODID))
             throw ERROR_INVALID_NAME.create(saveLoc);
 
-
-        final Player target = stack.getSource().getPlayerOrException();
         final Optional<ItemStack> record = CommonUtil.getItemInBothHands(target, ModItems.RECORD_WRITABLE.get());
 
         if (record.isEmpty())
