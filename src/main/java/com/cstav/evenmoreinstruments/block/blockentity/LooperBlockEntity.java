@@ -83,7 +83,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
             channel = recordData.getCompound(CHANNEL_TAG);
         }
         else if (recordData.contains(BURNED_MEDIA_TAG, Tag.TAG_STRING)) {
-            setChannel(RecordRepository.getRecord(getBurnedMediaLoc()));
+            setChannel(RecordRepository.getRecord(getBurnedMediaLoc()).orElse(null));
         }
     }
     protected ResourceLocation getBurnedMediaLoc() {

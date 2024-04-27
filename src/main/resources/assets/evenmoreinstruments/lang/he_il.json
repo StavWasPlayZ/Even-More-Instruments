@@ -74,6 +74,18 @@
     "gamerule.evenmoreinstruments_looperMaxNotes.description": "מספר התווים שלופר יכול להכיל. כל ערך מתחת ל- 0 יגרום ללופר להיות חסר כל מגבלות.",
 
 
+    "commands.evenmoreinstruments.emirecord.failed.record_burned": "התקליט המוחזק של %s כבר צרוב",
+    "commands.evenmoreinstruments.emirecord.failed.no_record": "%s לא מחזיק באף תקליט",
+    "commands.evenmoreinstruments.emirecord.failed.record_empty": "התקליט בידיו של %s אינו צרוב",
+    "commands.evenmoreinstruments.emirecord.failed.record_invalid": "לא ניתן למצוא את התקליט '%s'",
+    "commands.evenmoreinstruments.emirecord.failed.too_many": "יותר מידיי תקליטים בידיו של %s. בדיוק תקליט 1 מחוייב להיות בידיו של השחקן.",
+    "commands.evenmoreinstruments.emirecord.failed.invalid_name": "לא ניתן לשמור תקליט על שמו של %s (התקבל %s)",
+
+    "commands.evenmoreinstruments.emirecord.success.record_burned": "תקליט נצרב בהצלחה",
+    "commands.evenmoreinstruments.emirecord.success.record_removed": "תקליט נמחק בהצלחה",
+    "commands.evenmoreinstruments.emirecord.success.record_saved": "תקליט נשמר בהצלחה",
+
+
     "evenmoreinstruments.advancements.main.japanese.title": "וויב אמיתי",
     "evenmoreinstruments.advancements.main.japanese.description": "נגן בכל כלי הנגינה האסייתיים",
 

@@ -16,6 +16,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The main mod class of the "Even More Instruments!" mod
@@ -24,6 +26,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class EMIMain
 {
     public static final String MODID = "evenmoreinstruments";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+
     public static CompoundTag modTag(final ItemStack item) {
         return item.getOrCreateTagElement(MODID);
     }
