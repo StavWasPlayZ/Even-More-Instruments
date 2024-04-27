@@ -93,7 +93,6 @@ public class RecordRepository {
                 .filter(Files::isDirectory)
                 .flatMap(RecordRepository::listGeneratedInNamespace);
         } catch (Exception e) {
-            LOGGER.error("Error encountered while attempting to list available records", e);
             return Stream.empty();
         }
     }
