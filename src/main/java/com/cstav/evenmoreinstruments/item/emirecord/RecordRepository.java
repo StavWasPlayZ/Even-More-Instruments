@@ -1,7 +1,6 @@
 package com.cstav.evenmoreinstruments.item.emirecord;
 
 import com.cstav.evenmoreinstruments.EMIMain;
-import com.cstav.evenmoreinstruments.mixins.optional.MinecraftServerAccessor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -178,12 +177,11 @@ public class RecordRepository {
 
 
     private static Path getGenPath(final MinecraftServer server) throws IOException {
-        final Path path = ((MinecraftServerAccessor)server).getStorageSource()
+        final Path path = server.storageSource
             .getLevelPath(LevelResource.GENERATED_DIR)
             .normalize();
 
-        if (!Files.isDirectory(path))
-            throw new IOException("Path "+path+" is not directory");
+        Files.createDirectories(path);
 
         return path;
     }
