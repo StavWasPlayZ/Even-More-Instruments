@@ -82,7 +82,7 @@
     "commands.evenmoreinstruments.emirecord.failed.too_many": "Too many records present at %s's hand. Exactly 1 record must be held to load a track.",
     "commands.evenmoreinstruments.emirecord.failed.invalid_name": "Cannot save record by the namespace of %s (provided %s)",
 
-    "commands.evenmoreinstruments.emirecord.success.record_loaded": "Record successfully loaded",
+    "commands.evenmoreinstruments.emirecord.success.record_burned": "Record successfully burned",
     "commands.evenmoreinstruments.emirecord.success.record_removed": "Record removed successfully",
     "commands.evenmoreinstruments.emirecord.success.record_saved": "Record successfully saved",
 

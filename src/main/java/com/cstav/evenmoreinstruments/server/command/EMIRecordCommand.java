@@ -59,8 +59,8 @@ public class EMIRecordCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> pDispatcher) {
         pDispatcher.register(Commands.literal("emirecord")
-            .then(Commands.literal("load")
-                .then(Commands.argument("name", ResourceLocationArgument.id())
+            .then(Commands.literal("burn")
+                .then(Commands.argument("record", ResourceLocationArgument.id())
                     .suggests(SUGGEST_RECORDS)
                     .executes((stack) -> loadRecordToHand(stack, stack.getSource().getPlayer()))
                     .then(Commands.argument("target", EntityArgument.player())
@@ -71,13 +71,13 @@ public class EMIRecordCommand {
             )
             .then(Commands.literal("save")
                 .requires((stack) -> stack.isPlayer() && stack.hasPermission(2))
-                .then(Commands.argument("name", ResourceLocationArgument.id())
+                .then(Commands.argument("record", ResourceLocationArgument.id())
                     .executes(EMIRecordCommand::saveRecord)
                 )
             )
             .then(Commands.literal("remove")
                 .requires((stack) -> stack.hasPermission(2))
-                .then(Commands.argument("name", ResourceLocationArgument.id())
+                .then(Commands.argument("record", ResourceLocationArgument.id())
                     .suggests(SUGGEST_RECORDS)
                     .executes(EMIRecordCommand::removeRecord)
                 )
@@ -134,7 +134,7 @@ public class EMIRecordCommand {
 
         record.get().getOrCreateTag().putString(BurnedRecordItem.BURNED_MEDIA_TAG, recordName.toString());
 
-        stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.record_loaded"), true);
+        stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.record_burned"), true);
         return 1;
     }
 
