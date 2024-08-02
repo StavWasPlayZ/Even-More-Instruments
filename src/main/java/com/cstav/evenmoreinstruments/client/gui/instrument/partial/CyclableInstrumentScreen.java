@@ -1,7 +1,7 @@
 package com.cstav.evenmoreinstruments.client.gui.instrument.partial;
 
 import com.cstav.evenmoreinstruments.client.KeyMappings;
-import com.cstav.genshinstrument.client.gui.screen.instrument.partial.notegrid.GridInstrumentScreen;
+import com.cstav.genshinstrument.client.gui.screen.instrument.partial.grid.GridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.options.instrument.partial.SoundTypeOptionsScreen;
 import com.cstav.genshinstrument.sound.NoteSound;
 import net.minecraftforge.api.distmarker.Dist;

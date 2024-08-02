@@ -2,7 +2,7 @@ package com.cstav.evenmoreinstruments.sound;
 
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.genshinstrument.sound.NoteSound;
-import com.cstav.genshinstrument.sound.NoteSoundRegistrar;
+import com.cstav.genshinstrument.sound.registrar.NoteSoundRegistrar;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;

@@ -12,10 +12,10 @@ import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
-import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
+import com.cstav.genshinstrument.event.NoteSoundPlayedEvent;
+import com.cstav.genshinstrument.networking.packet.instrument.util.NoteSoundPacketUtil;
 import com.cstav.genshinstrument.sound.NoteSound;
-import com.cstav.genshinstrument.sound.NoteSoundRegistrar;
-import com.cstav.genshinstrument.util.ServerUtil;
+import com.cstav.genshinstrument.sound.registrar.NoteSoundRegistrar;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -39,8 +39,7 @@ import org.slf4j.Logger;
 
 import java.util.UUID;
 
-import static com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem.BURNED_MEDIA_TAG;
-import static com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem.*;
+import static com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem.*;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class LooperBlockEntity extends BlockEntity implements ContainerSingleItem {
@@ -373,7 +372,8 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
             final ResourceLocation soundLocation = new ResourceLocation(note.getString(SOUND_TYPE_TAG));
 
-            ServerUtil.sendPlayNotePackets(getLevel(), getBlockPos(),
+            NoteSoundPacketUtil.sendPlayNotePackets(
+                getLevel(), getBlockPos(),
                 NoteSoundRegistrar.getSounds(soundLocation)[note.getInt(SOUND_INDEX_TAG)],
                 instrumentId, pitch, (int)(volume * 100)
             );
@@ -413,11 +413,18 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
      * Writes the note to the record as described by the event.
      */
     @SubscribeEvent
-    public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
-        if (event.level.isClientSide || !LooperUtil.isRecording(event.player))
+    public static void onInstrumentPlayed(final NoteSoundPlayedEvent event) {
+        // Only get player events
+        if (!event.isByPlayer())
             return;
 
-        final Level level = event.player.level();
+        final Player player = (Player) event.entityInfo().get().entity;
+
+        if (event.level().isClientSide || !LooperUtil.isRecording(player))
+            return;
+
+
+        final Level level = player.level();
             
         final LooperBlockEntity looperBE = LooperUtil.getFromEvent(event);
         if (looperBE == null || looperBE.isCapped(level))
@@ -429,15 +436,18 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
 
         if (looperBE.isLocked()) {
-            if (!looperBE.isRecording() || !looperBE.isAllowedToRecord(event.player.getUUID()))
+            if (!looperBE.isRecording() || !looperBE.isAllowedToRecord(player.getUUID()))
                 return;
         } else {
-            looperBE.setLockedBy(event.player.getUUID());
+            looperBE.setLockedBy(player.getUUID());
             looperBE.setRecording(true);
-            looperBE.getChannel().putString(INSTRUMENT_ID_TAG, event.instrumentId.toString());
+            looperBE.getChannel().putString(INSTRUMENT_ID_TAG, event.soundMeta().instrumentId().toString());
         }
             
-        looperBE.writeNote(event.sound, event.pitch, event.volume, looperBE.getTicks());
+        looperBE.writeNote(
+            event.sound(), event.soundMeta().pitch(), event.soundMeta().volume(),
+            looperBE.getTicks()
+        );
     }
 
     /**

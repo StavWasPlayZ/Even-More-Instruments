@@ -8,7 +8,7 @@ import com.cstav.evenmoreinstruments.client.gui.instrument.saxophone.SaxophoneSc
 import com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.ShamisenScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.trombone.TromboneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
-import com.cstav.genshinstrument.networking.packet.instrument.OpenInstrumentPacket;
+import com.cstav.genshinstrument.networking.packet.instrument.s2c.OpenInstrumentPacket;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.FriendlyByteBuf;
 

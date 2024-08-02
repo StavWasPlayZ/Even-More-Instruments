@@ -19,11 +19,11 @@ class ViolinItem extends AccessoryInstrumentItem {
     }
 
     @Override
-    public int hurtInstrumentBy(final InstrumentPlayedEvent.ByPlayer event, final ItemStack accessory) {
+    public int hurtAccessoryBy(final InstrumentPlayedEvent<?> event, final ItemStack accessory) {
         // If we did a long press, deal damage by 2.
         final boolean playedLong = Arrays.stream(ModSounds.VIOLIN_FULL_NOTE)
-            .anyMatch((sound) -> sound.equals(event.sound));
+            .anyMatch((sound) -> sound.equals(event.sound()));
 
-        return super.hurtInstrumentBy(event, accessory) * (playedLong ? 2 : 1);
+        return super.hurtAccessoryBy(event, accessory) * (playedLong ? 2 : 1);
     }
 }
