@@ -87,9 +87,13 @@ public class LooperOverlayInjector {
 
     @SubscribeEvent
     public static void onKeyboardPress(final ScreenEvent.KeyPressed.Pre event) {
-        if (KeyMappings.RECORD.get().matches(event.getKeyCode(), event.getScanCode()) && (recordBtn != null)) {
-            recordBtn.playDownSound(Minecraft.getInstance().getSoundManager());
-            recordBtn.onPress();
+        if (KeyMappings.RECORD.get().matches(event.getKeyCode(), event.getScanCode())) {
+
+            if (recordBtn != null) {
+                recordBtn.playDownSound(Minecraft.getInstance().getSoundManager());
+                recordBtn.onPress();
+            }
+
         }
     }
 

@@ -63,7 +63,7 @@ public class LooperRecordStatePacket implements IModPacket {
         if (ServerUtil.isMaliciousPos(player, looperTag))
             return;
 
-        final LooperBlockEntity lbe = LooperUtil.getFromInstrument(player.level(), instrumentBlock);
+        final LooperBlockEntity lbe = LooperUtil.getFromBlockInstrument(player.level(), instrumentBlock);
         if (lbe == null) {
             EMIPacketHandler.sendToClient(new LooperRemovedPacket(), player);
             return;
@@ -81,7 +81,7 @@ public class LooperRecordStatePacket implements IModPacket {
             return;
 
 
-        final LooperBlockEntity lbe = LooperUtil.getFromInstrument(player.level(), instrumentItem);
+        final LooperBlockEntity lbe = LooperUtil.getFromItemInstrument(player.level(), instrumentItem);
         if (lbe == null) {
             EMIPacketHandler.sendToClient(new LooperRemovedPacket(), player);
             return;
