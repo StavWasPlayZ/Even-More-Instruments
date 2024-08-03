@@ -99,18 +99,8 @@ public class LooperOverlayInjector {
 
     @SubscribeEvent
     public static void onScreenClose(final ScreenEvent.Closing event) {
-        if (!isRecording || (event.getScreen() != screen))
+        if (event.getScreen() != screen)
             return;
-
-        final Player player = Minecraft.getInstance().player;
-
-        EMIPacketHandler.sendToServer(
-            new LooperRecordStatePacket(false,
-                InstrumentOpenProvider.isItem(player)
-                    ? InstrumentOpenProvider.getHand(player)
-                    : null
-            )
-        );
 
         isRecording = false;
         LooperOverlayInjector.screen = null;
