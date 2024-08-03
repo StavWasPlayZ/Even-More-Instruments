@@ -52,12 +52,6 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     public ResourceLocation getInstrumentId() {
         return instrumentId;
     }
-
-
-    @Override
-    public ResourceLocation getSourcePath() {
-        return FloralZitherScreen.INSTRUMENT_ID;
-    }
     
 
     @Override
@@ -76,8 +70,8 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     }
 
 
-    private static final InstrumentThemeLoader THEME_LOADER = InstrumentThemeLoader.fromOther(
-        FloralZitherScreen.INSTRUMENT_ID,
+    public static final InstrumentThemeLoader THEME_LOADER = InstrumentThemeLoader.fromOther(
+        FloralZitherScreen.THEME_LOADER,
         new ResourceLocation(EMIMain.MODID, "note_block_instrument")
     );
         

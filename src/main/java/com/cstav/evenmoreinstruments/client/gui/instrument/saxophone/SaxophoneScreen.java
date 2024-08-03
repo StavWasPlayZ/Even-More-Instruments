@@ -28,13 +28,10 @@ public class SaxophoneScreen extends GridInstrumentScreen {
         return false;
     }
 
-
-    @Override
-    public ResourceLocation getSourcePath() {
-        return TromboneScreen.INSTRUMENT_ID;
-    }
-
-    private static final InstrumentThemeLoader THEME_LOADER = InstrumentThemeLoader.fromOther(TromboneScreen.INSTRUMENT_ID, INSTRUMENT_ID);
+    public static final InstrumentThemeLoader THEME_LOADER = InstrumentThemeLoader.fromOther(
+        TromboneScreen.THEME_LOADER,
+        INSTRUMENT_ID
+    );
     @Override
     public InstrumentThemeLoader getThemeLoader() {
         return THEME_LOADER;
