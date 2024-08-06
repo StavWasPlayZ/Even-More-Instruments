@@ -13,14 +13,12 @@ import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
-import com.cstav.evenmoreinstruments.util.Tuple3;
 import com.cstav.genshinstrument.networking.packet.instrument.NoteSoundMetadata;
 import com.cstav.genshinstrument.networking.packet.instrument.util.HeldNoteSoundPacketUtil;
 import com.cstav.genshinstrument.networking.packet.instrument.util.HeldSoundPhase;
 import com.cstav.genshinstrument.networking.packet.instrument.util.NoteSoundPacketUtil;
 import com.cstav.genshinstrument.sound.NoteSound;
 import com.cstav.genshinstrument.sound.held.HeldNoteSound;
-import com.cstav.genshinstrument.sound.held.HeldNoteSounds;
 import com.cstav.genshinstrument.sound.held.InitiatorID;
 import com.cstav.genshinstrument.sound.registrar.HeldNoteSoundRegistrar;
 import com.cstav.genshinstrument.sound.registrar.NoteSoundRegistrar;
@@ -45,9 +43,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.slf4j.Logger;
 
+import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem.*;
 
@@ -327,26 +324,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
                 EMIPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, getBlockPos()), (ServerPlayer)player)
             );
 
-            // Stop all potential held sounds
-            HeldNoteSounds.release(initiatorID).stream()
-                // Collect only distinct pitches, instruments and types
-                .collect(Collectors.toMap(
-                    (sound) -> new Tuple3<>(sound.notePitch, sound.heldSoundContainer, sound.instrumentId),
-                    Function.identity(),
-                    (existing, replacement) -> existing
-                ))
-                .values()
-
-                .forEach((sound) ->
-                    HeldNoteSoundPacketUtil.sendPlayNotePackets(
-                        level, getBlockPos(),
-                        //TODO implement public final field 'instrumentId' in HeldSoundInstance;
-                        // actually test this feature
-                        sound.heldSoundContainer, sound.instrumentId,
-                        sound.notePitch, (int)(sound.getVolume() * 100),
-                        HeldSoundPhase.RELEASE, initiatorID
-                    )
-                );
+            //TODO cycle held notes
         }
 
         return newState;
@@ -430,13 +408,6 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
     private void playNote(final CompoundTag note, final ResourceLocation instrumentId) {
         try {
-            // Get basic metadata
-            final int pitch = note.getInt(PITCH_TAG);
-            final float volume = note.getFloat(VOLUME_TAG);
-
-            final ResourceLocation soundLocation = new ResourceLocation(note.getString(SOUND_TYPE_TAG));
-            final int soundIndex = note.getInt(SOUND_INDEX_TAG);
-
             // Acquire note type
             final WritableNoteType noteType;
             final String rawNoteType = note.getString(NOTE_TYPE);
@@ -449,38 +420,61 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
             }
 
             switch (noteType) {
-                case REGULAR: {
-                    NoteSoundPacketUtil.sendPlayNotePackets(
-                        getLevel(), getBlockPos(),
-                        NoteSoundRegistrar.getSounds(soundLocation)[soundIndex],
-                        instrumentId, pitch, (int)(volume * 100)
-                    );
-
-                    triggerEmitNoteParticle(pitch);
+                case REGULAR:
+                    playNoteSound(note, instrumentId);
                     break;
-                }
-                case HELD: {
-                    final HeldSoundPhase phase = HeldSoundPhase.valueOf(note.getString(HELD_PHASE));
-
-                    HeldNoteSoundPacketUtil.sendPlayNotePackets(
-                        getLevel(), getBlockPos(),
-                        HeldNoteSoundRegistrar.getSounds(soundLocation)[soundIndex],
-                        instrumentId, pitch, (int)(volume * 100),
-                        phase, initiatorID
-                    );
-
-                    if (phase == HeldSoundPhase.ATTACK) {
-                        triggerEmitNoteParticle(pitch);
-                    }
+                case HELD:
+                    playHeldSound(note, instrumentId);
                     break;
-                }
             }
         } catch (Exception e) {
             LOGGER.error("Attempted to play a looper note at {}, but met with an exception", getBlockPos(), e);
         }
     }
 
-    protected void triggerEmitNoteParticle(final int pitch) {
+    protected void playNoteSound(final CompoundTag noteTag, final ResourceLocation instrumentId) {
+        final NoteSoundMetadata meta = metaFromNoteTag(noteTag, instrumentId);
+
+        final ResourceLocation soundLocation = new ResourceLocation(noteTag.getString(SOUND_TYPE_TAG));
+        final int soundIndex = noteTag.getInt(SOUND_INDEX_TAG);
+
+        NoteSoundPacketUtil.sendPlayNotePackets(
+            level,
+            NoteSoundRegistrar.getSounds(soundLocation)[soundIndex],
+            meta
+        );
+
+        triggerEmitNoteParticle(meta.pitch());
+    }
+    protected void playHeldSound(final CompoundTag noteTag, final ResourceLocation instrumentId) {
+        final NoteSoundMetadata meta = metaFromNoteTag(noteTag, instrumentId);
+
+        final ResourceLocation soundLocation = new ResourceLocation(noteTag.getString(SOUND_TYPE_TAG));
+        final int soundIndex = noteTag.getInt(SOUND_INDEX_TAG);
+
+        final HeldSoundPhase phase = HeldSoundPhase.valueOf(noteTag.getString(HELD_PHASE));
+
+        HeldNoteSoundPacketUtil.sendPlayNotePackets(
+            level,
+            HeldNoteSoundRegistrar.getSounds(soundLocation)[soundIndex],
+            meta, phase, initiatorID
+        );
+
+        if (phase == HeldSoundPhase.ATTACK) {
+            triggerEmitNoteParticle(meta.pitch());
+        }
+    }
+
+    protected NoteSoundMetadata metaFromNoteTag(final CompoundTag noteTag, final ResourceLocation instrumentId) {
+        return new NoteSoundMetadata(
+            getBlockPos(),
+            noteTag.getInt(PITCH_TAG),
+            (int)(noteTag.getFloat(VOLUME_TAG) * 100),
+            instrumentId, Optional.empty()
+        );
+    }
+
+    public void triggerEmitNoteParticle(final int pitch) {
         getLevel().blockEvent(getBlockPos(), ModBlocks.LOOPER.get(), 42, pitch);
     }
 
