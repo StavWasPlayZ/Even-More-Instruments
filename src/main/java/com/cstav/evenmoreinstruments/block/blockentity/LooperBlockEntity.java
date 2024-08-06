@@ -22,6 +22,7 @@ import com.cstav.genshinstrument.sound.held.HeldNoteSound;
 import com.cstav.genshinstrument.sound.held.InitiatorID;
 import com.cstav.genshinstrument.sound.registrar.HeldNoteSoundRegistrar;
 import com.cstav.genshinstrument.sound.registrar.NoteSoundRegistrar;
+import com.cstav.genshinstrument.util.BiValue;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -43,6 +44,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.slf4j.Logger;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -68,6 +70,12 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     private CompoundTag channel;
 
     private final InitiatorID initiatorID;
+
+    /**
+     * A set of cached notes as to use them
+     * for pausing and resuming the looper.
+     */
+    protected final HashSet<BiValue<HeldNoteSound, NoteSoundMetadata>> cachedHeldNotes = new HashSet<>();
 
 
     /**
@@ -324,7 +332,15 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
                 EMIPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, getBlockPos()), (ServerPlayer)player)
             );
 
-            //TODO cycle held notes
+            // Cycle held notes
+            cachedHeldNotes.forEach((bi) ->
+                HeldNoteSoundPacketUtil.sendPlayNotePackets(
+                    level,
+                    bi.obj1(), bi.obj2(),
+                    playing ? HeldSoundPhase.ATTACK : HeldSoundPhase.RELEASE,
+                    initiatorID
+                )
+            );
         }
 
         return newState;
@@ -451,17 +467,21 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
         final ResourceLocation soundLocation = new ResourceLocation(noteTag.getString(SOUND_TYPE_TAG));
         final int soundIndex = noteTag.getInt(SOUND_INDEX_TAG);
+        final HeldNoteSound sound = HeldNoteSoundRegistrar.getSounds(soundLocation)[soundIndex];
 
         final HeldSoundPhase phase = HeldSoundPhase.valueOf(noteTag.getString(HELD_PHASE));
 
         HeldNoteSoundPacketUtil.sendPlayNotePackets(
-            level,
-            HeldNoteSoundRegistrar.getSounds(soundLocation)[soundIndex],
+            level, sound,
             meta, phase, initiatorID
         );
 
         if (phase == HeldSoundPhase.ATTACK) {
+            cachedHeldNotes.add(new BiValue<>(sound, meta));
+            // Also emit particle here
             triggerEmitNoteParticle(meta.pitch());
+        } else if (phase == HeldSoundPhase.RELEASE) {
+            cachedHeldNotes.remove(new BiValue<>(sound, meta));
         }
     }
 
