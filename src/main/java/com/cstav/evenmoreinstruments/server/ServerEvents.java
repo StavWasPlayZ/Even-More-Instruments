@@ -1,4 +1,4 @@
-package com.cstav.evenmoreinstruments.event;
+package com.cstav.evenmoreinstruments.server;
 
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.util.LooperRecordStateUtil;
