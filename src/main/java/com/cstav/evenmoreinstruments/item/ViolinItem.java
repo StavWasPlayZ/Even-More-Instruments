@@ -1,17 +1,18 @@
 package com.cstav.evenmoreinstruments.item;
 
-import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
+import com.cstav.genshinstrument.networking.packet.instrument.util.InstrumentPacketUtil;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Arrays;
 
 class ViolinItem extends AccessoryInstrumentItem {
     public ViolinItem() {
-        super((player) -> EMIPacketHandler.sendToClient(
-                new EMIOpenInstrumentPacket("violin"), player
+        super((player) -> InstrumentPacketUtil.sendOpenPacket(
+                player, new ResourceLocation(EMIMain.MODID, "violin")
             ),
             (InstrumentAccessoryItem) ModItems.VIOLIN_BOW.get(),
             "Philharmonia"
