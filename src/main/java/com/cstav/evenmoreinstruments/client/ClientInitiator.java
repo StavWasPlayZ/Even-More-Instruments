@@ -10,10 +10,9 @@ import com.cstav.evenmoreinstruments.client.gui.instrument.saxophone.SaxophoneSc
 import com.cstav.evenmoreinstruments.client.gui.instrument.shamisen.ShamisenScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.trombone.TromboneScreen;
 import com.cstav.evenmoreinstruments.client.gui.instrument.violin.ViolinScreen;
-import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.genshinstrument.client.gui.screen.instrument.InstrumentScreenRegistry;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentScreen;
-import net.minecraft.client.gui.screens.Screen;
+import com.cstav.genshinstrument.util.CommonUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,6 +25,13 @@ import java.util.function.Supplier;
 
 @EventBusSubscriber(value = Dist.CLIENT, bus = Bus.MOD, modid = EMIMain.MODID)
 public class ClientInitiator {
+
+    private static final Class<?>[] LOAD_ME = new Class[] {
+        // Load this ourselves because it's not included
+        // in out instruments map - hence the theme loader of the
+        // note block is not loaded.
+        NoteBlockInstrumentScreen.class
+    };
 
     private static final Map<ResourceLocation, Supplier<? extends InstrumentScreen>> INSTRUMENTS = Map.of(
         KeyboardScreen.INSTRUMENT_ID, KeyboardScreen::new,
@@ -40,6 +46,7 @@ public class ClientInitiator {
 
     @SubscribeEvent
     public static void setupClient(final FMLClientSetupEvent event) {
+        CommonUtil.loadClasses(LOAD_ME);
         InstrumentScreenRegistry.register(INSTRUMENTS);
     }
 
