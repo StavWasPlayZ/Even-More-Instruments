@@ -7,6 +7,7 @@ import com.cstav.genshinstrument.client.gui.screen.instrument.floralzither.Flora
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.InstrumentThemeLoader;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.grid.GridInstrumentScreen;
 import com.cstav.genshinstrument.client.gui.screen.instrument.partial.note.grid.NoteGridButton;
+import com.cstav.genshinstrument.client.midi.InstrumentMidiReceiver;
 import com.cstav.genshinstrument.sound.NoteSound;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -69,6 +70,11 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
         return true;
     }
 
+
+    @Override
+    public InstrumentMidiReceiver initMidiReceiver() {
+        return new NoteBlockInstrumentMIDIReceiver(this);
+    }
 
     public static final InstrumentThemeLoader THEME_LOADER = InstrumentThemeLoader.fromOther(
         FloralZitherScreen.THEME_LOADER,
