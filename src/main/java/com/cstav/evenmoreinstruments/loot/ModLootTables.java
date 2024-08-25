@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = EMIMain.MODID, bus = Bus.FORGE)
 public class ModLootTables {
-    private static final float RECORD_DROP_PROBABILITY = .4f;
+    private static final float RECORD_DROP_PROBABILITY = .056f;
 
     private static final Map<ResourceLocation, Supplier<LootPool>> TO_INJECT = Map.of(
         BuiltInLootTables.JUNGLE_TEMPLE, () -> createRecordPool(ModItems.RECORD_SUPER_IDOL.get()),
