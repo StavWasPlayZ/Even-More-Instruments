@@ -13,7 +13,7 @@ public class ServerEvents {
 
     @SubscribeEvent
     public static void onInstrumentClosedStateClosed(final InstrumentOpenStateChangedEvent event) {
-        if (event.player.level().isClientSide)
+        if (event.player.getLevel().isClientSide)
             return;
 
         if (!event.isOpen) {
