@@ -32,13 +32,13 @@ public class LooperRecordStateUtil {
     public static void handleBlock(ServerPlayer player, boolean recording) {
         final BlockPos instrumentBlockPos = InstrumentOpenProvider.getBlockPos(player);
 
-        final BlockEntity instrumentBlock = player.level().getBlockEntity(instrumentBlockPos);
+        final BlockEntity instrumentBlock = player.getLevel().getBlockEntity(instrumentBlockPos);
         final CompoundTag looperTag = LooperUtil.looperTag(instrumentBlock);
 
         if (ServerUtil.isMaliciousPos(player, looperTag))
             return;
 
-        final LooperBlockEntity lbe = LooperUtil.getFromBlockInstrument(player.level(), instrumentBlock);
+        final LooperBlockEntity lbe = LooperUtil.getFromBlockInstrument(player.getLevel(), instrumentBlock);
         if (lbe == null) {
             EMIPacketHandler.sendToClient(new LooperRemovedPacket(), player);
             return;
@@ -56,7 +56,7 @@ public class LooperRecordStateUtil {
             return;
 
 
-        final LooperBlockEntity lbe = LooperUtil.getFromItemInstrument(player.level(), instrumentItem);
+        final LooperBlockEntity lbe = LooperUtil.getFromItemInstrument(player.getLevel(), instrumentItem);
         if (lbe == null) {
             EMIPacketHandler.sendToClient(new LooperRemovedPacket(), player);
             return;
@@ -75,7 +75,7 @@ public class LooperRecordStateUtil {
         if (!recording) {
             lbe.lock();
 
-            player.level().setBlockAndUpdate(
+            player.getLevel().setBlockAndUpdate(
                 lbe.getBlockPos(),
                 lbe.setPlaying(true, lbe.getBlockState())
             );

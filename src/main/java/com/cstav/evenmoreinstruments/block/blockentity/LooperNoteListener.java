@@ -51,7 +51,7 @@ public class LooperNoteListener {
             return Optional.empty();
 
 
-        final Level level = player.level();
+        final Level level = player.getLevel();
 
         final LooperBlockEntity looperBE = LooperUtil.getFromEvent(event);
         if (looperBE == null || looperBE.isCapped(level))
