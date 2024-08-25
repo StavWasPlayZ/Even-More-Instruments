@@ -1,10 +1,11 @@
 package com.cstav.evenmoreinstruments.block;
 
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.partial.DoubleInstrumentBlock;
-import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
+import com.cstav.genshinstrument.networking.packet.instrument.util.InstrumentPacketUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -28,7 +29,7 @@ public class KeyboardBlock extends DoubleInstrumentBlock {
 
     @Override
     protected void onInstrumentOpen(ServerPlayer player) {
-        EMIPacketHandler.sendToClient(new EMIOpenInstrumentPacket("keyboard"), player);
+        InstrumentPacketUtil.sendOpenPacket(player, new ResourceLocation(EMIMain.MODID, "keyboard"));
     }
 
     @Override

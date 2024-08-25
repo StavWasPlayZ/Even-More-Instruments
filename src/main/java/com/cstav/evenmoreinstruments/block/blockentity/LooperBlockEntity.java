@@ -3,6 +3,7 @@ package com.cstav.evenmoreinstruments.block.blockentity;
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.ModBlocks;
+import com.cstav.evenmoreinstruments.block.util.WritableNoteType;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
@@ -12,10 +13,16 @@ import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.LooperPlayStatePacket;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
-import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
+import com.cstav.genshinstrument.networking.packet.instrument.NoteSoundMetadata;
+import com.cstav.genshinstrument.networking.packet.instrument.util.HeldNoteSoundPacketUtil;
+import com.cstav.genshinstrument.networking.packet.instrument.util.HeldSoundPhase;
+import com.cstav.genshinstrument.networking.packet.instrument.util.NoteSoundPacketUtil;
 import com.cstav.genshinstrument.sound.NoteSound;
-import com.cstav.genshinstrument.sound.NoteSoundRegistrar;
-import com.cstav.genshinstrument.util.ServerUtil;
+import com.cstav.genshinstrument.sound.held.HeldNoteSound;
+import com.cstav.genshinstrument.sound.held.InitiatorID;
+import com.cstav.genshinstrument.sound.registrar.HeldNoteSoundRegistrar;
+import com.cstav.genshinstrument.sound.registrar.NoteSoundRegistrar;
+import com.cstav.genshinstrument.util.BiValue;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -36,10 +43,11 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.slf4j.Logger;
 
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.UUID;
 
-import static com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem.BURNED_MEDIA_TAG;
-import static com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem.*;
+import static com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem.*;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = EMIMain.MODID)
 public class LooperBlockEntity extends BlockEntity implements Clearable {
@@ -59,6 +67,14 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
     private ItemStack recordIn = ItemStack.EMPTY;
 
     private CompoundTag channel;
+
+    private final InitiatorID initiatorID;
+
+    /**
+     * A set of cached notes as to use them
+     * for pausing and resuming the looper.
+     */
+    protected final HashSet<BiValue<HeldNoteSound, NoteSoundMetadata>> cachedHeldNotes = new HashSet<>();
 
 
     /**
@@ -189,6 +205,9 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
 
     public LooperBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.LOOPER.get(), pPos, pBlockState);
+        this.initiatorID = new InitiatorID("block",
+            String.format("x%sy%sz%s", pPos.getX(), pPos.getY(), pPos.getZ())
+        );
 
         final CompoundTag data = getPersistentData();
 
@@ -300,10 +319,23 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
         final boolean isPlaying = hasFootage() && playing;
         final BlockState newState = state.setValue(LooperBlock.PLAYING, isPlaying);
 
-        if (!getLevel().isClientSide)
+        // If it's the server;
+        if (!getLevel().isClientSide) {
+            // Update the clients
             getLevel().players().forEach((player) ->
                 EMIPacketHandler.sendToClient(new LooperPlayStatePacket(isPlaying, getBlockPos()), (ServerPlayer)player)
             );
+
+            // Cycle held notes
+            cachedHeldNotes.forEach((bi) ->
+                HeldNoteSoundPacketUtil.sendPlayNotePackets(
+                    level,
+                    bi.obj1(), bi.obj2(),
+                    playing ? HeldSoundPhase.ATTACK : HeldSoundPhase.RELEASE,
+                    initiatorID
+                )
+            );
+        }
 
         return newState;
     }
@@ -312,23 +344,47 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
     /**
      * Writes a new note to the writable record.
      */
-    public void writeNote(NoteSound sound, int pitch, int volume, int timestamp) {
+    public void writeNote(NoteSound sound, NoteSoundMetadata soundMeta, int timestamp) {
         if (!isWritable())
             return;
 
-        final CompoundTag noteTag = new CompoundTag();
+        final CompoundTag noteTag = serializeNoteMeta(soundMeta, timestamp);
+        noteTag.putString(NOTE_TYPE, WritableNoteType.REGULAR.name());
 
         noteTag.putInt(SOUND_INDEX_TAG, sound.index);
         noteTag.putString(SOUND_TYPE_TAG, sound.baseSoundLocation.toString());
 
-        noteTag.putInt(PITCH_TAG, pitch);
-        noteTag.putFloat(VOLUME_TAG, volume / 100f);
+        CommonUtil.getOrCreateListTag(getChannel(), NOTES_TAG).add(noteTag);
+        setChanged();
+    }
+    /**
+     * Writes a new note to the writable record.
+     */
+    public void writeHeldNote(HeldNoteSound sound, HeldSoundPhase phase,
+                              NoteSoundMetadata soundMeta, int timestamp) {
+        if (!isWritable())
+            return;
 
-        noteTag.putInt(TIMESTAMP_TAG, timestamp);
+        final CompoundTag noteTag = serializeNoteMeta(soundMeta, timestamp);
+        noteTag.putString(NOTE_TYPE, WritableNoteType.HELD.name());
 
+        noteTag.putInt(SOUND_INDEX_TAG, sound.index());
+        noteTag.putString(SOUND_TYPE_TAG, sound.baseSoundLocation().toString());
+        noteTag.putString(HELD_PHASE, phase.name());
 
         CommonUtil.getOrCreateListTag(getChannel(), NOTES_TAG).add(noteTag);
         setChanged();
+    }
+
+    protected CompoundTag serializeNoteMeta(NoteSoundMetadata soundMeta, int timestamp) {
+        final CompoundTag noteTag = new CompoundTag();
+
+        noteTag.putInt(PITCH_TAG, soundMeta.pitch());
+        noteTag.putFloat(VOLUME_TAG, soundMeta.volume() / 100f);
+
+        noteTag.putInt(TIMESTAMP_TAG, timestamp);
+
+        return noteTag;
     }
 
 
@@ -362,20 +418,78 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
     }
     private void playNote(final CompoundTag note, final ResourceLocation instrumentId) {
         try {
-            final int pitch = note.getInt(PITCH_TAG);
-            final float volume = note.getFloat(VOLUME_TAG);
+            // Acquire note type
+            final WritableNoteType noteType;
+            final String rawNoteType = note.getString(NOTE_TYPE);
 
-            final ResourceLocation soundLocation = new ResourceLocation(note.getString(SOUND_TYPE_TAG));
+            // Support for older versions
+            if (rawNoteType.isEmpty()) {
+                noteType = WritableNoteType.REGULAR;
+            } else {
+                noteType = WritableNoteType.valueOf(rawNoteType);
+            }
 
-            ServerUtil.sendPlayNotePackets(getLevel(), getBlockPos(),
-                NoteSoundRegistrar.getSounds(soundLocation)[note.getInt(SOUND_INDEX_TAG)],
-                instrumentId, pitch, (int)(volume * 100)
-            );
-
-            getLevel().blockEvent(getBlockPos(), ModBlocks.LOOPER.get(), 42, pitch);
+            switch (noteType) {
+                case REGULAR:
+                    playNoteSound(note, instrumentId);
+                    break;
+                case HELD:
+                    playHeldSound(note, instrumentId);
+                    break;
+            }
         } catch (Exception e) {
-            LOGGER.error("Attempted to play a looper note, but met with an exception", e);
+            LOGGER.error("Attempted to play a looper note at {}, but met with an exception", getBlockPos(), e);
         }
+    }
+
+    protected void playNoteSound(final CompoundTag noteTag, final ResourceLocation instrumentId) {
+        final NoteSoundMetadata meta = metaFromNoteTag(noteTag, instrumentId);
+
+        final ResourceLocation soundLocation = new ResourceLocation(noteTag.getString(SOUND_TYPE_TAG));
+        final int soundIndex = noteTag.getInt(SOUND_INDEX_TAG);
+
+        NoteSoundPacketUtil.sendPlayNotePackets(
+            level,
+            NoteSoundRegistrar.getSounds(soundLocation)[soundIndex],
+            meta
+        );
+
+        triggerEmitNoteParticle(meta.pitch());
+    }
+    protected void playHeldSound(final CompoundTag noteTag, final ResourceLocation instrumentId) {
+        final NoteSoundMetadata meta = metaFromNoteTag(noteTag, instrumentId);
+
+        final ResourceLocation soundLocation = new ResourceLocation(noteTag.getString(SOUND_TYPE_TAG));
+        final int soundIndex = noteTag.getInt(SOUND_INDEX_TAG);
+        final HeldNoteSound sound = HeldNoteSoundRegistrar.getSounds(soundLocation)[soundIndex];
+
+        final HeldSoundPhase phase = HeldSoundPhase.valueOf(noteTag.getString(HELD_PHASE));
+
+        HeldNoteSoundPacketUtil.sendPlayNotePackets(
+            level, sound,
+            meta, phase, initiatorID
+        );
+
+        if (phase == HeldSoundPhase.ATTACK) {
+            cachedHeldNotes.add(new BiValue<>(sound, meta));
+            // Also emit particle here
+            triggerEmitNoteParticle(meta.pitch());
+        } else if (phase == HeldSoundPhase.RELEASE) {
+            cachedHeldNotes.remove(new BiValue<>(sound, meta));
+        }
+    }
+
+    protected NoteSoundMetadata metaFromNoteTag(final CompoundTag noteTag, final ResourceLocation instrumentId) {
+        return new NoteSoundMetadata(
+            getBlockPos(),
+            noteTag.getInt(PITCH_TAG),
+            (int)(noteTag.getFloat(VOLUME_TAG) * 100),
+            instrumentId, Optional.empty()
+        );
+    }
+
+    public void triggerEmitNoteParticle(final int pitch) {
+        getLevel().blockEvent(getBlockPos(), ModBlocks.LOOPER.get(), 42, pitch);
     }
 
 
@@ -409,38 +523,6 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
     }
 
 
-
-    /**
-     * Writes the note to the record as described by the event.
-     */
-    @SubscribeEvent
-    public static void onInstrumentPlayed(final InstrumentPlayedEvent.ByPlayer event) {
-        if (event.level.isClientSide || !LooperUtil.isRecording(event.player))
-            return;
-
-        final Level level = event.player.getLevel();
-            
-        final LooperBlockEntity looperBE = LooperUtil.getFromEvent(event);
-        if (looperBE == null || looperBE.isCapped(level))
-            return;
-
-        // Omit if record is not writable
-        if (!looperBE.isWritable())
-            return;
-
-
-        if (looperBE.isLocked()) {
-            if (!looperBE.isRecording() || !looperBE.isAllowedToRecord(event.player.getUUID()))
-                return;
-        } else {
-            looperBE.setLockedBy(event.player.getUUID());
-            looperBE.setRecording(true);
-            looperBE.getChannel().putString(INSTRUMENT_ID_TAG, event.instrumentId.toString());
-        }
-            
-        looperBE.writeNote(event.sound, event.pitch, event.volume, looperBE.getTicks());
-    }
-
     /**
      * A capped looper is a looper that cannot have any more notes in it, as defined in {@link ModGameRules#RULE_LOOPER_MAX_NOTES}.
      * Any negative will make the looper uncappable.
@@ -463,10 +545,9 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
             .getBlockEntity(RecordingCapabilityProvider.getLooperPos(player), ModBlockEntities.LOOPER.get())
             .filter((lbe) -> lbe.lockedBy.equals(player.getUUID()))
             .ifPresent((lbe) -> {
-                    lbe.reset();
-                    lbe.getPersistentData().putBoolean(RECORDING_TAG, false);
-                }
-            );
+                lbe.reset();
+                lbe.getPersistentData().putBoolean(RECORDING_TAG, false);
+            });
 
         LooperUtil.setNotRecording(player);
     }

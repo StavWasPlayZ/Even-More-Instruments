@@ -10,6 +10,7 @@ public abstract class EMIRecordItem extends Item {
 
         INSTRUMENT_ID_TAG = "InstrumentId",
         NOTES_TAG = "Notes",
+        NOTE_TYPE = "NoteType",
 
         SOUND_INDEX_TAG = "SoundIndex",
         SOUND_TYPE_TAG = "SoundType",
@@ -17,6 +18,9 @@ public abstract class EMIRecordItem extends Item {
         VOLUME_TAG = "Volume",
         TIMESTAMP_TAG = "Timestamp",
         REPEAT_TICK_TAG = "RepeatTick",
+
+        // Held-exclusive
+        HELD_PHASE = "HeldPhase",
 
         WRITABLE_TAG = "Writable"
     ;

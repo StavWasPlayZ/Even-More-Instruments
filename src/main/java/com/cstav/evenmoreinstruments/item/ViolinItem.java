@@ -1,19 +1,19 @@
 package com.cstav.evenmoreinstruments.item;
 
-import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.EMIOpenInstrumentPacket;
+import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
 import com.cstav.genshinstrument.GICreativeModeTabs;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
+import com.cstav.genshinstrument.networking.packet.instrument.util.InstrumentPacketUtil;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Arrays;
 
 class ViolinItem extends AccessoryInstrumentItem {
     public ViolinItem() {
-        super(
-            (player) -> EMIPacketHandler.sendToClient(
-                new EMIOpenInstrumentPacket("violin"), player
+        super((player) -> InstrumentPacketUtil.sendOpenPacket(
+                player, new ResourceLocation(EMIMain.MODID, "violin")
             ),
             new Properties().tab(GICreativeModeTabs.instrumentsTab),
             (InstrumentAccessoryItem) ModItems.VIOLIN_BOW.get(),
@@ -22,11 +22,11 @@ class ViolinItem extends AccessoryInstrumentItem {
     }
 
     @Override
-    public int hurtInstrumentBy(final InstrumentPlayedEvent.ByPlayer event, final ItemStack accessory) {
+    public int hurtAccessoryBy(final InstrumentPlayedEvent<?> event, final ItemStack accessory) {
         // If we did a long press, deal damage by 2.
         final boolean playedLong = Arrays.stream(ModSounds.VIOLIN_FULL_NOTE)
-            .anyMatch((sound) -> sound.equals(event.sound));
+            .anyMatch((sound) -> sound.equals(event.sound()));
 
-        return super.hurtInstrumentBy(event, accessory) * (playedLong ? 2 : 1);
+        return super.hurtAccessoryBy(event, accessory) * (playedLong ? 2 : 1);
     }
 }
