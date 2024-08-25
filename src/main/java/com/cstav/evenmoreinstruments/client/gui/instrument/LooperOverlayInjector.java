@@ -86,26 +86,20 @@ public class LooperOverlayInjector {
 
     @SubscribeEvent
     public static void onKeyboardPress(final KeyboardKeyPressedEvent.Pre event) {
-        if (KeyMappings.RECORD.get().matches(event.getKeyCode(), event.getScanCode()) && (recordBtn != null)) {
-            recordBtn.playDownSound(Minecraft.getInstance().getSoundManager());
-            recordBtn.onPress();
+        if (KeyMappings.RECORD.get().matches(event.getKeyCode(), event.getScanCode())) {
+
+            if (recordBtn != null) {
+                recordBtn.playDownSound(Minecraft.getInstance().getSoundManager());
+                recordBtn.onPress();
+            }
+
         }
     }
 
     @SubscribeEvent
     public static void onScreenClose(final ScreenCloseEvent event) {
-        if (!isRecording || (event.screen != screen))
+        if (event.screen != screen)
             return;
-
-        final Player player = Minecraft.getInstance().player;
-
-        EMIPacketHandler.sendToServer(
-            new LooperRecordStatePacket(false,
-                InstrumentOpenProvider.isItem(player)
-                    ? InstrumentOpenProvider.getHand(player)
-                    : null
-            )
-        );
 
         isRecording = false;
         LooperOverlayInjector.screen = null;
