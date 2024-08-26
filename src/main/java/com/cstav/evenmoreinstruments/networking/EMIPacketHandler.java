@@ -21,7 +21,7 @@ public class EMIPacketHandler {
     private static final List<Class<IModPacket>> ACCEPTABLE_PACKETS = List.of(new Class[] {
         LooperRecordStatePacket.class, OpenNoteBlockInstrumentPacket.class,
         // Sync stuff
-        DoesLooperExistPacket.class, LooperRemovedPacket.class, SyncModTagPacket.class,
+        DoesLooperExistPacket.class, LooperUnplayablePacket.class, SyncModTagPacket.class,
         LooperPlayStatePacket.class
     });
 

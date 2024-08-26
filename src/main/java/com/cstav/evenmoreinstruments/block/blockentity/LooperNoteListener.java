@@ -63,10 +63,10 @@ public class LooperNoteListener {
 
 
         if (looperBE.isLocked()) {
-            if (!looperBE.isRecording() || !looperBE.isAllowedToRecord(player.getUUID()))
+            if (!looperBE.isRecording() || !looperBE.isAllowedToRecord(player))
                 return Optional.empty();
         } else {
-            looperBE.setLockedBy(player.getUUID());
+            looperBE.setLockedBy(player);
             looperBE.setRecording(true);
             looperBE.getChannel().putString(INSTRUMENT_ID_TAG, event.soundMeta().instrumentId().toString());
         }

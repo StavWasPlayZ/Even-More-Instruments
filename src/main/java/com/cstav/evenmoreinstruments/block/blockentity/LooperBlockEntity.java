@@ -45,7 +45,6 @@ import org.slf4j.Logger;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem.*;
 
@@ -56,19 +55,18 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
     public static final String
         RECORD_TAG = "Record",
         RECORDING_TAG = "Recording",
-
-        TICKS_TAG = "Ticks",
-
-        LOCKED_TAG = "Locked",
-        LOCKED_BY_TAG = "LockedBy"
+    
+        TICKS_TAG = "Ticks"
     ;
 
-    private UUID lockedBy;
+    private boolean locked = false;
+    private Player lockedBy = null;
+
     private ItemStack recordIn = ItemStack.EMPTY;
 
     private CompoundTag channel;
 
-    private final InitiatorID initiatorID;
+    private final InitiatorID looperInitiatorID;
 
     /**
      * A set of cached notes as to use them
@@ -205,7 +203,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
 
     public LooperBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.LOOPER.get(), pPos, pBlockState);
-        this.initiatorID = new InitiatorID("block",
+        this.looperInitiatorID = new InitiatorID("block",
             String.format("x%sy%sz%s", pPos.getX(), pPos.getY(), pPos.getZ())
         );
 
@@ -249,13 +247,16 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
         getChannel().putInt(REPEAT_TICK_TAG, tick);
     }
 
-    public void setLockedBy(final UUID player) {
+    public void setLockedBy(final Player player) {
         lockedBy = player;
     }
 
     public void lock() {
-        getTileData().putBoolean(LOCKED_TAG, true);
+        locked = true;
         lockedBy = null;
+
+        notifyHeldNotesPhase(HeldSoundPhase.RELEASE);
+        cachedHeldNotes.clear();
 
         setRepeatTick(getTicks());
         setRecording(false);
@@ -271,8 +272,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
      * This method resets the looper, assuming it is not recording.
      */
     public void reset() {
-        getTileData().remove(LOCKED_TAG);
-        getTileData().remove(LOCKED_BY_TAG);
+        locked = false;
         lockedBy = null;
 
         setTicks(0);
@@ -281,20 +281,20 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
     }
 
     public boolean isLocked() {
-        return lockedByAnyone() || getTileData().getBoolean(LOCKED_TAG);
+        return lockedByAnyone() || locked;
     }
     public boolean isRecording() {
         return getTileData().getBoolean(RECORDING_TAG);
     }
 
-    public boolean isAllowedToRecord(final UUID playerUUID) {
-        return !lockedByAnyone() || isLockedBy(playerUUID);
+    public boolean isAllowedToRecord(final Player player) {
+        return !lockedByAnyone() || isLockedBy(player);
     }
     public boolean lockedByAnyone() {
         return lockedBy != null;
     }
-    public boolean isLockedBy(final UUID playerUUID) {
-        return playerUUID.equals(lockedBy);
+    public boolean isLockedBy(final Player player) {
+        return player.equals(lockedBy);
     }
 
     public int getTicks() {
@@ -327,17 +327,21 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
             );
 
             // Cycle held notes
-            cachedHeldNotes.forEach((bi) ->
-                HeldNoteSoundPacketUtil.sendPlayNotePackets(
-                    level,
-                    bi.obj1(), bi.obj2(),
-                    playing ? HeldSoundPhase.ATTACK : HeldSoundPhase.RELEASE,
-                    initiatorID
-                )
-            );
+            notifyHeldNotesPhase(playing ? HeldSoundPhase.ATTACK : HeldSoundPhase.RELEASE);
         }
 
         return newState;
+    }
+
+    private void notifyHeldNotesPhase(final HeldSoundPhase phase) {
+        cachedHeldNotes.forEach((bi) ->
+            HeldNoteSoundPacketUtil.sendPlayNotePackets(
+                level,
+                bi.obj1(), bi.obj2(),
+                phase,
+                looperInitiatorID
+            )
+        );
     }
 
 
@@ -467,7 +471,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
 
         HeldNoteSoundPacketUtil.sendPlayNotePackets(
             level, sound,
-            meta, phase, initiatorID
+            meta, phase, looperInitiatorID
         );
 
         if (phase == HeldSoundPhase.ATTACK) {
@@ -505,7 +509,13 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
                 recordData.remove(CHANNEL_TAG);
         }
 
-        // Random offset generator, JukeboxBlock#dropRecording
+        // Stop all held sounds
+        notifyHeldNotesPhase(HeldSoundPhase.RELEASE);
+        // Then clear em
+        cachedHeldNotes.clear();
+
+        // Finally, pop it
+        // Random offset generator - JukeboxBlock#dropRecording
         float offset = 0.7F;
         double offX = (double)(getLevel().random.nextFloat() * offset) + (double)0.15F;
         double offY = (double)(getLevel().random.nextFloat() * offset) + (double)0.06F + 0.6D;
@@ -543,7 +553,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
 
         player.getLevel()
             .getBlockEntity(RecordingCapabilityProvider.getLooperPos(player), ModBlockEntities.LOOPER.get())
-            .filter((lbe) -> lbe.lockedBy.equals(player.getUUID()))
+            .filter((lbe) -> lbe.lockedBy.equals(player))
             .ifPresent((lbe) -> {
                 lbe.reset();
                 lbe.getTileData().putBoolean(RECORDING_TAG, false);
