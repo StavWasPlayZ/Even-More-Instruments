@@ -208,8 +208,6 @@ public class LooperUtil {
         // Looper
         entry("recording", LooperBlockEntity.RECORDING_TAG),
         entry("ticks", LooperBlockEntity.TICKS_TAG),
-        entry("locked", LooperBlockEntity.LOCKED_TAG),
-        entry("lockedBy", LooperBlockEntity.LOCKED_BY_TAG),
         // Looper -> Record
         entry("channel", EMIRecordItem.CHANNEL_TAG),
         entry("repeatTick", EMIRecordItem.REPEAT_TICK_TAG)

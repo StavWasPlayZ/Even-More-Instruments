@@ -3,7 +3,7 @@ package com.cstav.evenmoreinstruments.util;
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
-import com.cstav.evenmoreinstruments.networking.packet.LooperRemovedPacket;
+import com.cstav.evenmoreinstruments.networking.packet.LooperUnplayablePacket;
 import com.cstav.evenmoreinstruments.networking.packet.SyncModTagPacket;
 import com.cstav.genshinstrument.capability.instrumentOpen.InstrumentOpenProvider;
 import net.minecraft.core.BlockPos;
@@ -40,7 +40,7 @@ public class LooperRecordStateUtil {
 
         final LooperBlockEntity lbe = LooperUtil.getFromBlockInstrument(player.level(), instrumentBlock);
         if (lbe == null) {
-            EMIPacketHandler.sendToClient(new LooperRemovedPacket(), player);
+            EMIPacketHandler.sendToClient(new LooperUnplayablePacket(), player);
             return;
         }
 
@@ -58,7 +58,7 @@ public class LooperRecordStateUtil {
 
         final LooperBlockEntity lbe = LooperUtil.getFromItemInstrument(player.level(), instrumentItem);
         if (lbe == null) {
-            EMIPacketHandler.sendToClient(new LooperRemovedPacket(), player);
+            EMIPacketHandler.sendToClient(new LooperUnplayablePacket(), player);
             return;
         }
 
@@ -69,8 +69,10 @@ public class LooperRecordStateUtil {
                                       Runnable looperTagRemover,
                                       boolean recording) {
 
-        if (lbe.isLocked() && !lbe.isLockedBy(player.getUUID()))
+        if (lbe.isLocked() && !lbe.isLockedBy(player)) {
+            EMIPacketHandler.sendToClient(new LooperUnplayablePacket(), player);
             return;
+        }
 
         if (!recording) {
             lbe.lock();
