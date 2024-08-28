@@ -40,7 +40,7 @@ public class LooperRecordStateUtil {
 
         final LooperBlockEntity lbe = LooperUtil.getFromBlockInstrument(player.level(), instrumentBlock);
         if (lbe == null) {
-            notifyLooperUnplayable(player);
+            EMIPacketHandler.sendToClient(new LooperUnplayablePacket(), player);
             return;
         }
 
@@ -58,7 +58,7 @@ public class LooperRecordStateUtil {
 
         final LooperBlockEntity lbe = LooperUtil.getFromItemInstrument(player.level(), instrumentItem);
         if (lbe == null) {
-            notifyLooperUnplayable(player);
+            EMIPacketHandler.sendToClient(new LooperUnplayablePacket(), player);
             return;
         }
 
@@ -69,17 +69,12 @@ public class LooperRecordStateUtil {
                                       Runnable looperTagRemover,
                                       boolean recording) {
 
-        if (recording) {
-            if (lbe.isLocked() && !lbe.isLockedBy(player)) {
-                notifyLooperUnplayable(player);
-                return;
-            }
+        if (lbe.isLocked() && !lbe.isLockedBy(player)) {
+            EMIPacketHandler.sendToClient(new LooperUnplayablePacket(), player);
+            return;
+        }
 
-            LooperUtil.setRecording(player, lbe.getBlockPos());
-        } else {
-            if (!lbe.isLockedBy(player))
-                return;
-
+        if (!recording) {
             lbe.lock();
 
             player.level().setBlockAndUpdate(
@@ -90,11 +85,8 @@ public class LooperRecordStateUtil {
             looperTagRemover.run();
 
             LooperUtil.setNotRecording(player);
-        }
-    }
-
-    private static void notifyLooperUnplayable(final ServerPlayer player) {
-        EMIPacketHandler.sendToClient(new LooperUnplayablePacket(), player);
+        } else
+            LooperUtil.setRecording(player, lbe.getBlockPos());
     }
 
 }
