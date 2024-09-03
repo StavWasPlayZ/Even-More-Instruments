@@ -1,16 +1,18 @@
 package com.cstav.evenmoreinstruments.criteria;
 
-import com.cstav.genshinstrument.mixins.required.CriterionRegisterInvoker;
+import com.cstav.evenmoreinstruments.EMIMain;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModCriteria {
-    public static void load() {}
-
-    // It doesn't account for namespaces, so will use evenmoreinstruments_ prefix instead
-    public static final RecordInjectedTrigger RECORD_INJECTED_TRIGGER = register("evenmoreinstruments_record_injected", new RecordInjectedTrigger());
-
-
-    private static <T extends CriterionTrigger<?>> T register(String id, T criterion) {
-        return CriterionRegisterInvoker.callRegister(id, criterion);
+    private static final DeferredRegister<CriterionTrigger<?>> CRITERION = DeferredRegister.create(BuiltInRegistries.TRIGGER_TYPES.key(), EMIMain.MODID);
+    public static void register(final IEventBus bus) {
+        CRITERION.register(bus);
     }
+
+
+    public static final RegistryObject<RecordInjectedTrigger> RECORD_INJECTED_TRIGGER = CRITERION.register("record_injected", RecordInjectedTrigger::new);
 }

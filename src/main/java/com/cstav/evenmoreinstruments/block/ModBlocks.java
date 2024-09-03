@@ -29,7 +29,7 @@ public class ModBlocks {
             Properties.of().noOcclusion().strength(.3f).sound(SoundType.WOOD)
         )),
 
-        LOOPER = BLOCKS.register("looper", () -> new LooperBlock(Properties.copy(Blocks.NOTE_BLOCK)))
+        LOOPER = BLOCKS.register("looper", () -> new LooperBlock(Properties.ofFullCopy(Blocks.NOTE_BLOCK)))
     ;
 
 }

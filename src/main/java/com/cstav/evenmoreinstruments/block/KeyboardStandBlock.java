@@ -3,10 +3,10 @@ package com.cstav.evenmoreinstruments.block;
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.blockentity.ModInstrumentBlockEntity;
 import com.cstav.evenmoreinstruments.item.ModItems;
-import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
 import com.cstav.genshinstrument.networking.packet.instrument.util.InstrumentPacketUtil;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -32,6 +33,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class KeyboardStandBlock extends AbstractInstrumentBlock {
+    public static final MapCodec<KeyboardStandBlock> CODEC = simpleCodec(KeyboardStandBlock::new);
+
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty HAS_KEYBOARD = BooleanProperty.create("has_keyboard");
     
@@ -43,6 +46,12 @@ public class KeyboardStandBlock extends AbstractInstrumentBlock {
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return pState.getValue(HAS_KEYBOARD) ? WITH_KEYBOARD_SHAPE : BASE_SHAPE;
     }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
 
     public KeyboardStandBlock(Properties pProperties) {
         super(pProperties);

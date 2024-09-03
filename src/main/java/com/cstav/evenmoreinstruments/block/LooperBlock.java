@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.redstone.Redstone;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -173,7 +174,7 @@ public class LooperBlock extends Block implements EntityBlock {
 
         lbe.setItem(0, heldStack);
         // Trigger record injected criterion
-        ModCriteria.RECORD_INJECTED_TRIGGER.trigger((ServerPlayer)pPlayer, heldStack);
+        ModCriteria.RECORD_INJECTED_TRIGGER.get().trigger((ServerPlayer)pPlayer, heldStack);
 
         if (!pPlayer.isCreative())
             heldStack.shrink(1);
@@ -256,15 +257,17 @@ public class LooperBlock extends Block implements EntityBlock {
 
 
     @Override
-    public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
+    public @NotNull BlockState playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
         super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
+
         if (pLevel.isClientSide())
-            return;
+            return pState;
 
         if (!(pLevel.getBlockEntity(pPos) instanceof LooperBlockEntity lbe))
-            return;
+            return pState;
 
         lbe.popRecord();
+        return pState;
     }
 
 

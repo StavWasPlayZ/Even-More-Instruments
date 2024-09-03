@@ -42,6 +42,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.HashSet;
@@ -139,13 +140,17 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
     // Assuming for single container, slots irrelevant:
 
+    //#region ContainerSingleItem implementation
+
+    // Assuming for single container, slots irrelevant:
+
     @Override
-    public ItemStack getItem(int pSlot) {
+    public @NotNull ItemStack getTheItem() {
         return recordIn;
     }
 
     @Override
-    public void setItem(int pSlot, ItemStack pStack) {
+    public void setTheItem(ItemStack pStack) {
         if (!(pStack.getItem() instanceof EMIRecordItem recordItem))
             return;
 
@@ -165,7 +170,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     @Override
-    public ItemStack removeItem(int pSlot, int pAmount) {
+    public ItemStack splitTheItem(int pAmount) {
         if (!isRecordIn() || pAmount <= 0)
             return ItemStack.EMPTY;
 
@@ -173,8 +178,8 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         recordIn = ItemStack.EMPTY;
 
         getLevel().setBlock(getBlockPos(),
-             setPlaying(false, getBlockState())
-            .setValue(LooperBlock.RECORD_IN, false),
+            setPlaying(false, getBlockState())
+                .setValue(LooperBlock.RECORD_IN, false),
             3
         );
 
@@ -190,8 +195,8 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     @Override
-    public boolean stillValid(Player pPlayer) {
-        return Container.stillValidBlockEntity(this, pPlayer);
+    public BlockEntity getContainerBlockEntity() {
+        return this;
     }
 
     @Override

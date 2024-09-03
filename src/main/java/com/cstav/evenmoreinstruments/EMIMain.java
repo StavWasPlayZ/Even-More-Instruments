@@ -43,7 +43,7 @@ public class EMIMain
         ModSounds.register(bus);
 
         ModGameRules.load();
-        ModCriteria.load();
+        ModCriteria.register(bus);
 
         EMIModCreativeModeTabs.register(bus);
 
