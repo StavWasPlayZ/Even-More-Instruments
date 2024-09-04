@@ -34,9 +34,11 @@ public class EMIMain
 //    }
     public static CompoundTag modTag(final BlockEntity be) {
         if (be.components().has(ModDataComponents.MOD_TAG.get()))
-            return be.components().get(ModDataComponents.MOD_TAG.get()).copyTag();
+            return be.components().get(ModDataComponents.MOD_TAG.get()).getUnsafe();
 
+        //FIXME
         final CompoundTag modTag = new CompoundTag();
+//        be.components().
         CustomData.of(modTag).loadInto(be, Minecraft.getInstance().level.registryAccess());
         return modTag;
     }
@@ -53,6 +55,7 @@ public class EMIMain
 
         EMIModCreativeModeTabs.register(bus);
 
+        ModDataComponents.register(bus);
         ModBlocks.register(bus);
         ModBlockEntities.register(bus);
         ModItems.register(bus);

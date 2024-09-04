@@ -35,6 +35,8 @@ public class LooperRecordStateUtil {
         final BlockEntity instrumentBlock = player.level().getBlockEntity(instrumentBlockPos);
         final CompoundTag looperTag = LooperUtil.looperTag(instrumentBlock);
 
+        if (looperTag.isEmpty())
+            return;
         if (ServerUtil.isMaliciousPos(player, looperTag))
             return;
 
@@ -52,6 +54,8 @@ public class LooperRecordStateUtil {
         final ItemStack instrumentItem = player.getItemInHand(hand);
         final CompoundTag looperTag = LooperUtil.looperTag(instrumentItem);
 
+        if (looperTag.isEmpty())
+            return;
         if (ServerUtil.isMaliciousPos(player, looperTag))
             return;
 

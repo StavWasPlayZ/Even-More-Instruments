@@ -63,7 +63,7 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
         if (!accessory.isDamageableItem())
             return;
         // Shouldn't be the case, but always best to check:
-        if (event.pLevel().isClientSide)
+        if (event.level().isClientSide)
             return;
 
         //TODO entities in general (fix following)
@@ -88,7 +88,7 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
     // Call AccessoryInstrumentItem#onAccessoryUsed
     @SubscribeEvent
     public static void onInstrumentPlayedEvent(final InstrumentPlayedEvent<?> event) {
-        if (event.pLevel().isClientSide)
+        if (event.level().isClientSide)
             return;
 
         //TODO make for entities in general.

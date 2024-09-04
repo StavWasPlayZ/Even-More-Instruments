@@ -62,7 +62,7 @@ public class LooperUtil {
 
     public static CompoundTag looperTag(final ItemStack instrument) {
         return instrument.has(ModDataComponents.LOOPER_TAG.get())
-            ? instrument.get(ModDataComponents.LOOPER_TAG.get()).copyTag()
+            ? instrument.get(ModDataComponents.LOOPER_TAG.get()).getUnsafe()
             : new CompoundTag();
 
     }
@@ -85,7 +85,7 @@ public class LooperUtil {
 
         return (!entityInfo.isBlockInstrument())
             ? looperTag(player.getItemInHand(entityInfo.hand.get()))
-            : looperTag(event.pLevel().getBlockEntity(event.soundMeta().pPos()));
+            : looperTag(event.level().getBlockEntity(event.soundMeta().pos()));
     }
 
     @Nullable
@@ -95,12 +95,12 @@ public class LooperUtil {
 
         final InstrumentPlayedEvent<?>.EntityInfo entityInfo = event.entityInfo().get();
         final Player player = (Player) entityInfo.entity;
-        final Level level = event.pLevel();
+        final Level level = event.level();
 
         if (entityInfo.isItemInstrument())
             return getFromItemInstrument(level, player.getItemInHand(entityInfo.hand.get()));
         else if (entityInfo.isBlockInstrument())
-            return getFromBlockInstrument(level, level.getBlockEntity(event.soundMeta().pPos()));
+            return getFromBlockInstrument(level, level.getBlockEntity(event.soundMeta().pos()));
 
         return null;
     }

@@ -47,7 +47,7 @@ public class LooperNoteListener {
 
         final Player player = (Player) event.entityInfo().get().entity;
 
-        if (event.pLevel().isClientSide || !LooperUtil.isRecording(player))
+        if (event.level().isClientSide || !LooperUtil.isRecording(player))
             return Optional.empty();
 
 

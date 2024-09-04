@@ -31,16 +31,22 @@ public class WritableRecordItem extends EMIRecordItem {
         if (stack.has(ModDataComponents.BURNED_MEDIA.get()))
             return;
 
-        final CompoundTag channel = stack.get(ModDataComponents.CHANNNEL.get()).getUnsafe();
+        final CustomData channelRaw = stack.get(ModDataComponents.CHANNNEL.get());
+        CompoundTag channel;
 
-        if (!channel.getBoolean(WRITABLE_TAG) && !channel.contains(NOTES_TAG, Tag.TAG_LIST)) {
-            // Record is empty; check if is legacy looper
-            LooperUtil.migrateLegacyLooper(lbe).ifPresentOrElse(
-                (recordData) -> stack.set(ModDataComponents.CHANNNEL.get(), CustomData.of(recordData)),
-                // 100% empty
-                () -> channel.putBoolean(WRITABLE_TAG, true)
-            );
+        if (channelRaw == null) {
+            channel = new CompoundTag();
+            channel.putBoolean(WRITABLE_TAG, true);
+        } else {
+            channel = channelRaw.getUnsafe();
+
+            if (!channel.getBoolean(WRITABLE_TAG) && !channel.contains(NOTES_TAG, Tag.TAG_LIST)) {
+                // Record is empty; check if is legacy looper
+                channel = LooperUtil.migrateLegacyLooper(lbe).orElse(channel);
+            }
         }
+
+        stack.set(ModDataComponents.CHANNNEL.get(), CustomData.of(channel));
     }
 
     @Override

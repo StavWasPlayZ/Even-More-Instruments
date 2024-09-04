@@ -52,7 +52,7 @@ public class ModDataComponents {
     /**
      * Stores information about a looper, primarily its position.
      */
-    public static final RegistryObject<DataComponentType<CustomData>> LOOPER_TAG = register("looper_pos", (builder) ->
+    public static final RegistryObject<DataComponentType<CustomData>> LOOPER_TAG = register("looper_tag", (builder) ->
         builder.persistent(CustomData.CODEC).networkSynchronized(CustomData.STREAM_CODEC).cacheEncoding()
     );
 

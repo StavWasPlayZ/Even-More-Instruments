@@ -221,7 +221,7 @@ public class LooperBlock extends Block implements EntityBlock {
             lbe.popRecord();
         }
 
-        lbe.setItem(0, heldStack);
+        lbe.setTheItem(heldStack);
         // Trigger record injected criterion
         ModCriteria.RECORD_INJECTED_TRIGGER.get().trigger((ServerPlayer)pPlayer, heldStack);
 

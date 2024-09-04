@@ -6,6 +6,7 @@ import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.block.util.WritableNoteType;
 import com.cstav.evenmoreinstruments.capability.recording.RecordingCapabilityProvider;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
+import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.component.ModDataComponents;
 import com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.item.emirecord.RecordRepository;
@@ -69,7 +70,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
     private ItemStack recordIn = ItemStack.EMPTY;
 
-    private CompoundTag channel;
+    private CompoundTag channel = new CompoundTag();
 
     private final InitiatorID looperInitiatorID;
 
@@ -101,10 +102,12 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
      */
     private void updateChannel() {
         if (recordIn.has(ModDataComponents.CHANNNEL.get())) {
-            channel = recordIn.get(ModDataComponents.CHANNNEL.get()).copyTag();
+            setChannel(recordIn.get(ModDataComponents.CHANNNEL.get()).getUnsafe());
         }
-        else if (recordIn.has(ModDataComponents.BURNED_MEDIA.get())) {
+        else if (recordIn.has(ModDataComponents.BURNED_MEDIA.get()))
             setChannel(RecordRepository.getRecord(getBurnedMediaLoc()).orElse(null));
+        else {
+            setChannel(new CompoundTag());
         }
     }
     protected ResourceLocation getBurnedMediaLoc() {
@@ -122,7 +125,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
     public boolean isWritable() {
-        return (getChannel() != null) && getChannel().getBoolean(WRITABLE_TAG);
+        return getChannel().getBoolean(WRITABLE_TAG);
     }
     public void setWritable(final boolean writable) {
         getChannel().putBoolean(WRITABLE_TAG, writable);
@@ -130,6 +133,9 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
     public boolean isRecordIn() {
         return !recordIn.isEmpty();
+    }
+    protected CompoundTag getRecordData() {
+        return channel;
     }
 
     @Override
@@ -139,7 +145,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         // Also saves me from making a migration system.
         looperData = pTag.getCompound("ForgeData");
 
-        recordIn = ItemStack.parseOptional(level.registryAccess(), getPersistentData().getCompound(RECORD_TAG));
+        recordIn = ItemStack.parseOptional(pRegistries, getPersistentData().getCompound(RECORD_TAG));
         updateChannel();
     }
 
@@ -525,6 +531,15 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
 
 
     public void popRecord() {
+        if (recordIn.is(ModItems.RECORD_WRITABLE.get())) {
+            // Record ejected while player writing to the record; remove notes
+            if (isWritable())
+                getRecordData().remove(NOTES_TAG);
+            // Empty record; empty data.
+            if (!hasFootage())
+                recordIn.remove(ModDataComponents.CHANNNEL.get());
+        }
+
         // Stop all held sounds
         notifyHeldNotesPhase(HeldSoundPhase.RELEASE);
         // Then clear em
