@@ -38,8 +38,7 @@ public class RecordingCapability {
     }
     public void loadNBTData(final CompoundTag nbt) {
         isRecording = nbt.getBoolean(RECORDING_TAG);
-        if (nbt.contains(REC_POS_TAG))
-            looperPos = NbtUtils.readBlockPos(nbt.getCompound(REC_POS_TAG));
+        looperPos = NbtUtils.readBlockPos(nbt, REC_POS_TAG).orElse(null);
     }
 
 }

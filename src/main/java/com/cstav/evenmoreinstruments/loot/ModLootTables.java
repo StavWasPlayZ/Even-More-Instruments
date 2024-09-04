@@ -22,11 +22,11 @@ public class ModLootTables {
     private static final float RECORD_DROP_PROBABILITY = .056f;
 
     private static final Map<ResourceLocation, Supplier<LootPool>> TO_INJECT = Map.of(
-        BuiltInLootTables.JUNGLE_TEMPLE, () -> createRecordPool(ModItems.RECORD_SUPER_IDOL.get()),
-        BuiltInLootTables.VILLAGE_SAVANNA_HOUSE, () -> createRecordPool(ModItems.RECORD_SAD_VIOLIN.get()),
-        BuiltInLootTables.BASTION_OTHER, () -> createRecordPool(ModItems.RECORD_OVEN_KID.get()),
-        BuiltInLootTables.ABANDONED_MINESHAFT, () -> createRecordPool(ModItems.RECORD_RICKROLL.get()),
-        BuiltInLootTables.BURIED_TREASURE, () -> createRecordPool(ModItems.RECORD_JOHNNY.get())
+        BuiltInLootTables.JUNGLE_TEMPLE.location(), () -> createRecordPool(ModItems.RECORD_SUPER_IDOL.get()),
+        BuiltInLootTables.VILLAGE_SAVANNA_HOUSE.location(), () -> createRecordPool(ModItems.RECORD_SAD_VIOLIN.get()),
+        BuiltInLootTables.BASTION_OTHER.location(), () -> createRecordPool(ModItems.RECORD_OVEN_KID.get()),
+        BuiltInLootTables.ABANDONED_MINESHAFT.location(), () -> createRecordPool(ModItems.RECORD_RICKROLL.get()),
+        BuiltInLootTables.BURIED_TREASURE.location(), () -> createRecordPool(ModItems.RECORD_JOHNNY.get())
     );
 
     private static LootPool createRecordPool(final Item item) {

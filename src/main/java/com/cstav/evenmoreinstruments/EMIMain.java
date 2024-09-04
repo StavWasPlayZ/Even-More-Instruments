@@ -5,12 +5,13 @@ import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
 import com.cstav.evenmoreinstruments.criteria.ModCriteria;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
+import com.cstav.evenmoreinstruments.item.component.ModDataComponents;
 import com.cstav.evenmoreinstruments.item.crafting.ModRecipeSerializers;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
-import com.cstav.evenmoreinstruments.util.CommonUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -28,11 +29,16 @@ public class EMIMain
     public static final String MODID = "evenmoreinstruments";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    public static CompoundTag modTag(final ItemStack item) {
-        return item.getOrCreateTagElement(MODID);
-    }
+//    public static CompoundTag modTag(final ItemStack item) {
+//        return item.getOrCreateTagElement(MODID);
+//    }
     public static CompoundTag modTag(final BlockEntity be) {
-        return CommonUtil.getOrCreateElementTag(be.getPersistentData(), MODID);
+        if (be.components().has(ModDataComponents.MOD_TAG.get()))
+            return be.components().get(ModDataComponents.MOD_TAG.get()).copyTag();
+
+        final CompoundTag modTag = new CompoundTag();
+        CustomData.of(modTag).loadInto(be, Minecraft.getInstance().level.registryAccess());
+        return modTag;
     }
     
     public EMIMain()

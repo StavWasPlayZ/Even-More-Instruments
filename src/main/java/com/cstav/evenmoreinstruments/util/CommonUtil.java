@@ -15,11 +15,9 @@ import java.util.function.Supplier;
 
 public class CommonUtil {
 
-    public static final CompoundTag TAG_EMPTY = new CompoundTag();
-
-    public static CompoundTag getOrCreateElementTag(final ItemStack item, final String key) {
-        return getOrCreateElementTag(EMIMain.modTag(item), key);
-    }
+//    public static CompoundTag getOrCreateElementTag(final ItemStack item, final String key) {
+//        return getOrCreateElementTag(EMIMain.modTag(item), key);
+//    }
     public static CompoundTag getOrCreateElementTag(final CompoundTag parent, final String key) {
         return getOrCreateTag(parent, key, CompoundTag.TAG_COMPOUND, CompoundTag::new);
     }
@@ -28,9 +26,6 @@ public class CommonUtil {
         return getOrCreateTag(parent, key, CompoundTag.TAG_LIST, ListTag::new);
     }
 
-    public static <T extends Tag> T getOrCreateTag(ItemStack item, String key, int type, Supplier<T> orElse) {
-        return getOrCreateTag(EMIMain.modTag(item), key, type, orElse);
-    }
     @SuppressWarnings("unchecked")
     public static <T extends Tag> T getOrCreateTag(CompoundTag parent, String key, int type, Supplier<T> orElse) {
         if (parent.contains(key, type))

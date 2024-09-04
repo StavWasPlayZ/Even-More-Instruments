@@ -2,8 +2,8 @@ package com.cstav.evenmoreinstruments.item.crafting;
 
 import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.emirecord.WritableRecordItem;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -33,15 +33,12 @@ public class RecordCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(CraftingContainer pContainer, Provider pRegistries) {
         final Optional<ItemStack[]> ingredients = getIngredientsFromContainer(pContainer);
         if (ingredients.isEmpty())
             return ItemStack.EMPTY;
 
-
-        final ItemStack result = new ItemStack(ModItems.RECORD_WRITABLE.get());
-        result.setTag(ingredients.get()[1].getTag().copy());
-        return result;
+        return ingredients.get()[1].copy();
     }
 
     @Override

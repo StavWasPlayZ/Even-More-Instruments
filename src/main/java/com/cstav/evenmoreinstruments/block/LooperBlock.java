@@ -2,7 +2,8 @@ package com.cstav.evenmoreinstruments.block;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
-import com.cstav.evenmoreinstruments.block.util.LooperInteractionRunnable;
+import com.cstav.evenmoreinstruments.block.util.LooperInteractionRunnableNI;
+import com.cstav.evenmoreinstruments.block.util.LooperInteractionRunnableYI;
 import com.cstav.evenmoreinstruments.criteria.ModCriteria;
 import com.cstav.evenmoreinstruments.item.emirecord.EMIRecordItem;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
@@ -15,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -106,9 +108,31 @@ public class LooperBlock extends Block implements EntityBlock {
 
     //#region Looper interaction handlers
 
+
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
-            BlockHitResult pHit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        if (pLevel.isClientSide)
+            return ItemInteractionResult.CONSUME;
+
+        final BlockEntity be = pLevel.getBlockEntity(pPos);
+        if (!(be instanceof LooperBlockEntity lbe))
+            return ItemInteractionResult.FAIL;
+
+        final ItemStack heldStack = pPlayer.getItemInHand(pHand);
+
+        return performChainedInteractionsYI(
+            List.of(
+                this::insertRecord,
+                this::validateRecordPresence,
+                //   /\ Do not perform all following interactions if there is no record
+                this::pairInstrumentItem
+            ),
+            (interaction) -> interaction.run(pState, pLevel, pPos, pPlayer, lbe, heldStack, pHitResult)
+        );
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide)
             return InteractionResult.CONSUME;
 
@@ -116,44 +140,69 @@ public class LooperBlock extends Block implements EntityBlock {
         if (!(be instanceof LooperBlockEntity lbe))
             return InteractionResult.FAIL;
 
-        final ItemStack heldStack = pPlayer.getItemInHand(pHand);
-
-        return performChainedInteractions(
+        return performChainedInteractionsNI(
             List.of(
-                this::insertRecord,
                 this::cycleLooping,
                 this::validateRecordPresence,
                 //   /\ Do not perform all following interactions if there is no record
-                this::pairInstrumentItem,
                 this::ejectRecord,
                 this::cyclePlaying
             ),
-            (interaction) -> interaction.run(pState, pLevel, pPos, pPlayer, lbe, heldStack, pHit)
+            (interaction) -> interaction.run(pState, pLevel, pPos, pPlayer, lbe, pHitResult)
         );
     }
 
     /**
      * Performs the described interactions one after another, until one does not return
      * {@link InteractionResult#FAIL}.
-     * @return The interaction result of the successful interaction, or {@link InteractionResult#FAIL if none.
+     * @return The interaction result of the successful interaction, or {@link InteractionResult#FAIL} if none.
      */
-    protected InteractionResult performChainedInteractions(final List<LooperInteractionRunnable> interactions,
-                                                           Function<LooperInteractionRunnable, InteractionResult> performer) {
-        for (LooperInteractionRunnable interaction : interactions) {
-            final InteractionResult result = performer.apply(interaction);
-            if (result != InteractionResult.FAIL)
+    protected InteractionResult performChainedInteractionsNI(final List<LooperInteractionRunnableNI> interactions,
+                                                           Function<LooperInteractionRunnableNI, InteractionResult> performer) {
+        return performChainedInteractions(
+            interactions, performer,
+            InteractionResult.FAIL,
+            InteractionResult.FAIL
+        );
+    }
+    /**
+     * Performs the described interactions one after another, until one does not return
+     * {@link ItemInteractionResult#FAIL}.
+     * @return The interaction result of the successful interaction, or {@link ItemInteractionResult#PASS_TO_DEFAULT_BLOCK_INTERACTION} if none.
+     */
+    protected ItemInteractionResult performChainedInteractionsYI(final List<LooperInteractionRunnableYI> interactions,
+                                                             Function<LooperInteractionRunnableYI, ItemInteractionResult> performer) {
+        return performChainedInteractions(
+            interactions, performer,
+            ItemInteractionResult.FAIL,
+            ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+        );
+    }
+
+    /**
+     * Performs the described interactions one after another, until one does not return a {@code fail}.
+     * @return The interaction result of the successful interaction, {@code fail} if none
+     * or {@code passRes} if all have passed.
+     */
+    protected <R, T> T performChainedInteractions(final List<R> interactions, Function<R, T> performer,
+                                                  final T fail, final T passRes) {
+        for (R interaction : interactions) {
+            final T result = performer.apply(interaction);
+            if (result != fail)
                 return result;
         }
 
-        return InteractionResult.FAIL;
+        return passRes;
     }
+
+
     /**
      * Attempts to cycle the {@link LooperBlock#LOOPING looping} state of the looper,
      * provided the player right-clicked on {@link LooperBlock#getLoopDir the correct face}.
      */
     protected InteractionResult cycleLooping(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
-                                             LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
-        if (pHit.getDirection() != getLoopDir(pState))
+                                             LooperBlockEntity lbe, BlockHitResult pHitResult) {
+        if (pHitResult.getDirection() != getLoopDir(pState))
             return InteractionResult.FAIL;
 
         pLevel.setBlockAndUpdate(pPos, pState.cycle(LOOPING));
@@ -162,10 +211,10 @@ public class LooperBlock extends Block implements EntityBlock {
     /**
      * Assuming server-only call.
      */
-    protected InteractionResult insertRecord(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+    protected ItemInteractionResult insertRecord(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
                                              LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
         if (!(heldStack.getItem() instanceof EMIRecordItem))
-            return InteractionResult.FAIL;
+            return ItemInteractionResult.FAIL;
 
         // Eject previously inserted record
         if (pState.getValue(RECORD_IN)) {
@@ -186,26 +235,34 @@ public class LooperBlock extends Block implements EntityBlock {
             );
         }
 
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
-    protected InteractionResult validateRecordPresence(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
-                                                       LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+
+    protected boolean validateRecordPresence(BlockState pState, Player pPlayer) {
         if (!pState.getValue(RECORD_IN)) {
             pPlayer.displayClientMessage(
                 Component.translatable("evenmoreinstruments.looper.no_record").withStyle(ChatFormatting.RED),
                 true
             );
-            return InteractionResult.CONSUME_PARTIAL;
+            return true;
         }
 
-        return InteractionResult.FAIL;
+        return false;
+    }
+    protected ItemInteractionResult validateRecordPresence(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+                                                       LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+        return validateRecordPresence(pState, pPlayer) ? ItemInteractionResult.CONSUME_PARTIAL : ItemInteractionResult.FAIL;
+    }
+    protected InteractionResult validateRecordPresence(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+                                                       LooperBlockEntity lbe, BlockHitResult pHitResult) {
+        return validateRecordPresence(pState, pPlayer) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.FAIL;
     }
 
     /**
      * Ejects the present record on the condition it is empty or the player is shifting.
      */
     protected InteractionResult ejectRecord(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
-                                            LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+                                            LooperBlockEntity lbe, BlockHitResult pHit) {
         if (!pState.getValue(RECORD_IN))
             return InteractionResult.FAIL;
 
@@ -216,25 +273,25 @@ public class LooperBlock extends Block implements EntityBlock {
 
         return InteractionResult.FAIL;
     }
-    protected InteractionResult pairInstrumentItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
+    protected ItemInteractionResult pairInstrumentItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
                                                    LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
         if (!(heldStack.getItem() instanceof InstrumentItem))
-            return InteractionResult.FAIL;
+            return ItemInteractionResult.FAIL;
 
         if (lbe.isWritable()) {
             if (LooperUtil.performPair(lbe, () -> LooperUtil.createLooperTag(heldStack, pPos), pPlayer))
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
         } else {
             pPlayer.displayClientMessage(
                 Component.translatable("evenmoreinstruments.record.not_writable").withStyle(ChatFormatting.YELLOW)
                 , true);
-            return InteractionResult.FAIL;
+            return ItemInteractionResult.FAIL;
         }
 
-        return InteractionResult.FAIL;
+        return ItemInteractionResult.FAIL;
     }
     protected InteractionResult cyclePlaying(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
-                                             LooperBlockEntity lbe, ItemStack heldStack, BlockHitResult pHit) {
+                                             LooperBlockEntity lbe, BlockHitResult pHit) {
         if (!lbe.hasFootage()) {
             if (lbe.isWritable()) {
                 pPlayer.displayClientMessage(

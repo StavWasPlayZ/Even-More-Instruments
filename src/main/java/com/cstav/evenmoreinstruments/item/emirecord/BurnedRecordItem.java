@@ -1,19 +1,17 @@
 package com.cstav.evenmoreinstruments.item.emirecord;
 
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
+import com.cstav.evenmoreinstruments.item.component.ModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class BurnedRecordItem extends EMIRecordItem {
-    public static final String BURNED_MEDIA_TAG = "BurnedMedia";
-
     private final ResourceLocation burnedMedia;
     private final Component title;
     private final @Nullable String info, arranger;
@@ -34,7 +32,7 @@ public class BurnedRecordItem extends EMIRecordItem {
 
     @Override
     public void onInsert(final ItemStack stack, final LooperBlockEntity lbe) {
-        stack.getOrCreateTag().putString(BURNED_MEDIA_TAG, burnedMedia.toString());
+        stack.set(ModDataComponents.BURNED_MEDIA.get(), burnedMedia);
     }
 
 
@@ -43,7 +41,7 @@ public class BurnedRecordItem extends EMIRecordItem {
         return title;
     }
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
         if (info != null) {
             pTooltipComponents.add(
                 Component.literal(info)
@@ -58,6 +56,6 @@ public class BurnedRecordItem extends EMIRecordItem {
             );
         }
 
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }

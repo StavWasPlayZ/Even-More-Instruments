@@ -23,7 +23,7 @@ public class InstrumentAccessoryItem extends Item {
         pStack.hurtAndBreak(
             pState.getDestroySpeed(pLevel, pPos) == 0 ? 3 : 10,
             pMiningEntity,
-            (player) -> player.broadcastBreakEvent(EquipmentSlot.MAINHAND)
+            EquipmentSlot.MAINHAND
         );
 
         return false;

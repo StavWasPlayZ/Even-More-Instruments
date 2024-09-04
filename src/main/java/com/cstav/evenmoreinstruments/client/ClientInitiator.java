@@ -16,9 +16,12 @@ import com.cstav.genshinstrument.util.CommonUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -48,6 +51,11 @@ public class ClientInitiator {
     public static void setupClient(final FMLClientSetupEvent event) {
         CommonUtil.loadClasses(LOAD_ME);
         InstrumentScreenRegistry.register(INSTRUMENTS);
+    }
+
+    @SubscribeEvent
+    public static void registerConfigs(final FMLConstructModEvent event) {
+        ModLoadingContext.get().registerConfig(Type.CLIENT, ModClientConfigs.CONFIGS, "evenmore_instrument_configs.toml");
     }
 
 }

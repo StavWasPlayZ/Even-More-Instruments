@@ -5,11 +5,10 @@ import com.cstav.evenmoreinstruments.item.partial.instrument.CreditableInstrumen
 import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.genshinstrument.event.InstrumentPlayedEvent;
 import com.cstav.genshinstrument.networking.OpenInstrumentPacketSender;
-import com.cstav.genshinstrument.networking.packet.instrument.util.InstrumentPacketUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -64,7 +63,7 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
         if (!accessory.isDamageableItem())
             return;
         // Shouldn't be the case, but always best to check:
-        if (event.level().isClientSide)
+        if (event.pLevel().isClientSide)
             return;
 
         //TODO entities in general (fix following)
@@ -75,10 +74,9 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
         accessory.hurtAndBreak(
             hurtAccessoryBy(event, accessory),
             player,
-            (_player) -> {
-                _player.broadcastBreakEvent(_player.getUsedItemHand());
-                InstrumentPacketUtil.setInstrumentClosed((ServerPlayer) _player);
-            }
+            (player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof AccessoryInstrumentItem)
+                ? EquipmentSlot.MAINHAND
+                : EquipmentSlot.OFFHAND
         );
     }
 
@@ -90,7 +88,7 @@ public class AccessoryInstrumentItem extends CreditableInstrumentItem {
     // Call AccessoryInstrumentItem#onAccessoryUsed
     @SubscribeEvent
     public static void onInstrumentPlayedEvent(final InstrumentPlayedEvent<?> event) {
-        if (event.level().isClientSide)
+        if (event.pLevel().isClientSide)
             return;
 
         //TODO make for entities in general.

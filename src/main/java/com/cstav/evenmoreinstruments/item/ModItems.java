@@ -138,7 +138,7 @@ public class ModItems {
             CreativeModeTabs.REDSTONE_BLOCKS, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
 
-        RECORD_WRITABLE = register("record_writable", () -> new WritableRecordItem(new Properties()),
+        RECORD_WRITABLE = register("record_writable", () -> new WritableRecordItem(new Properties().stacksTo(16)),
             CreativeModeTabs.TOOLS_AND_UTILITIES, EMIModCreativeModeTabs.MUSIC_PRODUCTION_TAB.getKey()
         ),
         RECORD_JOHNNY = register("record_johnny", () ->

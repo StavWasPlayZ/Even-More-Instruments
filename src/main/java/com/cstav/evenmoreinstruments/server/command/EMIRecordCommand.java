@@ -2,7 +2,7 @@ package com.cstav.evenmoreinstruments.server.command;
 
 import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.item.ModItems;
-import com.cstav.evenmoreinstruments.item.emirecord.BurnedRecordItem;
+import com.cstav.evenmoreinstruments.item.component.ModDataComponents;
 import com.cstav.evenmoreinstruments.item.emirecord.RecordRepository;
 import com.cstav.evenmoreinstruments.item.emirecord.WritableRecordItem;
 import com.cstav.evenmoreinstruments.util.CommonUtil;
@@ -98,7 +98,7 @@ public class EMIRecordCommand {
 
         try {
             RecordRepository.saveRecord(saveLoc,
-                record.get().getTagElement(WritableRecordItem.CHANNEL_TAG)
+                record.get().get(ModDataComponents.CHANNNEL.get()).copyTag()
             );
         } catch (IOException e) {
             EMIMain.LOGGER.error("Error encountered while saving record data", e);
@@ -127,7 +127,7 @@ public class EMIRecordCommand {
         if (recordChannel.isEmpty())
             throw ERROR_RECORD_INVALID.create(recordName);
 
-        record.get().getOrCreateTag().putString(BurnedRecordItem.BURNED_MEDIA_TAG, recordName.toString());
+        record.get().set(ModDataComponents.BURNED_MEDIA.get(), recordName);
 
         stack.getSource().sendSuccess(() -> Component.translatable("commands.evenmoreinstruments.emirecord.success.record_burned"), true);
         return 1;

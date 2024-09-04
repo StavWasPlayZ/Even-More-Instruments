@@ -4,18 +4,15 @@ import com.cstav.evenmoreinstruments.EMIMain;
 import com.cstav.evenmoreinstruments.block.LooperBlock;
 import com.cstav.evenmoreinstruments.block.blockentity.LooperBlockEntity;
 import com.cstav.evenmoreinstruments.block.partial.IDoubleBlock;
+import com.cstav.evenmoreinstruments.item.component.ModDataComponents;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.networking.packet.SyncModTagPacket;
-import com.cstav.evenmoreinstruments.util.CommonUtil;
 import com.cstav.evenmoreinstruments.util.LooperUtil;
 import com.cstav.genshinstrument.block.partial.AbstractInstrumentBlock;
 import com.cstav.genshinstrument.block.partial.InstrumentBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -29,7 +26,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class LooperAdapterItem extends Item {
@@ -49,31 +45,31 @@ public class LooperAdapterItem extends Item {
         final BlockPos pos = pContext.getClickedPos();
         final Block block = pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock();
 
-        final CompoundTag adapterTag = CommonUtil.getOrCreateElementTag(EMIMain.modTag(pContext.getItemInHand()), "looperAdapter");
+        final ItemStack adapterItem = pContext.getItemInHand();
         final Player player = pContext.getPlayer();
 
         boolean pairSucceed;
         if (block instanceof AbstractInstrumentBlock)
-            pairSucceed = handleInstrumentBlock(pos, adapterTag, player);
+            pairSucceed = handleInstrumentBlock(pos, adapterItem, player);
         else if (block instanceof LooperBlock)
-            pairSucceed = handleLooperBlock(pos, adapterTag, player);
+            pairSucceed = handleLooperBlock(pos, adapterItem, player);
         else
             return InteractionResult.FAIL;
 
         return pairSucceed ? InteractionResult.SUCCESS : InteractionResult.CONSUME_PARTIAL;
     }
 
-    private static boolean handleInstrumentBlock(BlockPos blockPos, CompoundTag adapterTag, Player player) {
-        if (adapterTag.contains(LOOPER_POS_TAG, Tag.TAG_COMPOUND))
-            return pairLooperToInstrument(adapterTag, NbtUtils.readBlockPos(adapterTag.getCompound(LOOPER_POS_TAG)), blockPos, player);
+    private static boolean handleInstrumentBlock(BlockPos blockPos, ItemStack adapterItem, Player player) {
+        if (adapterItem.has(ModDataComponents.LOOPER_POS.get()))
+            return pairLooperToInstrument(adapterItem, adapterItem.get(ModDataComponents.LOOPER_POS.get()), blockPos, player);
 
-        adapterTag.put(BLOCK_INSTRUMENT_POS_TAG, NbtUtils.writeBlockPos(blockPos));
+        adapterItem.set(ModDataComponents.BLOCK_INSTRUMENT_POS.get(), blockPos);
         player.displayClientMessage(
             Component.translatable("item.evenmoreinstruments.looper_adapter.looper.select")
         , true);
         return true;
     }
-    private static boolean handleLooperBlock(BlockPos blockPos, CompoundTag adapterTag, Player player) {
+    private static boolean handleLooperBlock(BlockPos blockPos, ItemStack adapterItem, Player player) {
         final BlockEntity be = player.level().getBlockEntity(blockPos);
         if (!(be instanceof LooperBlockEntity lbe))
             return false;
@@ -87,12 +83,12 @@ public class LooperAdapterItem extends Item {
             return false;
         }
 
-        if (adapterTag.contains(BLOCK_INSTRUMENT_POS_TAG, Tag.TAG_COMPOUND))
-            return pairLooperToInstrument(adapterTag, blockPos, NbtUtils.readBlockPos(adapterTag.getCompound(BLOCK_INSTRUMENT_POS_TAG)), player);
-        if (adapterTag.contains(LOOPER_POS_TAG, Tag.TAG_COMPOUND))
-            return syncLoopers(adapterTag, NbtUtils.readBlockPos(adapterTag.getCompound(LOOPER_POS_TAG)), blockPos, player);
+        if (adapterItem.has(ModDataComponents.BLOCK_INSTRUMENT_POS.get()))
+            return pairLooperToInstrument(adapterItem, blockPos, adapterItem.get(ModDataComponents.BLOCK_INSTRUMENT_POS.get()), player);
+        if (adapterItem.has(ModDataComponents.LOOPER_POS.get()))
+            return syncLoopers(adapterItem, adapterItem.get(ModDataComponents.LOOPER_POS.get()), blockPos, player);
 
-        adapterTag.put(LOOPER_POS_TAG, NbtUtils.writeBlockPos(blockPos));
+        adapterItem.set(ModDataComponents.LOOPER_POS.get(), blockPos);
         player.displayClientMessage(
             Component.translatable("item.evenmoreinstruments.looper_adapter.instrument.select").withStyle(ChatFormatting.GREEN),
             true
@@ -101,10 +97,8 @@ public class LooperAdapterItem extends Item {
     }
 
 
-    private static boolean pairLooperToInstrument(CompoundTag adapterTag, InstrumentBlockEntity ibe, LooperBlockEntity lbe, Player player) {
-        // Clear all compound keys after pairing
-        for (final String key : adapterTag.getAllKeys())
-            adapterTag.remove(key);
+    private static boolean pairLooperToInstrument(ItemStack adapterItem, InstrumentBlockEntity ibe, LooperBlockEntity lbe, Player player) {
+        clearComponents(adapterItem);
 
         return LooperUtil.performPair(lbe, () -> {
 
@@ -134,7 +128,7 @@ public class LooperAdapterItem extends Item {
 
         }, player);
     }
-    private static boolean pairLooperToInstrument(CompoundTag adapterTag, BlockPos looperPos, BlockPos instrumentPos, Player player) {
+    private static boolean pairLooperToInstrument(ItemStack adapterItem, BlockPos looperPos, BlockPos instrumentPos, Player player) {
         final Level level = player.level();
 
         final BlockEntity lbe = level.getBlockEntity(looperPos),
@@ -142,19 +136,17 @@ public class LooperAdapterItem extends Item {
         if (!(lbe instanceof LooperBlockEntity) || !(ibe instanceof InstrumentBlockEntity))
             return false;
 
-        return pairLooperToInstrument(adapterTag, (InstrumentBlockEntity)ibe, (LooperBlockEntity)lbe, player);
+        return pairLooperToInstrument(adapterItem, (InstrumentBlockEntity)ibe, (LooperBlockEntity)lbe, player);
     }
 
     /**
      * Syncs the 2 loopers by setting their repeat ticks to be of the lower looper.
      */
-    private static boolean syncLoopers(CompoundTag adapterTag, LooperBlockEntity lbe1, LooperBlockEntity lbe2, Player player) {
+    private static boolean syncLoopers(ItemStack adapterItem, LooperBlockEntity lbe1, LooperBlockEntity lbe2, Player player) {
         if (lbe1.getBlockPos().equals(lbe2.getBlockPos()))
             return false;
 
-        // Clear all compound keys after pairing
-        for (final String key : adapterTag.getAllKeys())
-            adapterTag.remove(key);
+        clearComponents(adapterItem);
 
         if (!lbe1.hasFootage() || !lbe1.hasFootage()) {
             player.displayClientMessage(
@@ -173,7 +165,7 @@ public class LooperAdapterItem extends Item {
         );
         return true;
     }
-    private static boolean syncLoopers(CompoundTag adapterTag, BlockPos looper1Pos, BlockPos looper2Pos, Player player) {
+    private static boolean syncLoopers(ItemStack adapterItem, BlockPos looper1Pos, BlockPos looper2Pos, Player player) {
         if (looper2Pos.equals(looper1Pos))
             return false;
 
@@ -185,12 +177,17 @@ public class LooperAdapterItem extends Item {
         if (!(lbe1 instanceof LooperBlockEntity) || !(lbe2 instanceof LooperBlockEntity))
             return false;
 
-        return syncLoopers(adapterTag, (LooperBlockEntity)lbe1, (LooperBlockEntity)lbe2, player);
+        return syncLoopers(adapterItem, (LooperBlockEntity)lbe1, (LooperBlockEntity)lbe2, player);
     }
 
 
+    public static void clearComponents(final ItemStack adapterItem) {
+        adapterItem.remove(ModDataComponents.LOOPER_POS.get());
+        adapterItem.remove(ModDataComponents.BLOCK_INSTRUMENT_POS.get());
+    }
+
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> tooltipComponents, TooltipFlag pTooltipFlag) {
         if (!Screen.hasShiftDown()) {
             tooltipComponents.add(
                 Component.translatable("item.shift.hint.show")
@@ -212,8 +209,7 @@ public class LooperAdapterItem extends Item {
             Component.translatable("item.evenmoreinstruments.looper_adapter.looper.description")
                 .withStyle(ChatFormatting.GRAY)
         );
-
-        super.appendHoverText(stack, level, tooltipComponents, isAdvanced);
+        super.appendHoverText(pStack, pContext, tooltipComponents, pTooltipFlag);
     }
     
 }
