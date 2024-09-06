@@ -21,7 +21,7 @@
     "group": "noteblock_instruments",
 
     "result": {
-        "item": "evenmoreinstruments:cow_bell_note_block_instrument",
+        "id": "evenmoreinstruments:cow_bell_note_block_instrument",
         "count": 1
     }
 }

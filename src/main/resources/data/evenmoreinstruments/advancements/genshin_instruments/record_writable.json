@@ -3,7 +3,7 @@
 
     "display": {
         "icon": {
-            "item": "evenmoreinstruments:record_writable"
+            "id": "evenmoreinstruments:record_writable"
         },
         "hidden": false,
 
@@ -17,7 +17,7 @@
 
     "criteria": {
         "record_injected": {
-            "trigger": "evenmoreinstruments_record_injected",
+            "trigger": "evenmoreinstruments:record_injected",
 
             "conditions": {
                 "record": {

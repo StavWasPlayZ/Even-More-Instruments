@@ -3,7 +3,7 @@
 
     "display": {
         "icon": {
-            "item": "evenmoreinstruments:record_sad_violin"
+            "id": "evenmoreinstruments:record_sad_violin"
         },
         "hidden": false,
 
@@ -19,7 +19,7 @@
 
     "criteria": {
         "record_rickroll": {
-            "trigger": "evenmoreinstruments_record_injected",
+            "trigger": "evenmoreinstruments:record_injected",
 
             "conditions": {
                 "record": {
@@ -28,7 +28,7 @@
             }
         },
         "record_johnny": {
-            "trigger": "evenmoreinstruments_record_injected",
+            "trigger": "evenmoreinstruments:record_injected",
 
             "conditions": {
                 "record": {
@@ -37,7 +37,7 @@
             }
         },
         "record_super_idol": {
-            "trigger": "evenmoreinstruments_record_injected",
+            "trigger": "evenmoreinstruments:record_injected",
 
             "conditions": {
                 "record": {
@@ -46,7 +46,7 @@
             }
         },
         "record_oven_kid": {
-            "trigger": "evenmoreinstruments_record_injected",
+            "trigger": "evenmoreinstruments:record_injected",
 
             "conditions": {
                 "record": {
@@ -55,7 +55,7 @@
             }
         },
         "record_sad_violin": {
-            "trigger": "evenmoreinstruments_record_injected",
+            "trigger": "evenmoreinstruments:record_injected",
 
             "conditions": {
                 "record": {

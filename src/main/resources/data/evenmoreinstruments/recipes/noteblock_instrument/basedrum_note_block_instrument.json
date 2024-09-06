@@ -21,7 +21,7 @@
     "group": "noteblock_instruments",
 
     "result": {
-        "item": "evenmoreinstruments:basedrum_note_block_instrument",
+        "id": "evenmoreinstruments:basedrum_note_block_instrument",
         "count": 1
     }
 }

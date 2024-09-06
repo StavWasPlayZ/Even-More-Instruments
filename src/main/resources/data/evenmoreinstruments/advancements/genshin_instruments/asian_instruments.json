@@ -3,7 +3,7 @@
 
     "display": {
         "icon": {
-            "item": "evenmoreinstruments:shamisen"
+            "id": "evenmoreinstruments:shamisen"
         },
         "hidden": false,
 
@@ -19,7 +19,7 @@
 
     "criteria": {
         "koto_played": {
-            "trigger": "genshinstrument_instrument_played",
+            "trigger": "genshinstrument:instrument_played",
 
             "conditions": {
                 "instrument": {
@@ -28,7 +28,7 @@
             }
         },
         "pipa_played": {
-            "trigger": "genshinstrument_instrument_played",
+            "trigger": "genshinstrument:instrument_played",
 
             "conditions": {
                 "instrument": {
@@ -37,7 +37,7 @@
             }
         },
         "shamisen_played": {
-            "trigger": "genshinstrument_instrument_played",
+            "trigger": "genshinstrument:instrument_played",
 
             "conditions": {
                 "instrument": {

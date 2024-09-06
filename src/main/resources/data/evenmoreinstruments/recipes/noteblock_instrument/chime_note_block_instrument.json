@@ -21,7 +21,7 @@
     "group": "noteblock_instruments",
 
     "result": {
-        "item": "evenmoreinstruments:chime_note_block_instrument",
+        "id": "evenmoreinstruments:chime_note_block_instrument",
         "count": 1
     }
 }

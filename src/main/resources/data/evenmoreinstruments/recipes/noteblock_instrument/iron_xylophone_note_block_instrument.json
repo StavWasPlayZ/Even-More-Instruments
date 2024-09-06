@@ -21,7 +21,7 @@
     "group": "noteblock_instruments",
 
     "result": {
-        "item": "evenmoreinstruments:iron_xylophone_note_block_instrument",
+        "id": "evenmoreinstruments:iron_xylophone_note_block_instrument",
         "count": 1
     }
 }
