@@ -115,10 +115,10 @@ repositories {
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
-//    flatDir {
-//        dir 'libs'
-//    }
-    mavenLocal()
+    flatDir {
+        dir 'libs'
+    }
+//    mavenLocal()
     // exclusiveContent {
     //     forRepository {
     //         maven {
@@ -144,8 +144,8 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // implementation "maven.modrinth:genshin-instruments:${genshinstruments_version}"
-//    implementation fg.deobf("idc:genshinstrument-${minecraft_version}:${genshinstruments_version}")
-    implementation "com.cstav:genshinstrument:${minecraft_version}-${genshinstruments_version}"
+    implementation "idc:genshinstrument-${minecraft_version}:${genshinstruments_version}"
+//    implementation "com.cstav:genshinstrument:${minecraft_version}-${genshinstruments_version}"
 
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
