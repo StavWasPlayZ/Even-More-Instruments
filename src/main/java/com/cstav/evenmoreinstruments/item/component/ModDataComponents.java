@@ -20,10 +20,6 @@ public class ModDataComponents {
         DATA_COMPONENTS.register(bus);
     }
 
-    public static final RegistryObject<DataComponentType<CustomData>> MOD_TAG = register("mod_tag", (builder) ->
-        builder.persistent(CustomData.CODEC).networkSynchronized(CustomData.STREAM_CODEC).cacheEncoding()
-    );
-
     /**
      * Used for burned records to identify their location on the {@link RecordRepository}
      */
