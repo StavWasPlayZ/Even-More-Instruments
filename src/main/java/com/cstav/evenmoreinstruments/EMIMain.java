@@ -2,6 +2,8 @@ package com.cstav.evenmoreinstruments;
 
 import com.cstav.evenmoreinstruments.block.ModBlocks;
 import com.cstav.evenmoreinstruments.block.blockentity.ModBlockEntities;
+import com.cstav.evenmoreinstruments.capability.ModTagCapability;
+import com.cstav.evenmoreinstruments.capability.ModTagCapabilityProvider;
 import com.cstav.evenmoreinstruments.criteria.ModCriteria;
 import com.cstav.evenmoreinstruments.gamerule.ModGameRules;
 import com.cstav.evenmoreinstruments.item.ModItems;
@@ -9,11 +11,10 @@ import com.cstav.evenmoreinstruments.item.component.ModDataComponents;
 import com.cstav.evenmoreinstruments.item.crafting.ModRecipeSerializers;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -33,14 +34,16 @@ public class EMIMain
 //        return item.getOrCreateTagElement(MODID);
 //    }
     public static CompoundTag modTag(final BlockEntity be) {
-        if (be.components().has(ModDataComponents.MOD_TAG.get()))
-            return be.components().get(ModDataComponents.MOD_TAG.get()).getUnsafe();
+        final LazyOptional<ModTagCapability> modTag = be.getCapability(ModTagCapabilityProvider.CAPABILITY);
+        if (!modTag.isPresent()) {
+            try {
+                throw new RuntimeException("Attempted to load mod tag for block entity "+be+", but it is not present!");
+            } catch (RuntimeException e) {
+                LOGGER.error("Error occurred getting mod tag", e);
+            }
+        }
 
-        //FIXME
-        final CompoundTag modTag = new CompoundTag();
-//        be.components().
-        CustomData.of(modTag).loadInto(be, Minecraft.getInstance().level.registryAccess());
-        return modTag;
+        return modTag.resolve().get().getTag();
     }
     
     public EMIMain()

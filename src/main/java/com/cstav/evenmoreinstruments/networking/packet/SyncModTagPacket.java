@@ -1,11 +1,11 @@
 package com.cstav.evenmoreinstruments.networking.packet;
 
+import com.cstav.evenmoreinstruments.capability.ModTagCapabilityProvider;
 import com.cstav.genshinstrument.networking.IModPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -46,8 +46,7 @@ public class SyncModTagPacket implements IModPacket {
             final Level level = Minecraft.getInstance().player.level();
             final BlockEntity be = level.getBlockEntity(pos);
 
-            if (be != null)
-                CustomData.of(modTag).loadInto(be, level.registryAccess());
+            be.getCapability(ModTagCapabilityProvider.CAPABILITY).resolve().get().setTag(modTag);
         });
     }
 }
