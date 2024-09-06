@@ -27,7 +27,7 @@ public abstract class EMIRecordItem extends Item {
 
 
     public EMIRecordItem(final Properties properties) {
-        super(properties.stacksTo(1));
+        super(properties);
     }
 
     public abstract void onInsert(final ItemStack stack, final LooperBlockEntity lbe);
