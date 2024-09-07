@@ -22,6 +22,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
@@ -139,7 +140,7 @@ public class RecordRepository {
      * Queries the {@code generated} level directory
      */
     private static Path getGenPath(final boolean failIfNone) throws IOException {
-        final Path path = Minecraft.getInstance().level.getServer()
+        final Path path = ServerLifecycleHooks.getCurrentServer()
             .getWorldPath(LevelResource.GENERATED_DIR)
             .normalize();
 
