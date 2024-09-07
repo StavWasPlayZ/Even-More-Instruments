@@ -73,6 +73,10 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
      * for pausing and resuming the looper.
      */
     protected final HashSet<BiValue<HeldNoteSound, NoteSoundMetadata>> cachedHeldNotes = new HashSet<>();
+    protected void stopAndClearHeldSounds() {
+        notifyHeldNotesPhase(HeldSoundPhase.RELEASE);
+        cachedHeldNotes.clear();
+    }
 
 
     /**
@@ -221,6 +225,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
     public void setTicks(final int ticks) {
         getTileData().putInt(TICKS_TAG, ticks);
     }
+
     /**
      * Increment the ticks of this looper by 1. Wrap back to the start
      * if the track finished playing.
@@ -228,21 +233,35 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
      */
     public int incrementTick() {
         int ticks = getTicks();
-
         final int repTick = getRepeatTick();
-        // Finished playing
-        if ((repTick != -1) && (ticks > repTick)) {
-            // Wrap back to the start
-            ticks = 0;
-            // If we don't loop, disable playing
-            if (!getBlockState().getValue(LooperBlock.LOOPING))
-                getLevel().setBlockAndUpdate(getBlockPos(), setPlaying(false, getBlockState()));
-        } else
+
+        // Finished playing?
+        if ((repTick != -1) && (ticks > repTick))
+            ticks = onLooperEnd();
+        else
             ticks++;
 
         setTicks(ticks);
         return ticks;
     }
+
+    /**
+     * Called after the Looper had finished playing a cycle.
+     * Responsible for either replaying or ceasing,
+     * depending on the {@link LooperBlock#LOOPING} state.
+     *
+     * @return The ticks to set the looper at
+     */
+    public int onLooperEnd() {
+        // If we don't loop, disable playing
+        if (!getBlockState().getValue(LooperBlock.LOOPING))
+            getLevel().setBlockAndUpdate(getBlockPos(), setPlaying(false, getBlockState()));
+
+        stopAndClearHeldSounds();
+
+        return 0;
+    }
+
     public void setRepeatTick(final int tick) {
         getChannel().putInt(REPEAT_TICK_TAG, tick);
     }
@@ -255,8 +274,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
         locked = true;
         lockedBy = null;
 
-        notifyHeldNotesPhase(HeldSoundPhase.RELEASE);
-        cachedHeldNotes.clear();
+        stopAndClearHeldSounds();
 
         setRepeatTick(getTicks());
         setRecording(false);
@@ -509,10 +527,7 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
                 recordData.remove(CHANNEL_TAG);
         }
 
-        // Stop all held sounds
-        notifyHeldNotesPhase(HeldSoundPhase.RELEASE);
-        // Then clear em
-        cachedHeldNotes.clear();
+        stopAndClearHeldSounds();
 
         // Finally, pop it
         // Random offset generator - JukeboxBlock#dropRecording
