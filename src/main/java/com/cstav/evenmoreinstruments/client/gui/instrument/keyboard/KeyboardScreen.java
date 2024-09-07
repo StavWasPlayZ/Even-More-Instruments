@@ -8,11 +8,8 @@ import com.cstav.genshinstrument.sound.NoteSound;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @OnlyIn(Dist.CLIENT)
-//NOTE there just to make it load on setup
-@EventBusSubscriber(Dist.CLIENT)
 public class KeyboardScreen extends GridInstrumentScreen {
     public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(EMIMain.MODID, "keyboard");
 
