@@ -139,8 +139,8 @@ public class RecordRepository {
      * Queries the {@code generated} level directory
      */
     private static Path getGenPath(final boolean failIfNone) throws IOException {
-        final Path path = ServerLifecycleHooks.getCurrentServer().storageSource
-            .getLevelPath(LevelResource.GENERATED_DIR)
+        final Path path = ServerLifecycleHooks.getCurrentServer()
+            .getWorldPath(LevelResource.GENERATED_DIR)
             .normalize();
 
         if (!Files.isDirectory(path)) {
