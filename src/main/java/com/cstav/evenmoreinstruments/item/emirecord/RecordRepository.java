@@ -10,6 +10,7 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.FileUtil;
 import net.minecraft.ResourceLocationException;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +22,6 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
@@ -139,8 +139,8 @@ public class RecordRepository {
      * Queries the {@code generated} level directory
      */
     private static Path getGenPath(final boolean failIfNone) throws IOException {
-        final Path path = ServerLifecycleHooks.getCurrentServer().storageSource
-            .getLevelPath(LevelResource.GENERATED_DIR)
+        final Path path = Minecraft.getInstance().level.getServer()
+            .getWorldPath(LevelResource.GENERATED_DIR)
             .normalize();
 
         if (!Files.isDirectory(path)) {
