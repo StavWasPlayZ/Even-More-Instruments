@@ -108,8 +108,9 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         if (recordIn.has(ModDataComponents.CHANNNEL.get())) {
             setChannel(recordIn.get(ModDataComponents.CHANNNEL.get()).getUnsafe());
         }
-        else if (recordIn.has(ModDataComponents.BURNED_MEDIA.get()))
+        else if (recordIn.has(ModDataComponents.BURNED_MEDIA.get())) {
             setChannel(RecordRepository.getRecord(getBurnedMediaLoc()).orElse(null));
+        }
         else {
             setChannel(new CompoundTag());
         }
