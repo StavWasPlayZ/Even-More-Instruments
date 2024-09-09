@@ -118,8 +118,6 @@ public class LooperBlock extends Block implements EntityBlock {
         if (!(be instanceof LooperBlockEntity lbe))
             return ItemInteractionResult.FAIL;
 
-        final ItemStack heldStack = pPlayer.getItemInHand(pHand);
-
         return performChainedInteractionsYI(
             List.of(
                 this::insertRecord,
@@ -127,7 +125,7 @@ public class LooperBlock extends Block implements EntityBlock {
                 //   /\ Do not perform all following interactions if there is no record
                 this::pairInstrumentItem
             ),
-            (interaction) -> interaction.run(pState, pLevel, pPos, pPlayer, lbe, heldStack, pHitResult)
+            (interaction) -> interaction.run(pState, pLevel, pPos, pPlayer, lbe, pStack, pHitResult)
         );
     }
 
