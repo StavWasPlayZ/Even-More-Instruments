@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class SaxophoneScreen extends GridInstrumentScreen {
-    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(EMIMain.MODID, "saxophone");
+    public static final ResourceLocation INSTRUMENT_ID = EMIMain.loc("saxophone");
 
     @Override
     public NoteSound[] getInitSounds() {

@@ -38,7 +38,7 @@ public class KotoBlock extends DoubleInstrumentBlock {
 
     @Override
     protected void onInstrumentOpen(ServerPlayer player) {
-        InstrumentPacketUtil.sendOpenPacket(player, new ResourceLocation(EMIMain.MODID, "koto"));
+        InstrumentPacketUtil.sendOpenPacket(player, EMIMain.loc("koto"));
     }
 
 

@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ViolinScreen extends CyclableInstrumentScreen<ViolinSoundType> {
-    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(EMIMain.MODID, "violin");
+    public static final ResourceLocation INSTRUMENT_ID = EMIMain.loc("violin");
 
 
     @Override

@@ -12,7 +12,7 @@ import java.util.Arrays;
 class ViolinItem extends AccessoryInstrumentItem {
     public ViolinItem() {
         super((player) -> InstrumentPacketUtil.sendOpenPacket(
-                player, new ResourceLocation(EMIMain.MODID, "violin")
+                player, EMIMain.loc("violin")
             ),
             (InstrumentAccessoryItem) ModItems.VIOLIN_BOW.get(),
             "Philharmonia"

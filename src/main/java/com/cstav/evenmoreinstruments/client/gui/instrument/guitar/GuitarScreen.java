@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class GuitarScreen extends GridInstrumentScreen {
-    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(EMIMain.MODID, "guitar");
+    public static final ResourceLocation INSTRUMENT_ID = EMIMain.loc("guitar");
 
     @Override
     public NoteSound[] getInitSounds() {

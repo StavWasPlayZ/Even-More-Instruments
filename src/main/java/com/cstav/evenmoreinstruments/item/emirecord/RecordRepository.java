@@ -198,7 +198,7 @@ public class RecordRepository {
                     return p_230381_.toString().endsWith(pPath);
                 }).mapMulti((p_230386_, p_230387_) -> {
                     try {
-                        p_230387_.accept(new ResourceLocation(pNamespace, function.apply(relativize(pFolder, p_230386_))));
+                        p_230387_.accept(ResourceLocation.fromNamespaceAndPath(pNamespace, function.apply(relativize(pFolder, p_230386_))));
                     } catch (ResourceLocationException resourcelocationexception) {
                         LOGGER.error("Invalid location while listing pack contents", (Throwable)resourcelocationexception);
                     }

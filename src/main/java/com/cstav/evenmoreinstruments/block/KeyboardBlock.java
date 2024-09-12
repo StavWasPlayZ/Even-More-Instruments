@@ -38,7 +38,7 @@ public class KeyboardBlock extends DoubleInstrumentBlock {
 
     @Override
     protected void onInstrumentOpen(ServerPlayer player) {
-        InstrumentPacketUtil.sendOpenPacket(player, new ResourceLocation(EMIMain.MODID, "keyboard"));
+        InstrumentPacketUtil.sendOpenPacket(player, EMIMain.loc("keyboard"));
     }
 
     @Override

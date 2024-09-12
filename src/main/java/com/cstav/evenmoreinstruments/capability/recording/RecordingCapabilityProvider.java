@@ -2,6 +2,7 @@ package com.cstav.evenmoreinstruments.capability.recording;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
@@ -30,14 +31,14 @@ public class RecordingCapabilityProvider implements ICapabilityProvider, INBTSer
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(Provider registryAccess) {
         final CompoundTag nbt = new CompoundTag();
         getInstance().saveNBTData(nbt);
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(Provider registryAccess, CompoundTag nbt) {
         getInstance().loadNBTData(nbt);
     }
 

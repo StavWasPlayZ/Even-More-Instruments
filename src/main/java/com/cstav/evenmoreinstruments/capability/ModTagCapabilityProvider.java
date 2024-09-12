@@ -1,6 +1,7 @@
 package com.cstav.evenmoreinstruments.capability;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -29,12 +30,12 @@ public class ModTagCapabilityProvider implements ICapabilityProvider, INBTSerial
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(Provider registryAccess) {
         return getInstance().getTag();
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(Provider registryAccess, CompoundTag nbt) {
         getInstance().setTag(nbt);
     }
 }

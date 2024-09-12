@@ -144,7 +144,7 @@ public class ModItems {
         RECORD_JOHNNY = register("record_johnny", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(EMIMain.MODID, "johnny"),
+                EMIMain.loc("johnny"),
                 "Hänschen klein - Franz Wiedemann",
                 null
             ),
@@ -153,7 +153,7 @@ public class ModItems {
         RECORD_SUPER_IDOL = register("record_super_idol", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(EMIMain.MODID, "super_idol"),
+                EMIMain.loc("super_idol"),
                 "Super Idol - De Xian Rong",
                 "Saxophy"
             ),
@@ -162,7 +162,7 @@ public class ModItems {
         RECORD_OVEN_KID = register("record_oven_kid", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(EMIMain.MODID, "oven_kid"),
+                EMIMain.loc("oven_kid"),
                 "Timmy Trumpet & Savage - Freaks",
                 "StavWasPlayZ"
             ),
@@ -171,7 +171,7 @@ public class ModItems {
         RECORD_SAD_VIOLIN = register("record_sad_violin", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.RARE),
-                new ResourceLocation(EMIMain.MODID, "sad_violin"),
+                EMIMain.loc("sad_violin"),
                 "Sad Romance - Ji Pyeongkeyon",
                 "StavWasPlayZ"
             ),
@@ -180,7 +180,7 @@ public class ModItems {
         RECORD_RICKROLL = register("record_rickroll", () ->
             new BurnedRecordItem(
                 new Properties().stacksTo(1).rarity(Rarity.EPIC),
-                new ResourceLocation(EMIMain.MODID, "rickroll"),
+                EMIMain.loc("rickroll"),
                 null,
                 "StavWasPlayZ",
                 Component.translatable("item.evenmoreinstruments.interesting_record")
@@ -211,7 +211,7 @@ public class ModItems {
 
 
     private static ResourceLocation loc(final String path) {
-        return new ResourceLocation(EMIMain.MODID, path);
+        return EMIMain.loc(path);
     }
 
 

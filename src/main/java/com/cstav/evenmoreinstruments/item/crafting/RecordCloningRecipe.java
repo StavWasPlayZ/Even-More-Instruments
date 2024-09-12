@@ -4,9 +4,9 @@ import com.cstav.evenmoreinstruments.item.ModItems;
 import com.cstav.evenmoreinstruments.item.emirecord.WritableRecordItem;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -22,8 +22,8 @@ public class RecordCloningRecipe extends CustomRecipe {
      * Used to check if a recipe matches current crafting inventory
      */
     @Override
-    public boolean matches(CraftingContainer pInv, Level pLevel) {
-        return getIngredientsFromContainer(pInv).isPresent();
+    public boolean matches(CraftingInput pInput, Level pLevel) {
+        return getIngredientsFromContainer(pInput).isPresent();
     }
     private static boolean isWritableRecord(final ItemStack stack) {
         return stack.is(ModItems.RECORD_WRITABLE.get()) && !((WritableRecordItem)stack.getItem()).isBurned(stack);
@@ -33,7 +33,7 @@ public class RecordCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, Provider pRegistries) {
+    public ItemStack assemble(CraftingInput pContainer, Provider pRegistries) {
         final Optional<ItemStack[]> ingredients = getIngredientsFromContainer(pContainer);
         if (ingredients.isEmpty())
             return ItemStack.EMPTY;
@@ -42,11 +42,11 @@ public class RecordCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer pInv) {
-        final NonNullList<ItemStack> result = NonNullList.withSize(pInv.getContainerSize(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput pInput) {
+        final NonNullList<ItemStack> result = NonNullList.withSize(pInput.size(), ItemStack.EMPTY);
 
         for (int i = 0; i < result.size(); ++i) {
-            ItemStack stack = pInv.getItem(i);
+            ItemStack stack = pInput.getItem(i);
 
             if (isBurnedRecord(stack)) {
                 result.set(i, stack.copyWithCount(1));
@@ -66,11 +66,11 @@ public class RecordCloningRecipe extends CustomRecipe {
      * </ol>
      * Or none if either were not present.
      */
-    private Optional<ItemStack[]> getIngredientsFromContainer(CraftingContainer pInv) {
+    private Optional<ItemStack[]> getIngredientsFromContainer(CraftingInput pInv) {
         ItemStack burnedRecord = ItemStack.EMPTY;
         ItemStack writableRecord = ItemStack.EMPTY;
 
-        for (int i = 0; i < pInv.getContainerSize(); ++i) {
+        for (int i = 0; i < pInv.size(); ++i) {
             ItemStack stack = pInv.getItem(i);
             if (stack.isEmpty())
                 continue;

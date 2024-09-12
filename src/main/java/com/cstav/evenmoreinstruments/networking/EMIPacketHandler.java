@@ -40,7 +40,7 @@ public class EMIPacketHandler {
 
 
     private static final SimpleChannel INSTANCE = ChannelBuilder
-        .named(new ResourceLocation(EMIMain.MODID, "mod_networking"))
+        .named(EMIMain.loc("mod_networking"))
         .networkProtocolVersion(protocolVersion())
         .acceptedVersions(VersionTest.exact(protocolVersion()))
     .simpleChannel();

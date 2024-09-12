@@ -20,7 +20,7 @@ public class ModCapabilities {
         if (event.getObject() instanceof Player) {
 
             if (!event.getObject().getCapability(RecordingCapabilityProvider.CAPABILITY).isPresent())
-                event.addCapability(new ResourceLocation(EMIMain.MODID, "emi_caps"), new RecordingCapabilityProvider());
+                event.addCapability(EMIMain.loc("emi_caps"), new RecordingCapabilityProvider());
 
         }
     }
@@ -30,7 +30,7 @@ public class ModCapabilities {
         if (event.getObject() instanceof InstrumentBlockEntity) {
 
             if (!event.getObject().getCapability(ModTagCapabilityProvider.CAPABILITY).isPresent())
-                event.addCapability(new ResourceLocation(EMIMain.MODID, "mod_tag"), new ModTagCapabilityProvider());
+                event.addCapability(EMIMain.loc("mod_tag"), new ModTagCapabilityProvider());
 
         }
     }

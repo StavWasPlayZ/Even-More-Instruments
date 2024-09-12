@@ -23,7 +23,7 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
     
     public NoteBlockInstrumentScreen(final NoteBlockInstrument instrumentType) {
         this.instrumentType = instrumentType;
-        instrumentId = new ResourceLocation(EMIMain.MODID, NoteBlockInstrumentItem.getId(instrumentType));
+        instrumentId = EMIMain.loc(NoteBlockInstrumentItem.getId(instrumentType));
 
         // Update the sound to match the note block's
         noteGrid.setNoteSounds(ModSounds.getNoteblockSounds(instrumentType));
@@ -78,7 +78,7 @@ public class NoteBlockInstrumentScreen extends GridInstrumentScreen {
 
     public static final InstrumentThemeLoader THEME_LOADER = InstrumentThemeLoader.fromOther(
         FloralZitherScreen.THEME_LOADER,
-        new ResourceLocation(EMIMain.MODID, "note_block_instrument")
+        EMIMain.loc("note_block_instrument")
     );
         
     @Override

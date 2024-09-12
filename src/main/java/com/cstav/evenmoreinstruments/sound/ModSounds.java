@@ -63,7 +63,7 @@ public class ModSounds {
 
 
     private static ResourceLocation loc(final String id) {
-        return new ResourceLocation(EMIMain.MODID, id);
+        return EMIMain.loc(id);
     }
     /**
      * Shorthand for {@code new NoteSoundRegistrar(soundRegistrar, instrumentId)}

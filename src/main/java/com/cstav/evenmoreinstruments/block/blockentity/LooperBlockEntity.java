@@ -463,7 +463,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
             return;
 
         final int ticks = getTicks();
-        final ResourceLocation instrumentId = new ResourceLocation(channel.getString(INSTRUMENT_ID_TAG));
+        final ResourceLocation instrumentId = ResourceLocation.parse(channel.getString(INSTRUMENT_ID_TAG));
 
         channel.getList(NOTES_TAG, Tag.TAG_COMPOUND).stream()
             .map((note) -> (CompoundTag) note)
@@ -501,7 +501,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     protected void playNoteSound(final CompoundTag noteTag, final ResourceLocation instrumentId) {
         final NoteSoundMetadata meta = metaFromNoteTag(noteTag, instrumentId);
 
-        final ResourceLocation soundLocation = new ResourceLocation(noteTag.getString(SOUND_TYPE_TAG));
+        final ResourceLocation soundLocation = ResourceLocation.parse(noteTag.getString(SOUND_TYPE_TAG));
         final int soundIndex = noteTag.getInt(SOUND_INDEX_TAG);
 
         NoteSoundPacketUtil.sendPlayNotePackets(
@@ -515,7 +515,7 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     protected void playHeldSound(final CompoundTag noteTag, final ResourceLocation instrumentId) {
         final NoteSoundMetadata meta = metaFromNoteTag(noteTag, instrumentId);
 
-        final ResourceLocation soundLocation = new ResourceLocation(noteTag.getString(SOUND_TYPE_TAG));
+        final ResourceLocation soundLocation = ResourceLocation.parse(noteTag.getString(SOUND_TYPE_TAG));
         final int soundIndex = noteTag.getInt(SOUND_INDEX_TAG);
         final HeldNoteSound sound = HeldNoteSoundRegistrar.getSounds(soundLocation)[soundIndex];
 

@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class PipaScreen extends CyclableInstrumentScreen<PipaSoundType> {
-    public static final ResourceLocation INSTRUMENT_ID = new ResourceLocation(EMIMain.MODID, "pipa");
+    public static final ResourceLocation INSTRUMENT_ID = EMIMain.loc("pipa");
 
     @Override
     protected SoundTypeOptionsScreen<PipaSoundType> initInstrumentOptionsScreen() {

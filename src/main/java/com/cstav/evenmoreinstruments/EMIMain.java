@@ -12,6 +12,7 @@ import com.cstav.evenmoreinstruments.item.crafting.ModRecipeSerializers;
 import com.cstav.evenmoreinstruments.networking.EMIPacketHandler;
 import com.cstav.evenmoreinstruments.sound.ModSounds;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
@@ -29,6 +30,11 @@ public class EMIMain
 {
     public static final String MODID = "evenmoreinstruments";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+
+    public static ResourceLocation loc(final String name) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, name);
+    }
+
 
 //    public static CompoundTag modTag(final ItemStack item) {
 //        return item.getOrCreateTagElement(MODID);
