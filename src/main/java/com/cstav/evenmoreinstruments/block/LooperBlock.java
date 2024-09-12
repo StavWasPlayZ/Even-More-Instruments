@@ -102,6 +102,10 @@ public class LooperBlock extends Block implements EntityBlock {
         return lbe.setPlaying(!state.getValue(PLAYING), state);
     }
 
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+    }
 
     //#region Looper interaction handlers
 
