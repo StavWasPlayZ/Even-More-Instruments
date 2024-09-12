@@ -276,6 +276,9 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
         lockedBy = player;
     }
 
+    /**
+     * Used for stopping the Looper's recording
+     */
     public void lock() {
         locked = true;
         lockedBy = null;
