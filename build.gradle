@@ -7,11 +7,11 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-version = mod_version
+version = "${minecraft_version}-${mod_version}"
 group = mod_group_id
 
 base {
-    archivesName = "${mod_id}-1.20+${minecraft_version}"
+    archivesName = mod_id
 }
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -180,8 +180,8 @@ dependencies {
     // Apply Mixin AP
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    // implementation "maven.modrinth:genshin-instruments:${genshinstruments_version}"
-    implementation fg.deobf("idc:genshinstrument-${minecraft_version}:${genshinstruments_version}")
+    // implementation "maven.modrinth:genshin-instruments:${genshinstrument_version}"
+    implementation fg.deobf("idc:genshinstrument:${genshinstrument_version}")
 
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
@@ -215,7 +215,8 @@ def replaceProperties = [
         forge_version: forge_version, forge_version_range: forge_version_range,
         loader_version_range: loader_version_range,
         mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-        mod_authors: mod_authors, mod_description: mod_description
+        mod_authors: mod_authors, mod_description: mod_description,
+        genshinstrument_version_range: genshinstrument_version_range
 ]
 processResources {
     inputs.properties replaceProperties
@@ -254,6 +255,7 @@ java {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId = mod_id
             artifact jar
         }
     }
