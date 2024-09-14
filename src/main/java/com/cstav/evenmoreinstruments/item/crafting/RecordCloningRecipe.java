@@ -38,7 +38,7 @@ public class RecordCloningRecipe extends CustomRecipe {
         if (ingredients.isEmpty())
             return ItemStack.EMPTY;
 
-        return ingredients.get()[1].copy();
+        return ingredients.get()[1].copyWithCount(1);
     }
 
     @Override
