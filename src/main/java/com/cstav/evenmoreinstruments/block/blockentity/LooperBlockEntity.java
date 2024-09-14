@@ -573,6 +573,12 @@ public class LooperBlockEntity extends BlockEntity implements ContainerSingleIte
     }
 
 
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        stopAndClearHeldSounds();
+    }
+
     /**
      * A capped looper is a looper that cannot have any more notes in it, as defined in {@link ModGameRules#RULE_LOOPER_MAX_NOTES}.
      * Any negative will make the looper uncappable.
