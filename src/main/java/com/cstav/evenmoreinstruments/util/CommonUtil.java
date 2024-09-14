@@ -14,9 +14,6 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public class CommonUtil {
-
-    public static final CompoundTag TAG_EMPTY = new CompoundTag();
-
     public static CompoundTag getOrCreateElementTag(final ItemStack item, final String key) {
         return getOrCreateElementTag(EMIMain.modTag(item), key);
     }
