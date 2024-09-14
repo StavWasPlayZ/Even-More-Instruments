@@ -67,7 +67,7 @@ public class LooperUtil {
     public static CompoundTag looperTag(final CompoundTag parentTag) {
         return parentTag.contains(LOOPER_TAG, CompoundTag.TAG_COMPOUND)
             ? parentTag.getCompound(LOOPER_TAG)
-            : CommonUtil.TAG_EMPTY;
+            : new CompoundTag();
     }
 
 

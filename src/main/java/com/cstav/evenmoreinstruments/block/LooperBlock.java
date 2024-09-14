@@ -103,7 +103,6 @@ public class LooperBlock extends Block implements EntityBlock {
         return lbe.setPlaying(!state.getValue(PLAYING), state);
     }
 
-
     //#region Looper interaction handlers
 
     @Override

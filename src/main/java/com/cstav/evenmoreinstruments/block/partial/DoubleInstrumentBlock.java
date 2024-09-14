@@ -63,11 +63,9 @@ public abstract class DoubleInstrumentBlock extends AbstractInstrumentBlock impl
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
         if (pLevel.isClientSide)
             return;
-
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
-
 
         final BlockPos sideBlock = getOtherBlock(pState, pPos, pLevel);
         if (sideBlock == null)
