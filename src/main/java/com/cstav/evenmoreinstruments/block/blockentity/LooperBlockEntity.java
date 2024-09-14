@@ -270,6 +270,9 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
         lockedBy = player;
     }
 
+    /**
+     * Used for stopping the Looper's recording
+     */
     public void lock() {
         locked = true;
         lockedBy = null;
@@ -547,6 +550,12 @@ public class LooperBlockEntity extends BlockEntity implements Clearable {
         removeItem(0, 1);
     }
 
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        stopAndClearHeldSounds();
+    }
 
     /**
      * A capped looper is a looper that cannot have any more notes in it, as defined in {@link ModGameRules#RULE_LOOPER_MAX_NOTES}.

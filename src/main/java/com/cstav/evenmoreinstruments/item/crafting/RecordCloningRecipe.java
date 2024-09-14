@@ -37,9 +37,8 @@ public class RecordCloningRecipe extends CustomRecipe {
         if (ingredients.isEmpty())
             return ItemStack.EMPTY;
 
-
-        final ItemStack result = new ItemStack(ModItems.RECORD_WRITABLE.get());
-        result.setTag(ingredients.get()[1].getTag().copy());
+        final ItemStack result = ingredients.get()[1].copy();
+        result.setCount(1);
         return result;
     }
 
