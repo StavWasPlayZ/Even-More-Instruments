@@ -19,7 +19,7 @@
         ]
     },
 
-    "group": "noteblock_instruments",
+    "group": "evenmoreinstruments:noteblock_instruments",
 
     "result": {
         "item": "evenmoreinstruments:bass_note_block_instrument",
