@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "abc"
+    ],
+    "key": {
+        "a": {
+            "item": "create:brass_nugget"
+        },
+        "b": {
+            "item": "create:brass_ingot"
+        },
+        "c": {
+            "item": "create:brass_block"
+        }
+    },
+
+    "group": "evenmoreinstruments:trombone",
+
+    "result": {
+        "item": "evenmoreinstruments:trombone",
+        "count": 1
+    }
+}
