@@ -5,13 +5,13 @@
     ],
     "key": {
         "a": {
-            "item": "minecraft:gold_nugget"
+            "item": "create:brass_nugget"
         },
         "b": {
-            "item": "minecraft:gold_ingot"
+            "item": "create:brass_ingot"
         },
         "c": {
-            "item": "minecraft:gold_block"
+            "item": "create:brass_block"
         }
     },
 
