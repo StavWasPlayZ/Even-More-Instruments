@@ -18,7 +18,7 @@
         }
     },
 
-    "group": "noteblock_instruments",
+    "group": "evenmoreinstruments:noteblock_instruments",
 
     "result": {
         "item": "evenmoreinstruments:banjo_note_block_instrument",
