@@ -22,7 +22,7 @@
         ]
     },
 
-    "group": "noteblock_instruments",
+    "group": "evenmoreinstruments:noteblock_instruments",
 
     "result": {
         "id": "evenmoreinstruments:hat_note_block_instrument",
