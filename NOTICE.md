@@ -10,4 +10,7 @@ Because this is basically all this mod is.
 If you *really* need to do any kind of modifications & redistributions, you should probably HMU about it directly.
 
 Moral of the story is just...   
-Don't be a d***! :D
+Don't be a d***!
+
+Happy coding! :D  
+\- StavWasPlayZ
