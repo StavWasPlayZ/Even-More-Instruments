@@ -36,7 +36,7 @@ public class EMIRecordCommand {
         new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.no_record", player)
     );
     private static final DynamicCommandExceptionType ERROR_RECORD_ALREADY_BURNED = new DynamicCommandExceptionType((player) ->
-        Component.translatable("commands.evenmoreinstruments.emirecord.failed.record_already_burned", player)
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.record_already_burned", player)
     );
     private static final DynamicCommandExceptionType ERROR_RECORD_BURNED = new DynamicCommandExceptionType((player) ->
         new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.record_burned", player)
