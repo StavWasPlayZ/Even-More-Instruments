@@ -72,15 +72,17 @@
     "button.evenmoreinstruments.stop": "Stop",
 
     "gamerule.evenmoreinstruments_looperMaxNotes": "Looper Max Notes",
-    "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maxumin amount of notes a looper can have. Any value below 0 will make the looper uncappable.",
+    "gamerule.evenmoreinstruments_looperMaxNotes.description": "Defines the maximum amount of notes a looper can have. Any value below 0 will make the looper uncappable.",
 
 
-    "commands.evenmoreinstruments.emirecord.failed.record_burned": "Held record for %s is already burned",
+    "commands.evenmoreinstruments.emirecord.failed.record_already_burned": "Held record of %s is already burned",
+    "commands.evenmoreinstruments.emirecord.failed.record_burned": "Cannot save a burned record",
     "commands.evenmoreinstruments.emirecord.failed.no_record": "%s is not holding an Empty Record",
-    "commands.evenmoreinstruments.emirecord.failed.record_empty": "Held record for %s is empty",
+    "commands.evenmoreinstruments.emirecord.failed.record_empty": "Held record of %s is empty",
     "commands.evenmoreinstruments.emirecord.failed.record_invalid": "Provided record name '%s' is unrecognizable",
     "commands.evenmoreinstruments.emirecord.failed.too_many": "Too many records present at %s's hand. Exactly 1 record must be held to load a track.",
-    "commands.evenmoreinstruments.emirecord.failed.invalid_name": "Cannot save record by the namespace of %s (provided %s)",
+    "commands.evenmoreinstruments.emirecord.failed.invalid_namespace": "Cannot save record by the namespace of %s (provided %s)",
+    "commands.evenmoreinstruments.emirecord.failed.illegal_name": "Illegal record name: %s",
 
     "commands.evenmoreinstruments.emirecord.success.record_burned": "Record successfully burned",
     "commands.evenmoreinstruments.emirecord.success.record_removed": "Record removed successfully",

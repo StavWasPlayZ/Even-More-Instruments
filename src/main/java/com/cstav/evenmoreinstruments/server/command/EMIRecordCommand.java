@@ -35,6 +35,9 @@ public class EMIRecordCommand {
     private static final DynamicCommandExceptionType ERROR_NO_ITEM = new DynamicCommandExceptionType((player) ->
         new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.no_record", player)
     );
+    private static final DynamicCommandExceptionType ERROR_RECORD_ALREADY_BURNED = new DynamicCommandExceptionType((player) ->
+        Component.translatable("commands.evenmoreinstruments.emirecord.failed.record_already_burned", player)
+    );
     private static final DynamicCommandExceptionType ERROR_RECORD_BURNED = new DynamicCommandExceptionType((player) ->
         new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.record_burned", player)
     );
@@ -47,8 +50,11 @@ public class EMIRecordCommand {
     private static final DynamicCommandExceptionType ERROR_TOO_MANY = new DynamicCommandExceptionType((player) ->
         new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.too_many", player)
     );
-    private static final DynamicCommandExceptionType ERROR_INVALID_NAME = new DynamicCommandExceptionType((id) ->
-        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.invalid_name", EMIMain.MODID, id)
+    private static final DynamicCommandExceptionType ERROR_INVALID_NAMESPACE = new DynamicCommandExceptionType((id) ->
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.invalid_namespace", EMIMain.MODID, id)
+    );
+    private static final DynamicCommandExceptionType ERROR_ILLEGAL_NAME = new DynamicCommandExceptionType((name) ->
+        new TranslatableComponent("commands.evenmoreinstruments.emirecord.failed.illegal_name", name)
     );
 
 
@@ -84,22 +90,45 @@ public class EMIRecordCommand {
         final Player target = stack.getSource().getPlayerOrException();
 
         final ResourceLocation saveLoc = ResourceLocationArgument.getId(stack, "record");
-        if (saveLoc.getNamespace().equals(EMIMain.MODID))
-            throw ERROR_INVALID_NAME.create(saveLoc);
+
+        if (saveLoc.getNamespace().equals(EMIMain.MODID)) {
+            throw ERROR_INVALID_NAMESPACE.create(saveLoc);
+        }
+        // Periods are disallowed because we later strip away the files' extensions.
+        // /\ The above is relevant to Fabric only, but will keep it in for the sake of parity.
+        if (saveLoc.getPath().contains(".")) {
+            throw ERROR_ILLEGAL_NAME.create(saveLoc);
+        }
 
         final Optional<ItemStack> record = CommonUtil.getItemInBothHands(target, ModItems.RECORD_WRITABLE.get());
 
-        if (record.isEmpty())
+        if (record.isEmpty()) {
             throw ERROR_NO_ITEM.create(target.getDisplayName());
+        }
 
-        if (!((WritableRecordItem) record.get().getItem()).isBurned(record.get()))
+        if (!((WritableRecordItem) record.get().getItem()).isBurned(record.get())) {
             throw ERROR_RECORD_EMPTY.create(target.getDisplayName());
+        }
+
+
+        final CompoundTag channelTag = record.get().getTagElement(WritableRecordItem.CHANNEL_TAG);
+        if (channelTag == null) {
+            final CompoundTag recordTag = record.get().getTag();
+
+            if (recordTag == null) {
+                throw ERROR_RECORD_EMPTY.create(target.getDisplayName());
+            }
+
+            if (recordTag.contains(BurnedRecordItem.BURNED_MEDIA_TAG)) {
+                throw ERROR_RECORD_BURNED.create(target.getDisplayName());
+            }
+
+            throw ERROR_RECORD_EMPTY.create(target.getDisplayName());
+        }
 
 
         try {
-            RecordRepository.saveRecord(saveLoc,
-                record.get().getTagElement(WritableRecordItem.CHANNEL_TAG)
-            );
+            RecordRepository.saveRecord(saveLoc, channelTag);
         } catch (IOException e) {
             EMIMain.LOGGER.error("Error encountered while saving record data", e);
             throw new RuntimeException(e);
@@ -112,20 +141,24 @@ public class EMIRecordCommand {
     private static int loadRecordToHand(CommandContext<CommandSourceStack> stack, Player target) throws CommandSyntaxException {
         final Optional<ItemStack> record = CommonUtil.getItemInBothHands(target, ModItems.RECORD_WRITABLE.get());
 
-        if (record.isEmpty())
+        if (record.isEmpty()) {
             throw ERROR_NO_ITEM.create(target.getDisplayName());
-        if (record.get().getCount() > 1)
+        }
+        if (record.get().getCount() > 1) {
             throw ERROR_TOO_MANY.create(target.getDisplayName());
+        }
 
-        if (((WritableRecordItem) record.get().getItem()).isBurned(record.get()))
-            throw ERROR_RECORD_BURNED.create(target.getDisplayName());
+        if (((WritableRecordItem) record.get().getItem()).isBurned(record.get())) {
+            throw ERROR_RECORD_ALREADY_BURNED.create(target.getDisplayName());
+        }
 
 
         final ResourceLocation recordName = stack.getArgument("record", ResourceLocation.class);
         final Optional<CompoundTag> recordChannel = RecordRepository.getRecord(recordName);
 
-        if (recordChannel.isEmpty())
+        if (recordChannel.isEmpty()) {
             throw ERROR_RECORD_INVALID.create(recordName);
+        }
 
         record.get().getOrCreateTag().putString(BurnedRecordItem.BURNED_MEDIA_TAG, recordName.toString());
 
@@ -136,7 +169,7 @@ public class EMIRecordCommand {
     private static int removeRecord(CommandContext<CommandSourceStack> stack) throws CommandSyntaxException {
         final ResourceLocation name = ResourceLocationArgument.getId(stack, "record");
         if (name.getNamespace().equals(EMIMain.MODID))
-            throw ERROR_INVALID_NAME.create(name);
+            throw ERROR_INVALID_NAMESPACE.create(name);
 
         try {
             RecordRepository.removeRecord(name);
