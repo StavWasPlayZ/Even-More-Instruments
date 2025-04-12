@@ -21,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -111,15 +112,11 @@ public class EMIRecordCommand {
         }
 
 
-        final CompoundTag channelTag = record.get().getTagElement(WritableRecordItem.CHANNEL_TAG);
+//        final CompoundTag channelTag = record.get().getTagElement(WritableRecordItem.CHANNEL_TAG);
+        final CustomData channelTag = record.get().get(ModDataComponents.CHANNNEL.get());
         if (channelTag == null) {
-            final CompoundTag recordTag = record.get().getTag();
 
-            if (recordTag == null) {
-                throw ERROR_RECORD_EMPTY.create(target.getDisplayName());
-            }
-
-            if (recordTag.contains(BurnedRecordItem.BURNED_MEDIA_TAG)) {
+            if (record.get().has(ModDataComponents.BURNED_MEDIA.get())) {
                 throw ERROR_RECORD_BURNED.create(target.getDisplayName());
             }
 
@@ -129,7 +126,7 @@ public class EMIRecordCommand {
 
         try {
             RecordRepository.saveRecord(saveLoc,
-                record.get().get(ModDataComponents.CHANNNEL.get()).copyTag()
+                channelTag.copyTag()
             );
         } catch (IOException e) {
             EMIMain.LOGGER.error("Error encountered while saving record data", e);
