@@ -128,9 +128,7 @@ public class EMIRecordCommand {
 
 
         try {
-            RecordRepository.saveRecord(saveLoc,
-                record.get().getTagElement(WritableRecordItem.CHANNEL_TAG)
-            );
+            RecordRepository.saveRecord(saveLoc, channelTag);
         } catch (IOException e) {
             EMIMain.LOGGER.error("Error encountered while saving record data", e);
             throw new RuntimeException(e);
