@@ -9,6 +9,12 @@ And a looper.
 
 Check out the Fabric port [here](https://github.com/StavWasPlayZ/Even-More-Instruments-Fabric/)!
 
+>[!WARNING]
+> # This Mod is No Longer being Maintained.
+> I'm too burnt out and busy to do anything.
+>
+> See the CurseForge page for more info.
+
 # Contributing
 
 > 1. [I have an idea for a new instrument!](#i-have-an-idea-for-a-new-instrument)
